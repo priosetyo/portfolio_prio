@@ -1,484 +1,158 @@
-import React, { useState } from 'react';
-import { supabase } from '../../lib/supabaseClient';
-import { FileDown } from 'lucide-react';
+import React from 'react';
 
-export function Contact({ settings, loading }) {
-  const email = settings?.email || 'prio@setyostudio.com';
-  const phone = settings?.phone || '+62 812-3456-7890';
-  const linkedin = settings?.linkedin || 'priosetyo';
-  const cvPath = settings?.cv_path;
-
-  const [copiedKey, setCopiedKey] = useState(null);
-
-  const copyToClipboard = (text, key) => {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text).then(() => {
-        setCopiedKey(key);
-        setTimeout(() => setCopiedKey(null), 2200);
-      }).catch(() => fallbackCopy(text, key));
-    } else {
-      fallbackCopy(text, key);
-    }
-  };
-
-  const fallbackCopy = (text, key) => {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    textArea.style.position = 'fixed';
-    textArea.style.left = '-999999px';
-    textArea.style.top = '-999999px';
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand('copy');
-      setCopiedKey(key);
-      setTimeout(() => setCopiedKey(null), 2200);
-    } catch (err) {
-      console.error('Copy fallback failed', err);
-    }
-    textArea.remove();
-  };
-
-  // CV public URL
-  let cvUrl = null;
-  if (cvPath) {
-    if (cvPath.startsWith('http')) {
-      cvUrl = cvPath;
-    } else {
-      const { data } = supabase.storage.from('portfolio-media').getPublicUrl(cvPath);
-      cvUrl = data?.publicUrl;
-    }
-  }
+export function Contact({ settings }) {
+  const email = settings?.email || 'prio.setyo@creativestudio.id';
 
   return (
     <section
-      id="kontak"
+      id="mulai-diskusi"
       style={{
-        width: '100%',
-        backgroundColor: 'var(--color-surface)',
-        paddingTop: 'var(--space-3xl)',
-        paddingBottom: 'var(--space-3xl)',
-        position: 'relative',
-        overflow: 'hidden'
+        maxWidth: '1440px',
+        margin: '0 auto',
+        padding: 'var(--space-lg) var(--margin-mobile)',
+        width: '100%'
       }}
     >
-      {/* Atmospheric Under-Glow Reflector */}
       <div
         style={{
-          position: 'absolute',
-          bottom: 0,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '700px',
-          height: '350px',
-          background: 'radial-gradient(ellipse at bottom, rgba(255, 87, 26, 0.22) 0%, transparent 70%)',
-          filter: 'blur(160px)',
-          pointerEvents: 'none',
-          borderTopLeftRadius: '9999px',
-          borderTopRightRadius: '9999px'
-        }}
-      />
-
-      <div
-        className="container"
-        style={{
+          width: '100%',
+          borderRadius: 'var(--radius-xl)',
+          padding: 'var(--space-lg) var(--space-xl)',
+          backgroundColor: '#000000',
+          color: '#ffffff',
+          boxShadow: 'var(--shadow-xl)',
           position: 'relative',
-          maxWidth: '56rem',
-          margin: '0 auto',
+          overflow: 'hidden',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          textAlign: 'center',
-          gap: 'var(--space-2xl)'
+          justifyContent: 'space-between',
+          gap: 'var(--space-lg)'
         }}
+        className="cta-banner-container"
       >
-        {/* Headline Block */}
+        {/* Decorative Backdrop Graphic */}
+        <div
+          style={{
+            position: 'absolute',
+            right: 0,
+            top: 0,
+            width: '24rem',
+            height: '24rem',
+            borderRadius: '50%',
+            backgroundColor: 'rgba(220, 213, 253, 0.15)',
+            filter: 'blur(64px)',
+            pointerEvents: 'none'
+          }}
+        />
+
+        {/* Text Content */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            gap: 'var(--space-md)',
-            maxWidth: '48rem'
+            gap: '8px',
+            position: 'relative',
+            zIndex: 1,
+            maxWidth: '36rem'
           }}
         >
           <span
             style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.75rem',
+              fontSize: '11px',
               fontWeight: '600',
-              color: 'var(--color-primary)',
+              letterSpacing: '0.1em',
               textTransform: 'uppercase',
-              letterSpacing: '0.3em'
+              color: 'var(--color-secondary-fixed)'
             }}
           >
-            Inisiasi Kerja Sama
+            KOLABORASI EKSKLUSIF
           </span>
 
           <h2
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.25rem, 6vw, 4.5rem)',
+              fontSize: 'clamp(2rem, 4vw, 44px)',
+              lineHeight: 1.1,
+              letterSpacing: '-0.03em',
               fontWeight: '800',
-              color: 'var(--color-on-surface)',
-              letterSpacing: '-0.025em',
-              lineHeight: 1.15,
-              margin: 0
+              color: '#ffffff',
+              margin: '4px 0 0 0'
             }}
           >
-            Mari Ciptakan Sesuatu yang Luar Biasa.
+            Siap Mewujudkan Visi Kreatif Anda?
           </h2>
 
           <p
             style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: 'clamp(1rem, 2vw, 1.125rem)',
-              color: 'var(--color-on-surface-variant)',
-              maxWidth: '38rem',
-              lineHeight: 1.6,
-              margin: '0 auto'
+              fontSize: '15px',
+              lineHeight: '24px',
+              color: 'var(--color-on-primary-container)',
+              marginTop: '8px',
+              margin: '8px 0 0 0'
             }}
           >
-            Terbuka untuk konsultasi visi kreatif, perancangan identitas baru, atau kolaborasi strategis jangka panjang di seluruh dunia.
+            Terbuka untuk konsultasi strategis Q2/Q3 2025, dewan penasihat kreatif, dan arahan desain transformatif berskala global.
           </p>
         </div>
 
-        {/* 3 CopyField Interactive Cards */}
+        {/* Action Button */}
         <div
           style={{
+            position: 'relative',
+            zIndex: 1,
             width: '100%',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: 'var(--gutter)',
-            paddingTop: 'var(--space-md)'
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
           }}
+          className="cta-btn-wrapper"
         >
-          {/* Card 1: Email */}
-          <div
-            className="stitch-contact-card group"
-            style={{
-              padding: 'var(--space-lg)',
-              borderRadius: 'var(--radius-xl)',
-              backgroundColor: 'var(--color-surface-container)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 'var(--space-md)',
-              boxShadow: 'var(--shadow-sm)',
-              border: '1px solid rgba(230, 190, 178, 0.08)',
-              transition: 'all var(--transition-fast)'
-            }}
-          >
-            <div
-              style={{
-                width: '3rem',
-                height: '3rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-surface-highest)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--color-primary)',
-                transition: 'transform var(--transition-fast)'
-              }}
-              className="contact-icon-box"
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-                mail
-              </span>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  color: 'var(--color-outline)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  fontWeight: '600'
-                }}
-              >
-                Surel Resmi
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '1rem',
-                  fontWeight: '700',
-                  color: 'var(--color-on-surface)',
-                  userSelect: 'all',
-                  marginTop: '0.2rem'
-                }}
-              >
-                {email}
-              </span>
-            </div>
-
-            <button
-              onClick={() => copyToClipboard(email, 'email')}
-              style={{
-                width: '100%',
-                padding: '0.5rem 1rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: copiedKey === 'email' ? 'var(--color-primary-container)' : 'var(--color-surface-highest)',
-                color: copiedKey === 'email' ? 'var(--color-on-primary-container)' : 'var(--color-on-surface)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
-                fontWeight: '600',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 'var(--space-xs)',
-                transition: 'all var(--transition-fast)'
-              }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                content_copy
-              </span>
-              <span>{copiedKey === 'email' ? 'Tersalin!' : 'Salin Email'}</span>
-            </button>
-          </div>
-
-          {/* Card 2: WhatsApp */}
-          <div
-            className="stitch-contact-card group"
-            style={{
-              padding: 'var(--space-lg)',
-              borderRadius: 'var(--radius-xl)',
-              backgroundColor: 'var(--color-surface-container)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 'var(--space-md)',
-              boxShadow: 'var(--shadow-sm)',
-              border: '1px solid rgba(230, 190, 178, 0.08)',
-              transition: 'all var(--transition-fast)'
-            }}
-          >
-            <div
-              style={{
-                width: '3rem',
-                height: '3rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-surface-highest)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--color-secondary-container)',
-                transition: 'transform var(--transition-fast)'
-              }}
-              className="contact-icon-box"
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-                chat
-              </span>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  color: 'var(--color-outline)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  fontWeight: '600'
-                }}
-              >
-                WhatsApp Bisnis
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '1rem',
-                  fontWeight: '700',
-                  color: 'var(--color-on-surface)',
-                  userSelect: 'all',
-                  marginTop: '0.2rem'
-                }}
-              >
-                {phone}
-              </span>
-            </div>
-
-            <button
-              onClick={() => copyToClipboard(phone.replace(/\s+/g, ''), 'phone')}
-              style={{
-                width: '100%',
-                padding: '0.5rem 1rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: copiedKey === 'phone' ? 'var(--color-primary-container)' : 'var(--color-surface-highest)',
-                color: copiedKey === 'phone' ? 'var(--color-on-primary-container)' : 'var(--color-on-surface)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
-                fontWeight: '600',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 'var(--space-xs)',
-                transition: 'all var(--transition-fast)'
-              }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                content_copy
-              </span>
-              <span>{copiedKey === 'phone' ? 'Tersalin!' : 'Salin Nomor'}</span>
-            </button>
-          </div>
-
-          {/* Card 3: LinkedIn */}
-          <div
-            className="stitch-contact-card group"
-            style={{
-              padding: 'var(--space-lg)',
-              borderRadius: 'var(--radius-xl)',
-              backgroundColor: 'var(--color-surface-container)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: 'var(--space-md)',
-              boxShadow: 'var(--shadow-sm)',
-              border: '1px solid rgba(230, 190, 178, 0.08)',
-              transition: 'all var(--transition-fast)'
-            }}
-          >
-            <div
-              style={{
-                width: '3rem',
-                height: '3rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-surface-highest)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: 'var(--color-primary)',
-                transition: 'transform var(--transition-fast)'
-              }}
-              className="contact-icon-box"
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-                share
-              </span>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  color: 'var(--color-outline)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  fontWeight: '600'
-                }}
-              >
-                LinkedIn Profil
-              </span>
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '1rem',
-                  fontWeight: '700',
-                  color: 'var(--color-on-surface)',
-                  userSelect: 'all',
-                  marginTop: '0.2rem'
-                }}
-              >
-                {linkedin}
-              </span>
-            </div>
-
-            <button
-              onClick={() => copyToClipboard(`https://linkedin.com/in/${linkedin.replace(/^https?:\/\/.*linkedin\.com\/in\//, '')}`, 'linkedin')}
-              style={{
-                width: '100%',
-                padding: '0.5rem 1rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: copiedKey === 'linkedin' ? 'var(--color-primary-container)' : 'var(--color-surface-highest)',
-                color: copiedKey === 'linkedin' ? 'var(--color-on-primary-container)' : 'var(--color-on-surface)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
-                fontWeight: '600',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 'var(--space-xs)',
-                transition: 'all var(--transition-fast)'
-              }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                content_copy
-              </span>
-              <span>{copiedKey === 'linkedin' ? 'Tersalin!' : 'Salin Profil'}</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Primary Big Action Capsule Button */}
-        <div style={{ paddingTop: 'var(--space-md)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--space-md)' }}>
           <a
-            href={`mailto:${email}?subject=Inquiry%20Konsultasi%20Kreatif%202025`}
+            href={`mailto:${email}?subject=Inquiry%20Proyek%20Kreatif%202025`}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: 'var(--space-md)',
-              padding: '1rem 3rem',
-              borderRadius: 'var(--radius-full)',
-              background: 'linear-gradient(to right, var(--color-primary-container), var(--color-secondary-container), var(--color-secondary))',
-              color: 'var(--color-on-primary-container)',
+              justifyContent: 'center',
+              gap: '6px',
+              padding: '1rem 2rem',
+              borderRadius: '9999px',
+              backgroundColor: 'var(--color-secondary-container)',
+              color: 'var(--color-on-secondary-fixed)',
               fontFamily: 'var(--font-display)',
-              fontSize: '1.125rem',
-              fontWeight: '700',
-              boxShadow: 'var(--shadow-glow-lg)',
-              transition: 'all var(--transition-fast)',
-              textDecoration: 'none'
+              fontSize: '14px',
+              fontWeight: '600',
+              textDecoration: 'none',
+              boxShadow: 'var(--shadow-lg)',
+              transition: 'all 200ms ease',
+              whiteSpace: 'nowrap'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'scale(1.04)';
+              e.currentTarget.style.backgroundColor = '#ffffff';
+              e.currentTarget.style.transform = 'translateY(-2px)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.backgroundColor = 'var(--color-secondary-container)';
+              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '24px' }}>
-              calendar_today
+            <span>Mulai Diskusi Sekarang</span>
+            <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
+              arrow_forward
             </span>
-            <span>Jadwalkan Konsultasi 1-on-1 (30 Menit)</span>
           </a>
-
-          {/* Optional CV PDF button if uploaded */}
-          {cvUrl && (
-            <a
-              href={cvUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 'var(--space-xs)',
-                fontSize: '0.875rem',
-                color: 'var(--color-outline)',
-                textDecoration: 'underline'
-              }}
-            >
-              <FileDown size={15} />
-              <span>Unduh Resume / CV (PDF)</span>
-            </a>
-          )}
         </div>
       </div>
 
       <style>{`
-        .stitch-contact-card:hover {
-          background-color: var(--color-surface-high) !important;
-        }
-        .stitch-contact-card:hover .contact-icon-box {
-          transform: scale(1.1);
+        @media (min-width: 768px) {
+          .cta-banner-container {
+            flex-direction: row !important;
+            text-align: left !important;
+          }
+          .cta-btn-wrapper {
+            width: auto !important;
+          }
         }
       `}</style>
     </section>

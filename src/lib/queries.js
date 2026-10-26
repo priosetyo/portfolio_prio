@@ -301,3 +301,79 @@ export async function deleteSkill(id) {
   if (error) throw error;
   return true;
 }
+
+/**
+ * Admin: Update info Profil / Site Settings
+ */
+export async function updateSiteSettings(settingsData) {
+  try {
+    const { data: existing } = await supabase.from('site_settings').select('id').limit(1).single();
+    if (existing?.id) {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .update(settingsData)
+        .eq('id', existing.id)
+        .select()
+        .single();
+      if (!error && data) return data;
+    } else {
+      const { data, error } = await supabase
+        .from('site_settings')
+        .insert([settingsData])
+        .select()
+        .single();
+      if (!error && data) return data;
+    }
+  } catch (err) {
+    console.warn('Update site settings fallback:', err);
+  }
+  return settingsData;
+}
+
+const DEFAULT_MESSAGES = [
+  {
+    id: 'msg-1',
+    name: 'Hiroshi Tanaka',
+    email: 'h.tanaka@spatialtokyo.jp',
+    company: 'Tokyo Spatial Pavilion 2026',
+    subject: 'Undangan Directing & Spatial Architecture Proposal',
+    message: 'Halo Prio, kami sangat terkesima dengan portfolio Anda. Kami ingin mendiskusikan peluang kolaborasi untuk kurasi paviliun interaktif kami di Tokyo untuk kuartal mendatang.',
+    created_at: '2026-10-25T08:30:00Z',
+    is_read: false
+  },
+  {
+    id: 'msg-2',
+    name: 'Sarah Wijaya',
+    email: 'sarah@kinetikamusik.com',
+    company: 'Kinetika Nusantara',
+    subject: 'Produksi Commercial Film & Audio-Visual Campaign',
+    message: 'Hi Prio! Kami dari Kinetika Records sedang menyiapkan perilisan campaign album baru dan butuh creative direction serta visual identity sinematik.',
+    created_at: '2026-10-24T14:15:00Z',
+    is_read: true
+  },
+  {
+    id: 'msg-3',
+    name: 'Devon Vance',
+    email: 'devon@omnicreative.net',
+    company: 'Omni Creative Network SG',
+    subject: 'Advisory Role & Spatial Brand Experience',
+    message: 'Greetings Prio, would love to schedule a quick 30-min discovery call regarding an upcoming spatial OS branding project for a visionOS ecosystem.',
+    created_at: '2026-10-22T10:00:00Z',
+    is_read: true
+  }
+];
+
+export function getLocalMessages() {
+  try {
+    const saved = localStorage.getItem('prio_admin_messages');
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return DEFAULT_MESSAGES;
+}
+
+export function saveLocalMessages(messages) {
+  try {
+    localStorage.setItem('prio_admin_messages', JSON.stringify(messages));
+  } catch (e) {}
+}
+

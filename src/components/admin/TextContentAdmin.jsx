@@ -1,7 +1,20 @@
 import React, { useState } from 'react';
 import { Tag } from '../ui/Tag';
 import { Button } from '../ui/Button';
-import { Plus, Edit2, Trash2, Save, X, Briefcase, Award } from 'lucide-react';
+import {
+  Plus,
+  Edit2,
+  Trash2,
+  Save,
+  X,
+  Briefcase,
+  Award,
+  Sparkles,
+  Calendar,
+  Building,
+  CheckCircle2,
+  ArrowRight
+} from 'lucide-react';
 import {
   createExperience,
   updateExperience,
@@ -142,76 +155,159 @@ export function TextContentAdmin({ experiences = [], skills = [], onRefresh }) {
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-      {/* Sub Tabs */}
-      <div style={{ display: 'flex', gap: 'var(--space-3)' }}>
-        <Button
-          variant={activeSubTab === 'exp' ? 'primary' : 'secondary'}
-          size="sm"
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {/* Sub Tabs Pill Selector */}
+      <div
+        style={{
+          display: 'inline-flex',
+          padding: '0.25rem',
+          borderRadius: '9999px',
+          backgroundColor: '#f3f3f5',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
+          alignSelf: 'flex-start'
+        }}
+      >
+        <button
+          type="button"
           onClick={() => setActiveSubTab('exp')}
-          icon={Briefcase}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+            padding: '0.5rem 1.25rem',
+            borderRadius: '9999px',
+            fontSize: 'var(--text-xs)',
+            fontWeight: '700',
+            border: 'none',
+            cursor: 'pointer',
+            backgroundColor: activeSubTab === 'exp' ? '#000000' : 'transparent',
+            color: activeSubTab === 'exp' ? '#ffffff' : 'var(--text-secondary)',
+            transition: 'all 0.15s ease'
+          }}
         >
-          Pengalaman Kerja ({experiences.length})
-        </Button>
-        <Button
-          variant={activeSubTab === 'skill' ? 'primary' : 'secondary'}
-          size="sm"
+          <Briefcase size={14} />
+          <span>Riwayat Pengalaman ({experiences.length})</span>
+        </button>
+
+        <button
+          type="button"
           onClick={() => setActiveSubTab('skill')}
-          icon={Award}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+            padding: '0.5rem 1.25rem',
+            borderRadius: '9999px',
+            fontSize: 'var(--text-xs)',
+            fontWeight: '700',
+            border: 'none',
+            cursor: 'pointer',
+            backgroundColor: activeSubTab === 'skill' ? '#000000' : 'transparent',
+            color: activeSubTab === 'skill' ? '#ffffff' : 'var(--text-secondary)',
+            transition: 'all 0.15s ease'
+          }}
         >
-          Keahlian & Kompetensi ({skills.length})
-        </Button>
+          <Award size={14} />
+          <span>Toolkit & Kompetensi ({skills.length})</span>
+        </button>
       </div>
 
-      {/* TAB 1: PENGALAMAN */}
+      {/* TAB 1: PENGALAMAN KERJA */}
       {activeSubTab === 'exp' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-6)' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+            gap: '1.5rem',
+            alignItems: 'start'
+          }}
+        >
           {/* List Experiences */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-            <h3 style={{ fontSize: 'var(--text-base)', fontWeight: '700' }}>Daftar Riwayat Karir</h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+              <h3 style={{ fontSize: '0.85rem', fontWeight: '800', color: '#000000', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                Linimasa Karir & Pengalaman
+              </h3>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-tertiary)' }}>{experiences.length} Entri</span>
+            </div>
+
             {experiences.map((exp) => (
               <div
                 key={exp.id}
                 style={{
-                  padding: 'var(--space-4)',
-                  backgroundColor: 'var(--bg-elevated)',
-                  borderRadius: 'var(--radius-lg)',
-                  border: '1px solid var(--border-subtle)',
+                  padding: '1.25rem',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '1rem',
+                  border: '1px solid rgba(0, 0, 0, 0.06)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
                   display: 'flex',
                   justifyContent: 'space-between',
-                  alignItems: 'flex-start'
+                  alignItems: 'flex-start',
+                  gap: '1rem',
+                  transition: 'border-color 0.15s ease'
                 }}
               >
-                <div>
-                  <div style={{ fontWeight: '700', fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>
-                    {exp.role}
-                  </div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--accent-highlight)', fontWeight: '600' }}>
-                    {exp.org} • {exp.start_date} — {exp.end_date || 'Sekarang'}
-                  </div>
-                  {exp.location && (
-                    <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-tertiary)' }}>
-                      {exp.location}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <div style={{ fontWeight: '800', fontSize: '0.95rem', color: '#000000' }}>
+                      {exp.role}
                     </div>
+                  </div>
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.75rem', color: '#000000' }}>
+                    <Building size={13} color="var(--text-tertiary)" />
+                    <span style={{ fontWeight: '600' }}>{exp.org}</span>
+                    <span style={{ color: 'var(--text-tertiary)' }}>•</span>
+                    <span style={{ color: 'var(--text-secondary)' }}>
+                      {exp.start_date} — {exp.end_date || 'Sekarang'}
+                    </span>
+                  </div>
+
+                  {exp.location && (
+                    <div style={{ fontSize: '0.68rem', color: 'var(--text-tertiary)' }}>
+                      📍 {exp.location}
+                    </div>
+                  )}
+
+                  {Array.isArray(exp.bullets) && exp.bullets.length > 0 && (
+                    <ul style={{ margin: '0.4rem 0 0 0', paddingLeft: '1.1rem', fontSize: '0.72rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                      {exp.bullets.map((b, idx) => (
+                        <li key={idx}>{b}</li>
+                      ))}
+                    </ul>
                   )}
                 </div>
 
-                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                <div style={{ display: 'flex', gap: '0.35rem', flexShrink: 0 }}>
                   <button
                     type="button"
                     onClick={() => handleEditExp(exp)}
-                    style={{ padding: '4px', color: 'var(--text-secondary)' }}
-                    title="Edit"
+                    style={{
+                      padding: '0.4rem',
+                      borderRadius: '0.5rem',
+                      backgroundColor: '#f3f3f5',
+                      color: 'var(--text-secondary)',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                    title="Edit Pengalaman"
                   >
-                    <Edit2 size={15} />
+                    <Edit2 size={13} />
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDeleteExp(exp.id)}
-                    style={{ padding: '4px', color: 'var(--badge-video)' }}
-                    title="Hapus"
+                    style={{
+                      padding: '0.4rem',
+                      borderRadius: '0.5rem',
+                      backgroundColor: 'transparent',
+                      color: '#dc2626',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                    title="Hapus Pengalaman"
                   >
-                    <Trash2 size={15} />
+                    <Trash2 size={13} />
                   </button>
                 </div>
               </div>
@@ -221,19 +317,37 @@ export function TextContentAdmin({ experiences = [], skills = [], onRefresh }) {
           {/* Form Tambah/Ubah Experience */}
           <div
             style={{
-              padding: 'var(--space-5)',
-              backgroundColor: 'var(--bg-elevated)',
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)',
-              height: 'fit-content'
+              padding: '1.5rem',
+              backgroundColor: '#ffffff',
+              borderRadius: '1.25rem',
+              border: '1px solid rgba(0, 0, 0, 0.06)',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)'
             }}
           >
-            <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: '700', marginBottom: 'var(--space-4)' }}>
-              {editingExp ? 'Edit Pengalaman' : 'Tambah Pengalaman Baru'}
-            </h3>
-            <form onSubmit={handleSaveExp} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+              <h3 style={{ fontSize: '0.85rem', fontWeight: '800', color: '#000000', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                {editingExp ? 'Edit Pengalaman' : 'Tambah Pengalaman Baru'}
+              </h3>
+              {editingExp && (
+                <button
+                  type="button"
+                  onClick={resetExpForm}
+                  style={{
+                    fontSize: '0.68rem',
+                    color: 'var(--text-tertiary)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Batal Edit
+                </button>
+              )}
+            </div>
+
+            <form onSubmit={handleSaveExp} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: '2px' }}>
+                <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
                   Posisi / Peran *
                 </label>
                 <input
@@ -241,28 +355,46 @@ export function TextContentAdmin({ experiences = [], skills = [], onRefresh }) {
                   required
                   value={expRole}
                   onChange={(e) => setExpRole(e.target.value)}
-                  placeholder="e.g. Creative Director"
-                  style={{ width: '100%', padding: 'var(--space-2)', fontSize: 'var(--text-xs)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', backgroundColor: 'var(--bg-secondary)' }}
+                  placeholder="Contoh: Principal Creative Director"
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000',
+                    outline: 'none'
+                  }}
                 />
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: '2px' }}>
-                  Organisasi / Perusahaan *
+                <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
+                  Perusahaan / Studio *
                 </label>
                 <input
                   type="text"
                   required
                   value={expOrg}
                   onChange={(e) => setExpOrg(e.target.value)}
-                  placeholder="e.g. Studio Kreatif"
-                  style={{ width: '100%', padding: 'var(--space-2)', fontSize: 'var(--text-xs)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', backgroundColor: 'var(--bg-secondary)' }}
+                  placeholder="Contoh: Studio Artefak"
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000',
+                    outline: 'none'
+                  }}
                 />
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-2)' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                 <div>
-                  <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: '2px' }}>
+                  <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
                     Tahun Mulai *
                   </label>
                   <input
@@ -270,94 +402,195 @@ export function TextContentAdmin({ experiences = [], skills = [], onRefresh }) {
                     required
                     value={expStart}
                     onChange={(e) => setExpStart(e.target.value)}
-                    placeholder="2022"
-                    style={{ width: '100%', padding: 'var(--space-2)', fontSize: 'var(--text-xs)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', backgroundColor: 'var(--bg-secondary)' }}
+                    placeholder="2024"
+                    style={{
+                      width: '100%',
+                      padding: '0.65rem 0.85rem',
+                      fontSize: '0.78rem',
+                      borderRadius: '0.65rem',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      backgroundColor: '#f3f3f5',
+                      color: '#000000',
+                      outline: 'none'
+                    }}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: '2px' }}>
+                  <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
                     Tahun Selesai
                   </label>
                   <input
                     type="text"
                     value={expEnd}
                     onChange={(e) => setExpEnd(e.target.value)}
-                    placeholder="Sekarang / 2024"
-                    style={{ width: '100%', padding: 'var(--space-2)', fontSize: 'var(--text-xs)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', backgroundColor: 'var(--bg-secondary)' }}
+                    placeholder="Sekarang"
+                    style={{
+                      width: '100%',
+                      padding: '0.65rem 0.85rem',
+                      fontSize: '0.78rem',
+                      borderRadius: '0.65rem',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      backgroundColor: '#f3f3f5',
+                      color: '#000000',
+                      outline: 'none'
+                    }}
                   />
                 </div>
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: '2px' }}>
+                <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
+                  Lokasi (Opsional)
+                </label>
+                <input
+                  type="text"
+                  value={expLocation}
+                  onChange={(e) => setExpLocation(e.target.value)}
+                  placeholder="Jakarta / Remote Global"
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000',
+                    outline: 'none'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
                   Poin Pencapaian (1 baris per poin)
                 </label>
                 <textarea
                   rows={4}
                   value={expBullets}
                   onChange={(e) => setExpBullets(e.target.value)}
-                  placeholder="Memimpin konseptualisasi visual untuk 30+ brand...&#10;Meningkatkan engagement kampanye video..."
-                  style={{ width: '100%', padding: 'var(--space-2)', fontSize: 'var(--text-xs)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', backgroundColor: 'var(--bg-secondary)', resize: 'vertical' }}
+                  placeholder="Memimpin konseptualisasi visual untuk brand global...&#10;Mengarahkan 25+ desainer dan produser video..."
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000',
+                    outline: 'none',
+                    resize: 'vertical'
+                  }}
                 />
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)', marginTop: 'var(--space-2)' }}>
-                {editingExp && (
-                  <Button variant="secondary" size="sm" onClick={resetExpForm}>
-                    Batal
-                  </Button>
-                )}
-                <Button variant="primary" size="sm" type="submit" icon={Save}>
-                  Simpan
-                </Button>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginTop: '0.5rem' }}>
+                <button
+                  type="submit"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.65rem 1.25rem',
+                    borderRadius: '0.65rem',
+                    backgroundColor: '#000000',
+                    color: '#ffffff',
+                    fontSize: 'var(--text-xs)',
+                    fontWeight: '700',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                  }}
+                >
+                  <Save size={13} />
+                  <span>{editingExp ? 'Simpan Perubahan' : 'Tambahkan Pengalaman'}</span>
+                </button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* TAB 2: KEAHLIAN (SKILLS) */}
+      {/* TAB 2: KEAHLIAN & TOOLKIT */}
       {activeSubTab === 'skill' && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 'var(--space-6)' }}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+            gap: '1.5rem',
+            alignItems: 'start'
+          }}
+        >
           {/* List Skills */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-            <h3 style={{ fontSize: 'var(--text-base)', fontWeight: '700', marginBottom: 'var(--space-2)' }}>
-              Daftar Keahlian Aktif
-            </h3>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
+              <h3 style={{ fontSize: '0.85rem', fontWeight: '800', color: '#000000', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                Daftar Toolkit & Keahlian Aktif
+              </h3>
+              <span style={{ fontSize: '0.72rem', color: 'var(--text-tertiary)' }}>{skills.length} Keahlian</span>
+            </div>
+
             {skills.map((skill) => (
               <div
                 key={skill.id}
                 style={{
-                  padding: 'var(--space-3) var(--space-4)',
-                  backgroundColor: 'var(--bg-elevated)',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1px solid var(--border-subtle)',
+                  padding: '0.85rem 1.25rem',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '0.85rem',
+                  border: '1px solid rgba(0, 0, 0, 0.06)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between'
                 }}
               >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-                  <Tag tone="default">{skill.group_name}</Tag>
-                  <span style={{ fontWeight: '600', fontSize: 'var(--text-sm)' }}>{skill.name}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <span
+                    style={{
+                      fontSize: '0.68rem',
+                      fontWeight: '700',
+                      padding: '0.2rem 0.55rem',
+                      borderRadius: '9999px',
+                      backgroundColor: 'var(--color-secondary-fixed)',
+                      color: '#1b1735'
+                    }}
+                  >
+                    {skill.group_name}
+                  </span>
+                  <span style={{ fontWeight: '700', fontSize: '0.85rem', color: '#000000' }}>
+                    {skill.name}
+                  </span>
                 </div>
 
-                <div style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                <div style={{ display: 'flex', gap: '0.35rem' }}>
                   <button
                     type="button"
                     onClick={() => handleEditSkill(skill)}
-                    style={{ padding: '4px', color: 'var(--text-secondary)' }}
+                    style={{
+                      padding: '0.35rem',
+                      borderRadius: '0.4rem',
+                      backgroundColor: '#f3f3f5',
+                      color: 'var(--text-secondary)',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
                     title="Edit"
                   >
-                    <Edit2 size={14} />
+                    <Edit2 size={13} />
                   </button>
                   <button
                     type="button"
                     onClick={() => handleDeleteSkill(skill.id)}
-                    style={{ padding: '4px', color: 'var(--badge-video)' }}
+                    style={{
+                      padding: '0.35rem',
+                      borderRadius: '0.4rem',
+                      backgroundColor: 'transparent',
+                      color: '#dc2626',
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
                     title="Hapus"
                   >
-                    <Trash2 size={14} />
+                    <Trash2 size={13} />
                   </button>
                 </div>
               </div>
@@ -367,25 +600,52 @@ export function TextContentAdmin({ experiences = [], skills = [], onRefresh }) {
           {/* Form Tambah/Ubah Skill */}
           <div
             style={{
-              padding: 'var(--space-5)',
-              backgroundColor: 'var(--bg-elevated)',
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)',
-              height: 'fit-content'
+              padding: '1.5rem',
+              backgroundColor: '#ffffff',
+              borderRadius: '1.25rem',
+              border: '1px solid rgba(0, 0, 0, 0.06)',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)'
             }}
           >
-            <h3 style={{ fontSize: 'var(--text-sm)', fontWeight: '700', marginBottom: 'var(--space-4)' }}>
-              {editingSkill ? 'Edit Keahlian' : 'Tambah Keahlian Baru'}
-            </h3>
-            <form onSubmit={handleSaveSkill} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem' }}>
+              <h3 style={{ fontSize: '0.85rem', fontWeight: '800', color: '#000000', margin: 0, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                {editingSkill ? 'Edit Keahlian' : 'Tambah Keahlian Baru'}
+              </h3>
+              {editingSkill && (
+                <button
+                  type="button"
+                  onClick={resetSkillForm}
+                  style={{
+                    fontSize: '0.68rem',
+                    color: 'var(--text-tertiary)',
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Batal Edit
+                </button>
+              )}
+            </div>
+
+            <form onSubmit={handleSaveSkill} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
               <div>
-                <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: '2px' }}>
-                  Kelompok Keahlian *
+                <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
+                  Kelompok Disiplin *
                 </label>
                 <select
                   value={skillGroup}
                   onChange={(e) => setSkillGroup(e.target.value)}
-                  style={{ width: '100%', padding: 'var(--space-2)', fontSize: 'var(--text-xs)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', backgroundColor: 'var(--bg-secondary)' }}
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000',
+                    outline: 'none'
+                  }}
                 >
                   <option value="Fotografi">Fotografi</option>
                   <option value="Videografi">Videografi</option>
@@ -395,28 +655,49 @@ export function TextContentAdmin({ experiences = [], skills = [], onRefresh }) {
               </div>
 
               <div>
-                <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: '2px' }}>
-                  Nama Keahlian / Kompetensi *
+                <label style={{ display: 'block', fontSize: '0.68rem', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '0.3rem' }}>
+                  Nama Toolkit / Kompetensi *
                 </label>
                 <input
                   type="text"
                   required
                   value={skillName}
                   onChange={(e) => setSkillName(e.target.value)}
-                  placeholder="e.g. Color Grading & Finishing"
-                  style={{ width: '100%', padding: 'var(--space-2)', fontSize: 'var(--text-xs)', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border-medium)', backgroundColor: 'var(--bg-secondary)' }}
+                  placeholder="Contoh: Unreal Engine 5 Spatial Lighting"
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000',
+                    outline: 'none'
+                  }}
                 />
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-2)', marginTop: 'var(--space-2)' }}>
-                {editingSkill && (
-                  <Button variant="secondary" size="sm" onClick={resetSkillForm}>
-                    Batal
-                  </Button>
-                )}
-                <Button variant="primary" size="sm" type="submit" icon={Save}>
-                  Simpan Keahlian
-                </Button>
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.5rem' }}>
+                <button
+                  type="submit"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.65rem 1.25rem',
+                    borderRadius: '0.65rem',
+                    backgroundColor: '#000000',
+                    color: '#ffffff',
+                    fontSize: 'var(--text-xs)',
+                    fontWeight: '700',
+                    border: 'none',
+                    cursor: 'pointer',
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                  }}
+                >
+                  <Save size={13} />
+                  <span>{editingSkill ? 'Simpan Keahlian' : 'Tambahkan Keahlian'}</span>
+                </button>
               </div>
             </form>
           </div>

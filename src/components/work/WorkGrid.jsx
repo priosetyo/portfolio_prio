@@ -14,188 +14,174 @@ export function WorkGrid() {
   const filteredProjects = useMemo(() => {
     if (activeCategory === 'all') return projects;
     return projects.filter((p) => {
-      if (activeCategory === 'photo' || activeCategory === 'fotografi') {
-        return p.category === 'photo' || p.category === 'fotografi';
+      const cat = p.category?.toLowerCase() || '';
+      if (activeCategory === 'fotografi' || activeCategory === 'photo') {
+        return cat.includes('photo') || cat.includes('fotografi');
       }
-      if (activeCategory === 'video' || activeCategory === 'videografi') {
-        return p.category === 'video' || p.category === 'videografi';
+      if (activeCategory === 'videografi' || activeCategory === 'video') {
+        return cat.includes('video') || cat.includes('videografi');
       }
-      if (activeCategory === 'design' || activeCategory === 'desain') {
-        return p.category === 'design' || p.category === 'desain';
+      if (activeCategory === 'desain' || activeCategory === 'design') {
+        return cat.includes('design') || cat.includes('desain');
       }
-      if (activeCategory === 'copy' || activeCategory === 'copywriting') {
-        return p.category === 'copy' || p.category === 'copywriting';
+      if (activeCategory === 'copywriting' || activeCategory === 'copy') {
+        return cat.includes('copy') || cat.includes('copywriting');
       }
-      return p.category === activeCategory;
+      return cat === activeCategory.toLowerCase();
     });
   }, [projects, activeCategory]);
 
   return (
     <section
-      id="karya"
+      id="karya-terpilih"
       style={{
+        maxWidth: '1440px',
+        margin: '0 auto',
+        padding: 'var(--space-lg) var(--margin-mobile) 0 var(--margin-mobile)',
         width: '100%',
-        backgroundColor: 'var(--color-surface-lowest)',
-        paddingTop: 'var(--space-3xl)',
-        paddingBottom: 'var(--space-3xl)'
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 'var(--space-md)'
       }}
     >
+      {/* Header Row: Title & Filter Chips */}
       <div
-        className="container"
         style={{
-          maxWidth: 'var(--max-width)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--space-2xl)'
+          justifyContent: 'space-between',
+          gap: 'var(--space-sm)'
         }}
+        className="work-gallery-header"
       >
-        {/* Section Header with Stitch Layout & Filter Chips */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            gap: 'var(--space-lg)'
-          }}
-          className="work-header"
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
-              <span
-                style={{
-                  width: '10px',
-                  height: '10px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-primary-container)',
-                  boxShadow: '0 0 10px rgba(255, 87, 26, 0.6)'
-                }}
-              />
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.75rem',
-                  fontWeight: '600',
-                  color: 'var(--color-primary)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.25em'
-                }}
-              >
-                Portofolio Kurasi
-              </span>
-            </div>
-
-            <h2
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#000000' }} />
+            <span
               style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                fontWeight: '800',
-                color: 'var(--color-on-surface)',
-                letterSpacing: '-0.02em',
-                lineHeight: 1.15,
-                margin: 0
+                fontFamily: 'var(--font-sans)',
+                fontSize: '11px',
+                fontWeight: '600',
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+                color: 'var(--color-on-surface-variant)'
               }}
             >
-              Karya Terpilih
-            </h2>
+              ARSIP TERPILIH 2023—2025
+            </span>
           </div>
 
-          {/* Filter Chips (Oval Pill Buttons) */}
-          <div>
-            <WorkFilter activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
-          </div>
+          <h2
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontSize: '40px',
+              lineHeight: '46px',
+              letterSpacing: '-0.03em',
+              fontWeight: '700',
+              color: '#000000',
+              margin: '4px 0 0 0'
+            }}
+          >
+            Eksplorasi Karya Terpilih
+          </h2>
         </div>
 
-        {/* Loading Skeleton */}
-        {loading && (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-              gap: 'var(--gutter)'
-            }}
-          >
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                style={{
-                  aspectRatio: '16/11',
-                  borderRadius: 'var(--radius-xl)',
-                  backgroundColor: 'var(--color-surface-container)',
-                  animation: 'pulse 1.5s infinite'
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && filteredProjects.length === 0 && (
-          <div
-            style={{
-              padding: 'var(--space-2xl) var(--space-md)',
-              borderRadius: 'var(--radius-xl)',
-              backgroundColor: 'var(--color-surface-container)',
-              border: '1px dashed var(--border-medium)',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 'var(--space-md)'
-            }}
-          >
-            <FolderArchive size={40} color="var(--color-outline)" />
-            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', color: 'var(--color-on-surface)' }}>
-              Belum ada karya untuk kategori ini
-            </h3>
-            <button
-              onClick={() => setActiveCategory('all')}
-              style={{
-                padding: '0.5rem 1.25rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-primary-container)',
-                color: 'var(--color-on-primary-container)',
-                fontWeight: '600',
-                fontSize: '0.875rem'
-              }}
-            >
-              Tampilkan Semua Karya
-            </button>
-          </div>
-        )}
-
-        {/* 3-Column Showcase Grid */}
-        {!loading && filteredProjects.length > 0 && (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))',
-              gap: 'var(--gutter)',
-              rowGap: 'var(--space-xl)'
-            }}
-          >
-            {filteredProjects.map((project) => (
-              <WorkTile
-                key={project.id}
-                project={project}
-                onClick={() => setActiveProjectData({ project })}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Detail Interactive Dialog Modal */}
-        <WorkDialog
-          open={Boolean(activeProjectData)}
-          onClose={() => setActiveProjectData(null)}
-          project={activeProjectData?.project}
-          frameNo={activeProjectData?.project?.year?.toString() || ''}
-        />
+        {/* Filter Chips */}
+        <div>
+          <WorkFilter activeCategory={activeCategory} onSelectCategory={setActiveCategory} />
+        </div>
       </div>
+
+      {/* Loading Skeleton */}
+      {loading && (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: 'var(--space-md)'
+          }}
+        >
+          {[1, 2, 3].map((i) => (
+            <div
+              key={i}
+              style={{
+                aspectRatio: '4/3',
+                borderRadius: 'var(--radius-xl)',
+                backgroundColor: 'var(--color-surface-container)',
+                animation: 'pulse 1.5s infinite'
+              }}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!loading && filteredProjects.length === 0 && (
+        <div
+          style={{
+            padding: 'var(--space-xl) var(--space-md)',
+            borderRadius: 'var(--radius-xl)',
+            backgroundColor: 'var(--color-surface-container-low)',
+            textAlign: 'center',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 'var(--space-sm)'
+          }}
+        >
+          <FolderArchive size={36} color="var(--color-outline)" />
+          <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '18px', color: 'var(--color-on-surface)' }}>
+            Belum ada karya untuk kategori ini
+          </h3>
+          <button
+            onClick={() => setActiveCategory('all')}
+            style={{
+              padding: '0.5rem 1.25rem',
+              borderRadius: '9999px',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              fontWeight: '600',
+              fontSize: '12px',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            Tampilkan Semua Karya
+          </button>
+        </div>
+      )}
+
+      {/* 3-Column Curated Projects Grid */}
+      {!loading && filteredProjects.length > 0 && (
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 340px), 1fr))',
+            gap: 'var(--space-md)'
+          }}
+        >
+          {filteredProjects.map((project) => (
+            <WorkTile
+              key={project.id}
+              project={project}
+              onClick={() => setActiveProjectData({ project })}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Interactive Detail Modal Dialog */}
+      <WorkDialog
+        open={Boolean(activeProjectData)}
+        onClose={() => setActiveProjectData(null)}
+        project={activeProjectData?.project}
+        frameNo={activeProjectData?.project?.year?.toString() || ''}
+      />
 
       <style>{`
         @media (min-width: 768px) {
-          .work-header {
+          .work-gallery-header {
             flex-direction: row !important;
             align-items: flex-end !important;
           }

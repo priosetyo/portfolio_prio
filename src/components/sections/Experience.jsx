@@ -1,237 +1,182 @@
 import React from 'react';
 
-export function Experience({ experiences = [], loading }) {
-  // If Supabase experiences are loaded and have different structure, normalize them
-  const items = experiences.map((exp, idx) => {
-    return {
-      id: exp.id || `exp-${idx}`,
-      period: exp.period || (exp.start_date ? `${exp.start_date} — ${exp.end_date || 'Sekarang'}` : '2024'),
-      location: exp.location || 'Jakarta',
-      title: exp.role && exp.org ? `${exp.role} — ${exp.org}` : exp.role || exp.title || 'Creative Director',
-      description:
-        exp.description ||
-        (Array.isArray(exp.bullets) ? exp.bullets.join(' ') : 'Memimpin arahan visual dan arsitektur desain komprehensif.'),
-      tag: exp.tag || (exp.type === 'work' ? 'Kepemimpinan' : 'Pendidikan'),
-      colorTone: exp.colorTone || (idx === 0 ? 'primary' : idx === 1 ? 'secondary' : 'tertiary')
-    };
-  });
+export function Experience({ experiences = [] }) {
+  // Curated default experiences from Stitch design
+  const defaultExps = [
+    {
+      id: 'exp-1',
+      period: '2022 — SEKARANG',
+      role: 'Executive Creative Director',
+      org: 'Studio Kinetika Nusantara',
+      desc: 'Memimpin 28 desainer multidisiplin, produser 3D, dan sinematografer menangani portofolio enterprise APAC.'
+    },
+    {
+      id: 'exp-2',
+      period: '2019 — 2022',
+      role: 'Head of Brand Architecture',
+      org: 'Omni Creative Network',
+      desc: 'Merancang ulang sistem visual bagi 14 rintisan teknologi unicorn dan platform fintech multinasional.'
+    },
+    {
+      id: 'exp-3',
+      period: '2015 — 2019',
+      role: 'Senior Art Director',
+      org: 'Vanguard Media Tokyo',
+      desc: 'Mengarahkan kampanye TVC global, instalasi imersif, dan identitas tipografi kontemporer.'
+    }
+  ];
+
+  const items = experiences && experiences.length > 0
+    ? experiences.map((e, idx) => ({
+        id: e.id || `exp-${idx}`,
+        period: `${e.start_date || '2020'} — ${e.end_date || 'SEKARANG'}`,
+        role: e.role,
+        org: e.org,
+        desc: Array.isArray(e.bullets) && e.bullets.length > 0 ? e.bullets.join('. ') : (e.bullets || defaultExps[idx]?.desc || '')
+      }))
+    : defaultExps;
 
   return (
     <section
-      id="pengalaman"
+      id="pengalaman-section"
       style={{
-        width: '100%',
-        backgroundColor: 'var(--color-surface-low)',
-        paddingTop: 'var(--space-3xl)',
-        paddingBottom: 'var(--space-3xl)'
+        maxWidth: '1440px',
+        margin: '0 auto',
+        padding: 'var(--space-lg) var(--margin-mobile) 0 var(--margin-mobile)',
+        width: '100%'
       }}
     >
       <div
-        className="container"
         style={{
-          maxWidth: 'var(--max-width)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--space-2xl)'
+          padding: 'var(--space-lg)',
+          borderRadius: 'var(--radius-xl)',
+          backgroundColor: 'var(--color-surface-container-low)',
+          boxShadow: 'var(--shadow-sm)',
+          gap: 'var(--space-md)'
         }}
       >
-        {/* Section Title & Narrative */}
+        {/* Header */}
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
+            alignItems: 'center',
             justifyContent: 'space-between',
-            gap: 'var(--space-md)'
+            gap: 'var(--space-xs)',
+            flexWrap: 'wrap'
           }}
-          className="experience-header"
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)' }}>
+          <div>
             <span
               style={{
                 fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
+                fontSize: '11px',
                 fontWeight: '600',
-                color: 'var(--color-primary)',
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                letterSpacing: '0.25em'
+                color: 'var(--color-on-surface-variant)'
               }}
             >
-              Jejak Langkah
+              JEJAK KARIER &amp; PERJALANAN
             </span>
-            <h2
+            <h3
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-                fontWeight: '800',
-                color: 'var(--color-on-surface)',
+                fontSize: '26px',
+                lineHeight: '32px',
                 letterSpacing: '-0.02em',
-                lineHeight: 1.15,
-                margin: 0
+                fontWeight: '700',
+                color: 'var(--color-on-surface)',
+                margin: '4px 0 0 0'
               }}
             >
-              Pengalaman Kerja &amp; Kolaborasi
-            </h2>
+              Kepemimpinan Kreatif Terpilih
+            </h3>
           </div>
 
-          <p
+          <span
             style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '1rem',
-              color: 'var(--color-on-surface-variant)',
-              maxWidth: '28rem',
-              lineHeight: 1.6,
-              margin: 0
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              backgroundColor: 'var(--color-surface-container-highest)',
+              color: 'var(--color-on-surface)',
+              fontSize: '11px',
+              fontWeight: '600',
+              letterSpacing: '0.08em'
             }}
           >
-            Lebih dari satu dekade memandu visi artistik untuk startup unicorn, agensi periklanan multinasional, dan institusi budaya global.
-          </p>
+            2015 — SEKARANG
+          </span>
         </div>
 
-        {/* Experience Items List */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
-          {items.map((item, index) => {
-            const periodColor =
-              item.colorTone === 'primary'
-                ? 'var(--color-primary)'
-                : item.colorTone === 'secondary'
-                ? 'var(--color-secondary)'
-                : 'var(--color-tertiary)';
-
-            return (
-              <div
-                key={item.id}
-                className="stitch-exp-card group"
+        {/* 3-Column Experience Grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: 'var(--space-md)'
+          }}
+        >
+          {items.map((item) => (
+            <div
+              key={item.id}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                padding: 'var(--space-md)',
+                borderRadius: '1rem',
+                backgroundColor: 'var(--color-surface-container-lowest)',
+                boxShadow: 'var(--shadow-sm)',
+                transition: 'transform 200ms ease'
+              }}
+            >
+              <span
                 style={{
-                  padding: 'clamp(1.5rem, 3.5vw, 2.5rem)',
-                  borderRadius: 'var(--radius-xl)',
-                  backgroundColor: 'var(--color-surface-container)',
-                  boxShadow: 'var(--shadow-sm)',
-                  border: '1px solid rgba(230, 190, 178, 0.06)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: 'var(--space-lg)',
-                  transition: 'all var(--transition-fast)'
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-secondary)'
                 }}
               >
-                {/* Column 1: Period & Location (25% on desktop) */}
-                <div className="stitch-exp-col-1" style={{ display: 'flex', flexDirection: 'column' }}>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '0.875rem',
-                      fontWeight: '700',
-                      color: periodColor
-                    }}
-                  >
-                    {item.period}
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '0.6875rem',
-                      color: 'var(--color-outline)',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                      marginTop: '0.2rem'
-                    }}
-                  >
-                    {item.location}
-                  </span>
-                </div>
+                {item.period}
+              </span>
 
-                {/* Column 2: Role & Narrative (50% on desktop) */}
-                <div
-                  className="stitch-exp-col-2"
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--space-xs)'
-                  }}
-                >
-                  <h3
-                    className="stitch-exp-title"
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '1.25rem',
-                      fontWeight: '700',
-                      color: 'var(--color-on-surface)',
-                      transition: 'color var(--transition-fast)',
-                      margin: 0
-                    }}
-                  >
-                    {item.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '0.875rem',
-                      color: 'var(--color-on-surface-variant)',
-                      lineHeight: 1.6,
-                      margin: 0
-                    }}
-                  >
-                    {item.description}
-                  </p>
-                </div>
+              <h4
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '20px',
+                  lineHeight: '26px',
+                  letterSpacing: '-0.01em',
+                  fontWeight: '600',
+                  color: 'var(--color-on-surface)',
+                  margin: '4px 0 0 0'
+                }}
+              >
+                {item.role}
+              </h4>
 
-                {/* Column 3: Tag / Domain Badge (25% on desktop) */}
-                <div className="stitch-exp-col-3" style={{ display: 'flex' }}>
-                  <span
-                    style={{
-                      padding: '0.35rem 1rem',
-                      borderRadius: 'var(--radius-full)',
-                      backgroundColor: 'var(--color-surface-lowest)',
-                      color:
-                        item.colorTone === 'secondary'
-                          ? 'var(--color-secondary)'
-                          : 'var(--color-on-surface-variant)',
-                      fontFamily: 'var(--font-sans)',
-                      fontSize: '0.6875rem',
-                      fontWeight: '600',
-                      border: '1px solid rgba(230, 190, 178, 0.08)',
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    {item.tag}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
+              <span style={{ fontSize: '12px', color: 'var(--color-on-surface-variant)', marginTop: '2px' }}>
+                {item.org}
+              </span>
+
+              <p
+                style={{
+                  fontSize: '13px',
+                  lineHeight: '18px',
+                  color: 'var(--color-on-surface-variant)',
+                  marginTop: '8px',
+                  margin: '8px 0 0 0'
+                }}
+              >
+                {item.desc}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
-
-      <style>{`
-        @media (min-width: 768px) {
-          .experience-header {
-            flex-direction: row !important;
-            align-items: flex-end !important;
-          }
-        }
-        @media (min-width: 1024px) {
-          .stitch-exp-card {
-            flex-direction: row !important;
-            align-items: center !important;
-            justify-content: space-between !important;
-          }
-          .stitch-exp-col-1 {
-            width: 25% !important;
-          }
-          .stitch-exp-col-2 {
-            width: 50% !important;
-          }
-          .stitch-exp-col-3 {
-            width: 25% !important;
-            justify-content: flex-end !important;
-          }
-        }
-        .stitch-exp-card:hover {
-          background-color: var(--color-surface-high) !important;
-        }
-        .stitch-exp-card:hover .stitch-exp-title {
-          color: var(--color-primary) !important;
-        }
-      `}</style>
     </section>
   );
 }

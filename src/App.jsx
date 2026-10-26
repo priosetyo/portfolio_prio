@@ -2,15 +2,15 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useSiteContent } from './hooks/useSiteContent';
 import { Navbar } from './components/sections/Navbar';
 import { Hero } from './components/sections/Hero';
-import { About } from './components/sections/About';
 import { Skills } from './components/sections/Skills';
 import { WorkGrid } from './components/work/WorkGrid';
 import { Experience } from './components/sections/Experience';
 import { Contact } from './components/sections/Contact';
 import { Footer } from './components/sections/Footer';
+import { FilosofiDialog } from './components/sections/FilosofiDialog';
 import { AlertCircle, RefreshCw, Loader2 } from 'lucide-react';
 
-// Code splitting rute admin (Lazy Loading untuk optimasi performa awal)
+// Code splitting rute admin
 const AdminPage = lazy(() =>
   import('./components/admin/AdminPage').then((module) => ({ default: module.AdminPage }))
 );
@@ -24,13 +24,13 @@ function AdminLoadingFallback() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'var(--bg-primary)',
-        color: 'var(--text-primary)',
-        gap: 'var(--space-3)'
+        backgroundColor: '#0e0e12',
+        color: '#ffffff',
+        gap: 'var(--space-sm)'
       }}
     >
-      <Loader2 size={32} style={{ animation: 'spin 1s linear infinite', color: 'var(--accent-highlight)' }} />
-      <span style={{ fontSize: 'var(--text-sm)', fontWeight: '600' }}>Memuat Admin Dashboard...</span>
+      <Loader2 size={32} style={{ animation: 'spin 1s linear infinite', color: '#ff571a' }} />
+      <span style={{ fontSize: '13px', fontWeight: '600' }}>Memuat Atelier CMS...</span>
       <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
@@ -43,8 +43,9 @@ function AdminLoadingFallback() {
 
 export default function App() {
   const [route, setRoute] = useState(window.location.pathname);
+  const [isFilosofiOpen, setIsFilosofiOpen] = useState(false);
 
-  // Listener untuk navigasi browser back/forward
+  // Listener untuk navigasi browser popstate
   useEffect(() => {
     const handlePopState = () => setRoute(window.location.pathname);
     window.addEventListener('popstate', handlePopState);
@@ -66,7 +67,7 @@ export default function App() {
     refetch
   } = useSiteContent();
 
-  // RUTE KHUSUS ADMIN (/admin) dengan Suspense
+  // RUTE KHUSUS ADMIN (/admin)
   if (route.startsWith('/admin')) {
     return (
       <Suspense fallback={<AdminLoadingFallback />}>
@@ -77,39 +78,51 @@ export default function App() {
 
   // RUTE PUBLIK UTAMA (/)
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Aksesibilitas: Skip link untuk navigasi keyboard & pembaca layar */}
+    <div
+      style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: 'var(--color-surface)',
+        color: 'var(--color-on-surface)'
+      }}
+    >
+      {/* Skip link untuk aksesibilitas */}
       <a href="#hero" className="skip-link">
         Loncat ke Konten Utama
       </a>
 
-      {/* Sticky Glassmorphic Navbar */}
-      <Navbar siteName={settings?.name || 'Prio Setyo'} />
+      {/* Sticky Top Navbar */}
+      <Navbar
+        siteName={settings?.name || 'Prio Setyo'}
+        onOpenFilosofi={() => setIsFilosofiOpen(true)}
+      />
 
-      {/* Jaringan Error Notification (Graceful Degradation Banner) */}
+      {/* Graceful Degradation Banner if Supabase connection is offline */}
       {error && (
         <div
           style={{
-            backgroundColor: 'var(--badge-video-bg)',
-            borderBottom: '1px solid var(--badge-video)',
-            padding: 'var(--space-3) var(--space-4)',
-            color: 'var(--badge-video)'
+            backgroundColor: 'var(--color-secondary-container)',
+            borderBottom: '1px solid var(--color-outline-variant)',
+            padding: '0.5rem 1rem',
+            color: 'var(--color-on-secondary-fixed)'
           }}
         >
           <div
-            className="container"
             style={{
+              maxWidth: '1440px',
+              margin: '0 auto',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              fontSize: 'var(--text-xs)',
+              fontSize: '12px',
               fontWeight: '500'
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-              <AlertCircle size={16} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <AlertCircle size={15} />
               <span>
-                Sedang menggunakan salinan lokal (Supabase terputus / belum dikonfigurasi sepenuhnya).
+                Sedang menggunakan salinan arsip lokal (Koneksi Supabase terputus / simulasi).
               </span>
             </div>
             <button
@@ -117,9 +130,12 @@ export default function App() {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.3rem',
+                gap: '4px',
                 textDecoration: 'underline',
-                fontWeight: '600'
+                fontWeight: '600',
+                border: 'none',
+                background: 'none',
+                cursor: 'pointer'
               }}
             >
               <RefreshCw size={12} />
@@ -129,31 +145,35 @@ export default function App() {
         </div>
       )}
 
-      {/* Main Public Content Sections */}
-      <main style={{ flex: 1 }}>
-        {/* 1. Hero Section (F01: Responsive on 360px without initial scroll) */}
-        <Hero settings={settings} loading={loading} />
+      {/* Main Public Content (Flow matching new Stitch Design) */}
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 'var(--space-lg)' }}>
+        {/* 1. Hero Section: Statement Bar + Bento Grid (Rail, Lilac Profile, Showreel, 3 Metric Cards) */}
+        <Hero
+          settings={settings}
+          loading={loading}
+          onOpenFilosofi={() => setIsFilosofiOpen(true)}
+        />
 
-        {/* 2. About Section (F02: Dynamic profil dari site_settings) */}
-        <About settings={settings} loading={loading} />
-
-        {/* 3. Skills Section (F03: Dynamic kelompok keahlian dari skills) */}
+        {/* 2. Toolkit & Creative Engine (Obsidian Solid Card) */}
         <Skills groupedSkills={groupedSkills} loading={loading} />
 
-        {/* 4. Work Section (F04: Galeri interaktif & filter kategori) */}
+        {/* 3. Extended Curated Work Gallery (Filter Chips & 3-Column 4/3 Grid) */}
         <WorkGrid />
 
-        {/* 5. Experience Section (F06: Garis waktu karir dari experiences) */}
+        {/* 4. Experience Timeline Strip (3 White Cards) */}
         <Experience experiences={experiences} loading={loading} />
 
-        {/* 6. Contact Section (F07: Baris salin cepat & unduh CV PDF) */}
+        {/* 5. Ultimate Call to Action Banner (Black Obsidian with Lilac Pill CTA) */}
         <Contact settings={settings} loading={loading} />
       </main>
 
-      {/* Footer dengan Link Cepat ke Admin Panel */}
-      <Footer
-        siteName={settings?.name || 'Prio Setyo'}
-        onNavigateAdmin={() => navigateTo('/admin')}
+      {/* Footer */}
+      <Footer settings={settings} />
+
+      {/* Interactive Filosofi Dialog Modal */}
+      <FilosofiDialog
+        isOpen={isFilosofiOpen}
+        onClose={() => setIsFilosofiOpen(false)}
       />
     </div>
   );

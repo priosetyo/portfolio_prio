@@ -138,23 +138,25 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
       {/* Upload Buttons & Options */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
         <label
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '0.4rem',
-            padding: '0.6rem 1.2rem',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--accent-primary)',
-            color: 'var(--accent-primary-text)',
-            fontSize: 'var(--text-sm)',
-            fontWeight: '600',
+            gap: '0.45rem',
+            padding: '0.6rem 1.25rem',
+            borderRadius: '0.75rem',
+            backgroundColor: '#000000',
+            color: '#ffffff',
+            fontSize: 'var(--text-xs)',
+            fontWeight: '700',
             cursor: uploading ? 'not-allowed' : 'pointer',
-            opacity: uploading ? 0.7 : 1
+            opacity: uploading ? 0.7 : 1,
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+            transition: 'opacity 0.15s ease'
           }}
         >
-          {uploading ? <Loader2 size={16} className="spin" /> : <Upload size={16} />}
+          {uploading ? <Loader2 size={15} className="spin" /> : <Upload size={15} />}
           <span>{uploading ? progressMsg || 'Mengunggah...' : 'Pilih Foto / Video'}</span>
           <input
             type="file"
@@ -165,28 +167,40 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
           />
         </label>
 
-        <Button
-          variant="secondary"
-          size="sm"
+        <button
+          type="button"
           onClick={() => setShowEmbedForm(!showEmbedForm)}
-          icon={Link}
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+            padding: '0.6rem 1rem',
+            borderRadius: '0.75rem',
+            backgroundColor: '#f3f3f5',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
+            color: '#1b1735',
+            fontSize: 'var(--text-xs)',
+            fontWeight: '600',
+            cursor: 'pointer'
+          }}
         >
-          {showEmbedForm ? 'Tutup Input Embed' : 'Tautkan YouTube / Vimeo'}
-        </Button>
+          <Link size={14} />
+          <span>{showEmbedForm ? 'Tutup Input Embed' : 'Tautkan YouTube / Vimeo'}</span>
+        </button>
       </div>
 
       {/* Error Banner */}
       {errorMsg && (
         <div
           style={{
-            padding: 'var(--space-3)',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--badge-video-bg)',
-            color: 'var(--badge-video)',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.75rem',
+            backgroundColor: '#fee2e2',
+            color: '#dc2626',
             fontSize: 'var(--text-xs)',
             display: 'flex',
             alignItems: 'center',
-            gap: 'var(--space-2)'
+            gap: '0.5rem'
           }}
         >
           <AlertCircle size={14} />
@@ -198,16 +212,16 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
       {showEmbedForm && (
         <div
           style={{
-            padding: 'var(--space-4)',
-            backgroundColor: 'var(--bg-secondary)',
-            borderRadius: 'var(--radius-md)',
-            border: '1px solid var(--border-subtle)',
+            padding: '1.25rem',
+            backgroundColor: '#f9f9fb',
+            borderRadius: '1rem',
+            border: '1px solid rgba(0, 0, 0, 0.08)',
             display: 'flex',
             flexDirection: 'column',
-            gap: 'var(--space-3)'
+            gap: '0.75rem'
           }}
         >
-          <div style={{ fontWeight: '600', fontSize: 'var(--text-xs)', textTransform: 'uppercase' }}>
+          <div style={{ fontWeight: '700', fontSize: 'var(--text-xs)', textTransform: 'uppercase', color: '#000000', letterSpacing: '0.04em' }}>
             Tautan Video Eksternal (YouTube / Vimeo)
           </div>
           <input
@@ -216,23 +230,29 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
             value={embedUrl}
             onChange={(e) => setEmbedUrl(e.target.value)}
             style={{
-              padding: 'var(--space-2) var(--space-3)',
-              borderRadius: 'var(--radius-sm)',
-              border: '1px solid var(--border-medium)',
-              fontSize: 'var(--text-sm)'
+              padding: '0.65rem 0.85rem',
+              borderRadius: '0.65rem',
+              border: '1px solid rgba(0, 0, 0, 0.08)',
+              backgroundColor: '#ffffff',
+              fontSize: 'var(--text-xs)',
+              color: '#000000',
+              outline: 'none'
             }}
           />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-2)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
             <input
               type="text"
               placeholder="Alt text / Judul video..."
               value={embedAlt}
               onChange={(e) => setEmbedAlt(e.target.value)}
               style={{
-                padding: 'var(--space-2) var(--space-3)',
-                borderRadius: 'var(--radius-sm)',
-                border: '1px solid var(--border-medium)',
-                fontSize: 'var(--text-xs)'
+                padding: '0.65rem 0.85rem',
+                borderRadius: '0.65rem',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                backgroundColor: '#ffffff',
+                fontSize: 'var(--text-xs)',
+                color: '#000000',
+                outline: 'none'
               }}
             />
             <input
@@ -241,31 +261,46 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
               value={embedDuration}
               onChange={(e) => setEmbedDuration(e.target.value)}
               style={{
-                padding: 'var(--space-2) var(--space-3)',
-                borderRadius: 'var(--radius-sm)',
-                border: '1px solid var(--border-medium)',
-                fontSize: 'var(--text-xs)'
+                padding: '0.65rem 0.85rem',
+                borderRadius: '0.65rem',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                backgroundColor: '#ffffff',
+                fontSize: 'var(--text-xs)',
+                color: '#000000',
+                outline: 'none'
               }}
             />
           </div>
           <div>
-            <Button size="sm" variant="primary" onClick={handleAddEmbed}>
+            <button
+              type="button"
+              onClick={handleAddEmbed}
+              style={{
+                padding: '0.5rem 1rem',
+                borderRadius: '0.65rem',
+                backgroundColor: '#000000',
+                color: '#ffffff',
+                fontSize: 'var(--text-xs)',
+                fontWeight: '700',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+            >
               Simpan Tautan Video
-            </Button>
+            </button>
           </div>
         </div>
       )}
 
       {/* Daftar Media Terpasang */}
       {mediaList.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: '600', color: 'var(--text-tertiary)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
             MEDIA TERKAIT ({mediaList.length}) — Teks Alt wajib diisi untuk kepatuhan aksesibilitas:
           </div>
 
           {mediaList.map((media, idx) => {
             const isImg = media.kind === 'image';
-            const isVid = media.kind === 'video' || media.kind === 'embed';
             const previewUrl = media.thumb_path || media.storage_path || media.poster_path;
             const hasAlt = Boolean(media.alt_text?.trim());
 
@@ -275,11 +310,11 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 'var(--space-3)',
-                  padding: 'var(--space-3)',
-                  borderRadius: 'var(--radius-md)',
-                  backgroundColor: 'var(--bg-secondary)',
-                  border: `1px solid ${hasAlt ? 'var(--border-subtle)' : 'var(--badge-video)'}`
+                  gap: '0.75rem',
+                  padding: '0.75rem',
+                  borderRadius: '0.85rem',
+                  backgroundColor: '#f9f9fb',
+                  border: `1px solid ${hasAlt ? 'rgba(0, 0, 0, 0.06)' : '#dc2626'}`
                 }}
               >
                 {/* Thumbnail */}
@@ -287,13 +322,14 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                   style={{
                     width: '64px',
                     height: '48px',
-                    borderRadius: 'var(--radius-sm)',
-                    backgroundColor: '#000',
+                    borderRadius: '0.5rem',
+                    backgroundColor: '#f3f3f5',
                     overflow: 'hidden',
                     flexShrink: 0,
                     display: 'flex',
                     alignItems: 'center',
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    border: '1px solid rgba(0, 0, 0, 0.06)'
                   }}
                 >
                   {previewUrl ? (
@@ -303,18 +339,18 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   ) : (
-                    <Video size={18} color="#fff" />
+                    <Video size={18} color="#5b5866" />
                   )}
                 </div>
 
                 {/* Alt Text Input */}
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', marginBottom: '4px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '4px' }}>
                     <Tag tone={isImg ? 'photo' : 'video'}>
                       {media.kind.toUpperCase()} #{idx + 1}
                     </Tag>
                     {!hasAlt && (
-                      <span style={{ fontSize: 'var(--text-xs)', color: 'var(--badge-video)', fontWeight: '600' }}>
+                      <span style={{ fontSize: '0.68rem', color: '#dc2626', fontWeight: '700' }}>
                         *Wajib isi Alt Text
                       </span>
                     )}
@@ -327,12 +363,13 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                     placeholder="Deskripsi gambar/video untuk pembaca layar (Alt text)..."
                     style={{
                       width: '100%',
-                      padding: '0.35rem 0.6rem',
+                      padding: '0.45rem 0.65rem',
                       fontSize: 'var(--text-xs)',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--border-medium)',
-                      backgroundColor: 'var(--bg-elevated)',
-                      color: 'var(--text-primary)'
+                      borderRadius: '0.5rem',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      backgroundColor: '#ffffff',
+                      color: 'var(--text-primary)',
+                      outline: 'none'
                     }}
                   />
                 </div>
@@ -345,12 +382,15 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                   style={{
                     width: '32px',
                     height: '32px',
-                    borderRadius: 'var(--radius-sm)',
-                    color: 'var(--badge-video)',
+                    borderRadius: '0.5rem',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: '#dc2626',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    flexShrink: 0
+                    flexShrink: 0,
+                    cursor: 'pointer'
                   }}
                 >
                   <Trash2 size={16} />

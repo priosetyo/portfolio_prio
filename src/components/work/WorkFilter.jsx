@@ -1,11 +1,11 @@
 import React from 'react';
 
 export const CATEGORIES = [
-  { key: 'all', label: 'Semua' },
-  { key: 'photo', label: 'Fotografi' },
-  { key: 'video', label: 'Videografi' },
-  { key: 'design', label: 'Desain UI/UX' },
-  { key: 'copy', label: 'Copywriting' }
+  { key: 'all', label: 'Semua Karya' },
+  { key: 'fotografi', label: 'Fotografi' },
+  { key: 'videografi', label: 'Videografi' },
+  { key: 'desain', label: 'Desain' },
+  { key: 'copywriting', label: 'Copywriting' }
 ];
 
 export function WorkFilter({ activeCategory, onSelectCategory }) {
@@ -17,50 +17,48 @@ export function WorkFilter({ activeCategory, onSelectCategory }) {
         display: 'inline-flex',
         flexWrap: 'wrap',
         alignItems: 'center',
-        gap: 'var(--space-xs)',
-        padding: 'var(--space-xs)',
-        borderRadius: 'var(--radius-full)',
-        backgroundColor: 'rgba(42, 41, 46, 0.6)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        border: '1px solid rgba(230, 190, 178, 0.08)'
+        gap: '8px',
+        padding: '4px',
+        borderRadius: '9999px',
+        backgroundColor: 'var(--color-surface-container-low)'
       }}
     >
       {CATEGORIES.map((cat) => {
         const isActive =
           activeCategory === cat.key ||
-          (activeCategory === 'desain' && cat.key === 'design') ||
-          (activeCategory === 'fotografi' && cat.key === 'photo') ||
-          (activeCategory === 'videografi' && cat.key === 'video') ||
-          (activeCategory === 'copywriting' && cat.key === 'copy');
+          (activeCategory === 'all' && cat.key === 'all') ||
+          (activeCategory === 'photo' && cat.key === 'fotografi') ||
+          (activeCategory === 'video' && cat.key === 'videografi') ||
+          (activeCategory === 'design' && cat.key === 'desain') ||
+          (activeCategory === 'copy' && cat.key === 'copywriting');
 
         return (
           <button
             key={cat.key}
+            type="button"
             role="tab"
             aria-selected={isActive}
             onClick={() => onSelectCategory(cat.key)}
             style={{
-              padding: '0.4rem 1.25rem',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: isActive ? 'var(--color-primary-container)' : 'transparent',
-              color: isActive ? 'var(--color-on-primary-container)' : 'var(--color-on-surface-variant)',
+              padding: '0.375rem 1.25rem',
+              borderRadius: '9999px',
+              backgroundColor: isActive ? '#000000' : 'transparent',
+              color: isActive ? '#ffffff' : 'var(--color-on-surface-variant)',
               fontFamily: 'var(--font-sans)',
-              fontSize: '0.75rem',
-              fontWeight: isActive ? '700' : '500',
+              fontSize: '12px',
+              fontWeight: isActive ? '600' : '500',
+              border: 'none',
+              cursor: 'pointer',
               boxShadow: isActive ? 'var(--shadow-sm)' : 'none',
-              transition: 'all var(--transition-fast)',
-              cursor: 'pointer'
+              transition: 'all 150ms ease'
             }}
             onMouseEnter={(e) => {
               if (!isActive) {
-                e.currentTarget.style.backgroundColor = 'var(--color-surface-container)';
                 e.currentTarget.style.color = 'var(--color-on-surface)';
               }
             }}
             onMouseLeave={(e) => {
               if (!isActive) {
-                e.currentTarget.style.backgroundColor = 'transparent';
                 e.currentTarget.style.color = 'var(--color-on-surface-variant)';
               }
             }}

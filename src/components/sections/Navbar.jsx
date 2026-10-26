@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ArrowUpRight, Menu, X, Sparkles } from 'lucide-react';
-import { useTheme } from '../../hooks/useTheme';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 
-export function Navbar({ siteName = 'Prio Setyo' }) {
-  const { isDark, toggleTheme } = useTheme();
+export function Navbar({ siteName = 'Prio Setyo', onOpenFilosofi }) {
   const [activeSection, setActiveSection] = useState('karya');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,13 +10,12 @@ export function Navbar({ siteName = 'Prio Setyo' }) {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Simple active section spy
-      const sections = ['tentang', 'keahlian', 'karya', 'pengalaman', 'kontak'];
+      const sections = ['karya-terpilih', 'toolkit-section', 'pengalaman-section', 'mulai-diskusi'];
       for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 180 && rect.bottom >= 180) {
+          if (rect.top <= 200 && rect.bottom >= 200) {
             setActiveSection(id);
             break;
           }
@@ -30,19 +27,20 @@ export function Navbar({ siteName = 'Prio Setyo' }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-    { id: 'tentang', label: 'Tentang', href: '#tentang' },
-    { id: 'keahlian', label: 'Keahlian', href: '#keahlian' },
-    { id: 'karya', label: 'Karya', href: '#karya' },
-    { id: 'pengalaman', label: 'Pengalaman', href: '#pengalaman' },
-    { id: 'kontak', label: 'Kontak', href: '#kontak' }
-  ];
-
-  const handleLinkClick = (e, href, id) => {
+  const handleNavClick = (e, targetId) => {
     e.preventDefault();
     setMobileMenuOpen(false);
-    setActiveSection(id);
-    const target = document.querySelector(href);
+
+    if (targetId === 'filosofi') {
+      if (onOpenFilosofi) onOpenFilosofi();
+      else {
+        const dialog = document.getElementById('dialog-filosofi');
+        if (dialog) dialog.showModal();
+      }
+      return;
+    }
+
+    const target = document.getElementById(targetId);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
     }
@@ -56,25 +54,27 @@ export function Navbar({ siteName = 'Prio Setyo' }) {
         left: 0,
         right: 0,
         zIndex: 50,
-        backgroundColor: isScrolled ? 'rgba(19, 19, 23, 0.88)' : 'rgba(19, 19, 23, 0.75)',
+        backgroundColor: 'rgba(249, 249, 251, 0.85)',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
-        boxShadow: isScrolled ? '0 1px 8px rgba(0, 0, 0, 0.25)' : '0 1px 8px rgba(0, 0, 0, 0.04)',
-        borderBottom: '1px solid rgba(230, 190, 178, 0.08)',
+        boxShadow: isScrolled ? '0 1px 8px rgba(0, 0, 0, 0.05)' : '0 1px 8px rgba(0, 0, 0, 0.02)',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.04)',
         transition: 'all 250ms ease'
       }}
     >
       <div
-        className="container"
         style={{
           height: '5rem', /* 80px */
+          maxWidth: '1440px',
+          margin: '0 auto',
+          padding: '0 var(--margin-mobile)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: 'var(--gutter)'
+          gap: 'var(--space-md)'
         }}
       >
-        {/* Brand Logo */}
+        {/* Left: Brand & Status Tag */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
           <a
             href="#"
@@ -82,245 +82,281 @@ export function Navbar({ siteName = 'Prio Setyo' }) {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
+            style={{ display: 'flex', flexDirection: 'column', textDecoration: 'none' }}
+          >
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '11px',
+                fontWeight: '600',
+                letterSpacing: '0.08em',
+                color: 'var(--color-on-surface-variant)',
+                textTransform: 'uppercase'
+              }}
+            >
+              DIRECTOR © 2025
+            </span>
+          </a>
+
+          <div
+            className="hide-mobile"
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 'var(--space-sm)',
-              textDecoration: 'none'
+              gap: 'var(--space-xs)',
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              backgroundColor: 'var(--color-surface-container-low)',
+              color: 'var(--color-on-surface)'
             }}
-            className="brand-group"
           >
-            <div
-              style={{
-                width: '2.25rem',
-                height: '2.25rem',
-                borderRadius: 'var(--radius-full)',
-                backgroundColor: 'var(--color-surface-high)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                transition: 'all var(--transition-fast)'
-              }}
-              className="brand-avatar"
-            >
-              <span
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '0.875rem',
-                  fontWeight: '700',
-                  color: 'var(--color-primary)',
-                  transition: 'color var(--transition-fast)'
-                }}
-                className="brand-avatar-text"
-              >
-                PS
-              </span>
-            </div>
             <span
               style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: '1.125rem',
-                fontWeight: '700',
-                letterSpacing: '-0.025em',
-                color: 'var(--color-on-surface)'
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: '#10b981',
+                boxShadow: '0 0 8px #10b981',
+                animation: 'pulse 2s infinite'
+              }}
+            />
+            <span
+              style={{
+                fontFamily: 'var(--font-sans)',
+                fontSize: '11px',
+                fontWeight: '600',
+                letterSpacing: '0.08em',
+                color: 'var(--color-on-surface-variant)',
+                textTransform: 'uppercase'
               }}
             >
-              {siteName}
+              AVAILABLE FOR Q2 PROJECTS
             </span>
-          </a>
+          </div>
         </div>
 
-        {/* Center Floating Pill Nav (Desktop) */}
+        {/* Center: Clean Floating Pill Navigation */}
         <nav
           className="desktop-nav"
           style={{
             display: 'none',
             alignItems: 'center',
-            gap: 'var(--space-xs)',
-            padding: 'var(--space-xs)',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'rgba(27, 27, 31, 0.7)',
-            backdropFilter: 'blur(12px)',
-            border: '1px solid rgba(230, 190, 178, 0.08)'
+            gap: '4px',
+            padding: '4px',
+            borderRadius: '9999px',
+            backgroundColor: 'var(--color-surface-container-low)'
           }}
         >
-          {navLinks.map((link) => {
-            const isActive = activeSection === link.id;
-            return (
-              <a
-                key={link.id}
-                href={link.href}
-                onClick={(e) => handleLinkClick(e, link.href, link.id)}
-                style={{
-                  padding: '0.5rem 1rem',
-                  borderRadius: 'var(--radius-full)',
-                  fontSize: '0.875rem',
-                  fontWeight: isActive ? '600' : '500',
-                  color: isActive ? 'var(--color-on-surface)' : 'var(--color-on-surface-variant)',
-                  backgroundColor: isActive ? 'var(--color-surface-high)' : 'transparent',
-                  transition: 'all var(--transition-fast)',
-                  textDecoration: 'none'
-                }}
-                onMouseEnter={(e) => {
-                  if (!isActive) e.currentTarget.style.color = 'var(--color-on-surface)';
-                }}
-                onMouseLeave={(e) => {
-                  if (!isActive) e.currentTarget.style.color = 'var(--color-on-surface-variant)';
-                }}
-              >
-                {link.label}
-              </a>
-            );
-          })}
-        </nav>
-
-        {/* Right Action & CTA */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)' }}>
           <a
-            href="#kontak"
-            onClick={(e) => handleLinkClick(e, '#kontak', 'kontak')}
-            className="desktop-nav"
+            href="#karya-terpilih"
+            onClick={(e) => handleNavClick(e, 'karya-terpilih')}
             style={{
-              display: 'none',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '0.5rem 1.5rem',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-primary-container)',
-              color: 'var(--color-on-primary-container)',
-              fontSize: '0.875rem',
+              padding: '0.375rem 1.25rem',
+              borderRadius: '9999px',
+              fontSize: '12px',
               fontWeight: '600',
-              letterSpacing: '0.04em',
-              boxShadow: '0 8px 24px -4px rgba(255, 87, 26, 0.45)',
-              transition: 'all var(--transition-fast)',
-              textDecoration: 'none'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--color-secondary-container)';
-              e.currentTarget.style.transform = 'scale(1.02)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'var(--color-primary-container)';
-              e.currentTarget.style.transform = 'scale(1)';
+              color: 'var(--color-on-surface)',
+              backgroundColor: 'var(--color-surface-container)',
+              textDecoration: 'none',
+              transition: 'all 150ms ease'
             }}
           >
-            Hubungi Saya
+            Karya
           </a>
 
-          {/* Person Avatar badge / Quick Admin Link */}
+          <a
+            href="#filosofi"
+            onClick={(e) => handleNavClick(e, 'filosofi')}
+            style={{
+              padding: '0.375rem 1.25rem',
+              borderRadius: '9999px',
+              fontSize: '12px',
+              fontWeight: '500',
+              color: 'var(--color-on-surface-variant)',
+              backgroundColor: 'transparent',
+              textDecoration: 'none',
+              transition: 'all 150ms ease'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-on-surface)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-on-surface-variant)')}
+          >
+            Filosofi
+          </a>
+
+          <a
+            href="#toolkit-section"
+            onClick={(e) => handleNavClick(e, 'toolkit-section')}
+            style={{
+              padding: '0.375rem 1.25rem',
+              borderRadius: '9999px',
+              fontSize: '12px',
+              fontWeight: '500',
+              color: 'var(--color-on-surface-variant)',
+              backgroundColor: 'transparent',
+              textDecoration: 'none',
+              transition: 'all 150ms ease'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-on-surface)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-on-surface-variant)')}
+          >
+            Toolkit
+          </a>
+
+          <a
+            href="#pengalaman-section"
+            onClick={(e) => handleNavClick(e, 'pengalaman-section')}
+            style={{
+              padding: '0.375rem 1.25rem',
+              borderRadius: '9999px',
+              fontSize: '12px',
+              fontWeight: '500',
+              color: 'var(--color-on-surface-variant)',
+              backgroundColor: 'transparent',
+              textDecoration: 'none',
+              transition: 'all 150ms ease'
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-on-surface)')}
+            onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-on-surface-variant)')}
+          >
+            Pengalaman
+          </a>
+        </nav>
+
+        {/* Right: Mulai Diskusi Button & Avatar */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-sm)' }}>
+          <a
+            href="#mulai-diskusi"
+            onClick={(e) => handleNavClick(e, 'mulai-diskusi')}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '0.625rem 1.25rem',
+              borderRadius: '9999px',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              fontSize: '12px',
+              fontWeight: '600',
+              letterSpacing: '0.02em',
+              textDecoration: 'none',
+              boxShadow: '0 2px 0 rgba(18, 18, 20, 0.04)',
+              transition: 'all 200ms ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#1b1b1d';
+              e.currentTarget.style.transform = 'translateY(-1px)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#000000';
+              e.currentTarget.style.transform = 'translateY(0)';
+            }}
+          >
+            Mulai Diskusi
+          </a>
+
+          {/* Profile Photo / Admin Access */}
           <a
             href="/admin"
-            title="Admin Dashboard"
-            aria-label="Admin Dashboard"
+            title="Akses Admin CMS"
             style={{
               width: '2rem',
               height: '2rem',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-primary)',
-              color: 'var(--color-on-primary)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform var(--transition-fast)'
+              borderRadius: '50%',
+              overflow: 'hidden',
+              display: 'inline-block',
+              border: '1px solid rgba(0, 0, 0, 0.1)',
+              transition: 'transform 150ms ease'
             }}
             onMouseEnter={(e) => (e.currentTarget.style.transform = 'scale(1.08)')}
             onMouseLeave={(e) => (e.currentTarget.style.transform = 'scale(1)')}
           >
-            <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--color-on-primary)' }}>
-              person
-            </span>
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY"
+              alt="Profile Prio Setyo"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
           </a>
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile Menu Button */}
           <button
             className="mobile-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Buka Menu"
+            aria-label="Toggle Menu"
             style={{
-              width: '2.5rem',
-              height: '2.5rem',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-surface-container)',
-              border: '1px solid var(--border-subtle)',
+              width: '2.25rem',
+              height: '2.25rem',
+              borderRadius: '50%',
+              backgroundColor: 'var(--color-surface-container-low)',
               color: 'var(--color-on-surface)',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              border: 'none',
+              cursor: 'pointer'
             }}
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Menu Drawer */}
       {mobileMenuOpen && (
         <div
           style={{
-            backgroundColor: 'var(--color-surface-lowest)',
-            borderBottom: '1px solid var(--border-subtle)',
-            padding: 'var(--space-md) var(--margin-mobile) var(--space-xl)',
+            backgroundColor: '#ffffff',
+            borderBottom: '1px solid var(--color-surface-container-high)',
+            padding: '1.5rem',
             display: 'flex',
             flexDirection: 'column',
-            gap: 'var(--space-xs)'
+            gap: '0.75rem'
           }}
         >
-          {navLinks.map((link) => (
-            <a
-              key={link.id}
-              href={link.href}
-              onClick={(e) => handleLinkClick(e, link.href, link.id)}
-              style={{
-                padding: '0.75rem 1rem',
-                borderRadius: 'var(--radius-md)',
-                fontSize: '1rem',
-                fontWeight: activeSection === link.id ? '700' : '500',
-                color: activeSection === link.id ? 'var(--color-primary)' : 'var(--color-on-surface)',
-                backgroundColor: activeSection === link.id ? 'var(--color-surface-high)' : 'transparent',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                textDecoration: 'none'
-              }}
-            >
-              <span>{link.label}</span>
-              <ArrowUpRight size={16} color="var(--color-outline)" />
-            </a>
-          ))}
-
-          <a
-            href="#kontak"
-            onClick={(e) => handleLinkClick(e, '#kontak', 'kontak')}
-            style={{
-              marginTop: 'var(--space-md)',
-              padding: '0.875rem',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'var(--color-primary-container)',
-              color: 'var(--color-on-primary-container)',
-              fontSize: '0.875rem',
-              fontWeight: '700',
-              textAlign: 'center',
-              boxShadow: '0 8px 24px -4px rgba(255, 87, 26, 0.45)',
-              textDecoration: 'none'
-            }}
-          >
-            Hubungi Saya
-          </a>
+          {['karya-terpilih', 'filosofi', 'toolkit-section', 'pengalaman-section', 'mulai-diskusi'].map((id) => {
+            const labels = {
+              'karya-terpilih': 'Karya Terpilih',
+              filosofi: 'Filosofi Desain',
+              'toolkit-section': 'Creative Toolkit',
+              'pengalaman-section': 'Pengalaman Karir',
+              'mulai-diskusi': 'Mulai Diskusi'
+            };
+            return (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => handleNavClick(e, id)}
+                style={{
+                  padding: '0.75rem 1rem',
+                  borderRadius: '0.75rem',
+                  fontSize: '14px',
+                  fontWeight: '600',
+                  color: 'var(--color-on-surface)',
+                  backgroundColor: 'var(--color-surface-container-low)',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <span>{labels[id]}</span>
+                <ArrowUpRight size={16} />
+              </a>
+            );
+          })}
         </div>
       )}
 
       <style>{`
-        .brand-group:hover .brand-avatar {
-          background-color: var(--color-primary-container) !important;
-        }
-        .brand-group:hover .brand-avatar-text {
-          color: var(--color-on-primary-container) !important;
-        }
         @media (min-width: 1024px) {
           .desktop-nav {
             display: flex !important;
           }
           .mobile-toggle-btn {
+            display: none !important;
+          }
+        }
+        @media (max-width: 1023px) {
+          .hide-mobile {
             display: none !important;
           }
         }

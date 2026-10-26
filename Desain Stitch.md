@@ -1,439 +1,543 @@
-<!DOCTYPE html><html class="dark" lang="id" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><title>Prio Setyo — Creative Director &amp; Visual Storyteller</title><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Syne:wght@600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "outline": "#ad897e", "surface-variant": "#353439", "on-primary-fixed-variant": "#852400", "on-secondary-fixed-variant": "#753400", "surface-container": "#1f1f23", "secondary": "#ffb68b", "tertiary-fixed": "#e5e1e4", "on-primary": "#5e1700", "surface-container-lowest": "#0e0e12", "surface-container-highest": "#353439", "primary-fixed-dim": "#ffb59e", "surface-container-high": "#2a292e", "error": "#ffb4ab", "tertiary-fixed-dim": "#c8c6c8", "primary-fixed": "#ffdbd0", "surface-bright": "#39393d", "error-container": "#93000a", "on-tertiary": "#313032", "secondary-container": "#ff7f1c", "tertiary-container": "#929093", "on-surface": "#e4e1e7", "surface-dim": "#131317", "tertiary": "#c8c6c8", "surface-tint": "#ffb59e", "on-tertiary-fixed": "#1b1b1d", "secondary-fixed": "#ffdbc8", "on-primary-fixed": "#3a0b00", "inverse-primary": "#ae3200", "on-tertiary-fixed-variant": "#474649", "secondary-fixed-dim": "#ffb68b", "surface-container-low": "#1b1b1f", "on-primary-container": "#521300", "on-error-container": "#ffdad6", "on-tertiary-container": "#2a292c", "inverse-surface": "#e4e1e7", "background": "#131317", "on-error": "#690005", "inverse-on-surface": "#303034", "on-secondary-fixed": "#321200", "on-background": "#e4e1e7", "surface": "#131317", "on-secondary-container": "#602a00", "outline-variant": "#5c4037", "primary": "#ffb59e", "on-secondary": "#522300", "primary-container": "#ff571a", "on-surface-variant": "#e6beb2" }, "borderRadius": { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "margin": "1.25rem", "space-md": "1rem", "space-2xl": "4rem", "space-lg": "1.5rem", "margin-desktop": "4rem", "space-3xl": "6rem", "margin-tablet": "2.5rem", "gutter-desktop": "2rem", "space-sm": "0.5rem", "space-xl": "2.5rem", "gutter": "1.5rem" }, "fontFamily": { "label-md": ["Inter"], "headline-sm": ["Syne"], "headline-lg-mobile": ["Syne"], "headline-md": ["Syne"], "display-xl-mobile": ["Syne"], "body-md": ["Inter"], "body-lg": ["Inter"], "label-lg": ["Inter"], "display-xl": ["Syne"], "body-sm": ["Inter"], "label-sm": ["Inter"], "headline-lg": ["Syne"] }, "fontSize": { "label-md": ["0.75rem", { "lineHeight": "1rem", "letterSpacing": "0.06em", "fontWeight": "600" }], "headline-sm": ["1.5rem", { "lineHeight": "1.875rem", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg-mobile": ["2.25rem", { "lineHeight": "2.5rem", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-md": ["2.25rem", { "lineHeight": "2.625rem", "letterSpacing": "-0.015em", "fontWeight": "700" }], "display-xl-mobile": ["3rem", { "lineHeight": "3.25rem", "letterSpacing": "-0.025em", "fontWeight": "800" }], "body-md": ["1rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "400" }], "body-lg": ["1.125rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.01em", "fontWeight": "400" }], "label-lg": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.04em", "fontWeight": "600" }], "display-xl": ["5rem", { "lineHeight": "5.25rem", "letterSpacing": "-0.03em", "fontWeight": "800" }], "body-sm": ["0.875rem", { "lineHeight": "1.25rem", "letterSpacing": "0.005em", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.08em", "fontWeight": "500" }], "headline-lg": ["3.5rem", { "lineHeight": "3.75rem", "letterSpacing": "-0.02em", "fontWeight": "700" }] } } } };</script><style id="global-helvetica-override">*, *::before, *::after, html, body, h1, h2, h3, h4, h5, h6, p, span, a, button, input, textarea, select, label, nav, footer, blockquote, div { font-family: 'Helvetica Neue', Helvetica, -apple-system, BlinkMacSystemFont, Arial, sans-serif !important; }</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.-right-20{right:-5rem}.-top-24{top:-6rem}.bottom-0{bottom:0px}.bottom-space-md{bottom:1rem}.left-0{left:0px}.left-1\/2{left:50%}.left-1\/4{left:25%}.left-space-md{left:1rem}.right-0{right:0px}.right-space-md{right:1rem}.top-0{top:0px}.top-1\/3{top:33.333333%}.top-space-md{top:1rem}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-space-lg{margin-top:1.5rem;margin-bottom:1.5rem}.my-space-xl{margin-top:2.5rem;margin-bottom:2.5rem}.-ml-4{margin-left:-1rem}.-mt-20{margin-top:-5rem}.mt-space-xs{margin-top:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[16\/11\]{aspect-ratio:16/11}.aspect-video{aspect-ratio:16 / 9}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:0.5rem}.h-20{height:5rem}.h-3{height:0.75rem}.h-8{height:2rem}.h-80{height:20rem}.h-9{height:2.25rem}.h-\[350px\]{height:350px}.h-\[460px\]{height:460px}.h-\[520px\]{height:520px}.h-full{height:100%}.h-px{height:1px}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-3{width:0.75rem}.w-8{width:2rem}.w-80{width:20rem}.w-9{width:2.25rem}.w-\[460px\]{width:460px}.w-\[520px\]{width:520px}.w-\[700px\]{width:700px}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-2{--tw-translate-y:0.5rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.select-all{-webkit-user-select:all;user-select:all}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-gutter{gap:1.5rem}.gap-space-2xl{gap:4rem}.gap-space-lg{gap:1.5rem}.gap-space-md{gap:1rem}.gap-space-sm{gap:0.5rem}.gap-space-xl{gap:2.5rem}.gap-space-xs{gap:0.25rem}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-t-full{border-top-left-radius:9999px;border-top-right-radius:9999px}.bg-primary{--tw-bg-opacity:1;background-color:rgb(255 181 158 / var(--tw-bg-opacity, 1))}.bg-primary-container{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.bg-primary-container\/10{background-color:rgb(255 87 26 / 0.1)}.bg-primary-container\/20{background-color:rgb(255 87 26 / 0.2)}.bg-secondary-container{--tw-bg-opacity:1;background-color:rgb(255 127 28 / var(--tw-bg-opacity, 1))}.bg-surface{--tw-bg-opacity:1;background-color:rgb(19 19 23 / var(--tw-bg-opacity, 1))}.bg-surface-container{--tw-bg-opacity:1;background-color:rgb(31 31 35 / var(--tw-bg-opacity, 1))}.bg-surface-container-high{--tw-bg-opacity:1;background-color:rgb(42 41 46 / var(--tw-bg-opacity, 1))}.bg-surface-container-high\/60{background-color:rgb(42 41 46 / 0.6)}.bg-surface-container-high\/80{background-color:rgb(42 41 46 / 0.8)}.bg-surface-container-high\/90{background-color:rgb(42 41 46 / 0.9)}.bg-surface-container-highest{--tw-bg-opacity:1;background-color:rgb(53 52 57 / var(--tw-bg-opacity, 1))}.bg-surface-container-low{--tw-bg-opacity:1;background-color:rgb(27 27 31 / var(--tw-bg-opacity, 1))}.bg-surface-container-low\/70{background-color:rgb(27 27 31 / 0.7)}.bg-surface-container-lowest{--tw-bg-opacity:1;background-color:rgb(14 14 18 / var(--tw-bg-opacity, 1))}.bg-surface-container-lowest\/80{background-color:rgb(14 14 18 / 0.8)}.bg-surface\/80{background-color:rgb(19 19 23 / 0.8)}.bg-transparent{background-color:transparent}.bg-gradient-to-bl{background-image:linear-gradient(to bottom left, var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-primary-container{--tw-gradient-from:#ff571a var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 87 26 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-primary-container\/20{--tw-gradient-from:rgb(255 87 26 / 0.2) var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 87 26 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-primary-container\/25{--tw-gradient-from:rgb(255 87 26 / 0.25) var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 87 26 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-surface-container-lowest{--tw-gradient-from:#0e0e12 var(--tw-gradient-from-position);--tw-gradient-to:rgb(14 14 18 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-surface-container-lowest\/80{--tw-gradient-from:rgb(14 14 18 / 0.8) var(--tw-gradient-from-position);--tw-gradient-to:rgb(14 14 18 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-primary\/5{--tw-gradient-to:rgb(255 181 158 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(255 181 158 / 0.05) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-secondary-container{--tw-gradient-to:rgb(255 127 28 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #ff7f1c var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-secondary-container\/10{--tw-gradient-to:rgb(255 127 28 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(255 127 28 / 0.1) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-secondary{--tw-gradient-to:#ffb68b var(--tw-gradient-to-position)}.to-secondary-container{--tw-gradient-to:#ff7f1c var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.object-cover{object-fit:cover}.object-center{object-position:center}.p-space-lg{padding:1.5rem}.p-space-md{padding:1rem}.p-space-xl{padding:2.5rem}.p-space-xs{padding:0.25rem}.px-margin{padding-left:1.25rem;padding-right:1.25rem}.px-space-2xl{padding-left:4rem;padding-right:4rem}.px-space-lg{padding-left:1.5rem;padding-right:1.5rem}.px-space-md{padding-left:1rem;padding-right:1rem}.px-space-xl{padding-left:2.5rem;padding-right:2.5rem}.px-space-xs{padding-left:0.25rem;padding-right:0.25rem}.py-space-3xl{padding-top:6rem;padding-bottom:6rem}.py-space-md{padding-top:1rem;padding-bottom:1rem}.py-space-sm{padding-top:0.5rem;padding-bottom:0.5rem}.py-space-xs{padding-top:0.25rem;padding-bottom:0.25rem}.py-space-2xl{padding-top:4rem;padding-bottom:4rem}.pb-space-3xl{padding-bottom:6rem}.pt-20{padding-top:5rem}.pt-28{padding-top:7rem}.pt-space-md{padding-top:1rem}.pt-space-xs{padding-top:0.25rem}.text-center{text-align:center}.font-body-lg{font-family:Inter}.font-body-md{font-family:Inter}.font-body-sm{font-family:Inter}.font-display-xl{font-family:Syne}.font-headline-lg{font-family:Syne}.font-headline-sm{font-family:Syne}.font-label-lg{font-family:Inter}.font-label-md{font-family:Inter}.font-label-sm{font-family:Inter}.text-\[16px\]{font-size:16px}.text-\[18px\]{font-size:18px}.text-\[20px\]{font-size:20px}.text-\[24px\]{font-size:24px}.text-body-lg{font-size:1.125rem;line-height:1.75rem;letter-spacing:-0.01em;font-weight:400}.text-body-md{font-size:1rem;line-height:1.5rem;letter-spacing:0em;font-weight:400}.text-body-sm{font-size:0.875rem;line-height:1.25rem;letter-spacing:0.005em;font-weight:400}.text-display-xl-mobile{font-size:3rem;line-height:3.25rem;letter-spacing:-0.025em;font-weight:800}.text-headline-lg-mobile{font-size:2.25rem;line-height:2.5rem;letter-spacing:-0.02em;font-weight:700}.text-headline-sm{font-size:1.5rem;line-height:1.875rem;letter-spacing:-0.01em;font-weight:600}.text-label-lg{font-size:0.875rem;line-height:1.25rem;letter-spacing:0.04em;font-weight:600}.text-label-md{font-size:0.75rem;line-height:1rem;letter-spacing:0.06em;font-weight:600}.text-label-sm{font-size:0.6875rem;line-height:0.875rem;letter-spacing:0.08em;font-weight:500}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\[0\.25em\]{letter-spacing:0.25em}.tracking-\[0\.2em\]{letter-spacing:0.2em}.tracking-\[0\.3em\]{letter-spacing:0.3em}.tracking-tight{letter-spacing:-0.025em}.tracking-tighter{letter-spacing:-0.05em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-on-primary{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.text-on-primary-container{--tw-text-opacity:1;color:rgb(82 19 0 / var(--tw-text-opacity, 1))}.text-on-surface{--tw-text-opacity:1;color:rgb(228 225 231 / var(--tw-text-opacity, 1))}.text-on-surface-variant{--tw-text-opacity:1;color:rgb(230 190 178 / var(--tw-text-opacity, 1))}.text-outline{--tw-text-opacity:1;color:rgb(173 137 126 / var(--tw-text-opacity, 1))}.text-outline-variant{--tw-text-opacity:1;color:rgb(92 64 55 / var(--tw-text-opacity, 1))}.text-primary{--tw-text-opacity:1;color:rgb(255 181 158 / var(--tw-text-opacity, 1))}.text-primary-container{--tw-text-opacity:1;color:rgb(255 87 26 / var(--tw-text-opacity, 1))}.text-secondary{--tw-text-opacity:1;color:rgb(255 182 139 / var(--tw-text-opacity, 1))}.text-secondary-container{--tw-text-opacity:1;color:rgb(255 127 28 / var(--tw-text-opacity, 1))}.text-tertiary{--tw-text-opacity:1;color:rgb(200 198 200 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.opacity-80{opacity:0.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_12px_32px_-4px_rgba\(255\2c 87\2c 26\2c 0\.45\)\]{--tw-shadow:0 12px 32px -4px rgba(255,87,26,0.45);--tw-shadow-colored:0 12px 32px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_16px_40px_-6px_rgba\(255\2c 87\2c 26\2c 0\.5\)\]{--tw-shadow:0 16px 40px -6px rgba(255,87,26,0.5);--tw-shadow-colored:0 16px 40px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_1px_8px_rgba\(0\2c 0\2c 0\2c 0\.04\)\]{--tw-shadow:0 1px 8px rgba(0,0,0,0.04);--tw-shadow-colored:0 1px 8px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_8px_24px_-4px_rgba\(255\2c 77\2c 0\2c 0\.45\)\]{--tw-shadow:0 8px 24px -4px rgba(255,77,0,0.45);--tw-shadow-colored:0 8px 24px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[120px\]{--tw-blur:blur(120px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[140px\]{--tw-blur:blur(140px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[160px\]{--tw-blur:blur(160px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-xl{--tw-backdrop-blur:blur(24px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.selection\:bg-primary-container *::selection{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.selection\:text-on-primary *::selection{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.selection\:bg-primary-container::selection{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.selection\:text-on-primary::selection{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-\[1\.02\]:hover{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-\[1\.03\]:hover{--tw-scale-x:1.03;--tw-scale-y:1.03;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-primary-container:hover{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.hover\:bg-secondary-container:hover{--tw-bg-opacity:1;background-color:rgb(255 127 28 / var(--tw-bg-opacity, 1))}.hover\:bg-surface-container:hover{--tw-bg-opacity:1;background-color:rgb(31 31 35 / var(--tw-bg-opacity, 1))}.hover\:bg-surface-container-high:hover{--tw-bg-opacity:1;background-color:rgb(42 41 46 / var(--tw-bg-opacity, 1))}.hover\:bg-surface-container-highest:hover{--tw-bg-opacity:1;background-color:rgb(53 52 57 / var(--tw-bg-opacity, 1))}.hover\:text-on-primary-container:hover{--tw-text-opacity:1;color:rgb(82 19 0 / var(--tw-text-opacity, 1))}.hover\:text-on-secondary-container:hover{--tw-text-opacity:1;color:rgb(96 42 0 / var(--tw-text-opacity, 1))}.hover\:text-on-surface:hover{--tw-text-opacity:1;color:rgb(228 225 231 / var(--tw-text-opacity, 1))}.hover\:text-primary:hover{--tw-text-opacity:1;color:rgb(255 181 158 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:bg-primary-container{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-primary-container\/15{background-color:rgb(255 87 26 / 0.15)}.group:hover .group-hover\:text-on-primary{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-primary{--tw-text-opacity:1;color:rgb(255 181 158 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-secondary{--tw-text-opacity:1;color:rgb(255 182 139 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:inline-flex{display:inline-flex}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:text-left{text-align:left}}@media (min-width: 768px){.md\:bottom-space-lg{bottom:1.5rem}.md\:left-space-lg{left:1.5rem}.md\:right-space-lg{right:1.5rem}.md\:col-span-12{grid-column:span 12 / span 12}.md\:col-span-5{grid-column:span 5 / span 5}.md\:col-span-7{grid-column:span 7 / span 7}.md\:aspect-\[21\/9\]{aspect-ratio:21/9}.md\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}.md\:items-center{align-items:center}.md\:p-space-2xl{padding:4rem}.md\:px-margin-tablet{padding-left:2.5rem;padding-right:2.5rem}.md\:text-right{text-align:right}.md\:text-display-xl{font-size:5rem;line-height:5.25rem;letter-spacing:-0.03em;font-weight:800}.md\:text-headline-lg{font-size:3.5rem;line-height:3.75rem;letter-spacing:-0.02em;font-weight:700}.md\:text-headline-md{font-size:2.25rem;line-height:2.625rem;letter-spacing:-0.015em;font-weight:700}}@media (min-width: 1024px){.lg\:flex{display:flex}.lg\:w-1\/4{width:25%}.lg\:w-2\/4{width:50%}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:flex-row{flex-direction:row}.lg\:items-center{align-items:center}.lg\:justify-end{justify-content:flex-end}.lg\:gap-gutter-desktop{gap:2rem}.lg\:px-margin-desktop{padding-left:4rem;padding-right:4rem}.lg\:text-display-xl{font-size:5rem;line-height:5.25rem;letter-spacing:-0.03em;font-weight:800}}</style><style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.inset-0{inset:0px}.-right-20{right:-5rem}.-top-24{top:-6rem}.bottom-0{bottom:0px}.bottom-space-md{bottom:1rem}.left-0{left:0px}.left-1\/2{left:50%}.left-1\/4{left:25%}.left-space-md{left:1rem}.right-0{right:0px}.right-space-md{right:1rem}.top-0{top:0px}.top-1\/3{top:33.333333%}.top-space-md{top:1rem}.z-10{z-index:10}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.my-space-lg{margin-top:1.5rem;margin-bottom:1.5rem}.my-space-xl{margin-top:2.5rem;margin-bottom:2.5rem}.-ml-4{margin-left:-1rem}.-mt-20{margin-top:-5rem}.mt-space-xs{margin-top:0.25rem}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.aspect-\[16\/11\]{aspect-ratio:16/11}.aspect-video{aspect-ratio:16 / 9}.h-10{height:2.5rem}.h-11{height:2.75rem}.h-12{height:3rem}.h-2{height:0.5rem}.h-20{height:5rem}.h-3{height:0.75rem}.h-8{height:2rem}.h-80{height:20rem}.h-9{height:2.25rem}.h-\[350px\]{height:350px}.h-\[460px\]{height:460px}.h-\[520px\]{height:520px}.h-full{height:100%}.h-px{height:1px}.w-10{width:2.5rem}.w-11{width:2.75rem}.w-12{width:3rem}.w-2{width:0.5rem}.w-3{width:0.75rem}.w-8{width:2rem}.w-80{width:20rem}.w-9{width:2.25rem}.w-\[460px\]{width:460px}.w-\[520px\]{width:520px}.w-\[700px\]{width:700px}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-3xl{max-width:48rem}.max-w-4xl{max-width:56rem}.max-w-5xl{max-width:64rem}.max-w-7xl{max-width:80rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}.max-w-xl{max-width:36rem}.-translate-x-1\/2{--tw-translate-x:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.translate-y-2{--tw-translate-y:0.5rem;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@keyframes ping{75%, 100%{transform:scale(2);opacity:0}}.animate-ping{animation:ping 1s cubic-bezier(0, 0, 0.2, 1) infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.select-all{-webkit-user-select:all;user-select:all}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-gutter{gap:1.5rem}.gap-space-2xl{gap:4rem}.gap-space-lg{gap:1.5rem}.gap-space-md{gap:1rem}.gap-space-sm{gap:0.5rem}.gap-space-xl{gap:2.5rem}.gap-space-xs{gap:0.25rem}.overflow-hidden{overflow:hidden}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-t-full{border-top-left-radius:9999px;border-top-right-radius:9999px}.bg-primary{--tw-bg-opacity:1;background-color:rgb(255 181 158 / var(--tw-bg-opacity, 1))}.bg-primary-container{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.bg-primary-container\/10{background-color:rgb(255 87 26 / 0.1)}.bg-primary-container\/20{background-color:rgb(255 87 26 / 0.2)}.bg-secondary-container{--tw-bg-opacity:1;background-color:rgb(255 127 28 / var(--tw-bg-opacity, 1))}.bg-surface{--tw-bg-opacity:1;background-color:rgb(19 19 23 / var(--tw-bg-opacity, 1))}.bg-surface-container{--tw-bg-opacity:1;background-color:rgb(31 31 35 / var(--tw-bg-opacity, 1))}.bg-surface-container-high{--tw-bg-opacity:1;background-color:rgb(42 41 46 / var(--tw-bg-opacity, 1))}.bg-surface-container-high\/60{background-color:rgb(42 41 46 / 0.6)}.bg-surface-container-high\/80{background-color:rgb(42 41 46 / 0.8)}.bg-surface-container-high\/90{background-color:rgb(42 41 46 / 0.9)}.bg-surface-container-highest{--tw-bg-opacity:1;background-color:rgb(53 52 57 / var(--tw-bg-opacity, 1))}.bg-surface-container-low{--tw-bg-opacity:1;background-color:rgb(27 27 31 / var(--tw-bg-opacity, 1))}.bg-surface-container-low\/70{background-color:rgb(27 27 31 / 0.7)}.bg-surface-container-lowest{--tw-bg-opacity:1;background-color:rgb(14 14 18 / var(--tw-bg-opacity, 1))}.bg-surface-container-lowest\/80{background-color:rgb(14 14 18 / 0.8)}.bg-surface\/80{background-color:rgb(19 19 23 / 0.8)}.bg-transparent{background-color:transparent}.bg-gradient-to-bl{background-image:linear-gradient(to bottom left, var(--tw-gradient-stops))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-r{background-image:linear-gradient(to right, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-primary-container{--tw-gradient-from:#ff571a var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 87 26 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-primary-container\/20{--tw-gradient-from:rgb(255 87 26 / 0.2) var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 87 26 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-primary-container\/25{--tw-gradient-from:rgb(255 87 26 / 0.25) var(--tw-gradient-from-position);--tw-gradient-to:rgb(255 87 26 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-surface-container-lowest{--tw-gradient-from:#0e0e12 var(--tw-gradient-from-position);--tw-gradient-to:rgb(14 14 18 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-surface-container-lowest\/80{--tw-gradient-from:rgb(14 14 18 / 0.8) var(--tw-gradient-from-position);--tw-gradient-to:rgb(14 14 18 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.via-primary\/5{--tw-gradient-to:rgb(255 181 158 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(255 181 158 / 0.05) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-secondary-container{--tw-gradient-to:rgb(255 127 28 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), #ff7f1c var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-secondary-container\/10{--tw-gradient-to:rgb(255 127 28 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), rgb(255 127 28 / 0.1) var(--tw-gradient-via-position), var(--tw-gradient-to)}.via-transparent{--tw-gradient-to:rgb(0 0 0 / 0)  var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), transparent var(--tw-gradient-via-position), var(--tw-gradient-to)}.to-secondary{--tw-gradient-to:#ffb68b var(--tw-gradient-to-position)}.to-secondary-container{--tw-gradient-to:#ff7f1c var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.bg-clip-text{-webkit-background-clip:text;background-clip:text}.object-cover{object-fit:cover}.object-center{object-position:center}.p-space-lg{padding:1.5rem}.p-space-md{padding:1rem}.p-space-xl{padding:2.5rem}.p-space-xs{padding:0.25rem}.px-margin{padding-left:1.25rem;padding-right:1.25rem}.px-space-2xl{padding-left:4rem;padding-right:4rem}.px-space-lg{padding-left:1.5rem;padding-right:1.5rem}.px-space-md{padding-left:1rem;padding-right:1rem}.px-space-xl{padding-left:2.5rem;padding-right:2.5rem}.px-space-xs{padding-left:0.25rem;padding-right:0.25rem}.py-space-3xl{padding-top:6rem;padding-bottom:6rem}.py-space-md{padding-top:1rem;padding-bottom:1rem}.py-space-sm{padding-top:0.5rem;padding-bottom:0.5rem}.py-space-xs{padding-top:0.25rem;padding-bottom:0.25rem}.py-space-2xl{padding-top:4rem;padding-bottom:4rem}.pb-space-3xl{padding-bottom:6rem}.pt-20{padding-top:5rem}.pt-28{padding-top:7rem}.pt-space-md{padding-top:1rem}.pt-space-xs{padding-top:0.25rem}.text-center{text-align:center}.font-body-lg{font-family:Inter}.font-body-md{font-family:Inter}.font-body-sm{font-family:Inter}.font-display-xl{font-family:Syne}.font-headline-lg{font-family:Syne}.font-headline-sm{font-family:Syne}.font-label-lg{font-family:Inter}.font-label-md{font-family:Inter}.font-label-sm{font-family:Inter}.text-\[16px\]{font-size:16px}.text-\[18px\]{font-size:18px}.text-\[20px\]{font-size:20px}.text-\[24px\]{font-size:24px}.text-body-lg{font-size:1.125rem;line-height:1.75rem;letter-spacing:-0.01em;font-weight:400}.text-body-md{font-size:1rem;line-height:1.5rem;letter-spacing:0em;font-weight:400}.text-body-sm{font-size:0.875rem;line-height:1.25rem;letter-spacing:0.005em;font-weight:400}.text-display-xl-mobile{font-size:3rem;line-height:3.25rem;letter-spacing:-0.025em;font-weight:800}.text-headline-lg-mobile{font-size:2.25rem;line-height:2.5rem;letter-spacing:-0.02em;font-weight:700}.text-headline-sm{font-size:1.5rem;line-height:1.875rem;letter-spacing:-0.01em;font-weight:600}.text-label-lg{font-size:0.875rem;line-height:1.25rem;letter-spacing:0.04em;font-weight:600}.text-label-md{font-size:0.75rem;line-height:1rem;letter-spacing:0.06em;font-weight:600}.text-label-sm{font-size:0.6875rem;line-height:0.875rem;letter-spacing:0.08em;font-weight:500}.font-bold{font-weight:700}.font-extrabold{font-weight:800}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-none{line-height:1}.leading-relaxed{line-height:1.625}.leading-snug{line-height:1.375}.leading-tight{line-height:1.25}.tracking-\[0\.25em\]{letter-spacing:0.25em}.tracking-\[0\.2em\]{letter-spacing:0.2em}.tracking-\[0\.3em\]{letter-spacing:0.3em}.tracking-tight{letter-spacing:-0.025em}.tracking-tighter{letter-spacing:-0.05em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-on-primary{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.text-on-primary-container{--tw-text-opacity:1;color:rgb(82 19 0 / var(--tw-text-opacity, 1))}.text-on-surface{--tw-text-opacity:1;color:rgb(228 225 231 / var(--tw-text-opacity, 1))}.text-on-surface-variant{--tw-text-opacity:1;color:rgb(230 190 178 / var(--tw-text-opacity, 1))}.text-outline{--tw-text-opacity:1;color:rgb(173 137 126 / var(--tw-text-opacity, 1))}.text-outline-variant{--tw-text-opacity:1;color:rgb(92 64 55 / var(--tw-text-opacity, 1))}.text-primary{--tw-text-opacity:1;color:rgb(255 181 158 / var(--tw-text-opacity, 1))}.text-primary-container{--tw-text-opacity:1;color:rgb(255 87 26 / var(--tw-text-opacity, 1))}.text-secondary{--tw-text-opacity:1;color:rgb(255 182 139 / var(--tw-text-opacity, 1))}.text-secondary-container{--tw-text-opacity:1;color:rgb(255 127 28 / var(--tw-text-opacity, 1))}.text-tertiary{--tw-text-opacity:1;color:rgb(200 198 200 / var(--tw-text-opacity, 1))}.text-transparent{color:transparent}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.opacity-80{opacity:0.8}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_12px_32px_-4px_rgba\(255\2c 87\2c 26\2c 0\.45\)\]{--tw-shadow:0 12px 32px -4px rgba(255,87,26,0.45);--tw-shadow-colored:0 12px 32px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_16px_40px_-6px_rgba\(255\2c 87\2c 26\2c 0\.5\)\]{--tw-shadow:0 16px 40px -6px rgba(255,87,26,0.5);--tw-shadow-colored:0 16px 40px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_1px_8px_rgba\(0\2c 0\2c 0\2c 0\.04\)\]{--tw-shadow:0 1px 8px rgba(0,0,0,0.04);--tw-shadow-colored:0 1px 8px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_8px_24px_-4px_rgba\(255\2c 77\2c 0\2c 0\.45\)\]{--tw-shadow:0 8px 24px -4px rgba(255,77,0,0.45);--tw-shadow-colored:0 8px 24px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.blur-3xl{--tw-blur:blur(64px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[120px\]{--tw-blur:blur(120px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[140px\]{--tw-blur:blur(140px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.blur-\[160px\]{--tw-blur:blur(160px);filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-xl{--tw-backdrop-blur:blur(24px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-700{transition-duration:700ms}.selection\:bg-primary-container *::selection{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.selection\:text-on-primary *::selection{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.selection\:bg-primary-container::selection{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.selection\:text-on-primary::selection{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.hover\:scale-105:hover{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-\[1\.02\]:hover{--tw-scale-x:1.02;--tw-scale-y:1.02;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:scale-\[1\.03\]:hover{--tw-scale-x:1.03;--tw-scale-y:1.03;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.hover\:bg-primary-container:hover{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.hover\:bg-secondary-container:hover{--tw-bg-opacity:1;background-color:rgb(255 127 28 / var(--tw-bg-opacity, 1))}.hover\:bg-surface-container:hover{--tw-bg-opacity:1;background-color:rgb(31 31 35 / var(--tw-bg-opacity, 1))}.hover\:bg-surface-container-high:hover{--tw-bg-opacity:1;background-color:rgb(42 41 46 / var(--tw-bg-opacity, 1))}.hover\:bg-surface-container-highest:hover{--tw-bg-opacity:1;background-color:rgb(53 52 57 / var(--tw-bg-opacity, 1))}.hover\:text-on-primary-container:hover{--tw-text-opacity:1;color:rgb(82 19 0 / var(--tw-text-opacity, 1))}.hover\:text-on-secondary-container:hover{--tw-text-opacity:1;color:rgb(96 42 0 / var(--tw-text-opacity, 1))}.hover\:text-on-surface:hover{--tw-text-opacity:1;color:rgb(228 225 231 / var(--tw-text-opacity, 1))}.hover\:text-primary:hover{--tw-text-opacity:1;color:rgb(255 181 158 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-105{--tw-scale-x:1.05;--tw-scale-y:1.05;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:scale-110{--tw-scale-x:1.1;--tw-scale-y:1.1;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.group:hover .group-hover\:bg-primary-container{--tw-bg-opacity:1;background-color:rgb(255 87 26 / var(--tw-bg-opacity, 1))}.group:hover .group-hover\:bg-primary-container\/15{background-color:rgb(255 87 26 / 0.15)}.group:hover .group-hover\:text-on-primary{--tw-text-opacity:1;color:rgb(94 23 0 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-primary{--tw-text-opacity:1;color:rgb(255 181 158 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:text-secondary{--tw-text-opacity:1;color:rgb(255 182 139 / var(--tw-text-opacity, 1))}.group:hover .group-hover\:opacity-100{opacity:1}@media (min-width: 640px){.sm\:inline-flex{display:inline-flex}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:text-left{text-align:left}}@media (min-width: 768px){.md\:bottom-space-lg{bottom:1.5rem}.md\:left-space-lg{left:1.5rem}.md\:right-space-lg{right:1.5rem}.md\:col-span-12{grid-column:span 12 / span 12}.md\:col-span-5{grid-column:span 5 / span 5}.md\:col-span-7{grid-column:span 7 / span 7}.md\:aspect-\[21\/9\]{aspect-ratio:21/9}.md\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}.md\:items-center{align-items:center}.md\:p-space-2xl{padding:4rem}.md\:px-margin-tablet{padding-left:2.5rem;padding-right:2.5rem}.md\:text-right{text-align:right}.md\:text-display-xl{font-size:5rem;line-height:5.25rem;letter-spacing:-0.03em;font-weight:800}.md\:text-headline-lg{font-size:3.5rem;line-height:3.75rem;letter-spacing:-0.02em;font-weight:700}.md\:text-headline-md{font-size:2.25rem;line-height:2.625rem;letter-spacing:-0.015em;font-weight:700}}@media (min-width: 1024px){.lg\:flex{display:flex}.lg\:w-1\/4{width:25%}.lg\:w-2\/4{width:50%}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.lg\:flex-row{flex-direction:row}.lg\:items-center{align-items:center}.lg\:justify-end{justify-content:flex-end}.lg\:gap-gutter-desktop{gap:2rem}.lg\:px-margin-desktop{padding-left:4rem;padding-right:4rem}.lg\:text-display-xl{font-size:5rem;line-height:5.25rem;letter-spacing:-0.03em;font-weight:800}}</style></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary" style="font-family: Helvetica Neue, Helvetica, -apple-system, BlinkMacSystemFont, Arial, sans-serif !important;" data-mode="connect"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 w-full px-margin md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between gap-gutter"><div class="flex items-center gap-space-md"><a class="group flex items-center gap-space-sm" data-path="karya" href="#"><div class="w-9 h-9 rounded-full bg-surface-container-high flex items-center justify-center group-hover:bg-primary-container transition-colors"><span class="font-headline-sm text-label-lg font-bold text-primary group-hover:text-on-primary transition-colors">PS</span></div><span class="font-headline-sm text-body-lg font-bold tracking-tight text-on-surface">Prio Setyo</span></a></div><nav class="hidden lg:flex items-center gap-space-xs p-space-xs rounded-full bg-surface-container-low/70 backdrop-blur-md" data-active-classes="bg-surface-container-high text-on-surface font-semibold rounded-full"><a class="px-space-md py-space-sm text-label-lg font-label-lg text-on-surface-variant hover:text-on-surface transition-colors rounded-full" data-path="tentang" href="#">Tentang</a><a class="px-space-md py-space-sm text-label-lg font-label-lg text-on-surface-variant hover:text-on-surface transition-colors rounded-full" data-path="keahlian" href="#">Keahlian</a><a aria-current="page" class="px-space-md py-space-sm transition-colors bg-surface-container-high text-on-surface font-semibold rounded-full" data-path="karya" href="#">Karya</a><a class="px-space-md py-space-sm text-label-lg font-label-lg text-on-surface-variant hover:text-on-surface transition-colors rounded-full" data-path="pengalaman" href="#">Pengalaman</a><a class="px-space-md py-space-sm text-label-lg font-label-lg text-on-surface-variant hover:text-on-surface transition-colors rounded-full" data-path="kontak" href="#">Kontak</a></nav><div class="flex items-center gap-space-md"><a class="hidden sm:inline-flex items-center justify-center px-space-lg py-space-sm rounded-full bg-primary-container text-on-primary-container hover:bg-secondary-container hover:text-on-secondary-container font-label-lg text-label-lg shadow-[0_8px_24px_-4px_rgba(255,77,0,0.45)] transition-all hover:scale-[1.02]" data-path="kontak" href="#">Hubungi Saya</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface"><div class="flex flex-col w-full">
-<!-- 1. HERO SECTION (Dark, Theatrical, High-Contrast with Concentrated Neon Radiant Heat) -->
-<section class="relative w-full overflow-hidden bg-surface-container-lowest -mt-20 pt-28 pb-space-3xl px-margin md:px-margin-tablet lg:px-margin-desktop">
-<!-- Atmospheric Ambient Glow Spheres (Subtle Kinetic Light Emitters) -->
-<div class="absolute -top-24 left-1/4 w-[520px] h-[520px] bg-gradient-to-br from-primary-container/25 via-secondary-container/10 to-transparent blur-[140px] pointer-events-none rounded-full"></div>
-<div class="absolute top-1/3 -right-20 w-[460px] h-[460px] bg-gradient-to-bl from-primary-container/20 via-primary/5 to-transparent blur-[120px] pointer-events-none rounded-full"></div>
-<div class="relative max-w-7xl mx-auto flex flex-col gap-space-2xl">
-<!-- Status Badge Pill -->
-<div class="flex items-center justify-center">
-<div class="inline-flex items-center gap-space-sm px-space-md py-space-xs rounded-full bg-surface-container-high/90 text-on-surface shadow-md">
-<span class="w-2 h-2 rounded-full bg-primary-container animate-ping"></span>
-<span class="w-2 h-2 rounded-full bg-primary-container -ml-4"></span>
-<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Tersedia untuk Proyek &amp; Kolaborasi Global 2025</span>
+<!DOCTYPE html><html lang="id" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Syne:wght@600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed":"#e5deff","tertiary-container":"#002115","on-tertiary-container":"#668c7a","on-primary-fixed":"#1b1b1d","inverse-on-surface":"#f0f0f2","error-container":"#ffdad6","surface":"#f9f9fb","on-tertiary-fixed-variant":"#294e3f","inverse-surface":"#2f3132","tertiary-fixed-dim":"#a8cfbc","background":"#f9f9fb","surface-dim":"#d9dadc","surface-container-low":"#f3f3f5","on-secondary":"#ffffff","tertiary":"#000000","inverse-primary":"#c8c6c8","secondary-fixed-dim":"#c8c2e9","primary":"#000000","on-secondary-container":"#605b7d","surface-tint":"#5f5e60","error":"#ba1a1a","on-error":"#ffffff","primary-fixed":"#e5e1e4","surface-container-high":"#e8e8ea","on-secondary-fixed-variant":"#474363","on-tertiary":"#ffffff","on-background":"#1a1c1d","secondary":"#5f5a7c","on-tertiary-fixed":"#002115","surface-variant":"#e2e2e4","primary-fixed-dim":"#c8c6c8","secondary-container":"#dcd5fd","tertiary-fixed":"#c3ecd7","on-error-container":"#93000a","surface-bright":"#f9f9fb","on-surface-variant":"#47464a","on-primary":"#ffffff","on-secondary-fixed":"#1b1735","outline":"#77767b","primary-container":"#1b1b1d","surface-container-lowest":"#ffffff","on-surface":"#1a1c1d","on-primary-container":"#858386","surface-container":"#edeef0","on-primary-fixed-variant":"#474649","surface-container-highest":"#e2e2e4","outline-variant":"#c8c6ca"},borderRadius:{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},spacing:{"space-xl":"3rem","margin":"1.25rem","space-lg":"2rem","gutter":"1.25rem","space-xs":"0.375rem","space-sm":"0.75rem","space-md":"1.25rem","gutter-desktop":"1.5rem","margin-desktop":"3rem"},fontFamily:{"label-caps":["Inter"],"stat-display":["Syne"],"display-xl":["Syne"],"label-sm":["Inter"],"headline-lg-mobile":["Syne"],"headline-lg":["Syne"],"display-xl-mobile":["Syne"],"headline-sm":["Syne"],"headline-md":["Syne"],"body-lg":["Inter"],"body-md":["Inter"],"body-sm":["Inter"]},fontSize:{"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"600"}],"stat-display":["56px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"800"}],"display-xl":["72px",{"lineHeight":"76px","letterSpacing":"-0.04em","fontWeight":"800"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"500"}],"headline-lg-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["40px",{"lineHeight":"46px","letterSpacing":"-0.03em","fontWeight":"700"}],"display-xl-mobile":["44px",{"lineHeight":"48px","letterSpacing":"-0.03em","fontWeight":"800"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"400"}],"body-md":["15px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-20 max-w-[1440px] mx-auto px-margin lg:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="group flex flex-col" data-path="karya" href="#"><span class="font-label-caps text-label-caps text-on-surface-variant">DIRECTOR © 2025</span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface"><span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span><span class="font-label-caps text-label-caps tracking-wider text-on-surface-variant uppercase">AVAILABLE FOR Q2 PROJECTS</span></div></div><nav class="hidden md:flex items-center gap-1 p-1 rounded-full bg-surface-container-low" data-active-classes="text-on-surface bg-surface-container font-semibold rounded-full"><a aria-current="page" class="px-space-md py-space-xs transition-colors text-on-surface bg-surface-container font-semibold rounded-full" data-path="karya" href="#">Karya</a><a class="px-space-md py-space-xs rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="filosofi" href="#">Filosofi</a><a class="px-space-md py-space-xs rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="toolkit" href="#">Toolkit</a><a class="px-space-md py-space-xs rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="pengalaman" href="#">Pengalaman</a></nav><div class="flex items-center gap-space-sm"><a class="inline-flex items-center justify-center px-space-md py-space-sm rounded-full bg-primary text-on-primary font-label-sm text-label-sm tracking-normal hover:bg-primary-container hover:text-on-primary transition-all duration-200 shadow-[0_2px_0_rgba(18,18,20,0.04)]" data-path="kontak" href="#">Mulai Diskusi</a><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY"></div></div></header><main class="w-full pt-20 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Master Bento Wrapper -->
+<div class="max-w-[1440px] w-full mx-auto px-margin lg:px-margin-desktop py-space-md lg:py-space-lg flex flex-col gap-space-lg">
+<!-- Super Headline & Architectural Statement Bar -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center px-space-sm py-1 rounded-full bg-secondary-container text-on-secondary-fixed font-label-caps text-label-caps uppercase">
+            Curated Index 2025
+          </span>
+<span class="inline-flex items-center px-space-sm py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps uppercase">
+            Jakarta (6.2° S) / Tokyo (35.6° N)
+          </span>
 </div>
-</div>
-<!-- Hero Grid: Typographic Manifesto vs Studio Portrait -->
-<div class="flex flex-col items-center text-center max-w-4xl mx-auto gap-space-2xl"><div class="flex flex-col gap-space-xl items-center"><div class="flex flex-col gap-space-xs"><span class="font-label-lg text-label-lg uppercase tracking-[0.2em] text-secondary font-semibold">Creative Director &amp; Visual Storyteller</span><h1 class="font-display-xl text-display-xl-mobile md:text-display-xl text-on-surface tracking-tighter uppercase font-extrabold leading-none">Prio&nbsp;<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary-container via-secondary-container to-secondary">Setyo</span></h1></div><p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl leading-relaxed mx-auto">Membangun ekosistem visual spektakuler, identitas brand sinematik, dan antarmuka spasial masa depan. Mengubah narasi kompleks menjadi pengalaman sensorik bernilai komersial tinggi.</p><div class="flex flex-wrap items-center gap-space-md pt-space-xs justify-center"><a class="inline-flex items-center gap-space-sm px-space-xl py-space-md rounded-full bg-gradient-to-r from-primary-container to-secondary-container text-on-primary-container font-label-lg text-label-lg font-bold shadow-[0_12px_32px_-4px_rgba(255,87,26,0.45)] hover:scale-[1.03] transition-all" href="#karya"><span class="">Lihat Karya</span><span class="material-symbols-outlined text-[18px]">arrow_downward</span></a><a class="inline-flex items-center gap-space-sm px-space-xl py-space-md rounded-full bg-surface-container-high/80 text-on-surface hover:text-primary font-label-lg text-label-lg font-semibold shadow-md hover:bg-surface-container-highest transition-all" href="#kontak"><span class="">Hubungi Saya</span><span class="material-symbols-outlined text-[18px]">north_east</span></a></div><div class="grid grid-cols-3 gap-space-md pt-space-md max-w-lg mx-auto text-center"><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold text-on-surface">11+</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Tahun Pengalaman</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold text-on-surface">38+</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Penghargaan Global</span></div><div class="flex flex-col"><span class="font-headline-sm text-headline-sm font-bold text-on-surface">120+</span><span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Karya Kurasi</span></div></div></div><div class="relative flex justify-center w-full max-w-4xl mx-auto"><div class="relative w-full aspect-video md:aspect-[21/9] rounded-3xl overflow-hidden bg-surface-container shadow-2xl group"><img class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" data-alt="Cinematic high contrast studio portrait of an Asian male creative director in his late 30s. Dramatic warm vermilion and amber rim lighting accentuating his sharp facial features against deep obsidian shadow. Wearing a textured minimalist black turtleneck sweater, intense visionary gaze looking slightly off-camera. Editorial Vogue and Monocle magazine aesthetic, grain texture, volumetric warm backlighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRIdAZL_aeKhdNj0j11PfqRxTnoJDygyvYERlJUh1y9rRx9YyOGMjZFiQl_2j6PQW6HhRUnilkbhcYy9GWH70PN11eEfGSJ0G9xlGOkRvIVTqDUnNBug8yJ1IXV-sATFfvm4xFO8mMm9kC-OwxQZeA4hc-JH9O1V9r0PrNBmQBy4g9EOCErIcrj0H9Vk5g8IQa_EHACM41-23zvVgPWQfE6bMjCI3kPYlpgfzFomM"><div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-80"></div><div class="absolute bottom-space-md left-space-md right-space-md md:bottom-space-lg md:left-space-lg md:right-space-lg p-space-md rounded-2xl bg-surface-container-lowest/80 backdrop-blur-md flex items-center justify-between"><div><p class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-widest">Atelier &amp; Studio</p><p class="font-headline-sm text-body-md font-bold text-on-surface">Jakarta / Singapore</p></div><div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary-container"><span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">shutter_speed</span></div></div></div></div></div>
-</div>
-</section>
-<!-- 2. TENTANG SAYA & KEAHLIAN (Asymmetrical Modernist Bento Grid) -->
-<section class="w-full bg-surface py-space-3xl px-margin md:px-margin-tablet lg:px-margin-desktop" id="tentang">
-<div class="max-w-7xl mx-auto flex flex-col gap-space-2xl">
-<!-- Section Tagline -->
-<div class="flex flex-col justify-between gap-space-md items-center text-center">
-<div>
-<span class="font-label-md text-label-md text-primary uppercase tracking-[0.25em] font-semibold">Manifesto &amp; Disiplin</span>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight font-extrabold mt-space-xs">
-            Rekayasa Sensorik &amp; Nilai Estetika
-          </h2>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
-          Mengintegrasikan kedalaman naratif sinema dengan presisi teknologi antarmuka spasial untuk memantik rasa penasaran audiens.
-        </p>
-</div>
-<!-- Bento Box Layout Grid -->
-<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter text-center"><div class="md:col-span-7 bg-surface-container-low rounded-3xl p-space-xl md:p-space-2xl flex flex-col justify-between items-center text-center shadow-xl relative overflow-hidden group"><div class="absolute top-0 right-0 w-80 h-80 bg-primary-container/10 rounded-full blur-3xl pointer-events-none group-hover:bg-primary-container/15 transition-all"></div><div class="flex items-center justify-center gap-space-sm z-10 w-full"><span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Filosofi Desain</span><span class="material-symbols-outlined text-outline text-[24px]">format_quote</span></div><blockquote class="my-space-xl z-10 max-w-xl mx-auto"><p class="font-headline-sm text-headline-sm md:text-headline-md font-bold text-on-surface leading-snug tracking-tight">“Desain bukan sekadar ornamen estetika, melainkan <span class="text-secondary">rekayasa persepsi</span> yang memantik rasa penasaran dan memberikan dampak nyata.”</p></blockquote><div class="flex flex-wrap items-center justify-center gap-space-sm z-10 pt-space-md"><div class="px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">Art &amp; Commerce Balance</div><div class="px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">Spatial Intelligence</div><div class="px-space-md py-space-xs rounded-full bg-surface-container-high text-on-surface font-label-sm text-label-sm">Human Metaphor</div></div></div><div class="md:col-span-5 bg-surface-container rounded-3xl p-space-xl flex flex-col justify-between items-center text-center shadow-xl"><div class="flex flex-col gap-space-xs items-center"><span class="font-label-sm text-label-sm uppercase tracking-widest text-secondary font-bold">Pilar Strategis</span><h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Disiplin Kreasi</h3></div><div class="flex flex-col gap-space-md my-space-lg w-full"><div class="p-space-md rounded-2xl bg-surface-container-high flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-space-sm"><div class="flex flex-col sm:flex-row items-center gap-space-md text-center sm:text-left"><span class="material-symbols-outlined text-primary-container">theater_comedy</span><div><h4 class="font-headline-sm text-body-md font-bold text-on-surface">Creative Direction</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Narasi menyeluruh &amp; arsitektur ide</p></div></div><span class="material-symbols-outlined text-outline-variant">north_east</span></div><div class="p-space-md rounded-2xl bg-surface-container-high flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-space-sm"><div class="flex flex-col sm:flex-row items-center gap-space-md text-center sm:text-left"><span class="material-symbols-outlined text-secondary-container">view_in_ar</span><div><h4 class="font-headline-sm text-body-md font-bold text-on-surface">UI/UX Spatial Design</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Antarmuka imersif &amp; arsitektur sistem</p></div></div><span class="material-symbols-outlined text-outline-variant">north_east</span></div><div class="p-space-md rounded-2xl bg-surface-container-high flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-space-sm"><div class="flex flex-col sm:flex-row items-center gap-space-md text-center sm:text-left"><span class="material-symbols-outlined text-primary">camera</span><div><h4 class="font-headline-sm text-body-md font-bold text-on-surface">Editorial Photography</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Cahaya terukur &amp; komposisi sinematik</p></div></div><span class="material-symbols-outlined text-outline-variant">north_east</span></div><div class="p-space-md rounded-2xl bg-surface-container-high flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-space-sm"><div class="flex flex-col sm:flex-row items-center gap-space-md text-center sm:text-left"><span class="material-symbols-outlined text-secondary">movie</span><div><h4 class="font-headline-sm text-body-md font-bold text-on-surface">Film &amp; Motion</h4><p class="font-body-sm text-body-sm text-on-surface-variant">Ritme visual berdaya sentak tinggi</p></div></div><span class="material-symbols-outlined text-outline-variant">north_east</span></div></div><div class="pt-space-xs flex items-center justify-center gap-space-xs text-secondary font-label-sm text-label-sm mx-auto"><span class="">Diselaraskan untuk skala multi-platform</span><span class="material-symbols-outlined text-[16px]">check_circle</span></div></div><div class="md:col-span-12 bg-surface-container-low rounded-3xl p-space-xl flex flex-col items-center justify-center text-center gap-space-xl shadow-xl"><div class="flex flex-col items-center text-center gap-space-sm max-w-2xl mx-auto"><span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Instrumen &amp; Ekosistem</span><h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Creative Toolkit &amp; Pipeline Produksi</h3><p class="font-body-md text-body-md text-on-surface-variant">Memadukan presisi perangkat lunak modern (Figma Spatial, Unreal Engine 5, DaVinci Resolve Studio, Medium Format Phase One) untuk menciptakan presisi dari nol hingga rilis global.</p><div class="flex flex-wrap justify-center gap-space-xs pt-space-xs"><span class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">Figma Spatials</span><span class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">Unreal Engine 5</span><span class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">DaVinci Resolve Studio</span><span class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">Cinema 4D / Octane</span><span class="px-space-md py-space-xs rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">Phase One XF</span></div></div><div class="w-full max-w-lg aspect-video rounded-2xl overflow-hidden bg-surface-container-highest relative shadow-inner mx-auto"><img class="w-full h-full object-cover" data-alt="Abstract dynamic 3D glass sculpture rendering with warm amber and volcanic orange light refractions. Modern minimalist 3D rendering with deep obsidian black background, crystalline caustics, cinematic depth of field, Octane render quality for a creative director portfolio." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZKUN_SI6NZ3puaBrvtRv0gTBlp5tPYbBmGv9poKowqWonoPPb6Rq08Bsitb21GU9e2mol3RoVN06il8u3QarPHsh8xTMZiI5tm6LAeDYbIWXfFfkgVjmzFzqnruZdc5Rrf_KIo1e_43LuNOoDa3ziCn1DVr4mLELPaaRxHObTanCYnKvPCG78NPyKVnxd0CiVkulDQh-ObFxi2UB0wovswqqn4FDxlIbO9pODsXA"><div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/80 to-transparent flex items-end justify-center p-space-md"><span class="font-label-sm text-label-sm text-on-surface font-semibold flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-secondary-container"></span>Eksperimen Estetika Q1</span></div></div></div></div>
-</div>
-</section>
-<!-- 3. GALERI KARYA / WORK GALLERY (Selected Works with Rich Imagery & Pill Filter) -->
-<section class="w-full bg-surface-container-lowest py-space-3xl px-margin md:px-margin-tablet lg:px-margin-desktop" id="karya">
-<div class="max-w-7xl mx-auto flex flex-col gap-space-2xl">
-<!-- Section Header -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-lg">
-<div class="flex flex-col gap-space-xs">
 <div class="flex items-center gap-space-sm">
-<span class="w-3 h-3 rounded-full bg-primary-container"></span>
-<span class="font-label-md text-label-md text-primary uppercase tracking-[0.25em] font-semibold">Portofolio Kurasi</span>
+
+<span class="text-outline-variant font-label-sm text-label-sm">•</span>
+
 </div>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight font-extrabold">
-            Karya Terpilih
+</div>
+<!-- Hero Typography Display -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
+<div class="flex flex-col">
+
+<h1 class="font-display-xl text-display-xl text-primary tracking-tighter uppercase leading-none">
+            PRIO SETYO
+          </h1>
+</div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-md lg:pb-2">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Director &amp; Brand Architect</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Translating human tension into resilient design systems</span>
+</div>
+
+</div>
+</div>
+</section>
+<!-- Bento Grid Section with Left Edge Vertical Rail -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
+<!-- Left Rail: Architectural Vertical Nav Strip (Desktop Only) -->
+<aside class="hidden lg:flex lg:col-span-1 flex-col items-center justify-between py-space-lg rounded-3xl bg-surface-container-low min-h-[640px] shadow-sm select-none">
+<div class="flex flex-col items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-display-xl text-xs font-bold">
+            PS
+          </div>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
+</div>
+<nav class="flex flex-col items-center gap-space-xl py-space-md">
+<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface hover:text-primary tracking-widest transition-colors py-2" href="#karya-terpilih">
+            Karya
+          </a>
+<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface tracking-widest transition-colors py-2" href="#filosofi-modal" onclick="document.getElementById('dialog-filosofi').showModal()">
+            Filosofi
+          </a>
+<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface tracking-widest transition-colors py-2" href="#toolkit-section">
+            Toolkit
+          </a>
+<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface tracking-widest transition-colors py-2" href="#pengalaman-section">
+            Pengalaman
+          </a>
+</nav>
+<div class="flex flex-col items-center gap-1 font-label-caps text-label-caps text-on-surface-variant">
+<span class="">01</span>
+<div class="w-0.5 h-8 bg-surface-variant"></div>
+<span class="">05</span>
+</div>
+</aside>
+<!-- Main Profile Bento Card (Lilac Field) -->
+<article class="lg:col-span-4 flex flex-col justify-between p-space-lg rounded-3xl bg-secondary-fixed text-on-secondary-fixed shadow-md relative overflow-hidden min-h-[640px]">
+<!-- Background Ambient Accent Circle -->
+<div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-surface-container-lowest/40 pointer-events-none blur-2xl"></div>
+<!-- Top Profile Micro Badges -->
+<div class="flex items-start justify-between relative z-10">
+<div class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-lowest text-on-surface font-label-caps text-label-caps shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+            JAKARTA BASED
+          </div>
+<!-- Sticker Badge -->
+<div class="w-16 h-16 rounded-full bg-primary text-on-primary flex flex-col items-center justify-center text-center p-1 shadow-lg transform rotate-6 hover:rotate-0 transition-transform">
+<span class="text-[10px] leading-tight font-label-caps tracking-tighter">★ TOP ★</span>
+<span class="text-[9px] font-label-caps uppercase tracking-tight text-secondary-fixed">CREATIVE</span>
+<span class="text-[10px] font-headline-sm leading-none font-bold">2025</span>
+</div>
+</div>
+<!-- Center: Profile Portrait & Frame -->
+<div class="flex flex-col items-center text-center my-space-md relative z-10">
+<div class="relative w-40 h-40 rounded-full p-1.5 bg-surface-container-lowest shadow-xl mb-space-md">
+<img alt="Prio Setyo Creative Director" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY">
+<span class="absolute bottom-1 right-2 px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-[10px]">
+              LEAD
+            </span>
+</div>
+<span class="font-label-caps text-label-caps tracking-widest uppercase text-on-secondary-fixed-variant">CREATIVE DIRECTOR</span>
+<h2 class="font-headline-lg text-headline-lg text-on-secondary-fixed tracking-tight mt-1">
+            I'm Prio Setyo
+          </h2>
+<p class="font-body-md text-body-md text-on-secondary-fixed-variant mt-2 max-w-xs">
+            Merancang identitas visual, kampanye spasial, dan narasi digital untuk jenama global terkemuka.
+          </p>
+</div>
+<!-- Bottom Bio & Micro Info -->
+<div class="flex flex-col gap-space-xs pt-space-sm relative z-10">
+<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-lowest/80 backdrop-blur-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-lg">mail</span>
+<span class="font-label-sm text-label-sm text-on-surface truncate">prio.setyo@creativestudio.id</span>
+</div>
+<button class="p-1 rounded-full hover:bg-surface-container-high transition-colors" onclick="navigator.clipboard.writeText('prio.setyo@creativestudio.id'); alert('Email disalin ke clipboard!');" title="Copy Email">
+<span class="material-symbols-outlined text-base text-on-surface-variant">content_copy</span>
+</button>
+</div>
+<div class="flex items-center justify-between text-on-secondary-fixed-variant font-label-caps text-label-caps px-2 pt-1">
+<span class="">AVAILABILITY: IMMINENT</span>
+<span class="">TIMEZONE: GMT+7</span>
+</div>
+</div>
+</article>
+<!-- Right Column: Showreel & Metrics Stack -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<!-- Cinematic Showreel Card -->
+<article class="relative w-full rounded-3xl overflow-hidden min-h-[360px] flex flex-col justify-between p-space-lg shadow-md group">
+<!-- Background Image with Scrim -->
+<div class="absolute inset-0 z-0">
+<img alt="Cinematic Architectural Showreel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA9Bw8naRYvQDN01ucwLtamVgIA7fSRvelaYIR35pGCC4LkMLUtgDaQrwC26rLyCwU_Eft5O0s5tGWFr8Tw3jz7rgfxGxNlfboQ8qQv7FbWwtpIg34o6Cvqu-kqw7IgsDD-N_I56LCfULu8OvSK9ARwqoj5FTKHWm6zl8ECBfv2uZ6TzudafeVPODgn_KRz7uQzpggYxYj4q62HG-Uh2d_UU7UMbgmo3wMqz-zcQY">
+<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
+</div>
+<!-- Top Meta Row -->
+<div class="relative z-10 flex flex-wrap items-center justify-between gap-space-sm">
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface font-label-caps text-label-caps uppercase shadow-sm">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+              SHOWREEL 2024–2025 • SPATIAL &amp; CINEMATIC DESIGN
+            </span>
+<span class="px-space-sm py-1 rounded-full bg-primary/70 backdrop-blur-sm text-on-primary font-label-caps text-label-caps">
+              03:42 MIN / 4K UHD
+            </span>
+</div>
+<!-- Center Glowing Frosted Play Trigger -->
+<div class="relative z-10 flex items-center justify-center my-space-md">
+<button aria-label="Putar Showreel" class="relative group/play flex items-center justify-center w-20 h-20 rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-primary shadow-2xl hover:scale-110 transition-transform duration-300" onclick="alert('Memutar Creative Director Showreel 2024–2025...')">
+<span class="absolute inset-0 rounded-full bg-surface-container-lowest/40 animate-ping pointer-events-none"></span>
+<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+</button>
+</div>
+<!-- Bottom Summary Strip -->
+<div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-space-sm">
+<div class="flex flex-col text-on-primary">
+<span class="font-label-caps text-label-caps text-surface-variant uppercase tracking-wider">STUDIO HIGHLIGHT</span>
+<h3 class="font-headline-md text-headline-md tracking-tight">Kinetika Spasial &amp; Narasi Visual</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                Direction
+              </span>
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
+                CGI Architecture
+              </span>
+</div>
+</div>
+</article>
+<!-- Metric Trio Bento Cards Row -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
+<!-- Metric Card 1: Mint Green -->
+<article class="p-space-lg rounded-3xl bg-tertiary-fixed text-on-tertiary-fixed shadow-sm flex flex-col justify-between min-h-[220px]">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-tertiary-fixed-variant">PORTOFOLIO</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest/80 text-on-surface font-label-caps text-[10px]">
+                +24% YoY
+              </span>
+</div>
+<div class="flex flex-col my-space-xs">
+<span class="font-stat-display text-stat-display tracking-tight text-on-tertiary-fixed">120+</span>
+<span class="font-headline-sm text-headline-sm font-semibold mt-1">Proyek Komersial</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-tertiary-fixed-variant">
+              Skala korporasi internasional &amp; rintisan teknologi tier-1.
+            </p>
+</article>
+<!-- Metric Card 2: Soft Violet/Lilac -->
+<article class="p-space-lg rounded-3xl bg-secondary-fixed-dim text-on-secondary-fixed shadow-sm flex flex-col justify-between min-h-[220px]">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-secondary-fixed-variant">REKOGNISI</span>
+<span class="material-symbols-outlined text-secondary text-xl" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+</div>
+<div class="flex flex-col my-space-xs">
+<span class="font-stat-display text-stat-display tracking-tight text-on-secondary-fixed">35+</span>
+<span class="font-headline-sm text-headline-sm font-semibold mt-1">Penghargaan Global</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant">
+              Termasuk rekognisi Cannes Lions &amp; D&amp;AD Graphite Pencils.
+            </p>
+</article>
+<!-- Metric Card 3: Warm Peach -->
+<article class="p-space-lg rounded-3xl bg-[#FFE8D6] text-[#422006] shadow-sm flex flex-col justify-between min-h-[220px]">
+<div class="flex items-center justify-between">
+<span class="font-label-caps text-label-caps uppercase tracking-wider text-[#9A3412]">JAM TERBANG</span>
+<span class="material-symbols-outlined text-[#EA580C] text-xl">timeline</span>
+</div>
+<div class="flex flex-col my-space-xs">
+<span class="font-stat-display text-stat-display tracking-tight text-[#422006]">10+</span>
+<span class="font-headline-sm text-headline-sm font-semibold mt-1">Tahun Pengalaman</span>
+</div>
+<p class="font-body-sm text-body-sm text-[#7C2D12]">
+              Kepemimpinan kreatif lintas Asia Pasifik dan Eropa.
+            </p>
+</article>
+</div>
+</div>
+</section>
+<!-- Toolkit & Creative Engine (Obsidian Solid Card) -->
+<section class="w-full p-space-lg rounded-3xl bg-primary text-on-primary shadow-xl flex flex-col lg:flex-row items-stretch justify-between gap-space-lg" id="toolkit-section">
+<div class="flex flex-col justify-between lg:max-w-md">
+<div class="flex flex-col gap-2">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase w-max">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed animate-pulse"></span>
+            Realtime 3D &amp; Spatial Pipeline
+          </div>
+<h3 class="font-headline-lg text-headline-lg tracking-tight uppercase text-on-primary mt-2">
+            CREATIVE ENGINE &amp; TOOLKIT
+          </h3>
+<p class="font-body-md text-body-md text-on-primary-container">
+            Kombinasi komputasi spasial, tipografi parametrik, dan alur kerja sinematik untuk mewujudkan presisi visual tanpa kompromi.
+          </p>
+</div>
+<div class="pt-space-md flex items-center gap-space-md">
+<div class="flex flex-col">
+<span class="font-stat-display text-2xl font-bold text-on-primary">100%</span>
+<span class="font-label-caps text-label-caps text-on-primary-container uppercase">Fidelity Rate</span>
+</div>
+<div class="h-8 w-px bg-on-primary-container/30"></div>
+<div class="flex flex-col">
+<span class="font-stat-display text-2xl font-bold text-tertiary-fixed">Sub-second</span>
+<span class="font-label-caps text-label-caps text-on-primary-container uppercase">Spatial Iteration</span>
+</div>
+</div>
+</div>
+<!-- Tech Stack Badges Grid -->
+<div class="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-space-sm items-center content-center">
+<!-- Figma -->
+<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
+<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
+            Fg
+          </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm font-semibold text-on-primary">Figma</span>
+<span class="font-label-caps text-[10px] text-on-primary-container">Design Systems</span>
+</div>
+</div>
+<!-- Unreal Engine -->
+<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
+<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
+            UE5
+          </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm font-semibold text-on-primary">Unreal 5.4</span>
+<span class="font-label-caps text-[10px] text-on-primary-container">Real-time Sets</span>
+</div>
+</div>
+<!-- Blender -->
+<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
+<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
+            Bl
+          </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm font-semibold text-on-primary">Blender 4</span>
+<span class="font-label-caps text-[10px] text-on-primary-container">Procedural 3D</span>
+</div>
+</div>
+<!-- Cinema 4D -->
+<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
+<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
+            C4D
+          </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm font-semibold text-on-primary">Cinema 4D</span>
+<span class="font-label-caps text-[10px] text-on-primary-container">Redshift Engine</span>
+</div>
+</div>
+<!-- After Effects -->
+<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
+<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
+            Ae
+          </div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm font-semibold text-on-primary">After Effects</span>
+<span class="font-label-caps text-[10px] text-on-primary-container">Kinetic Motion</span>
+</div>
+</div>
+<!-- Apple Vision / Spatial -->
+<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
+<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
+<span class="material-symbols-outlined text-base">view_in_ar</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-sm font-semibold text-on-primary">visionOS</span>
+<span class="font-label-caps text-[10px] text-on-primary-container">Spatial UX</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Extended Work Gallery Section -->
+<section class="flex flex-col gap-space-md pt-space-lg" id="karya-terpilih">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">ARSIP TERPILIH 2023—2025</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mt-1">
+            Eksplorasi Karya Terpilih
           </h2>
 </div>
-<!-- Filter Chips (Oval Pill Buttons) -->
-<div class="flex flex-wrap items-center gap-space-xs p-space-xs rounded-full bg-surface-container-high/60 backdrop-blur-md">
-<button class="filter-btn active px-space-lg py-space-xs rounded-full bg-primary-container text-on-primary-container font-label-md text-label-md font-bold shadow-md transition-all" data-category="all">
-            Semua
+<!-- Interactive Filter Chips -->
+<div class="flex flex-wrap items-center gap-2 p-1 rounded-full bg-surface-container-low" id="gallery-filters">
+<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm bg-primary text-on-primary shadow-sm transition-all" data-filter="all">
+            Semua Karya
           </button>
-<button class="filter-btn px-space-lg py-space-xs rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-all" data-category="fotografi">
+<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="fotografi">
             Fotografi
           </button>
-<button class="filter-btn px-space-lg py-space-xs rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-all" data-category="videografi">
+<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="videografi">
             Videografi
           </button>
-<button class="filter-btn px-space-lg py-space-xs rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-all" data-category="desain">
-            Desain UI/UX
+<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="desain">
+            Desain
           </button>
-<button class="filter-btn px-space-lg py-space-xs rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-md text-label-md font-medium transition-all" data-category="copywriting">
+<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="copywriting">
             Copywriting
           </button>
 </div>
 </div>
-<!-- Project Showcase Grid (3-column / asymmetric layout) -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter lg:gap-gutter-desktop" id="projects-grid">
-<!-- Project 1: Nova Spatial OS (Desain UI/UX) -->
-<div class="project-item group flex flex-col gap-space-md" data-category="desain">
-<div class="relative w-full aspect-[16/11] rounded-3xl overflow-hidden bg-surface-container shadow-xl">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Futuristic next-generation spatial computing operating system interface floating in ambient translucent glass layers with deep space obsidian backdrop. Glowing neon orange micro-widgets, holographic layered menus, dynamic data typography, tactile spatial glass panels, ultra-clean UI/UX design presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEofPaya-ZGWveRCDy8cNUJRN_N5NCwX8ngR_QWgpEBmZTMQSRSh6bxRyttNiIroK5QcXboYpJxqPZs9QkCWZcOtUeAGvDkKGmo-uebF1mBjT3YA7YmeL8Csg_uPYRVhbCmdunD9DPNpU9f3Sb3ARiTfkBAzuu8v5JuA6WzP9sHblTo2IT7q4-IVdBGZ-q_-tkeuAJxBOf8ewixWB6K-4TYKjcKa2VI3i50WA3Er0">
-<div class="absolute top-space-md left-space-md">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
-                Desain UI/UX
+<!-- 3-Column Curated Projects Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md" id="projects-grid">
+<!-- Project 1: Desain / Spatial -->
+<article class="project-item group flex flex-col rounded-3xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-lg transition-all duration-300" data-category="desain">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-space-md bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Futuristic architectural pavilion interior with monumental concrete curved walls, minimalist soft diffused skylight, serene zen water basin reflection, high contrast editorial architecture photography in muted slate tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBa2KOlfDWEI_usA-OnOjp3a2gg2wYXQ8JqEKgT6dPfKs0QED6iQt-6apVB4u0Y88SYYSTkI7iEjrZyQWCwYncdE22z-HdmNDvCA29vfXKaNbMeKhdAgDI_zksjN4ETeC6oHeuFpLQYS7JZFaP4-fkZxU-IDqj82uUMJeraANVwimVd4jJX_52m0mJjIBk0KrLMGGuBwaGc7eKxh2kaKLD0mC8AbkpXv05T0or4Jlg">
+<div class="absolute top-space-sm left-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-caps text-label-caps text-on-surface">
+                SPATIAL SYSTEM
               </span>
 </div>
-<div class="absolute bottom-space-md right-space-md w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-lg">
-<span class="material-symbols-outlined text-[20px]">arrow_outward</span>
-</div>
-</div>
-<div class="flex flex-col gap-space-xs px-space-xs">
-<div class="flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">Nova Spatial OS</h3>
-<span class="font-label-sm text-label-sm text-outline">2024</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Next-gen spatial computing design system &amp; modular glass design language.</p>
-</div>
-</div>
-<!-- Project 2: Silent Monolith (Fotografi & Seni) -->
-<div class="project-item group flex flex-col gap-space-md" data-category="fotografi">
-<div class="relative w-full aspect-[16/11] rounded-3xl overflow-hidden bg-surface-container shadow-xl">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Editorial monochromatic visual campaign photography of monumental brutalist concrete architecture at golden dusk. A lone silhouetted figure in high-fashion flowing coat standing in the cavernous concrete geometric archway. Stark architectural lines, warm vermilion sunset rim light touching the edge of the monolith." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJJWJQHqgaJrmmXgNkWqjiPjVu7ZXUY93Ukc-HYliONfsYpK_nSAnrYbzGboJ0gyL8MSQnESy0w6V8M6mAAlq-Zh1zMtIsBlD2evEHv5yejd9hJk4BSVDi0ZThWFhJ2xzbDkXnZQ-qPEqNJyWPJc7Xiec9xXS4QrDZqG2jWs0Eg49tPpt08SC6Lc3RGOU5LszmeDEkUa64Dfvu31LzCX-tPZBOsWCs6Kz2FuKgrtU">
-<div class="absolute top-space-md left-space-md">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
-                Fotografi &amp; Seni
+<div class="absolute bottom-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-primary/80 text-on-primary font-label-caps text-[10px]">
+                JAKARTA / 2024
               </span>
 </div>
-<div class="absolute bottom-space-md right-space-md w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-lg">
-<span class="material-symbols-outlined text-[20px]">arrow_outward</span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps uppercase text-secondary">Pavilion Architecture</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary">Mono Spatial Pavilion</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Instalasi spasial interaktif berskala 1.200 meter persegi untuk pameran biennial seni rupa kontemporer.
+              </p>
+</div>
+<div class="pt-space-md mt-space-sm flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Client: Mono Foundation</span>
+<button class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-primary group-hover:text-on-primary flex items-center justify-center transition-colors" onclick="alert('Membuka dokumentasi: Mono Spatial Pavilion')">
+<span class="material-symbols-outlined text-lg">arrow_outward</span>
+</button>
 </div>
 </div>
-<div class="flex flex-col gap-space-xs px-space-xs">
-<div class="flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">Silent Monolith</h3>
-<span class="font-label-sm text-label-sm text-outline">2024</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Editorial visual campaign menyelidiki ruang, arsitektur brutalism, dan kesunyian manusia.</p>
-</div>
-</div>
-<!-- Project 3: Echoes of Nusantara (Videografi & Sinematografi) -->
-<div class="project-item group flex flex-col gap-space-md" data-category="videografi">
-<div class="relative w-full aspect-[16/11] rounded-3xl overflow-hidden bg-surface-container shadow-xl">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Cinematic 4K documentary film still capturing the ancient volcanic landscapes of Indonesia at misty sunrise. Traditional shadow puppeteer craftsman working under dramatic directional warm incandescent lantern light, atmospheric dust motes floating in air, rich cinematic color grade." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQDL8KyX67MLyaR7WRfaYFlh9D3zIMs9-FgF-5WUMaZP98VJN0u0HWQnagcNiYU21us6WzS1dos1hALtR8p9j1Y1cJS6p7Y5y8PF80Vcr0kUHLBjdnwxTe2og09FZy-SgOiug8FWF4K8yPNODiqBk7_L-EoD4JSpFPMnDuzUUCTGGo1s70qVEUA80yLgJdIy2XO46DFN7rIdbSRUJopu4F23RB7b9BsrukJGrePAc">
-<div class="absolute top-space-md left-space-md">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
-                Videografi &amp; Sinematografi
+</article>
+<!-- Project 2: Videografi -->
+<article class="project-item group flex flex-col rounded-3xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-lg transition-all duration-300" data-category="videografi">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-space-md bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cinematic frame from a high fashion commercial with dramatic chiaroscuro studio lighting, athletic model captured mid-motion with luminous sheer fabric, cinematic 35mm grain aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw-HjHTxu0iiEQ5z7YvjAbVP9wfRoOcfUb13m1mFshL5HU6LfmOEyk_w9r7ILa2sS5f7YN6AT4xK9vAXIfYQRiV0s1IagWRXCZndw5C-09Y5hCK0pIeBZtWRgQ8ROcmnmez5qemMezfiQ9P0sdjBnbsAJkJRPodhoCrxzeh-quGgzLEdorxq0VQtnxJF_SLz3-iHG5jz2SojHZd69KaE4NN6YwL2UGlbXJTZ00ZV8">
+<div class="absolute top-space-sm left-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-caps text-label-caps text-on-surface">
+                COMMERCIAL FILM
               </span>
 </div>
-<div class="absolute bottom-space-md right-space-md w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-lg">
-<span class="material-symbols-outlined text-[20px]">arrow_outward</span>
-</div>
-</div>
-<div class="flex flex-col gap-space-xs px-space-xs">
-<div class="flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">Echoes of Nusantara</h3>
-<span class="font-label-sm text-label-sm text-outline">2023</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Film dokumenter sinematik 4K mengeksplorasi mitologi dan warisan maritim kepulauan.</p>
-</div>
-</div>
-<!-- Project 4: Minimalist Living & Spatial Identity (Copywriting & Editorial) -->
-<div class="project-item group flex flex-col gap-space-md" data-category="copywriting">
-<div class="relative w-full aspect-[16/11] rounded-3xl overflow-hidden bg-surface-container shadow-xl">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Editorial hardcover architecture and design publication layout shot from overhead. Tactile textured matte Japanese paper, elegant Swiss typography, minimalist layout showcasing serene interior living spaces with timber and concrete finishes. Editorial copywriting layout specimen." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIZ9WdXuNxt44iBS-4auf6jTJMPv7tm3YWi_wIOpXTyE7Vkgx8iOwF1ivwHFKiR5cEfEpspADw0AhfNWqEfOgxfFLzTYySK53lPJXMfvZiEu--2OP72hxWRCQGGHwlJm65yLtiTFHVyk3A0p4TbgR3CIKqIF_PBisqPl6luHIr25qafE2z2rqvF6zw8fQD-ta1Q6AVu7Fd0QOIEX6tcO78ogKm4NqP5tHgmK-u_JI">
-<div class="absolute top-space-md left-space-md">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
-                Copywriting &amp; Editorial
+<div class="absolute bottom-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-primary/80 text-on-primary font-label-caps text-[10px]">
+                TOKYO / 2024
               </span>
 </div>
-<div class="absolute bottom-space-md right-space-md w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-lg">
-<span class="material-symbols-outlined text-[20px]">arrow_outward</span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps uppercase text-secondary">Campaign Direction</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary">Aura Kinetic Film</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Penyutradaraan kampanye sinematik global untuk peluncuran lini wearable cerdas generasi terbaru.
+              </p>
+</div>
+<div class="pt-space-md mt-space-sm flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Client: Aura Wearables</span>
+<button class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-primary group-hover:text-on-primary flex items-center justify-center transition-colors" onclick="alert('Membuka dokumentasi: Aura Kinetic Film')">
+<span class="material-symbols-outlined text-lg">arrow_outward</span>
+</button>
 </div>
 </div>
-<div class="flex flex-col gap-space-xs px-space-xs">
-<div class="flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">Minimalist Spatial Identity</h3>
-<span class="font-label-sm text-label-sm text-outline">2023</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Editorial monograph &amp; narasi kuratorial arsitektur modern Asia Pasifik.</p>
-</div>
-</div>
-<!-- Project 5: Apex Vanguard (Desain UI/UX & Brand Identity) -->
-<div class="project-item group flex flex-col gap-space-md" data-category="desain">
-<div class="relative w-full aspect-[16/11] rounded-3xl overflow-hidden bg-surface-container shadow-xl">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Kinetic brand identity and high performance dashboard UI for a cutting edge clean energy technology venture. Sharp typographic layouts, glowing dynamic electric vermilion data charts, dark sleek carbon surfaces, modern corporate tech branding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDllCkHRIougiyqRWHGJLWDrV55d8vecFNTScdOcV0msY7wcCViWHKSa2M8FXuLkLTVo1yIGcPpWKoYSxwcyUoShAcMnUHbzfengCqLgvUVQdvCKy89YlmsswdywJai31Ka8hDQmttxjuTRY3o349XKSZT-CGuq7kUJ_bA5DNZSNiSTfRc8SxEjFmD3oOQllOCa6d1GKiUkGO_5b1NhpGi3Z7NziIj-LC9ogqR4IBE">
-<div class="absolute top-space-md left-space-md">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
-                Brand Identity
+</article>
+<!-- Project 3: Fotografi & Copywriting -->
+<article class="project-item group flex flex-col rounded-3xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-lg transition-all duration-300" data-category="fotografi copywriting">
+<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-space-md bg-surface-container">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Monochrome minimalist editorial studio book cover mockup with extreme Swiss typographic grid, bold sans-serif lettering, subtle debossed foil textures on matte raw off-white paper" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOa2CZ7oJQpqn24tmFYPG-ipuAF3HbDXddDuzTXTZAyrz6xjDOt8yFhNRKAkgRmmKn_3QxK46zh2_b-h-2PhTyVYBzsVN65eou6dmKd4O_qZwRSwaU5k3tsRRZoV04gACDu0yG9lCCXLgVYWiFyCr-CGC8IHce3IttCfbl-wafpe7Vr5dh2EOaWiOF-_5xa6I5-wae3cbmqwVwku8JQRBHQ17xgv0hTGBrIAocOJg">
+<div class="absolute top-space-sm left-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-caps text-label-caps text-on-surface">
+                EDITORIAL &amp; COPY
               </span>
 </div>
-<div class="absolute bottom-space-md right-space-md w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-lg">
-<span class="material-symbols-outlined text-[20px]">arrow_outward</span>
-</div>
-</div>
-<div class="flex flex-col gap-space-xs px-space-xs">
-<div class="flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">Apex Vanguard</h3>
-<span class="font-label-sm text-label-sm text-outline">2022</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Identitas kinetik komprehensif dan sistem visual aplikasi venture capital teknologi.</p>
-</div>
-</div>
-<!-- Project 6: Komorebi Serenity (Fotografi) -->
-<div class="project-item group flex flex-col gap-space-md" data-category="fotografi">
-<div class="relative w-full aspect-[16/11] rounded-3xl overflow-hidden bg-surface-container shadow-xl">
-<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Fine art medium format photograph of sunlight filtering through dense Japanese cypress and maple leaves (komorebi). Soft dappled sunlight casting geometric patterns across minimalist tatami room and oiled cedar wall, poetic tranquil mood, Hasselblad tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxR8p1mdUkdU_k_kbTDAThJW9hbl9kZnlKYKbKH5RqvH0cNLGUToLXn74Ffbc1hTGCWQyClrPqtYJtk9C8h6WHDdctHvr-b9Q7XLuxjxskgiuMz5IYCPAdM8hDbAR0AbIGpr_QbAhQHxdYUJxBSddLBNAWh8fnXlMbs7Y9qOx8F8LWP4evYkSjSO8XkhKSXVA9NkLEUcDX6GuugvXfqoyGcUj2tZ1vVwbzE04acXA">
-<div class="absolute top-space-md left-space-md">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-secondary font-label-sm text-label-sm font-semibold uppercase tracking-wider">
-                Fotografi
+<div class="absolute bottom-space-sm right-space-sm">
+<span class="px-space-sm py-1 rounded-full bg-primary/80 text-on-primary font-label-caps text-[10px]">
+                BERLIN / 2025
               </span>
 </div>
-<div class="absolute bottom-space-md right-space-md w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all shadow-lg">
-<span class="material-symbols-outlined text-[20px]">arrow_outward</span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div class="flex flex-col gap-1">
+<span class="font-label-caps text-label-caps uppercase text-secondary">Brand Manifesto</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary">Kinetik Identity &amp; Voice</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
+                Perumusan arsitektur naratif, pedoman copywriting, dan fotografi editorial untuk kendaraan listrik masa depan.
+              </p>
+</div>
+<div class="pt-space-md mt-space-sm flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Client: Kinetik Mobility</span>
+<button class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-primary group-hover:text-on-primary flex items-center justify-center transition-colors" onclick="alert('Membuka dokumentasi: Kinetik Identity')">
+<span class="material-symbols-outlined text-lg">arrow_outward</span>
+</button>
 </div>
 </div>
-<div class="flex flex-col gap-space-xs px-space-xs">
-<div class="flex items-center justify-between">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">Komorebi Serenity</h3>
-<span class="font-label-sm text-label-sm text-outline">2022</span>
+</article>
 </div>
-<p class="font-body-sm text-body-sm text-on-surface-variant">Studi puitis interaksi cahaya alami Skandinavia dan arsitektur kayu tradisional Jepang.</p>
+</section>
+<!-- Experience Timeline Strip -->
+<section class="flex flex-col p-space-lg rounded-3xl bg-surface-container-low shadow-sm gap-space-md" id="pengalaman-section">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">JEJAK KARIER &amp; PERJALANAN</span>
+<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight">Kepemimpinan Kreatif Terpilih</h3>
 </div>
+<span class="px-space-sm py-1 rounded-full bg-surface-container-highest text-on-surface font-label-caps text-label-caps">
+          2015 — SEKARANG
+        </span>
 </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="flex flex-col p-space-md rounded-2xl bg-surface-container-lowest shadow-sm">
+<span class="font-label-caps text-label-caps text-secondary uppercase">2022 — SEKARANG</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Executive Creative Director</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Studio Kinetika Nusantara</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+            Memimpin 28 desainer multidisiplin, produser 3D, dan sinematografer menangani portofolio enterprise APAC.
+          </p>
+</div>
+<div class="flex flex-col p-space-md rounded-2xl bg-surface-container-lowest shadow-sm">
+<span class="font-label-caps text-label-caps text-secondary uppercase">2019 — 2022</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Head of Brand Architecture</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Omni Creative Network</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+            Merancang ulang sistem visual bagi 14 rintisan teknologi unicorn dan platform fintech multinasional.
+          </p>
+</div>
+<div class="flex flex-col p-space-md rounded-2xl bg-surface-container-lowest shadow-sm">
+<span class="font-label-caps text-label-caps text-secondary uppercase">2015 — 2019</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Senior Art Director</h4>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Vanguard Media Tokyo</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
+            Mengarahkan kampanye TVC global, instalasi imersif, dan identitas tipografi kontemporer.
+          </p>
 </div>
 </div>
 </section>
-<!-- 4. PENGALAMAN KERJA & KOLABORASI (Curated High-End Editorial Presentation) -->
-<section class="w-full bg-surface-container-low py-space-3xl px-margin md:px-margin-tablet lg:px-margin-desktop" id="pengalaman">
-<div class="max-w-7xl mx-auto flex flex-col gap-space-2xl">
-<!-- Section Title & Narrative -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
-<div class="flex flex-col gap-space-xs">
-<span class="font-label-md text-label-md text-primary uppercase tracking-[0.25em] font-semibold">Jejak Langkah</span>
-<h2 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface tracking-tight font-extrabold">
-            Pengalaman Kerja &amp; Kolaborasi
-          </h2>
-</div>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-md">
-          Lebih dari satu dekade memandu visi artistik untuk startup unicorn, agensi periklanan multinasional, dan institusi budaya global.
-        </p>
-</div>
-<!-- Experience Items Separated via Background Tonal Blocks and Spacing -->
-<div class="flex flex-col gap-space-md">
-<!-- Item 1: 2022 — Sekarang -->
-<div class="group p-space-xl rounded-3xl bg-surface-container hover:bg-surface-container-high transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg shadow-md">
-<div class="flex flex-col lg:w-1/4">
-<span class="font-label-lg text-label-lg font-bold text-primary">2022 — Sekarang</span>
-<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Jakarta &amp; Remote Global</span>
-</div>
-<div class="flex flex-col gap-space-xs lg:w-2/4">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
-              Principal Creative Director — Studio Artefak
-            </h3>
-<p class="font-body-md text-body-md text-on-surface-variant">
-              Memimpin arahan visual, arsitektur jenama, dan desain produk digital untuk 20+ jenama global across APAC and North America.
-            </p>
-</div>
-<div class="lg:w-1/4 flex lg:justify-end">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest text-secondary font-label-sm text-label-sm font-semibold">
-              Kepemimpinan Studio
-            </span>
-</div>
-</div>
-<!-- Item 2: 2019 — 2022 -->
-<div class="group p-space-xl rounded-3xl bg-surface-container hover:bg-surface-container-high transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg shadow-md">
-<div class="flex flex-col lg:w-1/4">
-<span class="font-label-lg text-label-lg font-bold text-secondary">2019 — 2022</span>
-<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Singapura</span>
-</div>
-<div class="flex flex-col gap-space-xs lg:w-2/4">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-secondary transition-colors">
-              Senior Lead Experience Designer — Global Kinetic Agency
-            </h3>
-<p class="font-body-md text-body-md text-on-surface-variant">
-              Arsitektur pengalaman pengguna fintech dan perbankan digital Asia Tenggara dengan total transaksi jutaan pengguna aktif.
-            </p>
-</div>
-<div class="lg:w-1/4 flex lg:justify-end">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-semibold">
-              Digital Banking &amp; UX
-            </span>
-</div>
-</div>
-<!-- Item 3: 2016 — 2019 -->
-<div class="group p-space-xl rounded-3xl bg-surface-container hover:bg-surface-container-high transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg shadow-md">
-<div class="flex flex-col lg:w-1/4">
-<span class="font-label-lg text-label-lg font-bold text-tertiary">2016 — 2019</span>
-<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Jakarta</span>
-</div>
-<div class="flex flex-col gap-space-xs lg:w-2/4">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
-              Visual Designer &amp; Photographer — Monolith Creative Lab
-            </h3>
-<p class="font-body-md text-body-md text-on-surface-variant">
-              Arahan visual komersial, editorial fotografi kelas dunia, dan perancangan instalasi interaktif brand ritel prestisius.
-            </p>
-</div>
-<div class="lg:w-1/4 flex lg:justify-end">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-semibold">
-              Komersial &amp; Fotografi
-            </span>
-</div>
-</div>
-<!-- Item 4: 2014 — 2016 -->
-<div class="group p-space-xl rounded-3xl bg-surface-container hover:bg-surface-container-high transition-all flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg shadow-md">
-<div class="flex flex-col lg:w-1/4">
-<span class="font-label-lg text-label-lg font-bold text-tertiary">2014 — 2016</span>
-<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Jakarta</span>
-</div>
-<div class="flex flex-col gap-space-xs lg:w-2/4">
-<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface group-hover:text-primary transition-colors">
-              Junior Art Director &amp; Copywriter — Neo Jakarta Advertising
-            </h3>
-<p class="font-body-md text-body-md text-on-surface-variant">
-              Penulisan naskah iklan, kampanye terintegrasi 360 derajat, dan elaborasi konsep visual komersial untuk FMCG terkemuka.
-            </p>
-</div>
-<div class="lg:w-1/4 flex lg:justify-end">
-<span class="px-space-md py-space-xs rounded-full bg-surface-container-lowest text-on-surface-variant font-label-sm text-label-sm font-semibold">
-              Advertising &amp; Copy
-            </span>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- 5. KONTAK & COPYFIELD INTERAKTIF (Atmospheric Warm Obsidian CTA Room) -->
-<section class="w-full bg-surface py-space-3xl px-margin md:px-margin-tablet lg:px-margin-desktop relative overflow-hidden" id="kontak">
-<!-- Atmospheric Under-Glow Reflector -->
-<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-gradient-to-t from-primary-container/20 to-transparent blur-[160px] pointer-events-none rounded-t-full"></div>
-<div class="relative max-w-5xl mx-auto flex flex-col items-center text-center gap-space-2xl">
-<!-- Headline Block -->
-<div class="flex flex-col items-center gap-space-md max-w-3xl">
-<span class="font-label-md text-label-md text-primary uppercase tracking-[0.3em] font-semibold">Inisiasi Kerja Sama</span>
-<h2 class="font-display-xl text-display-xl-mobile md:text-headline-lg lg:text-display-xl text-on-surface tracking-tight font-extrabold leading-tight">
-          Mari Ciptakan Sesuatu yang Luar Biasa.
+<!-- Ultimate Call to Action Banner -->
+<section class="w-full rounded-3xl p-space-lg lg:p-space-xl bg-primary text-on-primary shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-space-lg" id="mulai-diskusi">
+<!-- Decorative Backdrop Graphic -->
+<div class="absolute right-0 top-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex flex-col gap-2 relative z-10 max-w-xl">
+<span class="font-label-caps text-label-caps text-secondary-fixed uppercase tracking-widest">KOLABORASI EKSKLUSIF</span>
+<h2 class="font-display-xl text-3xl sm:text-display-xl tracking-tight leading-none text-on-primary">
+          Siap Mewujudkan Visi Kreatif Anda?
         </h2>
-<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-          Terbuka untuk konsultasi visi kreatif, perancangan identitas baru, atau kolaborasi strategis jangka panjang di seluruh dunia.
+<p class="font-body-md text-body-md text-on-primary-container mt-2">
+          Terbuka untuk konsultasi strategis Q2/Q3 2025, dewan penasihat kreatif, dan arahan desain transformatif berskala global.
         </p>
 </div>
-<!-- CopyField Interactive Components Grid -->
-<div class="w-full grid grid-cols-1 md:grid-cols-3 gap-gutter pt-space-md">
-<!-- CopyField 1: Email -->
-<div class="p-space-lg rounded-3xl bg-surface-container flex flex-col items-center justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-all">
-<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[24px]">mail</span>
-</div>
-<div class="flex flex-col items-center">
-<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-semibold">Surel Resmi</span>
-<span class="font-headline-sm text-body-md font-bold text-on-surface select-all" id="text-email">prio@setyostudio.com</span>
-</div>
-<button class="w-full py-space-sm px-space-md rounded-full bg-surface-container-highest hover:bg-primary-container hover:text-on-primary-container font-label-md text-label-md text-on-surface transition-all flex items-center justify-center gap-space-xs" onclick="copyToClipboard('prio@setyostudio.com', this, 'Salin Email', 'Tersalin!')">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-<span class="btn-text">Salin Email</span>
-</button>
-</div>
-<!-- CopyField 2: WhatsApp -->
-<div class="p-space-lg rounded-3xl bg-surface-container flex flex-col items-center justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-all">
-<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary-container group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[24px]">chat</span>
-</div>
-<div class="flex flex-col items-center">
-<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-semibold">WhatsApp Bisnis</span>
-<span class="font-headline-sm text-body-md font-bold text-on-surface select-all" id="text-wa">+62 812-3456-7890</span>
-</div>
-<button class="w-full py-space-sm px-space-md rounded-full bg-surface-container-highest hover:bg-primary-container hover:text-on-primary-container font-label-md text-label-md text-on-surface transition-all flex items-center justify-center gap-space-xs" onclick="copyToClipboard('+6281234567890', this, 'Salin Nomor', 'Tersalin!')">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-<span class="btn-text">Salin Nomor</span>
-</button>
-</div>
-<!-- CopyField 3: LinkedIn -->
-<div class="p-space-lg rounded-3xl bg-surface-container flex flex-col items-center justify-between gap-space-md shadow-lg group hover:bg-surface-container-high transition-all">
-<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
-<span class="material-symbols-outlined text-[24px]">share</span>
-</div>
-<div class="flex flex-col items-center">
-<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider font-semibold">LinkedIn Profil</span>
-<span class="font-headline-sm text-body-md font-bold text-on-surface select-all" id="text-linkedin">priosetyo</span>
-</div>
-<button class="w-full py-space-sm px-space-md rounded-full bg-surface-container-highest hover:bg-primary-container hover:text-on-primary-container font-label-md text-label-md text-on-surface transition-all flex items-center justify-center gap-space-xs" onclick="copyToClipboard('https://linkedin.com/in/priosetyo', this, 'Salin Profil', 'Tersalin!')">
-<span class="material-symbols-outlined text-[16px]">content_copy</span>
-<span class="btn-text">Salin Profil</span>
-</button>
-</div>
-</div>
-<!-- Primary Big Action Capsule Button -->
-<div class="pt-space-md">
-<a class="inline-flex items-center gap-space-md px-space-2xl py-space-md rounded-full bg-gradient-to-r from-primary-container via-secondary-container to-secondary text-on-primary-container font-headline-sm text-body-lg font-bold shadow-[0_16px_40px_-6px_rgba(255,87,26,0.5)] hover:scale-105 transition-all" href="mailto:prio@setyostudio.com?subject=Inquiry%20Konsultasi%20Kreatif%202025">
-<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
-<span class="">Jadwalkan Konsultasi 1-on-1 (30 Menit)</span>
+<div class="flex flex-col sm:flex-row items-center gap-space-sm relative z-10 w-full sm:w-auto">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-4 rounded-full bg-secondary-container text-on-secondary-fixed font-headline-sm text-sm tracking-normal hover:bg-surface-container-lowest transition-all duration-200 shadow-lg hover:-translate-y-0.5" href="mailto:prio.setyo@creativestudio.id?subject=Inquiry%20Proyek%20Kreatif%202025">
+<span class="">Mulai Diskusi Sekarang</span>
+<span class="material-symbols-outlined text-base">arrow_forward</span>
 </a>
 </div>
-</div>
 </section>
-<!-- Interactive Filter & Copy Scripting Logic -->
+</div>
+<!-- Interactive Modal for Filosofi (Accessible Dialog) -->
+<dialog class="p-0 rounded-3xl bg-surface-container-lowest text-on-surface backdrop:bg-primary/50 shadow-2xl max-w-lg w-full m-auto" id="dialog-filosofi">
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary-fixed-dim"></span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Filosofi Desain</h3>
+</div>
+<button class="p-1 rounded-full hover:bg-surface-container transition-colors" onclick="document.getElementById('dialog-filosofi').close()">
+<span class="material-symbols-outlined text-lg">close</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        “Desain bukan sekadar ornamen estetika, melainkan peredam friksi antara intensi manusia dan kompleksitas teknologi modern.”
+      </p>
+<div class="p-space-sm rounded-2xl bg-surface-container-low flex flex-col gap-2">
+<span class="font-label-caps text-label-caps text-secondary uppercase">3 PILAR UTAMA</span>
+<ul class="font-body-sm text-body-sm text-on-surface flex flex-col gap-1.5 list-disc pl-4">
+<li class=""><strong>Disiplin Struktural:</strong> Menolak kekacauan visual tanpa mengurangi kedalaman ekspresi.</li>
+<li class=""><strong>Ketepatan Spasial:</strong> Menyelaraskan tipografi, skala, dan gerak dalam ritme yang harmonis.</li>
+<li class=""><strong>Dampak Emosional:</strong> Menciptakan resonansi instan yang bertahan melampaui tren sesaat.</li>
+</ul>
+</div>
+<div class="flex justify-end pt-2">
+<button class="px-space-md py-2 rounded-full bg-primary text-on-primary font-label-sm text-label-sm" onclick="document.getElementById('dialog-filosofi').close()">
+          Tutup
+        </button>
+</div>
+</div>
+</dialog>
+<!-- Interactive JavaScript for Client-side Project Filtering -->
 <script>
-    function copyToClipboard(textToCopy, btnElement, defaultLabel, successLabel) {
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(textToCopy).then(() => {
-          showFeedback(btnElement, defaultLabel, successLabel);
-        }).catch(() => {
-          fallbackCopy(textToCopy, btnElement, defaultLabel, successLabel);
-        });
-      } else {
-        fallbackCopy(textToCopy, btnElement, defaultLabel, successLabel);
-      }
-    }
-
-    function fallbackCopy(text, btnElement, defaultLabel, successLabel) {
-      const textArea = document.createElement("textarea");
-      textArea.value = text;
-      textArea.style.position = "fixed";
-      textArea.style.left = "-999999px";
-      textArea.style.top = "-999999px";
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-      try {
-        document.execCommand('copy');
-        showFeedback(btnElement, defaultLabel, successLabel);
-      } catch (err) {
-        console.error('Copy fallback failed', err);
-      }
-      textArea.remove();
-    }
-
-    function showFeedback(btn, defaultLabel, successLabel) {
-      const textSpan = btn.querySelector('.btn-text');
-      if (textSpan) textSpan.textContent = successLabel;
-      btn.classList.add('bg-primary-container', 'text-on-primary-container');
-
-      setTimeout(() => {
-        if (textSpan) textSpan.textContent = defaultLabel;
-        btn.classList.remove('bg-primary-container', 'text-on-primary-container');
-      }, 2200);
-    }
-
     document.addEventListener('DOMContentLoaded', () => {
-      const filterBtns = document.querySelectorAll('.filter-btn');
-      const projectItems = document.querySelectorAll('.project-item');
+      const filterButtons = document.querySelectorAll('#gallery-filters .filter-btn');
+      const projectItems = document.querySelectorAll('#projects-grid .project-item');
 
-      filterBtns.forEach(btn => {
+      filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-          filterBtns.forEach(b => {
-            b.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-bold', 'shadow-md');
-            b.classList.add('bg-transparent', 'text-on-surface-variant', 'font-medium');
+          const filter = btn.getAttribute('data-filter');
+
+          // Toggle button styles
+          filterButtons.forEach(b => {
+            b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+            b.classList.add('text-on-surface-variant');
           });
+          btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+          btn.classList.remove('text-on-surface-variant');
 
-          btn.classList.add('bg-primary-container', 'text-on-primary-container', 'font-bold', 'shadow-md');
-          btn.classList.remove('bg-transparent', 'text-on-surface-variant', 'font-medium');
-
-          const category = btn.getAttribute('data-category');
-
+          // Filter card items
           projectItems.forEach(item => {
-            const itemCat = item.getAttribute('data-category');
-            if (category === 'all' || itemCat === category) {
+            const categories = item.getAttribute('data-category') || '';
+            if (filter === 'all' || categories.includes(filter)) {
               item.style.display = 'flex';
-              item.style.opacity = '1';
             } else {
               item.style.display = 'none';
             }
@@ -442,6 +546,6 @@
       });
     });
   </script>
-</div></main><footer class="w-full bg-surface-container-lowest py-space-2xl"><div class="w-full px-margin md:px-margin-tablet lg:px-margin-desktop flex flex-col gap-space-2xl"><div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xl"><div class="flex flex-col gap-space-xs"><div class="flex items-center gap-space-sm"><span class="font-headline-sm text-headline-sm text-on-surface font-bold">Prio Setyo</span><span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-wider">/ Studio</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">Creative Direction &amp; Visual Storytelling. Mengubah narasi kompleks menjadi karya visual berdaya pikat tinggi.</p></div><div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-xl"><div class="flex flex-col gap-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Studio Lokasi</span><span class="font-body-md text-body-md text-on-surface">Jakarta &amp; Singapore</span></div><div class="flex flex-col gap-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-widest text-outline">Ketersediaan</span><div class="flex items-center gap-space-xs"><span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span><span class="font-label-md text-label-md text-primary">Tersedia untuk Kolaborasi Q2/Q3</span></div></div></div></div><div class="w-full h-px bg-surface-container-high/60"></div><div class="flex flex-col md:flex-row items-center justify-between gap-space-lg text-on-surface-variant font-body-sm text-body-sm"><div class="flex flex-wrap items-center gap-space-lg"><a class="hover:text-primary transition-colors" href="#">LinkedIn</a><a class="hover:text-primary transition-colors" href="#">Dribbble</a><a class="hover:text-primary transition-colors" href="#">Behance</a><a class="hover:text-primary transition-colors" href="#">Instagram</a></div><div class="text-center md:text-right font-label-md text-label-md text-outline">© 2025 Prio Setyo. Seluruh hak cipta dilindungi undang-undang.</div></div></div></footer>
+</div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_12px_rgba(0,0,0,0.02)] mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin lg:px-margin-desktop py-space-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg"><div class="flex flex-col gap-1"><span class="font-headline-sm text-headline-sm text-on-surface">Prio Setyo</span><p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">Executive Creative Direction, Brand Systems &amp; High-Impact Digital Experiences.</p></div><div class="flex flex-wrap items-center gap-space-md font-label-caps text-label-caps uppercase text-on-surface-variant"><span class="hover:text-on-surface transition-colors cursor-pointer">JAKARTA / REMOTE</span><span class="hover:text-on-surface transition-colors cursor-pointer">ARCHIVE 2020—2025</span><span class="hover:text-on-surface transition-colors cursor-pointer">ALL RIGHTS RESERVED</span></div></div></footer>
 
 </body></html>

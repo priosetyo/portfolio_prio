@@ -1,8 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button } from '../ui/Button';
 import { Tag } from '../ui/Tag';
 import { MediaUploader } from './MediaUploader';
-import { ArrowLeft, Save, Sparkles, Check, AlertCircle } from 'lucide-react';
+import {
+  ArrowLeft,
+  Save,
+  Sparkles,
+  Check,
+  AlertCircle,
+  Camera,
+  Video,
+  Palette,
+  PenTool,
+  Eye,
+  Layers,
+  Calendar,
+  User,
+  Building,
+  Hash,
+  Sliders,
+  CheckCircle2
+} from 'lucide-react';
 
 function slugify(text) {
   return text
@@ -13,6 +31,13 @@ function slugify(text) {
     .replace(/[^\w\-]+/g, '')
     .replace(/\-\-+/g, '-');
 }
+
+const CATEGORIES = [
+  { id: 'photo', label: 'Fotografi', icon: Camera, desc: 'Editorial, Fashion, Still Life' },
+  { id: 'video', label: 'Videografi', icon: Video, desc: 'Commercial, Cinematic, 3D Motion' },
+  { id: 'design', label: 'Desain Grafis', icon: Palette, desc: 'Spatial UI/UX, Visual Identity' },
+  { id: 'copy', label: 'Copywriting', icon: PenTool, desc: 'Brand Storytelling, Tagline' }
+];
 
 export function ProjectForm({ project, onSave, onCancel }) {
   const isEditing = Boolean(project?.id);
@@ -27,13 +52,13 @@ export function ProjectForm({ project, onSave, onCancel }) {
   const [description, setDescription] = useState(project?.description || '');
   const [excerpt, setExcerpt] = useState(project?.excerpt || '');
   const [sortOrder, setSortOrder] = useState(project?.sort_order ?? 0);
-  const [isPublished, setIsPublished] = useState(project?.is_published ?? false);
+  const [isPublished, setIsPublished] = useState(project?.is_published ?? true);
   const [meta, setMeta] = useState(project?.meta || {});
   const [mediaList, setMediaList] = useState(project?.project_media || []);
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  // Auto-generate slug dari judul jika belum diedit manual
+  // Auto-generate slug dari judul
   const handleTitleChange = (e) => {
     const val = e.target.value;
     setTitle(val);
@@ -51,7 +76,7 @@ export function ProjectForm({ project, onSave, onCancel }) {
     setErrorMsg('');
 
     if (!title.trim() || !slug.trim()) {
-      setErrorMsg('Judul dan slug wajib diisi.');
+      setErrorMsg('Judul karya dan slug wajib diisi.');
       return;
     }
 
@@ -91,478 +116,862 @@ export function ProjectForm({ project, onSave, onCancel }) {
     }
   };
 
+  const firstMedia = mediaList?.[0];
+  const thumbUrl = firstMedia?.thumb_path || firstMedia?.poster_path || firstMedia?.storage_path;
+
   return (
-    <div
-      style={{
-        padding: 'var(--space-6)',
-        backgroundColor: 'var(--bg-elevated)',
-        borderRadius: 'var(--radius-xl)',
-        border: '1px solid var(--border-subtle)',
-        boxShadow: 'var(--shadow-sm)'
-      }}
-    >
-      {/* Header Form */}
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {/* Sticky Header Action Bar */}
       <div
         style={{
+          position: 'sticky',
+          top: '70px',
+          zIndex: 40,
+          padding: '1rem 1.5rem',
+          borderRadius: '1.25rem',
+          backgroundColor: '#ffffff',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.03)',
           display: 'flex',
+          flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginBottom: 'var(--space-6)',
-          paddingBottom: 'var(--space-4)',
-          borderBottom: '1px solid var(--border-subtle)'
+          gap: '1rem'
         }}
       >
-        <button
-          type="button"
-          onClick={onCancel}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.3rem',
-            fontSize: 'var(--text-sm)',
-            fontWeight: '600',
-            color: 'var(--text-secondary)'
-          }}
-        >
-          <ArrowLeft size={16} />
-          <span>Kembali ke Daftar Karya</span>
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <button
+            type="button"
+            onClick={onCancel}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              padding: '0.45rem 0.85rem',
+              borderRadius: '9999px',
+              backgroundColor: '#f3f3f5',
+              border: '1px solid rgba(0, 0, 0, 0.06)',
+              color: 'var(--text-secondary)',
+              fontSize: 'var(--text-xs)',
+              fontWeight: '600',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = '#000000';
+              e.currentTarget.style.backgroundColor = 'var(--color-secondary-fixed)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = 'var(--text-secondary)';
+              e.currentTarget.style.backgroundColor = '#f3f3f5';
+            }}
+          >
+            <ArrowLeft size={13} />
+            <span>Kembali ke Daftar</span>
+          </button>
 
-        <h2 style={{ fontSize: 'var(--text-xl)', fontWeight: '800', color: 'var(--text-primary)' }}>
-          {isEditing ? 'Ubah Data Karya' : 'Tambah Karya Baru'}
-        </h2>
+          <div>
+            <h2
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '1.15rem',
+                fontWeight: '800',
+                color: '#000000',
+                margin: 0
+              }}
+            >
+              {isEditing ? `Ubah Karya: ${title || 'Tanpa Judul'}` : 'Buat Entri Karya Baru'}
+            </h2>
+            <span style={{ fontSize: '0.68rem', color: 'var(--text-tertiary)' }}>
+              {isEditing ? `ID: ${project.id}` : 'Draft Baru Studio Prio Setyo'}
+            </span>
+          </div>
+        </div>
+
+        {/* Top Right Save & Cancel */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <button
+            type="button"
+            onClick={onCancel}
+            style={{
+              padding: '0.55rem 1rem',
+              borderRadius: '0.75rem',
+              backgroundColor: '#f3f3f5',
+              border: '1px solid rgba(0, 0, 0, 0.06)',
+              color: 'var(--text-secondary)',
+              fontSize: 'var(--text-xs)',
+              fontWeight: '600',
+              cursor: 'pointer'
+            }}
+          >
+            Batal
+          </button>
+
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={saving}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.45rem',
+              padding: '0.55rem 1.35rem',
+              borderRadius: '0.75rem',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              fontSize: 'var(--text-xs)',
+              fontWeight: '700',
+              border: 'none',
+              cursor: saving ? 'not-allowed' : 'pointer',
+              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.15)'
+            }}
+          >
+            <Save size={14} />
+            <span>{saving ? 'Menyimpan...' : isEditing ? 'Simpan Perubahan' : 'Terbitkan Karya'}</span>
+          </button>
+        </div>
       </div>
 
+      {/* Error Notification */}
       {errorMsg && (
         <div
           style={{
-            padding: 'var(--space-3) var(--space-4)',
-            borderRadius: 'var(--radius-md)',
-            backgroundColor: 'var(--badge-video-bg)',
-            color: 'var(--badge-video)',
+            padding: '0.85rem 1.25rem',
+            borderRadius: '0.85rem',
+            backgroundColor: '#fee2e2',
+            border: '1px solid rgba(220, 38, 38, 0.2)',
+            color: '#dc2626',
             fontSize: 'var(--text-xs)',
             display: 'flex',
             alignItems: 'center',
-            gap: 'var(--space-2)',
-            marginBottom: 'var(--space-6)'
+            gap: '0.5rem'
           }}
         >
-          <AlertCircle size={16} flexShrink={0} />
+          <AlertCircle size={16} style={{ flexShrink: 0 }} />
           <span>{errorMsg}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
-        {/* Row 1: Judul & Slug */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Judul Karya *
-            </label>
-            <input
-              type="text"
-              required
-              value={title}
-              onChange={handleTitleChange}
-              placeholder="Contoh: Lumina Botanical Editorial"
+      {/* Main 2-Column Responsive Layout */}
+      <form onSubmit={handleSubmit}>
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))',
+            gap: '1.5rem',
+            alignItems: 'start'
+          }}
+        >
+          {/* LEFT COLUMN: Core Details & Storytelling */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {/* Section 1: Kategori Visual Selector */}
+            <div
               style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-primary)'
-              }}
-            />
-          </div>
-
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Slug URL *
-            </label>
-            <input
-              type="text"
-              required
-              value={slug}
-              onChange={(e) => setSlug(e.target.value)}
-              placeholder="lumina-botanical-editorial"
-              style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                fontFamily: 'var(--font-mono)',
-                color: 'var(--text-primary)'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Row 2: Kategori, Klien, Tahun, Peran */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-4)' }}>
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Kategori Karya *
-            </label>
-            <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-primary)'
+                padding: '1.5rem',
+                borderRadius: '1.25rem',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.85rem'
               }}
             >
-              <option value="photo">Fotografi (Photo)</option>
-              <option value="video">Videografi (Video)</option>
-              <option value="design">Desain Grafis (Design)</option>
-              <option value="copy">Copywriting (Copy)</option>
-            </select>
-          </div>
+              <label
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: '700',
+                  color: 'var(--text-secondary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
+                }}
+              >
+                1. Pilih Disiplin / Kategori Karya
+              </label>
 
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Klien / Brand
-            </label>
-            <input
-              type="text"
-              value={client}
-              onChange={(e) => setClient(e.target.value)}
-              placeholder="Contoh: Velos Performance"
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+                  gap: '0.65rem'
+                }}
+              >
+                {CATEGORIES.map((cat) => {
+                  const Icon = cat.icon;
+                  const isSelected = category === cat.id;
+
+                  return (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => setCategory(cat.id)}
+                      style={{
+                        padding: '0.85rem 0.75rem',
+                        borderRadius: '0.85rem',
+                        border: isSelected
+                          ? '1px solid #000000'
+                          : '1px solid rgba(0, 0, 0, 0.08)',
+                        backgroundColor: isSelected
+                          ? 'var(--color-secondary-fixed)'
+                          : '#f9f9fb',
+                        color: isSelected ? '#1b1735' : 'var(--text-secondary)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        gap: '0.35rem',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease'
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: '0.5rem',
+                          backgroundColor: isSelected
+                            ? '#000000'
+                            : '#ffffff',
+                          color: isSelected ? '#ffffff' : '#5b5866',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}
+                      >
+                        <Icon size={16} />
+                      </div>
+                      <span style={{ fontSize: '0.82rem', fontWeight: '700', color: isSelected ? '#000000' : 'var(--text-primary)' }}>
+                        {cat.label}
+                      </span>
+                      <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)', lineHeight: 1.2 }}>
+                        {cat.desc}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Section 2: Judul & Slug */}
+            <div
               style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-primary)'
+                padding: '1.5rem',
+                borderRadius: '1.25rem',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
               }}
-            />
-          </div>
+            >
+              <label
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: '700',
+                  color: 'var(--text-secondary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
+                }}
+              >
+                2. Judul & Identitas URL
+              </label>
 
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Tahun
-            </label>
-            <input
-              type="number"
-              value={year}
-              onChange={(e) => setYear(e.target.value)}
-              placeholder="2024"
+              <div>
+                <label style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-tertiary)', marginBottom: '0.35rem' }}>
+                  Judul Portofolio *
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={title}
+                  onChange={handleTitleChange}
+                  placeholder="Contoh: Nova Spatial OS (Vision Pro)"
+                  style={{
+                    width: '100%',
+                    padding: '0.75rem 1rem',
+                    fontSize: '0.9rem',
+                    fontWeight: '700',
+                    borderRadius: '0.75rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000',
+                    outline: 'none'
+                  }}
+                  onFocus={(e) => (e.target.style.borderColor = '#000000')}
+                  onBlur={(e) => (e.target.style.borderColor = 'rgba(0, 0, 0, 0.08)')}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-tertiary)', marginBottom: '0.35rem' }}>
+                  Slug URL (Otomatis) *
+                </label>
+                <div style={{ position: 'relative' }}>
+                  <span
+                    style={{
+                      position: 'absolute',
+                      left: '12px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      fontSize: '0.75rem',
+                      fontFamily: 'var(--font-mono)',
+                      color: 'var(--text-tertiary)'
+                    }}
+                  >
+                    /
+                  </span>
+                  <input
+                    type="text"
+                    required
+                    value={slug}
+                    onChange={(e) => setSlug(e.target.value)}
+                    placeholder="nova-spatial-os"
+                    style={{
+                      width: '100%',
+                      padding: '0.65rem 1rem 0.65rem 1.8rem',
+                      fontSize: '0.78rem',
+                      fontFamily: 'var(--font-mono)',
+                      borderRadius: '0.75rem',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      backgroundColor: '#f3f3f5',
+                      color: '#000000',
+                      outline: 'none'
+                    }}
+                    onFocus={(e) => (e.target.style.borderColor = '#000000')}
+                    onBlur={(e) => (e.target.style.borderColor = 'rgba(0, 0, 0, 0.08)')}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Section 3: Klien, Tahun, Peran */}
+            <div
               style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-primary)'
+                padding: '1.5rem',
+                borderRadius: '1.25rem',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
               }}
-            />
-          </div>
+            >
+              <label
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: '700',
+                  color: 'var(--text-secondary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
+                }}
+              >
+                3. Metadata Klien & Produksi
+              </label>
 
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Peran Anda
-            </label>
-            <input
-              type="text"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              placeholder="Contoh: Director & Colorist"
-              style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-primary)'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Row 3: Ringkasan & Excerpt */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 'var(--space-4)' }}>
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Ringkasan Singkat (Summary)
-            </label>
-            <textarea
-              rows={3}
-              value={summary}
-              onChange={(e) => setSummary(e.target.value)}
-              placeholder="Deskripsi 1-2 kalimat untuk kartu karya..."
-              style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-primary)',
-                resize: 'vertical'
-              }}
-            />
-          </div>
-
-          <div>
-            <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-              Kutipan Penonjol (Excerpt / Headline)
-            </label>
-            <textarea
-              rows={3}
-              value={excerpt}
-              onChange={(e) => setExcerpt(e.target.value)}
-              placeholder="Kalimat kunci atau quote berkesan..."
-              style={{
-                width: '100%',
-                padding: 'var(--space-3)',
-                borderRadius: 'var(--radius-md)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-secondary)',
-                fontSize: 'var(--text-sm)',
-                color: 'var(--text-primary)',
-                resize: 'vertical'
-              }}
-            />
-          </div>
-        </div>
-
-        {/* Row 4: Deskripsi Lengkap */}
-        <div>
-          <label style={{ display: 'block', fontSize: 'var(--text-xs)', fontWeight: '600', marginBottom: 'var(--space-1)', color: 'var(--text-secondary)' }}>
-            Deskripsi Lengkap / Teks Narasi Copywriting
-          </label>
-          <textarea
-            rows={5}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Jelaskan proses kreasi, tantangan, atau masukkan teks lengkap naskah copywriting..."
-            style={{
-              width: '100%',
-              padding: 'var(--space-3)',
-              borderRadius: 'var(--radius-md)',
-              border: '1px solid var(--border-medium)',
-              backgroundColor: 'var(--bg-secondary)',
-              fontSize: 'var(--text-sm)',
-              color: 'var(--text-primary)',
-              resize: 'vertical'
-            }}
-          />
-        </div>
-
-        {/* Field Dinamis Metadata JSONB berdasarkan Kategori */}
-        <div
-          style={{
-            padding: 'var(--space-5)',
-            backgroundColor: 'var(--bg-secondary)',
-            borderRadius: 'var(--radius-lg)',
-            border: '1px solid var(--border-subtle)'
-          }}
-        >
-          <div style={{ fontSize: 'var(--text-xs)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--accent-highlight)', marginBottom: 'var(--space-4)' }}>
-            Metadata Khusus: {category.toUpperCase()} (Tersimpan sebagai JSONB)
-          </div>
-
-          {category === 'photo' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
-              {['camera', 'lens', 'aperture', 'shutter', 'iso', 'lighting'].map((field) => (
-                <div key={field}>
-                  <label style={{ display: 'block', fontSize: 'var(--text-xs)', textTransform: 'capitalize', color: 'var(--text-secondary)', marginBottom: '2px' }}>
-                    {field}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '0.85rem' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-tertiary)', marginBottom: '0.35rem' }}>
+                    Klien / Brand
                   </label>
                   <input
                     type="text"
-                    value={meta[field] || ''}
-                    onChange={(e) => handleMetaChange(field, e.target.value)}
-                    placeholder={`e.g. ${field === 'camera' ? 'Sony A7R V' : field === 'lens' ? '90mm Macro' : ''}`}
+                    value={client}
+                    onChange={(e) => setClient(e.target.value)}
+                    placeholder="Contoh: Spatial Labs Tokyo"
                     style={{
                       width: '100%',
-                      padding: 'var(--space-2) var(--space-3)',
-                      fontSize: 'var(--text-xs)',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--border-medium)',
-                      backgroundColor: 'var(--bg-elevated)',
-                      color: 'var(--text-primary)'
+                      padding: '0.65rem 0.85rem',
+                      fontSize: '0.78rem',
+                      borderRadius: '0.65rem',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      backgroundColor: '#f3f3f5',
+                      color: 'var(--text-primary)',
+                      outline: 'none'
                     }}
                   />
                 </div>
-              ))}
-            </div>
-          )}
 
-          {category === 'video' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
-              {['resolution', 'fps', 'color_grading', 'duration', 'sound_design'].map((field) => (
-                <div key={field}>
-                  <label style={{ display: 'block', fontSize: 'var(--text-xs)', textTransform: 'capitalize', color: 'var(--text-secondary)', marginBottom: '2px' }}>
-                    {field.replace('_', ' ')}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-tertiary)', marginBottom: '0.35rem' }}>
+                    Tahun Rilis
+                  </label>
+                  <input
+                    type="number"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                    placeholder="2026"
+                    style={{
+                      width: '100%',
+                      padding: '0.65rem 0.85rem',
+                      fontSize: '0.78rem',
+                      borderRadius: '0.65rem',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      backgroundColor: '#f3f3f5',
+                      color: 'var(--text-primary)',
+                      outline: 'none'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-tertiary)', marginBottom: '0.35rem' }}>
+                    Peran Utama
                   </label>
                   <input
                     type="text"
-                    value={meta[field] || ''}
-                    onChange={(e) => handleMetaChange(field, e.target.value)}
-                    placeholder={`e.g. ${field === 'resolution' ? '4K DCI' : field === 'duration' ? '90s' : ''}`}
+                    value={role}
+                    onChange={(e) => setRole(e.target.value)}
+                    placeholder="Contoh: Creative Director"
                     style={{
                       width: '100%',
-                      padding: 'var(--space-2) var(--space-3)',
-                      fontSize: 'var(--text-xs)',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--border-medium)',
-                      backgroundColor: 'var(--bg-elevated)',
-                      color: 'var(--text-primary)'
+                      padding: '0.65rem 0.85rem',
+                      fontSize: '0.78rem',
+                      borderRadius: '0.65rem',
+                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      backgroundColor: '#f3f3f5',
+                      color: 'var(--text-primary)',
+                      outline: 'none'
                     }}
                   />
                 </div>
-              ))}
+              </div>
             </div>
-          )}
 
-          {category === 'design' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
-              {['tools', 'deliverables', 'typefaces', 'color_palette'].map((field) => (
-                <div key={field}>
-                  <label style={{ display: 'block', fontSize: 'var(--text-xs)', textTransform: 'capitalize', color: 'var(--text-secondary)', marginBottom: '2px' }}>
-                    {field.replace('_', ' ')}
-                  </label>
-                  <input
-                    type="text"
-                    value={meta[field] || ''}
-                    onChange={(e) => handleMetaChange(field, e.target.value)}
-                    placeholder={`e.g. ${field === 'tools' ? 'Illustrator, Figma' : ''}`}
-                    style={{
-                      width: '100%',
-                      padding: 'var(--space-2) var(--space-3)',
-                      fontSize: 'var(--text-xs)',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--border-medium)',
-                      backgroundColor: 'var(--bg-elevated)',
-                      color: 'var(--text-primary)'
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {category === 'copy' && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 'var(--space-3)' }}>
-              {['channel', 'objective', 'tone_of_voice', 'impact'].map((field) => (
-                <div key={field}>
-                  <label style={{ display: 'block', fontSize: 'var(--text-xs)', textTransform: 'capitalize', color: 'var(--text-secondary)', marginBottom: '2px' }}>
-                    {field.replace('_', ' ')}
-                  </label>
-                  <input
-                    type="text"
-                    value={meta[field] || ''}
-                    onChange={(e) => handleMetaChange(field, e.target.value)}
-                    placeholder={`e.g. ${field === 'objective' ? 'Brand Affinity' : ''}`}
-                    style={{
-                      width: '100%',
-                      padding: 'var(--space-2) var(--space-3)',
-                      fontSize: 'var(--text-xs)',
-                      borderRadius: 'var(--radius-sm)',
-                      border: '1px solid var(--border-medium)',
-                      backgroundColor: 'var(--bg-elevated)',
-                      color: 'var(--text-primary)'
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Media Uploader Section (Foto, Video, Desain) */}
-        {category !== 'copy' && (
-          <div
-            style={{
-              padding: 'var(--space-5)',
-              backgroundColor: 'var(--bg-elevated)',
-              borderRadius: 'var(--radius-lg)',
-              border: '1px solid var(--border-subtle)'
-            }}
-          >
-            <div style={{ fontSize: 'var(--text-sm)', fontWeight: '700', marginBottom: 'var(--space-3)', color: 'var(--text-primary)' }}>
-              Pengelolaan File Media & Poster
-            </div>
-            <MediaUploader
-              mediaList={mediaList}
-              onChange={setMediaList}
-              projectId={slug || 'new'}
-            />
-          </div>
-        )}
-
-        {/* Pengaturan Publikasi & Urutan */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: 'var(--space-4)',
-            backgroundColor: 'var(--bg-secondary)',
-            borderRadius: 'var(--radius-md)',
-            gap: 'var(--space-4)'
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)', cursor: 'pointer' }}>
-              <input
-                type="checkbox"
-                checked={isPublished}
-                onChange={(e) => setIsPublished(e.target.checked)}
-                style={{ width: '18px', height: '18px', accentColor: 'var(--badge-copy)' }}
-              />
-              <span style={{ fontWeight: '600', fontSize: 'var(--text-sm)', color: 'var(--text-primary)' }}>
-                Terbitkan ke Galeri Publik (is_published)
-              </span>
-            </label>
-            <Tag tone={isPublished ? 'copy' : 'default'}>
-              {isPublished ? 'LIVE TERBIT' : 'DRAF (TERSEMBUNYI)'}
-            </Tag>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
-            <label style={{ fontSize: 'var(--text-xs)', fontWeight: '600', color: 'var(--text-secondary)' }}>
-              Urutan Tampil (sort_order):
-            </label>
-            <input
-              type="number"
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
+            {/* Section 4: Ringkasan & Narasi */}
+            <div
               style={{
-                width: '70px',
-                padding: 'var(--space-1) var(--space-2)',
-                borderRadius: 'var(--radius-sm)',
-                border: '1px solid var(--border-medium)',
-                backgroundColor: 'var(--bg-elevated)',
-                fontSize: 'var(--text-xs)',
-                textAlign: 'center'
+                padding: '1.5rem',
+                borderRadius: '1.25rem',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
               }}
-            />
-          </div>
-        </div>
+            >
+              <label
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: '700',
+                  color: 'var(--text-secondary)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
+                }}
+              >
+                4. Narasi & Storytelling Karya
+              </label>
 
-        {/* Action Buttons */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--space-3)' }}>
-          <Button variant="secondary" size="md" onClick={onCancel}>
-            Batal
-          </Button>
-          <Button variant="primary" size="md" type="submit" disabled={saving} icon={Save}>
-            {saving ? 'Menyimpan...' : isEditing ? 'Perbarui Karya' : 'Simpan Karya Baru'}
-          </Button>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-tertiary)', marginBottom: '0.35rem' }}>
+                  Ringkasan Kartu (Summary) - Tampil di Showcase
+                </label>
+                <textarea
+                  rows={2}
+                  value={summary}
+                  onChange={(e) => setSummary(e.target.value)}
+                  placeholder="Ringkasan 1-2 kalimat untuk kartu portofolio..."
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: 'var(--text-primary)',
+                    outline: 'none',
+                    resize: 'vertical'
+                  }}
+                />
+              </div>
+
+              <div>
+                <label style={{ display: 'block', fontSize: '0.68rem', color: 'var(--text-tertiary)', marginBottom: '0.35rem' }}>
+                  Deskripsi Lengkap / Naskah
+                </label>
+                <textarea
+                  rows={4}
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Ceritakan visi desain, proses produksi, serta hasil pencapaian..."
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    fontSize: '0.78rem',
+                    borderRadius: '0.65rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: 'var(--text-primary)',
+                    outline: 'none',
+                    resize: 'vertical'
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Section 5: Metadata Khusus Disiplin (JSONB) */}
+            <div
+              style={{
+                padding: '1.25rem 1.5rem',
+                borderRadius: '1.25rem',
+                backgroundColor: '#f9f9fb',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <Sliders size={13} color="#000000" />
+                <span style={{ fontSize: '0.68rem', fontWeight: '700', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                  Spesifikasi Teknis ({category.toUpperCase()})
+                </span>
+              </div>
+
+              {category === 'photo' && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.5rem' }}>
+                  {['camera', 'lens', 'aperture', 'shutter', 'iso'].map((field) => (
+                    <div key={field}>
+                      <label style={{ display: 'block', fontSize: '0.62rem', color: 'var(--text-tertiary)', textTransform: 'capitalize' }}>
+                        {field}
+                      </label>
+                      <input
+                        type="text"
+                        value={meta[field] || ''}
+                        onChange={(e) => handleMetaChange(field, e.target.value)}
+                        placeholder={field === 'camera' ? 'Sony A7R V' : '—'}
+                        style={{
+                          width: '100%',
+                          padding: '0.45rem 0.65rem',
+                          fontSize: '0.72rem',
+                          borderRadius: '0.5rem',
+                          border: '1px solid rgba(0, 0, 0, 0.08)',
+                          backgroundColor: '#ffffff',
+                          color: '#000000'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {category === 'video' && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.5rem' }}>
+                  {['resolution', 'fps', 'color_grading', 'duration'].map((field) => (
+                    <div key={field}>
+                      <label style={{ display: 'block', fontSize: '0.62rem', color: 'var(--text-tertiary)', textTransform: 'capitalize' }}>
+                        {field.replace('_', ' ')}
+                      </label>
+                      <input
+                        type="text"
+                        value={meta[field] || ''}
+                        onChange={(e) => handleMetaChange(field, e.target.value)}
+                        placeholder={field === 'resolution' ? '4K DCI' : '—'}
+                        style={{
+                          width: '100%',
+                          padding: '0.45rem 0.65rem',
+                          fontSize: '0.72rem',
+                          borderRadius: '0.5rem',
+                          border: '1px solid rgba(0, 0, 0, 0.08)',
+                          backgroundColor: '#ffffff',
+                          color: '#000000'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {category === 'design' && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.5rem' }}>
+                  {['tools', 'deliverables', 'typefaces'].map((field) => (
+                    <div key={field}>
+                      <label style={{ display: 'block', fontSize: '0.62rem', color: 'var(--text-tertiary)', textTransform: 'capitalize' }}>
+                        {field}
+                      </label>
+                      <input
+                        type="text"
+                        value={meta[field] || ''}
+                        onChange={(e) => handleMetaChange(field, e.target.value)}
+                        placeholder={field === 'tools' ? 'Figma, Blender' : '—'}
+                        style={{
+                          width: '100%',
+                          padding: '0.45rem 0.65rem',
+                          fontSize: '0.72rem',
+                          borderRadius: '0.5rem',
+                          border: '1px solid rgba(0, 0, 0, 0.08)',
+                          backgroundColor: '#ffffff',
+                          color: '#000000'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {category === 'copy' && (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '0.5rem' }}>
+                  {['channel', 'tone_of_voice', 'impact'].map((field) => (
+                    <div key={field}>
+                      <label style={{ display: 'block', fontSize: '0.62rem', color: 'var(--text-tertiary)', textTransform: 'capitalize' }}>
+                        {field.replace('_', ' ')}
+                      </label>
+                      <input
+                        type="text"
+                        value={meta[field] || ''}
+                        onChange={(e) => handleMetaChange(field, e.target.value)}
+                        placeholder={field === 'channel' ? 'Digital Campaign' : '—'}
+                        style={{
+                          width: '100%',
+                          padding: '0.45rem 0.65rem',
+                          fontSize: '0.72rem',
+                          borderRadius: '0.5rem',
+                          border: '1px solid rgba(0, 0, 0, 0.08)',
+                          backgroundColor: '#ffffff',
+                          color: '#000000'
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Media Uploads, Live Preview, & Publish Settings */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            {/* Live Studio Card Preview */}
+            <div
+              style={{
+                padding: '1.5rem',
+                borderRadius: '1.25rem',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.85rem'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <span
+                  style={{
+                    fontSize: '0.7rem',
+                    fontWeight: '700',
+                    color: '#000000',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em'
+                  }}
+                >
+                  Live Preview Kartu Showcase
+                </span>
+                <span style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>Pratinjau Nyata</span>
+              </div>
+
+              {/* Miniature WorkTile Card */}
+              <div
+                style={{
+                  borderRadius: '1rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.08)',
+                  overflow: 'hidden'
+                }}
+              >
+                <div
+                  style={{
+                    position: 'relative',
+                    aspectRatio: '16/10',
+                    backgroundColor: '#f3f3f5',
+                    overflow: 'hidden'
+                  }}
+                >
+                  {thumbUrl ? (
+                    <img src={thumbUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: 'var(--text-tertiary)'
+                      }}
+                    >
+                      <Layers size={24} />
+                    </div>
+                  )}
+
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '10px',
+                      left: '10px'
+                    }}
+                  >
+                    <Tag tone={category}>{category.toUpperCase()}</Tag>
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                  <h4
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: '1rem',
+                      fontWeight: '700',
+                      color: '#000000',
+                      margin: 0
+                    }}
+                  >
+                    {title || 'Judul Karya Baru'}
+                  </h4>
+                  <div style={{ fontSize: '0.72rem', color: 'var(--text-tertiary)' }}>
+                    {client || 'Klien Studio'} • {year || '2026'}
+                  </div>
+                  {summary && (
+                    <p style={{ fontSize: '0.72rem', color: 'var(--text-secondary)', margin: '0.2rem 0 0 0', lineHeight: 1.4 }}>
+                      {summary}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Media Uploader Section */}
+            {category !== 'copy' && (
+              <div
+                style={{
+                  padding: '1.5rem',
+                  borderRadius: '1.25rem',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid rgba(0, 0, 0, 0.06)',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem'
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: '0.72rem',
+                      fontWeight: '700',
+                      color: '#000000',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.06em'
+                    }}
+                  >
+                    Asset Media & Visual
+                  </div>
+                  <p style={{ fontSize: '0.68rem', color: 'var(--text-tertiary)', margin: '0.2rem 0 0 0' }}>
+                    Unggah foto (WebP auto), video (poster auto), atau tautkan embed YouTube/Vimeo.
+                  </p>
+                </div>
+
+                <MediaUploader
+                  mediaList={mediaList}
+                  onChange={setMediaList}
+                  projectId={slug || 'new'}
+                />
+              </div>
+            )}
+
+            {/* Publikasi & Urutan */}
+            <div
+              style={{
+                padding: '1.5rem',
+                borderRadius: '1.25rem',
+                backgroundColor: '#ffffff',
+                border: '1px solid rgba(0, 0, 0, 0.06)',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
+              }}
+            >
+              <div
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: '700',
+                  color: '#000000',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.06em'
+                }}
+              >
+                Status & Urutan Tampil
+              </div>
+
+              {/* Status Switch */}
+              <div
+                onClick={() => setIsPublished(!isPublished)}
+                style={{
+                  padding: '1rem',
+                  borderRadius: '0.85rem',
+                  backgroundColor: isPublished ? 'var(--color-tertiary-fixed)' : '#f3f3f5',
+                  border: isPublished ? '1px solid rgba(0, 33, 21, 0.15)' : '1px solid rgba(0, 0, 0, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                  <div
+                    style={{
+                      width: '10px',
+                      height: '10px',
+                      borderRadius: '50%',
+                      backgroundColor: isPublished ? '#059669' : '#9ca3af'
+                    }}
+                  />
+                  <div>
+                    <div style={{ fontSize: '0.82rem', fontWeight: '700', color: isPublished ? 'var(--color-on-tertiary-fixed)' : '#000000' }}>
+                      {isPublished ? 'Terbit ke Galeri Publik' : 'Simpan sebagai Draf'}
+                    </div>
+                    <div style={{ fontSize: '0.65rem', color: isPublished ? 'rgba(0, 33, 21, 0.8)' : 'var(--text-tertiary)' }}>
+                      {isPublished ? 'Karya dapat dilihat oleh semua pengunjung web' : 'Hanya tampak di panel admin'}
+                    </div>
+                  </div>
+                </div>
+
+                <Tag tone={isPublished ? 'video' : 'default'}>
+                  {isPublished ? 'LIVE' : 'DRAF'}
+                </Tag>
+              </div>
+
+              {/* Sort Order Input */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '600', color: '#000000' }}>
+                    Urutan Prioritas (Sort Order)
+                  </span>
+                  <div style={{ fontSize: '0.65rem', color: 'var(--text-tertiary)' }}>
+                    Angka lebih kecil tampil lebih awal di beranda
+                  </div>
+                </div>
+
+                <input
+                  type="number"
+                  value={sortOrder}
+                  onChange={(e) => setSortOrder(e.target.value)}
+                  style={{
+                    width: '80px',
+                    padding: '0.5rem',
+                    textAlign: 'center',
+                    fontSize: '0.82rem',
+                    fontWeight: '700',
+                    borderRadius: '0.5rem',
+                    border: '1px solid rgba(0, 0, 0, 0.08)',
+                    backgroundColor: '#f3f3f5',
+                    color: '#000000'
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>

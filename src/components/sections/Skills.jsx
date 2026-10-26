@@ -1,271 +1,236 @@
 import React from 'react';
 
-const TOOLKIT_PILLS = [
-  'Figma Spatials',
-  'Unreal Engine 5',
-  'DaVinci Resolve Studio',
-  'Cinema 4D / Octane',
-  'Phase One XF'
-];
-
-export function Skills({ groupedSkills = {}, loading }) {
-  const artworkSrc =
-    'https://lh3.googleusercontent.com/aida-public/AB6AXuBZKUN_SI6NZ3puaBrvtRv0gTBlp5tPYbBmGv9poKowqWonoPPb6Rq08Bsitb21GU9e2mol3RoVN06il8u3QarPHsh8xTMZiI5tm6LAeDYbIWXfFfkgVjmzFzqnruZdc5Rrf_KIo1e_43LuNOoDa3ziCn1DVr4mLELPaaRxHObTanCYnKvPCG78NPyKVnxd0CiVkulDQh-ObFxi2UB0wovswqqn4FDxlIbO9pODsXA';
-
-  const groupKeys = Object.keys(groupedSkills);
+export function Skills({ groupedSkills }) {
+  const tools = [
+    { code: 'Fg', name: 'Figma', role: 'Design Systems' },
+    { code: 'UE5', name: 'Unreal 5.4', role: 'Real-time Sets' },
+    { code: 'Bl', name: 'Blender 4', role: 'Procedural 3D' },
+    { code: 'C4D', name: 'Cinema 4D', role: 'Redshift Engine' },
+    { code: 'Ae', name: 'After Effects', role: 'Kinetic Motion' },
+    { code: 'visionOS', icon: 'view_in_ar', name: 'visionOS', role: 'Spatial UX' }
+  ];
 
   return (
     <section
-      id="keahlian"
+      id="toolkit-section"
       style={{
-        width: '100%',
-        backgroundColor: 'var(--color-surface)',
-        paddingTop: 'var(--space-md)',
-        paddingBottom: 'var(--space-3xl)'
+        maxWidth: '1440px',
+        margin: '0 auto',
+        padding: '0 var(--margin-mobile)',
+        width: '100%'
       }}
     >
       <div
-        className="container"
         style={{
-          maxWidth: 'var(--max-width)',
+          width: '100%',
+          padding: 'var(--space-lg)',
+          borderRadius: 'var(--radius-xl)',
+          backgroundColor: '#000000',
+          color: '#ffffff',
+          boxShadow: 'var(--shadow-xl)',
           display: 'flex',
           flexDirection: 'column',
-          gap: 'var(--space-2xl)'
+          justifyContent: 'space-between',
+          gap: 'var(--space-lg)'
         }}
+        className="toolkit-card-container"
       >
-        {/* Bento Card 3: Creative Toolkit & Pipeline Produksi */}
+        {/* Left Column: Description & Metric Counters */}
         <div
           style={{
-            backgroundColor: 'var(--color-surface-low)',
-            borderRadius: 'var(--radius-xl)',
-            padding: 'clamp(1.5rem, 4vw, 3rem)',
             display: 'flex',
             flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textAlign: 'center',
-            gap: 'var(--space-xl)',
-            boxShadow: 'var(--shadow-md)',
-            border: '1px solid rgba(230, 190, 178, 0.08)'
+            justifyContent: 'space-between',
+            maxWidth: '480px'
           }}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              textAlign: 'center',
-              gap: 'var(--space-sm)',
-              maxWidth: '42rem',
-              margin: '0 auto'
-            }}
-          >
-            <span
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <div
               style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.6875rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '0.25rem 0.75rem',
+                borderRadius: '9999px',
+                backgroundColor: 'var(--color-primary-container)',
+                color: 'var(--color-on-primary-container)',
+                fontSize: '11px',
+                fontWeight: '600',
+                letterSpacing: '0.08em',
                 textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                color: 'var(--color-primary)',
-                fontWeight: '700'
-              }}
-            >
-              Instrumen &amp; Ekosistem
-            </span>
-            <h3
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.5rem, 3.5vw, 2.25rem)',
-                fontWeight: '700',
-                color: 'var(--color-on-surface)'
-              }}
-            >
-              Creative Toolkit &amp; Pipeline Produksi
-            </h3>
-            <p
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '1rem',
-                color: 'var(--color-on-surface-variant)',
-                lineHeight: 1.6
-              }}
-            >
-              Memadukan presisi perangkat lunak modern (Figma Spatial, Unreal Engine 5, DaVinci Resolve Studio, Medium Format Phase One) untuk menciptakan presisi dari nol hingga rilis global.
-            </p>
-
-            {/* Toolkit Pills */}
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'center',
-                gap: 'var(--space-xs)',
-                paddingTop: 'var(--space-xs)'
-              }}
-            >
-              {TOOLKIT_PILLS.map((tool, idx) => (
-                <span
-                  key={idx}
-                  style={{
-                    padding: '0.35rem 1rem',
-                    borderRadius: 'var(--radius-full)',
-                    backgroundColor: 'var(--color-surface-highest)',
-                    color: 'var(--color-on-surface)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.75rem',
-                    fontWeight: '600',
-                    border: '1px solid rgba(230, 190, 178, 0.1)'
-                  }}
-                >
-                  {tool}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* 3D Artwork Frame: Eksperimen Estetika Q1 */}
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '32rem',
-              aspectRatio: '16/9',
-              borderRadius: 'var(--radius-lg)',
-              overflow: 'hidden',
-              backgroundColor: 'var(--color-surface-highest)',
-              position: 'relative',
-              boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.5)',
-              margin: '0 auto'
-            }}
-          >
-            <img
-              src={artworkSrc}
-              alt="Eksperimen Estetika Q1 - 3D dynamic glass sculpture"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover'
-              }}
-            />
-            <div
-              style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(to top, rgba(14, 14, 18, 0.85) 0%, transparent 60%)',
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
-                padding: 'var(--space-md)'
+                width: 'max-content'
               }}
             >
               <span
                 style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  color: 'var(--color-on-surface)',
-                  fontWeight: '600',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 'var(--space-xs)'
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: 'var(--color-tertiary-fixed)',
+                  boxShadow: '0 0 8px var(--color-tertiary-fixed)',
+                  animation: 'pulse 1.5s infinite'
+                }}
+              />
+              <span>Realtime 3D &amp; Spatial Pipeline</span>
+            </div>
+
+            <h3
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '40px',
+                lineHeight: '46px',
+                letterSpacing: '-0.03em',
+                fontWeight: '700',
+                textTransform: 'uppercase',
+                color: '#ffffff',
+                margin: '8px 0 0 0'
+              }}
+            >
+              CREATIVE ENGINE &amp; TOOLKIT
+            </h3>
+
+            <p
+              style={{
+                fontSize: '15px',
+                lineHeight: '24px',
+                color: 'var(--color-on-primary-container)',
+                marginTop: '8px'
+              }}
+            >
+              Kombinasi komputasi spasial, tipografi parametrik, dan alur kerja sinematik untuk mewujudkan presisi visual tanpa kompromi.
+            </p>
+          </div>
+
+          {/* Stats Bar */}
+          <div
+            style={{
+              paddingTop: 'var(--space-md)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-md)'
+            }}
+          >
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: '#ffffff'
                 }}
               >
-                <span
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--color-secondary-container)'
-                  }}
-                />
-                Eksperimen Estetika Q1
+                100%
+              </span>
+              <span
+                style={{
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-on-primary-container)'
+                }}
+              >
+                Fidelity Rate
+              </span>
+            </div>
+
+            <div style={{ height: '32px', width: '1px', backgroundColor: 'rgba(255, 255, 255, 0.2)' }} />
+
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <span
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '24px',
+                  fontWeight: '700',
+                  color: 'var(--color-tertiary-fixed)'
+                }}
+              >
+                Sub-second
+              </span>
+              <span
+                style={{
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: 'var(--color-on-primary-container)'
+                }}
+              >
+                Spatial Iteration
               </span>
             </div>
           </div>
         </div>
 
-        {/* Dynamic Skill Competencies (fotografi, videografi, desain, copywriting) */}
-        {groupKeys.length > 0 && (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: 'var(--space-md)',
-              marginTop: 'var(--space-md)'
-            }}
-          >
-            {groupKeys.map((group) => {
-              const items = groupedSkills[group] || [];
-              return (
-                <div
-                  key={group}
-                  style={{
-                    backgroundColor: 'var(--color-surface-container)',
-                    borderRadius: 'var(--radius-lg)',
-                    padding: 'var(--space-lg)',
-                    border: '1px solid rgba(230, 190, 178, 0.08)',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 'var(--space-md)'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <h4
-                      style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '1.125rem',
-                        fontWeight: '700',
-                        color: 'var(--color-on-surface)'
-                      }}
-                    >
-                      {group}
-                    </h4>
-                    <span
-                      style={{
-                        fontFamily: 'var(--font-mono)',
-                        fontSize: '0.6875rem',
-                        color: 'var(--color-outline)',
-                        backgroundColor: 'var(--color-surface-high)',
-                        padding: '0.15rem 0.5rem',
-                        borderRadius: 'var(--radius-full)'
-                      }}
-                    >
-                      {items.length} kompetensi
-                    </span>
-                  </div>
+        {/* Right Column: 6 Badges Grid */}
+        <div
+          style={{
+            flex: 1,
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+            gap: 'var(--space-sm)',
+            alignContent: 'center'
+          }}
+        >
+          {tools.map((t) => (
+            <div
+              key={t.name}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'var(--space-xs)',
+                padding: 'var(--space-sm)',
+                borderRadius: '1rem',
+                backgroundColor: 'var(--color-primary-container)',
+                transition: 'background-color 150ms ease'
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#2a292e')}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'var(--color-primary-container)')}
+            >
+              <div
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '0.75rem',
+                  backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: '700',
+                  fontSize: '12px',
+                  color: '#ffffff'
+                }}
+              >
+                {t.icon ? (
+                  <span className="material-symbols-outlined" style={{ fontSize: '18px' }}>
+                    {t.icon}
+                  </span>
+                ) : (
+                  t.code
+                )}
+              </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)' }}>
-                    {items.map((skill) => (
-                      <div
-                        key={skill.id}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: 'var(--space-sm)',
-                          fontSize: '0.875rem',
-                          color: 'var(--color-on-surface-variant)',
-                          padding: '0.4rem 0.6rem',
-                          borderRadius: 'var(--radius-sm)',
-                          backgroundColor: 'rgba(42, 41, 46, 0.4)'
-                        }}
-                      >
-                        <span
-                          style={{
-                            width: '5px',
-                            height: '5px',
-                            borderRadius: '50%',
-                            backgroundColor: 'var(--color-primary-container)',
-                            flexShrink: 0
-                          }}
-                        />
-                        <span>{skill.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#ffffff' }}>
+                  {t.name}
+                </span>
+                <span style={{ fontSize: '10px', color: 'var(--color-on-primary-container)', letterSpacing: '0.04em' }}>
+                  {t.role}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+
+      <style>{`
+        @media (min-width: 1024px) {
+          .toolkit-card-container {
+            flex-direction: row !important;
+            align-items: stretch !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }

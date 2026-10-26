@@ -1,24 +1,38 @@
 import React from 'react';
+import { ArrowUpRight } from 'lucide-react';
 
 export function WorkTile({ project, onClick }) {
-  const { title, category, categoryLabel, summary, year, project_media = [] } = project;
+  const {
+    title,
+    category,
+    categoryLabel,
+    subCategory,
+    locationYear,
+    summary,
+    client,
+    year,
+    project_media = []
+  } = project;
 
   const firstMedia = project_media[0] || {};
   const imageSrc =
     firstMedia.thumb_path ||
     firstMedia.storage_path ||
     firstMedia.poster_path ||
-    'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=1200&q=80';
+    'https://lh3.googleusercontent.com/aida-public/AB6AXuBa2KOlfDWEI_usA-OnOjp3a2gg2wYXQ8JqEKgT6dPfKs0QED6iQt-6apVB4u0Y88SYYSTkI7iEjrZyQWCwYncdE22z-HdmNDvCA29vfXKaNbMeKhdAgDI_zksjN4ETeC6oHeuFpLQYS7JZFaP4-fkZxU-IDqj82uUMJeraANVwimVd4jJX_52m0mJjIBk0KrLMGGuBwaGc7eKxh2kaKLD0mC8AbkpXv05T0or4Jlg';
 
-  const displayCategory =
+  const badgeCategory =
     categoryLabel ||
-    (category === 'photo'
-      ? 'Fotografi & Seni'
+    (category === 'design'
+      ? 'SPATIAL SYSTEM'
       : category === 'video'
-      ? 'Videografi & Sinematografi'
-      : category === 'design'
-      ? 'Desain UI/UX'
-      : 'Copywriting & Editorial');
+      ? 'COMMERCIAL FILM'
+      : category === 'photo'
+      ? 'FINE ART & PHOTO'
+      : 'EDITORIAL & COPY');
+
+  const locYearBadge = locationYear || `STUDIO / ${year || 2024}`;
+  const subCategoryLabel = subCategory || (category === 'design' ? 'Pavilion Architecture' : category === 'video' ? 'Campaign Direction' : 'Brand Manifesto');
 
   return (
     <article
@@ -31,167 +45,185 @@ export function WorkTile({ project, onClick }) {
           onClick();
         }
       }}
-      className="stitch-project-card group"
+      className="project-item group"
       style={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 'var(--space-md)',
+        borderRadius: 'var(--radius-xl)',
+        backgroundColor: 'var(--color-surface-container-lowest)',
+        padding: 'var(--space-md)',
+        boxShadow: 'var(--shadow-sm)',
+        transition: 'all 300ms ease',
         cursor: 'pointer',
-        outline: 'none'
+        outline: 'none',
+        height: '100%',
+        justifyContent: 'space-between'
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.boxShadow = 'var(--shadow-sm)';
+        e.currentTarget.style.transform = 'translateY(0)';
       }}
     >
-      {/* 1. Aspect 16/11 Media Container */}
+      {/* 4/3 Aspect Media Container */}
       <div
-        className="stitch-media-container"
         style={{
           position: 'relative',
           width: '100%',
-          aspectRatio: '16/11',
-          borderRadius: 'var(--radius-xl)',
+          aspectRatio: '4/3',
+          borderRadius: '1rem',
           overflow: 'hidden',
-          backgroundColor: 'var(--color-surface-container)',
-          boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.4)'
+          marginBottom: 'var(--space-md)',
+          backgroundColor: 'var(--color-surface-container)'
         }}
       >
         <img
           src={imageSrc}
           alt={firstMedia.alt_text || title}
           loading="lazy"
-          className="stitch-card-img"
+          className="project-img"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
-            transition: 'transform 700ms cubic-bezier(0.16, 1, 0.3, 1)'
+            transition: 'transform 500ms ease'
           }}
         />
 
-        {/* Top-Left Category Pill */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '1rem',
-            left: '1rem',
-            zIndex: 2
-          }}
-        >
+        {/* Top-Left Badge */}
+        <div style={{ position: 'absolute', top: 'var(--space-sm)', left: 'var(--space-sm)' }}>
           <span
             style={{
-              padding: '0.35rem 1rem',
-              borderRadius: 'var(--radius-full)',
-              backgroundColor: 'rgba(14, 14, 18, 0.82)',
+              display: 'inline-block',
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              backgroundColor: 'rgba(255, 255, 255, 0.92)',
               backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-              border: '1px solid rgba(230, 190, 178, 0.1)',
-              color: 'var(--color-secondary)',
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.6875rem',
+              fontSize: '11px',
               fontWeight: '600',
-              textTransform: 'uppercase',
-              letterSpacing: '0.06em'
+              letterSpacing: '0.08em',
+              color: 'var(--color-on-surface)'
             }}
           >
-            {displayCategory}
+            {badgeCategory}
           </span>
         </div>
 
-        {/* Bottom-Right Floating Hover CTA Button */}
-        <div
-          className="stitch-card-cta"
-          style={{
-            position: 'absolute',
-            bottom: '1rem',
-            right: '1rem',
-            width: '2.75rem',
-            height: '2.75rem',
-            borderRadius: 'var(--radius-full)',
-            backgroundColor: 'var(--color-primary-container)',
-            color: 'var(--color-on-primary-container)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: 'var(--shadow-glow)',
-            opacity: 0,
-            transform: 'translateY(8px)',
-            transition: 'all 250ms ease',
-            zIndex: 3
-          }}
-        >
-          <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
-            arrow_outward
+        {/* Bottom-Right Location & Year Badge */}
+        <div style={{ position: 'absolute', bottom: 'var(--space-sm)', right: 'var(--space-sm)' }}>
+          <span
+            style={{
+              display: 'inline-block',
+              padding: '0.25rem 0.75rem',
+              borderRadius: '9999px',
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              color: '#ffffff',
+              fontSize: '10px',
+              fontWeight: '700',
+              letterSpacing: '0.06em'
+            }}
+          >
+            {locYearBadge}
           </span>
         </div>
       </div>
 
-      {/* 2. Text Info: Title, Year, Summary */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--space-xs)',
-          padding: '0 0.25rem'
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: 'var(--space-sm)'
-          }}
-        >
+      {/* Body & Meta */}
+      <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+          <span
+            style={{
+              fontSize: '11px',
+              fontWeight: '600',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: 'var(--color-secondary)'
+            }}
+          >
+            {subCategoryLabel}
+          </span>
+
           <h3
-            className="stitch-card-title"
+            className="project-title"
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: '1.25rem',
-              fontWeight: '700',
+              fontSize: '20px',
+              lineHeight: '26px',
+              letterSpacing: '-0.01em',
+              fontWeight: '600',
               color: 'var(--color-on-surface)',
-              transition: 'color var(--transition-fast)',
-              margin: 0
+              margin: '2px 0 0 0',
+              transition: 'color 150ms ease'
             }}
           >
             {title}
           </h3>
-          {year && (
-            <span
-              style={{
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
-                color: 'var(--color-outline)',
-                fontWeight: '500'
-              }}
-            >
-              {year}
-            </span>
-          )}
-        </div>
 
-        {summary && (
           <p
             style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.875rem',
+              fontSize: '13px',
+              lineHeight: '18px',
               color: 'var(--color-on-surface-variant)',
-              lineHeight: 1.5,
-              margin: 0
+              marginTop: '4px',
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden'
             }}
           >
             {summary}
           </p>
-        )}
+        </div>
+
+        {/* Bottom Bar: Client & Arrow CTA */}
+        <div
+          style={{
+            paddingTop: 'var(--space-md)',
+            marginTop: 'var(--space-sm)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            borderTop: '1px solid rgba(0, 0, 0, 0.04)'
+          }}
+        >
+          <span style={{ fontSize: '12px', color: 'var(--color-on-surface-variant)' }}>
+            Client: {client || 'Mono Foundation'}
+          </span>
+
+          <div
+            className="arrow-circle"
+            style={{
+              width: '40px',
+              height: '40px',
+              borderRadius: '50%',
+              backgroundColor: 'var(--color-surface-container-low)',
+              color: 'var(--color-on-surface)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'all 200ms ease'
+            }}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>
+              arrow_outward
+            </span>
+          </div>
+        </div>
       </div>
 
       <style>{`
-        .stitch-project-card:hover .stitch-card-img {
+        .project-item:hover .project-img {
           transform: scale(1.05);
         }
-        .stitch-project-card:hover .stitch-card-cta {
-          opacity: 1 !important;
-          transform: translateY(0) !important;
+        .project-item:hover .project-title {
+          color: #000000;
         }
-        .stitch-project-card:hover .stitch-card-title {
-          color: var(--color-primary) !important;
+        .project-item:hover .arrow-circle {
+          background-color: #000000 !important;
+          color: #ffffff !important;
         }
       `}</style>
     </article>
