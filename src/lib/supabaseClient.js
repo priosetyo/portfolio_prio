@@ -1,10 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Baca environment variables Vite
+const rawUrl = import.meta.env.VITE_SUPABASE_URL;
+const rawKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase URL atau Anon Key belum diset di .env!');
+export const isSupabaseConfigured = Boolean(rawUrl && rawKey);
+
+if (!isSupabaseConfigured) {
+  console.warn(
+    'VITE_SUPABASE_URL atau VITE_SUPABASE_ANON_KEY belum diset di Environment Variables (Vercel). ' +
+    'Aplikasi tetap berjalan mulus menggunakan data portofolio kurasi Stitch.'
+  );
 }
 
-export const supabase = createClient(supabaseUrl || '', supabaseAnonKey || '');
+// Gunakan fallback URL aman agar createClient tidak melempar Uncaught Error saat env belum diset
+const supabaseUrl = isSupabaseConfigured ? rawUrl : 'https://pipymdkphzhkyvutclfn.supabase.co';
+const supabaseAnonKey = isSupabaseConfigured ? rawKey : 'sb_publishable_cFaPd_YnpN7G6Xk_QoDEuQ_BzoYo2fx';
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
