@@ -52,29 +52,66 @@ export function Footer({ settings }) {
           </p>
         </div>
 
-        {/* Caps Tags */}
-        <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-            gap: 'var(--space-md)',
-            fontSize: '11px',
-            fontWeight: '600',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: 'var(--color-on-surface-variant)'
-          }}
-        >
-          <span style={{ cursor: 'pointer', transition: 'color 150ms ease' }}>
-            {settings?.location || 'JAKARTA / REMOTE'}
-          </span>
-          <span style={{ cursor: 'pointer', transition: 'color 150ms ease' }}>
-            ARCHIVE 2020—{currentYear}
-          </span>
-          <span style={{ cursor: 'pointer', transition: 'color 150ms ease' }}>
-            ALL RIGHTS RESERVED
-          </span>
+        {/* Dynamic Social Links & Caps Tags */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
+          {(settings?.instagram || settings?.linkedin || settings?.github || settings?.youtube || settings?.behance || settings?.vimeo) && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center' }}>
+              {settings?.instagram && (
+                <a href={settings.instagram} target="_blank" rel="noreferrer" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-on-surface)', textDecoration: 'none' }}>
+                  INSTAGRAM ↗
+                </a>
+              )}
+              {settings?.linkedin && (
+                <a href={settings.linkedin} target="_blank" rel="noreferrer" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-on-surface)', textDecoration: 'none' }}>
+                  LINKEDIN ↗
+                </a>
+              )}
+              {settings?.behance && (
+                <a href={settings.behance} target="_blank" rel="noreferrer" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-on-surface)', textDecoration: 'none' }}>
+                  BEHANCE ↗
+                </a>
+              )}
+              {settings?.youtube && (
+                <a href={settings.youtube} target="_blank" rel="noreferrer" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-on-surface)', textDecoration: 'none' }}>
+                  YOUTUBE ↗
+                </a>
+              )}
+              {settings?.github && (
+                <a href={settings.github} target="_blank" rel="noreferrer" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-on-surface)', textDecoration: 'none' }}>
+                  GITHUB ↗
+                </a>
+              )}
+              {settings?.vimeo && (
+                <a href={settings.vimeo} target="_blank" rel="noreferrer" style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-on-surface)', textDecoration: 'none' }}>
+                  VIMEO ↗
+                </a>
+              )}
+            </div>
+          )}
+
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: 'var(--space-md)',
+              fontSize: '11px',
+              fontWeight: '600',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: 'var(--color-on-surface-variant)'
+            }}
+          >
+            <span>
+              {settings?.location || 'INDONESIA'}
+            </span>
+            <span>
+              ARCHIVE 2020—{currentYear}
+            </span>
+            <span>
+              ALL RIGHTS RESERVED
+            </span>
+          </div>
         </div>
       </div>
 

@@ -71,9 +71,36 @@ const DEFAULT_EXPERIENCES = [
  * Custom Hook untuk memuat seluruh konten teks publik secara paralel dari Supabase
  */
 export function useSiteContent() {
-  const [settings, setSettings] = useState(DEFAULT_SETTINGS);
-  const [skills, setSkills] = useState(DEFAULT_SKILLS);
-  const [experiences, setExperiences] = useState(DEFAULT_EXPERIENCES);
+  const [settings, setSettings] = useState(() => {
+    try {
+      const saved = localStorage.getItem('prio_site_settings');
+      if (saved) return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
+    } catch (e) {}
+    return DEFAULT_SETTINGS;
+  });
+
+  const [skills, setSkills] = useState(() => {
+    try {
+      const saved = localStorage.getItem('prio_skills');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return DEFAULT_SKILLS;
+  });
+
+  const [experiences, setExperiences] = useState(() => {
+    try {
+      const saved = localStorage.getItem('prio_experiences');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return DEFAULT_EXPERIENCES;
+  });
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -122,6 +149,13 @@ export function useSiteContent() {
 
   useEffect(() => {
     fetchContent();
+
+    const handleContentUpdated = () => {
+      fetchContent();
+    };
+
+    window.addEventListener('prio_site_content_updated', handleContentUpdated);
+    return () => window.removeEventListener('prio_site_content_updated', handleContentUpdated);
   }, [fetchContent]);
 
   // Kelompokkan skills berdasarkan group_name

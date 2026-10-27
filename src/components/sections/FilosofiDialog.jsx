@@ -1,7 +1,9 @@
 import React from 'react';
 
-export function FilosofiDialog({ isOpen, onClose }) {
+export function FilosofiDialog({ isOpen, onClose, settings }) {
   if (!isOpen) return null;
+
+  const bioContent = settings?.bio || settings?.summary || 'Desain bukan sekadar ornamen estetika, melainkan peredam friksi antara intensi manusia dan kompleksitas teknologi modern.';
 
   return (
     <div
@@ -80,17 +82,17 @@ export function FilosofiDialog({ isOpen, onClose }) {
           </button>
         </div>
 
-        {/* Quote */}
+        {/* Biografi / Filosofi Text */}
         <p
           style={{
             fontSize: '15px',
             lineHeight: '24px',
-            color: 'var(--color-on-surface-variant)',
+            color: 'var(--color-on-surface)',
             margin: 0,
-            fontStyle: 'italic'
+            whiteSpace: 'pre-line'
           }}
         >
-          “Desain bukan sekadar ornamen estetika, melainkan peredam friksi antara intensi manusia dan kompleksitas teknologi modern.”
+          {bioContent}
         </p>
 
         {/* 3 Core Pillars */}

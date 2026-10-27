@@ -1,7 +1,7 @@
 import React from 'react';
 
 export function Skills({ groupedSkills }) {
-  const tools = [
+  const defaultTools = [
     { code: 'Fg', name: 'Figma', role: 'Design Systems' },
     { code: 'UE5', name: 'Unreal 5.4', role: 'Real-time Sets' },
     { code: 'Bl', name: 'Blender 4', role: 'Procedural 3D' },
@@ -9,6 +9,27 @@ export function Skills({ groupedSkills }) {
     { code: 'Ae', name: 'After Effects', role: 'Kinetic Motion' },
     { code: 'visionOS', icon: 'view_in_ar', name: 'visionOS', role: 'Spatial UX' }
   ];
+
+  // Transform dynamic groupedSkills from database / admin
+  const dynamicItems = groupedSkills
+    ? Object.entries(groupedSkills).flatMap(([group, items]) =>
+        items.map((item) => {
+          const words = (item.name || '').trim().split(/\s+/);
+          const code =
+            words.length > 1
+              ? (words[0][0] + words[1][0]).toUpperCase()
+              : (item.name || 'SK').slice(0, 3).toUpperCase();
+          return {
+            id: item.id,
+            code,
+            name: item.name,
+            role: group
+          };
+        })
+      )
+    : [];
+
+  const displayTools = dynamicItems.length > 0 ? dynamicItems : defaultTools;
 
   return (
     <section
@@ -172,9 +193,9 @@ export function Skills({ groupedSkills }) {
             alignContent: 'center'
           }}
         >
-          {tools.map((t) => (
+          {displayTools.map((t, idx) => (
             <div
-              key={t.name}
+              key={t.id || t.name || idx}
               style={{
                 display: 'flex',
                 alignItems: 'center',

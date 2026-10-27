@@ -174,6 +174,7 @@ export default function App() {
       <FilosofiDialog
         isOpen={isFilosofiOpen}
         onClose={() => setIsFilosofiOpen(false)}
+        settings={settings}
       />
     </div>
   );

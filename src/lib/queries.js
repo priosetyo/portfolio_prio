@@ -1,52 +1,117 @@
 import { supabase } from './supabaseClient';
 
 /**
+ * Local Storage Helpers & Event Dispatcher
+ */
+export function notifySiteContentUpdated() {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('prio_site_content_updated'));
+  }
+}
+
+export function getLocalSettings() {
+  try {
+    const saved = localStorage.getItem('prio_site_settings');
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return null;
+}
+
+export function saveLocalSettings(settings) {
+  try {
+    localStorage.setItem('prio_site_settings', JSON.stringify(settings));
+  } catch (e) {}
+}
+
+export function getLocalSkills() {
+  try {
+    const saved = localStorage.getItem('prio_skills');
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return null;
+}
+
+export function saveLocalSkills(skills) {
+  try {
+    localStorage.setItem('prio_skills', JSON.stringify(skills));
+  } catch (e) {}
+}
+
+export function getLocalExperiences() {
+  try {
+    const saved = localStorage.getItem('prio_experiences');
+    if (saved) return JSON.parse(saved);
+  } catch (e) {}
+  return null;
+}
+
+export function saveLocalExperiences(exps) {
+  try {
+    localStorage.setItem('prio_experiences', JSON.stringify(exps));
+  } catch (e) {}
+}
+
+/**
  * Fetch profil situs & info kontak
  */
 export async function getSiteSettings() {
-  const { data, error } = await supabase
-    .from('site_settings')
-    .select('*')
-    .limit(1)
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from('site_settings')
+      .select('*')
+      .limit(1)
+      .single();
 
-  if (error && error.code !== 'PGRST116') {
-    console.error('Error fetching site_settings:', error);
-    throw error;
+    if (!error && data) {
+      const local = getLocalSettings() || {};
+      const merged = { ...local, ...data };
+      saveLocalSettings(merged);
+      return merged;
+    }
+  } catch (err) {
+    console.warn('Menggunakan fallback lokal untuk site_settings:', err);
   }
-  return data;
+  return getLocalSettings();
 }
 
 /**
  * Fetch semua keahlian (skills) dikelompokkan
  */
 export async function getSkills() {
-  const { data, error } = await supabase
-    .from('skills')
-    .select('*')
-    .order('sort_order', { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from('skills')
+      .select('*')
+      .order('sort_order', { ascending: true });
 
-  if (error) {
-    console.error('Error fetching skills:', error);
-    throw error;
+    if (!error && Array.isArray(data) && data.length > 0) {
+      saveLocalSkills(data);
+      return data;
+    }
+  } catch (err) {
+    console.warn('Menggunakan fallback lokal untuk skills:', err);
   }
-  return data || [];
+  return getLocalSkills() || [];
 }
 
 /**
  * Fetch riwayat pengalaman (experiences)
  */
 export async function getExperiences() {
-  const { data, error } = await supabase
-    .from('experiences')
-    .select('*')
-    .order('sort_order', { ascending: true });
+  try {
+    const { data, error } = await supabase
+      .from('experiences')
+      .select('*')
+      .order('sort_order', { ascending: true });
 
-  if (error) {
-    console.error('Error fetching experiences:', error);
-    throw error;
+    if (!error && Array.isArray(data) && data.length > 0) {
+      saveLocalExperiences(data);
+      return data;
+    }
+  } catch (err) {
+    console.warn('Menggunakan fallback lokal untuk experiences:', err);
   }
-  return data || [];
+  return getLocalExperiences() || [];
 }
 
 /**
@@ -319,35 +384,69 @@ export async function uploadMediaFile(path, fileBlob, contentType = 'image/webp'
  * Admin: CRUD Pengalaman
  */
 export async function createExperience(expData) {
-  const { data, error } = await supabase
-    .from('experiences')
-    .insert([expData])
-    .select()
-    .single();
+  const newExp = { ...expData, id: expData.id || `exp-${Date.now()}` };
+  
+  // 1. Update local storage immediately
+  const existing = getLocalExperiences() || [];
+  const updatedList = [newExp, ...existing];
+  saveLocalExperiences(updatedList);
+  notifySiteContentUpdated();
 
-  if (error) throw error;
-  return data;
+  // 2. Sync to Supabase
+  try {
+    const { data, error } = await supabase
+      .from('experiences')
+      .insert([expData])
+      .select()
+      .single();
+
+    if (!error && data) {
+      const mergedList = updatedList.map((x) => (x.id === newExp.id ? data : x));
+      saveLocalExperiences(mergedList);
+      return data;
+    }
+  } catch (err) {
+    console.warn('Supabase createExperience sync error, using local:', err);
+  }
+  return newExp;
 }
 
 export async function updateExperience(id, expData) {
-  const { data, error } = await supabase
-    .from('experiences')
-    .update(expData)
-    .eq('id', id)
-    .select()
-    .single();
+  // 1. Update local storage immediately
+  const existing = getLocalExperiences() || [];
+  const updatedList = existing.map((x) => (x.id === id ? { ...x, ...expData } : x));
+  saveLocalExperiences(updatedList);
+  notifySiteContentUpdated();
 
-  if (error) throw error;
-  return data;
+  // 2. Sync to Supabase
+  try {
+    const { data, error } = await supabase
+      .from('experiences')
+      .update(expData)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (!error && data) return data;
+  } catch (err) {
+    console.warn('Supabase updateExperience sync error, using local:', err);
+  }
+  return { ...expData, id };
 }
 
 export async function deleteExperience(id) {
-  const { error } = await supabase
-    .from('experiences')
-    .delete()
-    .eq('id', id);
+  // 1. Update local storage immediately
+  const existing = getLocalExperiences() || [];
+  const updatedList = existing.filter((x) => x.id !== id);
+  saveLocalExperiences(updatedList);
+  notifySiteContentUpdated();
 
-  if (error) throw error;
+  // 2. Sync to Supabase
+  try {
+    await supabase.from('experiences').delete().eq('id', id);
+  } catch (err) {
+    console.warn('Supabase deleteExperience error:', err);
+  }
   return true;
 }
 
@@ -355,35 +454,69 @@ export async function deleteExperience(id) {
  * Admin: CRUD Keahlian (Skills)
  */
 export async function createSkill(skillData) {
-  const { data, error } = await supabase
-    .from('skills')
-    .insert([skillData])
-    .select()
-    .single();
+  const newSkill = { ...skillData, id: skillData.id || `s-${Date.now()}` };
 
-  if (error) throw error;
-  return data;
+  // 1. Update local storage immediately
+  const existing = getLocalSkills() || [];
+  const updatedList = [...existing, newSkill];
+  saveLocalSkills(updatedList);
+  notifySiteContentUpdated();
+
+  // 2. Sync to Supabase
+  try {
+    const { data, error } = await supabase
+      .from('skills')
+      .insert([skillData])
+      .select()
+      .single();
+
+    if (!error && data) {
+      const mergedList = updatedList.map((s) => (s.id === newSkill.id ? data : s));
+      saveLocalSkills(mergedList);
+      return data;
+    }
+  } catch (err) {
+    console.warn('Supabase createSkill sync error, using local:', err);
+  }
+  return newSkill;
 }
 
 export async function updateSkill(id, skillData) {
-  const { data, error } = await supabase
-    .from('skills')
-    .update(skillData)
-    .eq('id', id)
-    .select()
-    .single();
+  // 1. Update local storage immediately
+  const existing = getLocalSkills() || [];
+  const updatedList = existing.map((s) => (s.id === id ? { ...s, ...skillData } : s));
+  saveLocalSkills(updatedList);
+  notifySiteContentUpdated();
 
-  if (error) throw error;
-  return data;
+  // 2. Sync to Supabase
+  try {
+    const { data, error } = await supabase
+      .from('skills')
+      .update(skillData)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (!error && data) return data;
+  } catch (err) {
+    console.warn('Supabase updateSkill sync error, using local:', err);
+  }
+  return { ...skillData, id };
 }
 
 export async function deleteSkill(id) {
-  const { error } = await supabase
-    .from('skills')
-    .delete()
-    .eq('id', id);
+  // 1. Update local storage immediately
+  const existing = getLocalSkills() || [];
+  const updatedList = existing.filter((s) => s.id !== id);
+  saveLocalSkills(updatedList);
+  notifySiteContentUpdated();
 
-  if (error) throw error;
+  // 2. Sync to Supabase
+  try {
+    await supabase.from('skills').delete().eq('id', id);
+  } catch (err) {
+    console.warn('Supabase deleteSkill error:', err);
+  }
   return true;
 }
 
@@ -391,23 +524,54 @@ export async function deleteSkill(id) {
  * Admin: Update info Profil / Site Settings
  */
 export async function updateSiteSettings(settingsData) {
+  // 1. Simpan langsung ke local storage
+  saveLocalSettings(settingsData);
+  notifySiteContentUpdated();
+
+  // 2. Siapkan sinkronisasi ke Supabase
   try {
-    const { data: existing } = await supabase.from('site_settings').select('id').limit(1).single();
-    if (existing?.id) {
-      const { data, error } = await supabase
+    const { data: existing } = await supabase
+      .from('site_settings')
+      .select('id')
+      .limit(1)
+      .single();
+
+    const targetId = existing?.id;
+    let res = null;
+
+    if (targetId) {
+      res = await supabase
         .from('site_settings')
         .update(settingsData)
-        .eq('id', existing.id)
+        .eq('id', targetId)
         .select()
         .single();
-      if (!error && data) return data;
     } else {
-      const { data, error } = await supabase
+      res = await supabase
         .from('site_settings')
         .insert([settingsData])
         .select()
         .single();
-      if (!error && data) return data;
+    }
+
+    if (res?.error) {
+      // Jika gagal karena kolom bio/sosial belum ditambahkan di Supabase SQL,
+      // fallback update kolom standar agar data inti tetap sinkron ke database
+      console.warn('Sinkronisasi penuh site_settings ke Supabase gagal, mencoba kolom inti:', res.error);
+      const coreFields = {
+        name: settingsData.name,
+        headline: settingsData.headline,
+        summary: settingsData.summary,
+        email: settingsData.email,
+        phone: settingsData.phone,
+        linkedin: settingsData.linkedin,
+        location: settingsData.location
+      };
+      if (targetId) {
+        await supabase.from('site_settings').update(coreFields).eq('id', targetId);
+      } else {
+        await supabase.from('site_settings').insert([coreFields]);
+      }
     }
   } catch (err) {
     console.warn('Update site settings fallback:', err);

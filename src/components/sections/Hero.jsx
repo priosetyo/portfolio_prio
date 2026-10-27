@@ -118,7 +118,7 @@ export function Hero({ settings, onOpenFilosofi }) {
                   letterSpacing: '-0.01em'
                 }}
               >
-                Director &amp; Brand Architect
+                {settings?.headline || 'Visual Creator, Designer & Copywriter'}
               </span>
               <span
                 style={{
@@ -127,7 +127,7 @@ export function Hero({ settings, onOpenFilosofi }) {
                   lineHeight: '18px'
                 }}
               >
-                Translating human tension into resilient design systems
+                {settings?.summary || 'Membantu brand mengomunikasikan nilai mereka melalui visual yang kuat, desain fungsional, dan narasi yang berdaya pikat.'}
               </span>
             </div>
           </div>
@@ -348,7 +348,7 @@ export function Hero({ settings, onOpenFilosofi }) {
                     backgroundColor: 'var(--color-tertiary-container)'
                   }}
                 />
-                <span>JAKARTA BASED</span>
+                <span>{(settings?.location || 'INDONESIA').toUpperCase()} BASED</span>
               </div>
 
               {/* Top Sticker Badge (Rotated) */}
@@ -423,7 +423,7 @@ export function Hero({ settings, onOpenFilosofi }) {
                   color: 'var(--color-on-secondary-fixed-variant)'
                 }}
               >
-                CREATIVE DIRECTOR
+                {settings?.headline?.toUpperCase() || 'CREATIVE DIRECTOR'}
               </span>
 
               <h2
@@ -437,7 +437,7 @@ export function Hero({ settings, onOpenFilosofi }) {
                   margin: '4px 0 0 0'
                 }}
               >
-                I'm Prio Setyo
+                I'm {settings?.name || 'Prio Setyo'}
               </h2>
 
               <p
@@ -449,8 +449,120 @@ export function Hero({ settings, onOpenFilosofi }) {
                   maxWidth: '320px'
                 }}
               >
-                Merancang identitas visual, kampanye spasial, dan narasi digital untuk jenama global terkemuka.
+                {settings?.summary || 'Merancang identitas visual, kampanye spasial, dan narasi digital untuk jenama global terkemuka.'}
               </p>
+
+              {/* Dynamic Social Links */}
+              {(settings?.instagram || settings?.linkedin || settings?.github || settings?.youtube || settings?.behance || settings?.vimeo) && (
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexWrap: 'wrap',
+                    gap: '6px',
+                    marginTop: '12px',
+                    position: 'relative',
+                    zIndex: 1
+                  }}
+                >
+                  {settings?.instagram && (
+                    <a
+                      href={settings.instagram}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: '9999px',
+                        backgroundColor: '#ffffff',
+                        color: '#000000',
+                        fontSize: '10px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        boxShadow: 'var(--shadow-sm)'
+                      }}
+                    >
+                      Instagram
+                    </a>
+                  )}
+                  {settings?.linkedin && (
+                    <a
+                      href={settings.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: '9999px',
+                        backgroundColor: '#ffffff',
+                        color: '#000000',
+                        fontSize: '10px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        boxShadow: 'var(--shadow-sm)'
+                      }}
+                    >
+                      LinkedIn
+                    </a>
+                  )}
+                  {settings?.behance && (
+                    <a
+                      href={settings.behance}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: '9999px',
+                        backgroundColor: '#ffffff',
+                        color: '#000000',
+                        fontSize: '10px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        boxShadow: 'var(--shadow-sm)'
+                      }}
+                    >
+                      Behance
+                    </a>
+                  )}
+                  {settings?.youtube && (
+                    <a
+                      href={settings.youtube}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: '9999px',
+                        backgroundColor: '#ffffff',
+                        color: '#000000',
+                        fontSize: '10px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        boxShadow: 'var(--shadow-sm)'
+                      }}
+                    >
+                      YouTube
+                    </a>
+                  )}
+                  {settings?.github && (
+                    <a
+                      href={settings.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        padding: '3px 10px',
+                        borderRadius: '9999px',
+                        backgroundColor: '#ffffff',
+                        color: '#000000',
+                        fontSize: '10px',
+                        fontWeight: '700',
+                        textDecoration: 'none',
+                        boxShadow: 'var(--shadow-sm)'
+                      }}
+                    >
+                      GitHub
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* Bottom Bio & Micro Info */}
