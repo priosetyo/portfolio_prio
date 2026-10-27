@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, Mail, AlertCircle, ArrowLeft, ShieldCheck, Eye, EyeOff, Zap, CheckCircle2 } from 'lucide-react';
 
-export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
+export function LoginForm({ onLogin, onBackToSite }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -10,7 +10,7 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!email.trim() || !password) {
       setErrorMsg('Mohon isi alamat surel dan kata sandi.');
       return;
     }
@@ -19,9 +19,15 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
     setErrorMsg('');
 
     try {
-      const res = await onLogin(email, password);
+      const res = await onLogin(email.trim(), password);
       if (res?.error) {
-        setErrorMsg(res.error.message || 'Login gagal. Periksa kembali email dan kata sandi.');
+        let msg = res.error.message || 'Login gagal. Periksa kembali email dan kata sandi.';
+        if (msg === 'Invalid login credentials') {
+          msg = 'Email atau kata sandi tidak cocok. Mohon periksa kembali.';
+        } else if (msg.includes('Email not confirmed')) {
+          msg = 'Alamat email belum dikonfirmasi di Supabase Auth.';
+        }
+        setErrorMsg(msg);
       }
     } catch (err) {
       setErrorMsg(err.message || 'Terjadi kesalahan sistem saat menghubungi Supabase Auth.');
@@ -80,11 +86,11 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
           position: 'relative',
           zIndex: 1,
           width: '100%',
-          maxWidth: '460px',
+          maxWidth: '440px',
           padding: '2.5rem',
           borderRadius: '1.5rem',
           backgroundColor: '#ffffff',
-          border: '1px solid rgba(0, 0, 0, 0.06)',
+          border: '1px solid rgba(0, 0, 0, 0.08)',
           boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04)',
           display: 'flex',
           flexDirection: 'column',
@@ -139,7 +145,7 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
             }}
           >
             <ShieldCheck size={12} />
-            <span>Studio Portal</span>
+            <span>Admin Portal</span>
           </div>
         </div>
 
@@ -168,101 +174,26 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
           <h1
             style={{
               fontFamily: 'var(--font-display)',
-              fontSize: '26px',
+              fontSize: '24px',
               fontWeight: '800',
               letterSpacing: '-0.02em',
               color: '#000000',
               margin: 0
             }}
           >
-            Atelier CMS
+            Admin Portal
           </h1>
           <p
             style={{
               fontSize: '13px',
               color: 'var(--color-on-surface-variant)',
-              marginTop: '4px',
+              marginTop: '6px',
               lineHeight: 1.5,
               maxWidth: '320px'
             }}
           >
-            Sistem kurasi karya visual, media, dan narasi kreatif Prio Setyo.
+            Silakan masukkan kredensial administrator Anda untuk mengelola portofolio.
           </p>
-        </div>
-
-        {/* Demo Fast Access Pill Button */}
-        {onDemoLogin && (
-          <div
-            style={{
-              padding: '1rem',
-              borderRadius: '1rem',
-              backgroundColor: 'var(--color-secondary-fixed)',
-              border: '1px solid rgba(95, 90, 124, 0.15)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.65rem'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                <span
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    backgroundColor: '#10b981',
-                    boxShadow: '0 0 8px #10b981'
-                  }}
-                />
-                <span style={{ fontSize: '11px', fontWeight: '700', color: 'var(--color-on-secondary-fixed)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Akses Pengujian Cepat
-                </span>
-              </div>
-              <span style={{ fontSize: '11px', color: 'var(--color-on-secondary-fixed-variant)' }}>1-Klik Langsung Masuk</span>
-            </div>
-
-            <button
-              type="button"
-              onClick={onDemoLogin}
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '6px',
-                padding: '0.65rem 1rem',
-                borderRadius: '0.75rem',
-                backgroundColor: '#000000',
-                color: '#ffffff',
-                fontSize: '12px',
-                fontWeight: '700',
-                border: 'none',
-                cursor: 'pointer',
-                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
-                transition: 'transform 150ms ease, background-color 150ms ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-1px)';
-                e.currentTarget.style.backgroundColor = '#1b1b1d';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.backgroundColor = '#000000';
-              }}
-            >
-              <Zap size={14} fill="#ffffff" />
-              <span>Masuk Mode Demo Studio</span>
-            </button>
-          </div>
-        )}
-
-        {/* Divider */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ flex: 1, height: '1px', backgroundColor: 'rgba(0, 0, 0, 0.06)' }} />
-          <span style={{ fontSize: '11px', color: 'var(--color-outline)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-            atau via email admin
-          </span>
-          <div style={{ flex: 1, height: '1px', backgroundColor: 'rgba(0, 0, 0, 0.06)' }} />
         </div>
 
         {/* Error Alert */}
@@ -271,22 +202,22 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
             style={{
               padding: '0.75rem 1rem',
               borderRadius: '0.75rem',
-              backgroundColor: '#ffdad6',
-              border: '1px solid #ba1a1a',
-              color: '#93000a',
+              backgroundColor: '#fef2f2',
+              border: '1px solid #fecaca',
+              color: '#b91c1c',
               fontSize: '12px',
               display: 'flex',
               alignItems: 'center',
-              gap: '6px'
+              gap: '8px'
             }}
           >
-            <AlertCircle size={15} style={{ flexShrink: 0 }} />
-            <span>{errorMsg}</span>
+            <AlertCircle size={16} style={{ flexShrink: 0 }} />
+            <span style={{ lineHeight: 1.4 }}>{errorMsg}</span>
           </div>
         )}
 
         {/* Form Fields */}
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <div>
             <label
               style={{
@@ -294,7 +225,7 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
                 fontSize: '11px',
                 fontWeight: '700',
                 color: 'var(--color-on-surface-variant)',
-                marginBottom: '4px',
+                marginBottom: '6px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em'
               }}
@@ -313,9 +244,10 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="nama@domain.com"
                 required
+                autoComplete="email"
                 style={{
                   width: '100%',
-                  padding: '0.65rem 0.85rem 0.65rem 2.4rem',
+                  padding: '0.75rem 0.85rem 0.75rem 2.4rem',
                   fontSize: '13px',
                   borderRadius: '0.75rem',
                   border: '1px solid var(--color-surface-container-high)',
@@ -343,7 +275,7 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
                 fontSize: '11px',
                 fontWeight: '700',
                 color: 'var(--color-on-surface-variant)',
-                marginBottom: '4px',
+                marginBottom: '6px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em'
               }}
@@ -362,9 +294,10 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
                 required
+                autoComplete="current-password"
                 style={{
                   width: '100%',
-                  padding: '0.65rem 2.4rem 0.65rem 2.4rem',
+                  padding: '0.75rem 2.4rem 0.75rem 2.4rem',
                   fontSize: '13px',
                   borderRadius: '0.75rem',
                   border: '1px solid var(--color-surface-container-high)',
@@ -409,36 +342,38 @@ export function LoginForm({ onLogin, onBackToSite, onDemoLogin }) {
             disabled={loading}
             style={{
               width: '100%',
-              marginTop: '4px',
-              padding: '0.75rem 1rem',
+              marginTop: '8px',
+              padding: '0.85rem 1.25rem',
               borderRadius: '0.75rem',
-              backgroundColor: 'var(--color-surface-container-high)',
-              color: 'var(--color-on-surface)',
-              fontSize: '12px',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              fontSize: '13px',
               fontWeight: '700',
               border: 'none',
               cursor: loading ? 'not-allowed' : 'pointer',
+              opacity: loading ? 0.75 : 1,
               transition: 'all 150ms ease',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '6px'
+              gap: '8px',
+              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.15)'
             }}
             onMouseEnter={(e) => {
               if (!loading) {
-                e.currentTarget.style.backgroundColor = '#000000';
-                e.currentTarget.style.color = '#ffffff';
+                e.currentTarget.style.backgroundColor = '#262629';
+                e.currentTarget.style.transform = 'translateY(-1px)';
               }
             }}
             onMouseLeave={(e) => {
               if (!loading) {
-                e.currentTarget.style.backgroundColor = 'var(--color-surface-container-high)';
-                e.currentTarget.style.color = 'var(--color-on-surface)';
+                e.currentTarget.style.backgroundColor = '#000000';
+                e.currentTarget.style.transform = 'translateY(0)';
               }
             }}
           >
-            <Lock size={13} />
-            <span>{loading ? 'Memverifikasi...' : 'Masuk dengan Kredensial'}</span>
+            <Lock size={14} />
+            <span>{loading ? 'Memverifikasi Kredensial...' : 'Masuk ke Admin Portal'}</span>
           </button>
         </form>
 

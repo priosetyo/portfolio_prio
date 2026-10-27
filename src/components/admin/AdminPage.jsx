@@ -68,11 +68,8 @@ const DEFAULT_PROFILE = {
 };
 
 export function AdminPage({ onBackToSite }) {
-  const { session, user, signOut } = useAuth();
-
-  // Local bypass demo mode
-  const [demoAdmin, setDemoAdmin] = useState(false);
-  const isAuthenticated = Boolean(session || demoAdmin);
+  const { session, user, loading: authLoading, signIn, signOut } = useAuth();
+  const isAuthenticated = Boolean(session);
 
   // Tab State: 'projects' | 'messages' | 'profile' | 'skills' | 'experience' | 'social'
   const [activeTab, setActiveTab] = useState('projects');
@@ -149,12 +146,43 @@ export function AdminPage({ onBackToSite }) {
     }
   }, [isAuthenticated, loadAdminData]);
 
+  if (authLoading) {
+    return (
+      <div
+        style={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '12px',
+          backgroundColor: '#f9f9fb',
+          fontFamily: 'var(--font-sans)'
+        }}
+      >
+        <div
+          style={{
+            width: '32px',
+            height: '32px',
+            border: '3px solid #e8e8ed',
+            borderTopColor: '#000000',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite'
+          }}
+        />
+        <span style={{ fontSize: '13px', color: '#6b7280', fontWeight: '500' }}>
+          Memeriksa sesi administrator...
+        </span>
+        <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <LoginForm
-        onLogin={() => {}}
+        onLogin={signIn}
         onBackToSite={onBackToSite}
-        onDemoLogin={() => setDemoAdmin(true)}
       />
     );
   }
@@ -501,10 +529,7 @@ export function AdminPage({ onBackToSite }) {
 
             <button
               type="button"
-              onClick={() => {
-                if (demoAdmin) setDemoAdmin(false);
-                else signOut();
-              }}
+              onClick={() => signOut()}
               title="Keluar dari Panel Admin"
               style={{
                 display: 'inline-flex',
