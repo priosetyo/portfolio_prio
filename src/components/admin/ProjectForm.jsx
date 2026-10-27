@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '../ui/Button';
 import { Tag } from '../ui/Tag';
 import { MediaUploader } from './MediaUploader';
+import { getStoragePublicUrl } from '../../lib/queries';
 import {
   ArrowLeft,
   Save,
@@ -117,7 +118,8 @@ export function ProjectForm({ project, onSave, onCancel }) {
   };
 
   const firstMedia = mediaList?.[0];
-  const thumbUrl = firstMedia?.thumb_path || firstMedia?.poster_path || firstMedia?.storage_path;
+  const rawThumb = firstMedia?.thumb_path || firstMedia?.poster_path || firstMedia?.storage_path;
+  const thumbUrl = getStoragePublicUrl(rawThumb);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

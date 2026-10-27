@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { getStoragePublicUrl } from '../../lib/queries';
 
 export function WorkTile({ project, onClick }) {
   const {
@@ -15,11 +16,12 @@ export function WorkTile({ project, onClick }) {
   } = project;
 
   const firstMedia = project_media[0] || {};
-  const imageSrc =
+  const rawImageSrc =
     firstMedia.thumb_path ||
     firstMedia.storage_path ||
     firstMedia.poster_path ||
     'https://lh3.googleusercontent.com/aida-public/AB6AXuBa2KOlfDWEI_usA-OnOjp3a2gg2wYXQ8JqEKgT6dPfKs0QED6iQt-6apVB4u0Y88SYYSTkI7iEjrZyQWCwYncdE22z-HdmNDvCA29vfXKaNbMeKhdAgDI_zksjN4ETeC6oHeuFpLQYS7JZFaP4-fkZxU-IDqj82uUMJeraANVwimVd4jJX_52m0mJjIBk0KrLMGGuBwaGc7eKxh2kaKLD0mC8AbkpXv05T0or4Jlg';
+  const imageSrc = getStoragePublicUrl(rawImageSrc);
 
   const badgeCategory =
     categoryLabel ||

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { resizeImageToWebP, captureVideoPoster } from '../../lib/image';
-import { uploadMediaFile } from '../../lib/queries';
+import { uploadMediaFile, getStoragePublicUrl } from '../../lib/queries';
 import { Button } from '../ui/Button';
 import { Tag } from '../ui/Tag';
 import { Upload, Image as ImageIcon, Video, Link, Trash2, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
@@ -36,28 +36,28 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
           resizeImageToWebP(file, 2400, 0.85)
         ]);
 
-        setProgressMsg('Mengunggah ke Supabase Storage...');
+        setProgressMsg('Mengunggah ke Supabase Storage (portfolio-media)...');
         const thumbPath = `photo/${projectId}/${timestamp}-${randomId}-thumb.webp`;
         const fullPath = `photo/${projectId}/${timestamp}-${randomId}-full.webp`;
 
-        try {
-          await Promise.all([
-            uploadMediaFile(thumbPath, thumbResult.blob),
-            uploadMediaFile(fullPath, fullResult.blob)
-          ]);
-        } catch (uploadErr) {
-          console.warn('Storage upload bypass/simulasi:', uploadErr);
-        }
+        // Upload ke Supabase Storage
+        const [thumbUpload, fullUpload] = await Promise.all([
+          uploadMediaFile(thumbPath, thumbResult.blob),
+          uploadMediaFile(fullPath, fullResult.blob)
+        ]);
 
-        // Buat objek media baru
+        const fullUrl = fullUpload?.publicUrl || fullPath;
+        const thumbUrl = thumbUpload?.publicUrl || thumbPath;
+
+        // Buat objek media baru dengan URL permanen Supabase
         const newMedia = {
           id: `media-${timestamp}`,
           kind: 'image',
-          storage_path: URL.createObjectURL(fullResult.blob),
-          thumb_path: URL.createObjectURL(thumbResult.blob),
+          storage_path: fullUrl,
+          thumb_path: thumbUrl,
           width: fullResult.width,
           height: fullResult.height,
-          alt_text: file.name.replace(/\.[^/.]+$/, ''), // Default dari nama file, wajib dicek
+          alt_text: file.name.replace(/\.[^/.]+$/, ''), // Default dari nama file
           sort_order: mediaList.length + 1
         };
 
@@ -67,22 +67,23 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
         setProgressMsg('Mengekstrak frame poster video...');
         const posterResult = await captureVideoPoster(file);
 
-        setProgressMsg('Memproses video...');
+        setProgressMsg('Memproses & mengunggah video...');
         const posterPath = `video/${projectId}/${timestamp}-${randomId}-poster.webp`;
         const videoPath = `video/${projectId}/${timestamp}-${randomId}-video.mp4`;
 
-        try {
-          await uploadMediaFile(posterPath, posterResult.blob);
-          await uploadMediaFile(videoPath, file, file.type || 'video/mp4');
-        } catch (uploadErr) {
-          console.warn('Storage upload bypass/simulasi:', uploadErr);
-        }
+        const [posterUpload, videoUpload] = await Promise.all([
+          uploadMediaFile(posterPath, posterResult.blob),
+          uploadMediaFile(videoPath, file, file.type || 'video/mp4')
+        ]);
+
+        const videoUrl = videoUpload?.publicUrl || videoPath;
+        const posterUrl = posterUpload?.publicUrl || posterPath;
 
         const newMedia = {
           id: `media-${timestamp}`,
           kind: 'video',
-          storage_path: URL.createObjectURL(file),
-          poster_path: URL.createObjectURL(posterResult.blob),
+          storage_path: videoUrl,
+          poster_path: posterUrl,
           width: posterResult.width,
           height: posterResult.height,
           duration_sec: posterResult.duration,
@@ -94,7 +95,19 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
       }
     } catch (err) {
       console.error('Error handling media file:', err);
-      setErrorMsg(err.message || 'Gagal memproses file media');
+      let msg = err.message || 'Gagal memproses file media';
+      if (
+        msg.includes('row-level security') ||
+        msg.includes('policy') ||
+        msg.includes('403') ||
+        msg.includes('Unauthorized') ||
+        msg.includes('violates')
+      ) {
+        msg = 'Upload ditolak oleh Supabase Storage RLS Policy. Mohon jalankan SQL policy INSERT untuk bucket "portfolio-media" di Supabase SQL Editor.';
+      } else if (msg.includes('Bucket not found')) {
+        msg = 'Bucket "portfolio-media" tidak ditemukan di Supabase Storage.';
+      }
+      setErrorMsg(msg);
     } finally {
       setUploading(false);
       setProgressMsg('');
@@ -301,7 +314,8 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
 
           {mediaList.map((media, idx) => {
             const isImg = media.kind === 'image';
-            const previewUrl = media.thumb_path || media.storage_path || media.poster_path;
+            const rawPreview = media.thumb_path || media.storage_path || media.poster_path;
+            const previewUrl = getStoragePublicUrl(rawPreview);
             const hasAlt = Boolean(media.alt_text?.trim());
 
             return (

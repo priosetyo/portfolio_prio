@@ -114,9 +114,11 @@ export function getStoragePublicUrl(path) {
  * Admin: Tambah karya baru
  */
 export async function createProject(projectData) {
+  const { project_media, ...fields } = projectData;
+
   const { data, error } = await supabase
     .from('projects')
-    .insert([projectData])
+    .insert([fields])
     .select()
     .single();
 
@@ -124,16 +126,48 @@ export async function createProject(projectData) {
     console.error('Error creating project:', error);
     throw error;
   }
-  return data;
+
+  // Jika ada media yang dilampirkan, simpan ke tabel project_media
+  let savedMedia = [];
+  if (project_media && Array.isArray(project_media) && project_media.length > 0 && data?.id) {
+    const mediaToInsert = project_media.map((m, idx) => ({
+      project_id: data.id,
+      kind: m.kind || 'image',
+      storage_path: m.storage_path || null,
+      thumb_path: m.thumb_path || null,
+      external_url: m.external_url || null,
+      poster_path: m.poster_path || null,
+      width: m.width || null,
+      height: m.height || null,
+      duration_sec: m.duration_sec || null,
+      alt_text: m.alt_text || '',
+      sort_order: m.sort_order ?? idx
+    }));
+
+    const { data: insertedMedia, error: mediaErr } = await supabase
+      .from('project_media')
+      .insert(mediaToInsert)
+      .select();
+
+    if (mediaErr) {
+      console.warn('Gagal menyimpan project_media ke Supabase:', mediaErr);
+    } else {
+      savedMedia = insertedMedia || [];
+    }
+  }
+
+  return { ...data, project_media: savedMedia.length > 0 ? savedMedia : (project_media || []) };
 }
 
 /**
  * Admin: Update karya
  */
 export async function updateProject(id, projectData) {
+  const { project_media, ...fields } = projectData;
+
   const { data, error } = await supabase
     .from('projects')
-    .update({ ...projectData, updated_at: new Date().toISOString() })
+    .update({ ...fields, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
     .single();
@@ -142,7 +176,49 @@ export async function updateProject(id, projectData) {
     console.error('Error updating project:', error);
     throw error;
   }
-  return data;
+
+  // Sinkronisasi relasi project_media
+  let savedMedia = [];
+  if (project_media && Array.isArray(project_media)) {
+    try {
+      // Hapus media lama
+      await supabase
+        .from('project_media')
+        .delete()
+        .eq('project_id', id);
+
+      if (project_media.length > 0) {
+        const mediaToInsert = project_media.map((m, idx) => ({
+          project_id: id,
+          kind: m.kind || 'image',
+          storage_path: m.storage_path || null,
+          thumb_path: m.thumb_path || null,
+          external_url: m.external_url || null,
+          poster_path: m.poster_path || null,
+          width: m.width || null,
+          height: m.height || null,
+          duration_sec: m.duration_sec || null,
+          alt_text: m.alt_text || '',
+          sort_order: m.sort_order ?? idx
+        }));
+
+        const { data: insertedMedia, error: mediaErr } = await supabase
+          .from('project_media')
+          .insert(mediaToInsert)
+          .select();
+
+        if (mediaErr) {
+          console.warn('Gagal memperbarui project_media:', mediaErr);
+        } else {
+          savedMedia = insertedMedia || [];
+        }
+      }
+    } catch (mediaSyncErr) {
+      console.warn('Kesalahan sinkronisasi media:', mediaSyncErr);
+    }
+  }
+
+  return { ...data, project_media: savedMedia.length > 0 ? savedMedia : (project_media || []) };
 }
 
 /**
@@ -213,7 +289,7 @@ export async function deleteProjectMedia(id) {
 }
 
 /**
- * Admin: Upload file ke bucket portfolio-media
+ * Admin: Upload file ke bucket portfolio-media dan kembalikan Public URL
  */
 export async function uploadMediaFile(path, fileBlob, contentType = 'image/webp') {
   const { data, error } = await supabase.storage
@@ -224,10 +300,19 @@ export async function uploadMediaFile(path, fileBlob, contentType = 'image/webp'
     });
 
   if (error) {
-    console.error('Error uploading to storage:', error);
+    console.error('Error uploading to Supabase storage:', error);
     throw error;
   }
-  return data;
+
+  const { data: urlData } = supabase.storage
+    .from('portfolio-media')
+    .getPublicUrl(path);
+
+  return {
+    ...data,
+    path,
+    publicUrl: urlData?.publicUrl || ''
+  };
 }
 
 /**

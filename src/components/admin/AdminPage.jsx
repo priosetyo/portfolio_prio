@@ -20,7 +20,8 @@ import {
   getSiteSettings,
   updateSiteSettings,
   getLocalMessages,
-  saveLocalMessages
+  saveLocalMessages,
+  getStoragePublicUrl
 } from '../../lib/queries';
 import {
   FolderKanban,
@@ -754,7 +755,8 @@ export function AdminPage({ onBackToSite }) {
                     >
                       {projects.map((proj) => {
                         const firstMedia = proj.project_media?.[0];
-                        const thumb = firstMedia?.thumb_path || firstMedia?.poster_path || firstMedia?.storage_path;
+                        const rawThumb = firstMedia?.thumb_path || firstMedia?.poster_path || firstMedia?.storage_path;
+                        const thumb = getStoragePublicUrl(rawThumb);
 
                         return (
                           <div
