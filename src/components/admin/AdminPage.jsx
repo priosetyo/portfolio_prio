@@ -21,8 +21,10 @@ import {
   updateSiteSettings,
   getLocalMessages,
   saveLocalMessages,
-  getStoragePublicUrl
+  getStoragePublicUrl,
+  uploadMediaFile
 } from '../../lib/queries';
+import { resizeImageToWebP } from '../../lib/image';
 import {
   FolderKanban,
   Mail,
@@ -42,7 +44,10 @@ import {
   X,
   Save,
   Check,
-  AlertCircle
+  AlertCircle,
+  Camera,
+  Upload,
+  Loader2
 } from 'lucide-react';
 
 const CATEGORY_LABELS = {
@@ -52,14 +57,17 @@ const CATEGORY_LABELS = {
   copy: 'Copywriting'
 };
 
+const DEFAULT_AVATAR = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY';
+
 const DEFAULT_PROFILE = {
   name: 'Prio Setyo',
-  headline: 'Director & Brand Architect',
+  headline: 'Visual Creator, Designer & Copywriter',
   summary: 'Membangun ekosistem visual spektakuler, identitas brand sinematik, dan antarmuka spasial masa depan.',
   bio: 'Creative Director berbasis di Jakarta & Tokyo dengan pengalaman 10+ tahun dalam real-time 3D, sinematografi, dan arsitektur jenama transformatif.',
+  avatar_url: DEFAULT_AVATAR,
   email: 'prio@setyostudio.com',
   phone: '+62 812-3456-7890',
-  location: 'Jakarta / Tokyo',
+  location: 'Indonesia',
   instagram: 'https://instagram.com/priosetyo',
   linkedin: 'https://linkedin.com/in/priosetyo',
   github: 'https://github.com/priosetyo',
@@ -104,9 +112,44 @@ export function AdminPage({ onBackToSite }) {
   const [expLocation, setExpLocation] = useState('');
   const [expBullets, setExpBullets] = useState('');
 
+  // Avatar Uploader State
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [avatarError, setAvatarError] = useState('');
+
   const showToast = (msg) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(''), 3500);
+  };
+
+  const handleAvatarFileSelect = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingAvatar(true);
+    setAvatarError('');
+
+    try {
+      const compressed = await resizeImageToWebP(file, 600, 0.9);
+      const timestamp = Date.now();
+      const storagePath = `avatars/avatar-${timestamp}.webp`;
+
+      const res = await uploadMediaFile(storagePath, compressed.blob);
+      const avatarUrl = res?.publicUrl || storagePath;
+
+      setProfile((prev) => ({ ...prev, avatar_url: avatarUrl }));
+      showToast('Foto profil berhasil diunggah! Klik "Simpan Perubahan Profil" untuk menerapkan.');
+    } catch (err) {
+      console.error('Error uploading avatar:', err);
+      let msg = err.message || 'Gagal mengunggah foto profil.';
+      if (msg.includes('row-level security') || msg.includes('policy') || msg.includes('403')) {
+        msg = 'Upload ditolak oleh RLS Supabase Storage. Pastikan policy INSERT untuk bucket "portfolio-media" sudah aktif.';
+      }
+      setAvatarError(msg);
+      showToast('Gagal mengunggah foto profil.');
+    } finally {
+      setUploadingAvatar(false);
+      e.target.value = '';
+    }
   };
 
   // Load All Admin Data
@@ -468,6 +511,7 @@ export function AdminPage({ onBackToSite }) {
                 borderRadius: '50%',
                 backgroundColor: '#000000',
                 color: '#ffffff',
+                overflow: 'hidden',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -475,10 +519,19 @@ export function AdminPage({ onBackToSite }) {
                 fontWeight: '800',
                 fontSize: '13px',
                 letterSpacing: '0.04em',
-                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)',
+                flexShrink: 0
               }}
             >
-              PS
+              {profile?.avatar_url ? (
+                <img
+                  src={getStoragePublicUrl(profile.avatar_url)}
+                  alt="Admin"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              ) : (
+                'PS'
+              )}
             </div>
             <div>
               <div
@@ -1135,6 +1188,145 @@ export function AdminPage({ onBackToSite }) {
                   </div>
 
                   <form onSubmit={handleSaveProfile} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                    {/* Foto Profil / Avatar Uploader */}
+                    <div
+                      style={{
+                        padding: '1.25rem',
+                        borderRadius: '1rem',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid rgba(0, 0, 0, 0.08)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        flexWrap: 'wrap',
+                        gap: '1.25rem',
+                        boxShadow: '0 1px 4px rgba(0, 0, 0, 0.02)'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                        {/* Circular Avatar Preview */}
+                        <div
+                          style={{
+                            position: 'relative',
+                            width: '84px',
+                            height: '84px',
+                            borderRadius: '50%',
+                            overflow: 'hidden',
+                            backgroundColor: '#000000',
+                            border: '3px solid #ffffff',
+                            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.12)',
+                            flexShrink: 0
+                          }}
+                        >
+                          {profile.avatar_url ? (
+                            <img
+                              src={getStoragePublicUrl(profile.avatar_url)}
+                              alt="Foto Profil"
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          ) : (
+                            <div
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                color: '#ffffff',
+                                fontFamily: 'var(--font-display)',
+                                fontWeight: '800',
+                                fontSize: '24px'
+                              }}
+                            >
+                              PS
+                            </div>
+                          )}
+
+                          {uploadingAvatar && (
+                            <div
+                              style={{
+                                position: 'absolute',
+                                inset: 0,
+                                backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                            >
+                              <Loader2 size={24} color="#ffffff" style={{ animation: 'spin 1s linear infinite' }} />
+                            </div>
+                          )}
+                        </div>
+
+                        <div>
+                          <div style={{ fontWeight: '800', fontSize: '15px', color: '#000000' }}>
+                            Foto Profil Portofolio
+                          </div>
+                          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '3px 0 0 0' }}>
+                            Foto profil utama yang akan muncul di hero section portofolio Anda.
+                          </p>
+                          {avatarError && (
+                            <span style={{ fontSize: '11px', color: '#dc2626', fontWeight: '600', marginTop: '4px', display: 'block' }}>
+                              {avatarError}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <label
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            padding: '0.6rem 1.25rem',
+                            borderRadius: '0.65rem',
+                            backgroundColor: '#000000',
+                            color: '#ffffff',
+                            fontSize: '12px',
+                            fontWeight: '700',
+                            cursor: uploadingAvatar ? 'not-allowed' : 'pointer',
+                            opacity: uploadingAvatar ? 0.7 : 1,
+                            transition: 'all 150ms ease',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.12)'
+                          }}
+                        >
+                          <Camera size={14} />
+                          <span>{uploadingAvatar ? 'Mengunggah...' : 'Ganti Foto Profil'}</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            disabled={uploadingAvatar}
+                            onChange={handleAvatarFileSelect}
+                            style={{ display: 'none' }}
+                          />
+                        </label>
+
+                        {profile.avatar_url && profile.avatar_url !== DEFAULT_AVATAR && (
+                          <button
+                            type="button"
+                            onClick={() => setProfile((prev) => ({ ...prev, avatar_url: DEFAULT_AVATAR }))}
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '4px',
+                              padding: '0.6rem 0.95rem',
+                              borderRadius: '0.65rem',
+                              backgroundColor: '#fee2e2',
+                              color: '#dc2626',
+                              fontSize: '12px',
+                              fontWeight: '600',
+                              border: '1px solid rgba(220, 38, 38, 0.15)',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            <Trash2 size={13} />
+                            <span>Reset Default</span>
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem' }}>
                       <div>
                         <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '4px' }}>

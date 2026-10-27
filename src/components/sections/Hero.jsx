@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getStoragePublicUrl } from '../../lib/queries';
 
 export function Hero({ settings, onOpenFilosofi }) {
   const [copied, setCopied] = useState(false);
@@ -392,8 +393,11 @@ export function Hero({ settings, onOpenFilosofi }) {
                 }}
               >
                 <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY"
-                  alt="Prio Setyo Creative Director"
+                  src={
+                    getStoragePublicUrl(settings?.avatar_url) ||
+                    "https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY"
+                  }
+                  alt={settings?.name || "Prio Setyo Creative Director"}
                   style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
                 />
                 <span

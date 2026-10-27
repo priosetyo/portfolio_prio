@@ -562,15 +562,24 @@ export async function updateSiteSettings(settingsData) {
         name: settingsData.name,
         headline: settingsData.headline,
         summary: settingsData.summary,
+        avatar_url: settingsData.avatar_url,
         email: settingsData.email,
         phone: settingsData.phone,
         linkedin: settingsData.linkedin,
         location: settingsData.location
       };
       if (targetId) {
-        await supabase.from('site_settings').update(coreFields).eq('id', targetId);
+        const { error: coreErr } = await supabase.from('site_settings').update(coreFields).eq('id', targetId);
+        if (coreErr) {
+          const { avatar_url, ...minFields } = coreFields;
+          await supabase.from('site_settings').update(minFields).eq('id', targetId);
+        }
       } else {
-        await supabase.from('site_settings').insert([coreFields]);
+        const { error: coreErr } = await supabase.from('site_settings').insert([coreFields]);
+        if (coreErr) {
+          const { avatar_url, ...minFields } = coreFields;
+          await supabase.from('site_settings').insert([minFields]);
+        }
       }
     }
   } catch (err) {
