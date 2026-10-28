@@ -1,0 +1,28 @@
+name: Supabase Keep-Alive Heartbeat
+
+on:
+  schedule:
+    # Berjalan otomatis setiap 3 hari sekali pada jam 00:00 UTC (jam 07:00 WIB)
+    - cron: '0 0 */3 * *'
+  workflow_dispatch: # Tombol manual untuk trigger ping kapan saja dari GitHub Actions
+
+jobs:
+  keep-alive:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Kirim Ping HTTP GET ke Supabase REST API
+        run: |
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "https://pipymdkphzhkyvutclfn.supabase.co/rest/v1/site_settings?select=id&limit=1" \
+            -H "apikey: sb_publishable_cFaPd_YnpN7G6Xk_QoDEuQ_BzoYo2fx" \
+            -H "Authorization: Bearer sb_publishable_cFaPd_YnpN7G6Xk_QoDEuQ_BzoYo2fx")
+          
+          echo "Supabase Response Status Code: $HTTP_STATUS"
+          
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 400 ]; then
+            echo "Ping berhasil! Server Supabase tetap aktif dan tidak akan di-pause."
+          else
+            echo "Peringatan: Response HTTP $HTTP_STATUS, periksa koneksi."
+            exit 1
+          fi
