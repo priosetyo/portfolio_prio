@@ -4,7 +4,7 @@ import { getStoragePublicUrl } from '../../lib/queries';
 import { useProjects } from '../../hooks/useProjects';
 
 const HERO_PORTRAIT_FALLBACK =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuCpHxtffRyMCl7o-J292Nepd-E2nswNXwo8wvxFNwYXyZ1HWF32bq4ZqGRfTQ8_v5VW71LxoFjFI-zlRb8fg5fcPONf3PfNeZFwSJvR0knkoYGQRnnvMMP3ImMcP41og8M4W2T9HrSb7IvCYv1oinkBTrlTz9fSEx5wKHDeekShJPspwR_ldIZFPcWzcoiMOozpASkGIID8kqd7PvtOAIl3xG-JHt9J0Q-hJjDYM51m';
+  'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-portraits/hero-portrait-1793409266406.png';
 
 const CATEGORY_LABELS = {
   photo: 'Photography',
@@ -122,7 +122,13 @@ export const DEFAULT_SPOTLIGHT_PROJECTS = [
   }
 ];
 
-export const DEFAULT_HERO_BG_SLIDES = DEFAULT_SPOTLIGHT_PROJECTS.map((p) => p.image);
+export const DEFAULT_HERO_BG_SLIDES = [
+  'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
+  'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
+  'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
+  'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
+  'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368636694-7mq2.jpg'
+];
 
 export const isVideoSlide = (slide) => {
   if (!slide) return false;
@@ -155,15 +161,15 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isHoveringSpotlight, setIsHoveringSpotlight] = useState(false);
   const [heroPortraitUrl, setHeroPortraitUrl] = useState(
-    () => settings?.hero_png_url || localStorage.getItem('prio_hero_png_url') || ''
+    () => settings?.hero_png_url || localStorage.getItem('prio_hero_png_url') || HERO_PORTRAIT_FALLBACK
   );
 
   useEffect(() => {
     try {
       localStorage.removeItem('prio_hero_portrait_url');
     } catch (e) {}
-    if (settings?.hero_png_url !== undefined) {
-      setHeroPortraitUrl(settings.hero_png_url || '');
+    if (settings?.hero_png_url) {
+      setHeroPortraitUrl(settings.hero_png_url);
     }
   }, [settings?.hero_png_url]);
 

@@ -100,9 +100,37 @@ export async function getLatestHeroPortraitFromStorage() {
 }
 
 /**
- * Fetch profil situs & info kontak
+ * Fetch media background Hero (foto atau video) dari Supabase Storage bucket 'portfolio-media' subfolder 'hero-backgrounds'
+ */
+export async function getHeroBgSlidesFromStorage() {
+  try {
+    const { data, error } = await supabase.storage
+      .from('portfolio-media')
+      .list('hero-backgrounds', {
+        limit: 15,
+        sortBy: { column: 'created_at', order: 'desc' }
+      });
+
+    if (!error && Array.isArray(data) && data.length > 0) {
+      const validSlides = data
+        .filter((f) => f.name && !f.name.startsWith('.'))
+        .slice(0, 5)
+        .map((f) => getStoragePublicUrl(`hero-backgrounds/${f.name}`));
+      if (validSlides.length > 0) {
+        return validSlides;
+      }
+    }
+  } catch (e) {
+    console.warn('Error fetching hero backgrounds from Supabase storage:', e);
+  }
+  return null;
+}
+
+/**
+ * Fetch profil situs & info kontak (dengan sinkronisasi penuh Supabase DB & Storage)
  */
 export async function getSiteSettings() {
+  let dbSettings = null;
   try {
     const { data, error } = await supabase
       .from('site_settings')
@@ -111,61 +139,67 @@ export async function getSiteSettings() {
       .single();
 
     if (!error && data) {
-      const local = getLocalSettings() || {};
-      const merged = { ...local, ...data };
-
-      // Jika avatar_url belum terisi atau masih placeholder lama, ambil foto profil aktual dari Supabase Storage
-      const isPlaceholder =
-        !merged.avatar_url ||
-        merged.avatar_url.includes('lh3.googleusercontent.com');
-
-      if (isPlaceholder) {
-        const storageAvatar = await getLatestAvatarFromStorage();
-        if (storageAvatar) {
-          merged.avatar_url = storageAvatar;
-        }
-      }
-
-      delete merged.hero_portrait_url;
-      if (!merged.hero_bg_slides) {
-        try {
-          const bgLocal = localStorage.getItem('prio_hero_bg_slides');
-          if (bgLocal) merged.hero_bg_slides = JSON.parse(bgLocal);
-        } catch (e) {}
-      }
-      if (!merged.track_record_header && local.track_record_header) {
-        merged.track_record_header = local.track_record_header;
-      }
-      if (!merged.track_record_metrics && local.track_record_metrics) {
-        merged.track_record_metrics = local.track_record_metrics;
-      }
-      if (!merged.spotlight_items && local.spotlight_items) {
-        merged.spotlight_items = local.spotlight_items;
-      }
-      saveLocalSettings(merged);
-      return merged;
+      dbSettings = data;
     }
   } catch (err) {
     console.warn('Menggunakan fallback lokal untuk site_settings:', err);
   }
 
-  // Fallback lokal jika query database gagal
   const local = getLocalSettings() || {};
-  delete local.hero_portrait_url;
-  if (!local.hero_bg_slides) {
+  const merged = { ...local, ...(dbSettings || {}) };
+
+  // 1. Ekstrak extended settings yang disimpan dalam cv_path JSON di Supabase
+  if (dbSettings?.cv_path && typeof dbSettings.cv_path === 'string') {
     try {
-      const bgLocal = localStorage.getItem('prio_hero_bg_slides');
-      if (bgLocal) local.hero_bg_slides = JSON.parse(bgLocal);
-    } catch (e) {}
-  }
-  if (!local.avatar_url || local.avatar_url.includes('lh3.googleusercontent.com')) {
-    const storageAvatar = await getLatestAvatarFromStorage();
-    if (storageAvatar) {
-      local.avatar_url = storageAvatar;
-      saveLocalSettings(local);
+      if (dbSettings.cv_path.startsWith('{')) {
+        const extra = JSON.parse(dbSettings.cv_path);
+        if (extra && typeof extra === 'object') {
+          if (extra.hero_bg_slides && Array.isArray(extra.hero_bg_slides) && extra.hero_bg_slides.length > 0) {
+            merged.hero_bg_slides = extra.hero_bg_slides;
+          }
+          if (extra.hero_png_url) merged.hero_png_url = extra.hero_png_url;
+          if (extra.avatar_url) merged.avatar_url = extra.avatar_url;
+          if (extra.track_record_header) merged.track_record_header = extra.track_record_header;
+          if (extra.track_record_metrics) merged.track_record_metrics = extra.track_record_metrics;
+          if (extra.spotlight_items) merged.spotlight_items = extra.spotlight_items;
+        }
+      }
+    } catch (e) {
+      console.warn('Gagal parse extra config dari cv_path:', e);
     }
   }
-  return local;
+
+  // 2. Sinkronkan Hero PNG Portrait dari Supabase Storage jika belum terpasang
+  if (!merged.hero_png_url) {
+    const storagePortrait = await getLatestHeroPortraitFromStorage();
+    if (storagePortrait) {
+      merged.hero_png_url = storagePortrait;
+    }
+  }
+
+  // 3. Sinkronkan Hero Background Slides dari Supabase Storage jika belum terpasang
+  if (!merged.hero_bg_slides || !Array.isArray(merged.hero_bg_slides) || merged.hero_bg_slides.length === 0) {
+    const storageSlides = await getHeroBgSlidesFromStorage();
+    if (storageSlides && storageSlides.length > 0) {
+      merged.hero_bg_slides = storageSlides;
+    }
+  }
+
+  // 4. Sinkronkan Avatar dari Supabase Storage jika kosong atau placeholder
+  const isPlaceholderAvatar =
+    !merged.avatar_url ||
+    merged.avatar_url.includes('lh3.googleusercontent.com');
+
+  if (isPlaceholderAvatar) {
+    const storageAvatar = await getLatestAvatarFromStorage();
+    if (storageAvatar) {
+      merged.avatar_url = storageAvatar;
+    }
+  }
+
+  delete merged.hero_portrait_url;
+  saveLocalSettings(merged);
+  return merged;
 }
 
 /**
@@ -615,14 +649,42 @@ export async function deleteSkill(id) {
 }
 
 /**
- * Admin: Update info Profil / Site Settings
+ * Admin: Update info Profil / Site Settings (Sinkron ke LocalStorage & Supabase DB)
  */
 export async function updateSiteSettings(settingsData) {
-  // 1. Simpan langsung ke local storage
+  // 1. Simpan langsung ke local storage agar antarmuka instan responsif
   saveLocalSettings(settingsData);
   notifySiteContentUpdated();
 
-  // 2. Siapkan sinkronisasi ke Supabase
+  // 2. Siapkan bundle extra settings ke dalam format JSON untuk disimpan di kolom cv_path Supabase
+  const extraConfig = {
+    hero_bg_slides: settingsData.hero_bg_slides,
+    hero_png_url: settingsData.hero_png_url,
+    avatar_url: settingsData.avatar_url,
+    track_record_header: settingsData.track_record_header,
+    track_record_metrics: settingsData.track_record_metrics,
+    spotlight_items: settingsData.spotlight_items
+  };
+
+  // Hanya kirim kolom-kolom yang valid di skema tabel site_settings Supabase
+  const validPayload = {
+    name: settingsData.name,
+    headline: settingsData.headline,
+    summary: settingsData.summary,
+    email: settingsData.email,
+    phone: settingsData.phone,
+    linkedin: settingsData.linkedin,
+    location: settingsData.location,
+    bio: settingsData.bio,
+    instagram: settingsData.instagram,
+    github: settingsData.github,
+    youtube: settingsData.youtube,
+    vimeo: settingsData.vimeo,
+    behance: settingsData.behance,
+    cv_path: JSON.stringify(extraConfig)
+  };
+
+  // 3. Sinkronisasi ke Supabase Database
   try {
     const { data: existing } = await supabase
       .from('site_settings')
@@ -636,49 +698,39 @@ export async function updateSiteSettings(settingsData) {
     if (targetId) {
       res = await supabase
         .from('site_settings')
-        .update(settingsData)
+        .update(validPayload)
         .eq('id', targetId)
         .select()
         .single();
     } else {
       res = await supabase
         .from('site_settings')
-        .insert([settingsData])
+        .insert([validPayload])
         .select()
         .single();
     }
 
     if (res?.error) {
-      // Jika gagal karena kolom bio/sosial belum ditambahkan di Supabase SQL,
-      // fallback update kolom standar agar data inti tetap sinkron ke database
-      console.warn('Sinkronisasi penuh site_settings ke Supabase gagal, mencoba kolom inti:', res.error);
-      const coreFields = {
+      console.warn('Gagal sinkronisasi penuh site_settings ke Supabase:', res.error);
+      // Fallback tanpa kolom sosial jika belum ada
+      const minPayload = {
         name: settingsData.name,
         headline: settingsData.headline,
         summary: settingsData.summary,
-        avatar_url: settingsData.avatar_url,
         email: settingsData.email,
         phone: settingsData.phone,
         linkedin: settingsData.linkedin,
-        location: settingsData.location
+        location: settingsData.location,
+        cv_path: JSON.stringify(extraConfig)
       };
       if (targetId) {
-        const { error: coreErr } = await supabase.from('site_settings').update(coreFields).eq('id', targetId);
-        if (coreErr) {
-          const { avatar_url, ...minFields } = coreFields;
-          await supabase.from('site_settings').update(minFields).eq('id', targetId);
-        }
-      } else {
-        const { error: coreErr } = await supabase.from('site_settings').insert([coreFields]);
-        if (coreErr) {
-          const { avatar_url, ...minFields } = coreFields;
-          await supabase.from('site_settings').insert([minFields]);
-        }
+        await supabase.from('site_settings').update(minPayload).eq('id', targetId);
       }
     }
   } catch (err) {
     console.warn('Update site settings fallback:', err);
   }
+
   return settingsData;
 }
 

@@ -7,6 +7,14 @@ const DEFAULT_SETTINGS = {
   headline: 'Creative Director & Visual Storyteller',
   summary: 'Membangun ekosistem visual spektakuler, identitas brand sinematik, dan antarmuka spasial masa depan. Mengubah narasi kompleks menjadi pengalaman sensorik bernilai komersial tinggi.',
   avatar_url: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/avatars/avatar-1793091534469.webp',
+  hero_png_url: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-portraits/hero-portrait-1793409266406.png',
+  hero_bg_slides: [
+    'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
+    'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
+    'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
+    'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
+    'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368636694-7mq2.jpg'
+  ],
   email: 'prio@setyostudio.com',
   phone: '+62 812-3456-7890',
   linkedin: 'priosetyo',
