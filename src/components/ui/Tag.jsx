@@ -7,34 +7,34 @@ import React from 'react';
 export function Tag({ children, tone = 'default', className = '' }) {
   const toneMap = {
     default: {
-      bg: 'var(--bg-secondary)',
-      text: 'var(--text-secondary)',
-      border: 'var(--border-subtle)'
+      bg: 'var(--color-surface-container)',
+      text: 'var(--color-on-surface-variant)',
+      border: 'rgba(194, 198, 211, 0.4)'
     },
     accent: {
-      bg: 'var(--accent-highlight-soft)',
-      text: 'var(--accent-highlight)',
-      border: 'transparent'
+      bg: 'var(--color-primary-fixed)',
+      text: 'var(--color-primary)',
+      border: 'rgba(0, 82, 155, 0.2)'
     },
     photo: {
       bg: 'var(--badge-photo-bg)',
       text: 'var(--badge-photo)',
-      border: 'transparent'
+      border: 'rgba(0, 59, 114, 0.15)'
     },
     video: {
       bg: 'var(--badge-video-bg)',
       text: 'var(--badge-video)',
-      border: 'transparent'
+      border: 'rgba(147, 0, 13, 0.15)'
     },
     design: {
       bg: 'var(--badge-design-bg)',
       text: 'var(--badge-design)',
-      border: 'transparent'
+      border: 'rgba(0, 28, 55, 0.15)'
     },
     copy: {
       bg: 'var(--badge-copy-bg)',
       text: 'var(--badge-copy)',
-      border: 'transparent'
+      border: 'rgba(122, 193, 66, 0.35)'
     }
   };
 
@@ -42,20 +42,21 @@ export function Tag({ children, tone = 'default', className = '' }) {
 
   return (
     <span
-      className={`ui-tag ${className}`}
+      className={`ui-tag font-label-mono-sm ${className}`}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        padding: '0.2rem 0.55rem',
-        fontSize: 'var(--text-xs)',
+        padding: '0.2rem 0.65rem',
+        fontSize: '11px',
         fontFamily: 'var(--font-mono)',
         fontWeight: '600',
         letterSpacing: '0.04em',
-        borderRadius: 'var(--radius-sm)',
+        textTransform: 'uppercase',
+        borderRadius: 'var(--radius-full)',
         backgroundColor: current.bg,
         color: current.text,
         border: `1px solid ${current.border}`,
-        lineHeight: 1.2
+        lineHeight: 1.25
       }}
     >
       {children}

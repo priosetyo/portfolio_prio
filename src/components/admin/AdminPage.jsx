@@ -26,6 +26,11 @@ import {
 } from '../../lib/queries';
 import { resizeImageToWebP } from '../../lib/image';
 import {
+  DEFAULT_TRACK_RECORD_HEADER,
+  DEFAULT_TRACK_RECORD_METRICS,
+  DEFAULT_SPOTLIGHT_PROJECTS
+} from '../sections/Hero';
+import {
   FolderKanban,
   Mail,
   User,
@@ -47,7 +52,13 @@ import {
   AlertCircle,
   Camera,
   Upload,
-  Loader2
+  Loader2,
+  Film,
+  Video,
+  Play,
+  Image as ImageIcon,
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 
 const CATEGORY_LABELS = {
@@ -58,6 +69,39 @@ const CATEGORY_LABELS = {
 };
 
 const DEFAULT_AVATAR = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY';
+
+const DEFAULT_HERO_BG_SLIDES = [
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuAw-HjHTxu0iiEQ5z7YvjAbVP9wfRoOcfUb13m1mFshL5HU6LfmOEyk_w9r7ILa2sS5f7YN6AT4xK9vAXIfYQRiV0s1IagWRXCZndw5C-09Y5hCK0pIeBZtWRgQ8ROcmnmez5qemMezfiQ9P0sdjBnbsAJkJRPodhoCrxzeh-quGgzLEdorxq0VQtnxJF_SLz3-iHG5jz2SojHZd69KaE4NN6YwL2UGlbXJTZ00ZV8',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuAEofPaya-ZGWveRCDy8cNUJRN_N5NCwX8ngR_QWgpEBmZTMQSRSh6bxRyttNiIroK5QcXboYpJxqPZs9QkCWZcOtUeAGvDkKGmo-uebF1mBjT3YA7YmeL8Csg_uPYRVhbCmdunD9DPNpU9f3Sb3ARiTfkBAzuu8v5JuA6WzP9sHblTo2IT7q4-IVdBGZ-q_-tkeuAJxBOf8ewixWB6K-4TYKjcKa2VI3i50WA3Er0',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuDQDL8KyX67MLyaR7WRfaYFlh9D3zIMs9-FgF-5WUMaZP98VJN0u0HWQnagcNiYU21us6WzS1dos1hALtR8p9j1Y1cJS6p7Y5y8PF80Vcr0kUHLBjdnwxTe2og09FZy-SgOiug8FWF4K8yPNODiqBk7_L-EoD4JSpFPMnDuzUUCTGGo1s70qVEUA80yLgJdIy2XO46DFN7rIdbSRUJopu4F23RB7b9BsrukJGrePAc',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuBOa2CZ7oJQpqn24tmFYPG-ipuAF3HbDXddDuzTXTZAyrz6xjDOt8yFhNRKAkgRmmKn_3QxK46zh2_b-h-2PhTyVYBzsVN65eou6dmKd4O_qZwRSwaU5k3tsRRZoV04gACDu0yG9lCCXLgVYWiFyCr-CGC8IHce3IttCfbl-wafpe7Vr5dh2EOaWiOF-_5xa6I5-wae3cbmqwVwku8JQRBHQ17xgv0hTGBrIAocOJg',
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuAJJWJQHqgaJrmmXgNkWqjiPjVu7ZXUY93Ukc-HYliONfsYpK_nSAnrYbzGboJ0gyL8MSQnESy0w6V8M6mAAlq-Zh1zMtIsBlD2evEHv5yejd9hJk4BSVDi0ZThWFhJ2xzbDkXnZQ-qPEqNJyWPJc7Xiec9xXS4QrDZqG2jWs0Eg49tPpt08SC6Lc3RGOU5LszmeDEkUa64Dfvu31LzCX-tPZBOsWCs6Kz2FuKgrtU'
+];
+
+const isVideoSlide = (slide) => {
+  if (!slide) return false;
+  if (typeof slide === 'object') {
+    if (slide.type === 'video') return true;
+    if (slide.type === 'photo' || slide.type === 'image') return false;
+    slide = slide.url || '';
+  }
+  const s = String(slide).toLowerCase();
+  return (
+    s.endsWith('.mp4') ||
+    s.endsWith('.webm') ||
+    s.endsWith('.mov') ||
+    s.endsWith('.ogg') ||
+    s.includes('.mp4?') ||
+    s.includes('.webm?') ||
+    s.includes('/video/')
+  );
+};
+
+const getSlideUrl = (slide) => {
+  if (!slide) return '';
+  const raw = typeof slide === 'object' ? slide.url : slide;
+  return getStoragePublicUrl(raw) || raw;
+};
 
 const DEFAULT_PROFILE = {
   name: 'Prio Setyo',
@@ -112,13 +156,404 @@ export function AdminPage({ onBackToSite }) {
   const [expLocation, setExpLocation] = useState('');
   const [expBullets, setExpBullets] = useState('');
 
-  // Avatar Uploader State
+  // Avatar & Hero Media Uploader State
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [avatarError, setAvatarError] = useState('');
+  const [uploadingHeroPortrait, setUploadingHeroPortrait] = useState(false);
+  const [uploadingHeroBg, setUploadingHeroBg] = useState(false);
+  const [adminBgPreviewIndex, setAdminBgPreviewIndex] = useState(0);
 
   const showToast = (msg) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(''), 3500);
+  };
+
+  const handleHeroPortraitFileSelect = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingHeroPortrait(true);
+    try {
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'png';
+      const storagePath = `hero-portraits/hero-portrait-${Date.now()}.${ext}`;
+      const res = await uploadMediaFile(storagePath, file, file.type || 'image/png');
+      const portraitUrl = res?.publicUrl || storagePath;
+
+      const updatedProfile = { ...profile, hero_png_url: portraitUrl, hero_portrait_url: '' };
+      setProfile(updatedProfile);
+      try {
+        localStorage.removeItem('prio_hero_portrait_url');
+        localStorage.setItem('prio_hero_png_url', portraitUrl);
+      } catch (err) {}
+      await updateSiteSettings(updatedProfile);
+      showToast('Foto PNG Hero berhasil diunggah dan langsung aktif di halaman depan!');
+    } catch (err) {
+      console.error('Error uploading hero portrait:', err);
+      showToast('Gagal mengunggah Foto PNG Hero.');
+    } finally {
+      setUploadingHeroPortrait(false);
+      e.target.value = '';
+    }
+  };
+
+  const currentHeroBgSlides = React.useMemo(() => {
+    let slides = profile.hero_bg_slides;
+    if (typeof slides === 'string') {
+      try {
+        slides = JSON.parse(slides);
+      } catch (e) {
+        slides = slides.split(',').map((s) => s.trim()).filter(Boolean);
+      }
+    }
+    if (!slides || !Array.isArray(slides) || slides.length === 0) {
+      try {
+        const local = localStorage.getItem('prio_hero_bg_slides');
+        if (local) slides = JSON.parse(local);
+      } catch (e) {}
+    }
+    if (Array.isArray(slides) && slides.length > 0) {
+      return slides.slice(0, 5);
+    }
+    return DEFAULT_HERO_BG_SLIDES;
+  }, [profile.hero_bg_slides]);
+
+  // Transisi Preview Tiap 3 Detik (Gaya Apple)
+  useEffect(() => {
+    if (currentHeroBgSlides.length <= 1) return undefined;
+    const timer = setInterval(() => {
+      setAdminBgPreviewIndex((prev) => (prev + 1) % currentHeroBgSlides.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [currentHeroBgSlides.length]);
+
+  const handleHeroBgUpload = async (e, targetIndex = null, forcedType = null) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (targetIndex === null && currentHeroBgSlides.length >= 5 && Array.isArray(profile.hero_bg_slides) && profile.hero_bg_slides.length >= 5) {
+      showToast('Batas maksimal adalah 5 media background.');
+      return;
+    }
+
+    setUploadingHeroBg(true);
+    try {
+      const isVideo = forcedType === 'video' || file.type.startsWith('video/') || Boolean(file.name.match(/\.(mp4|webm|mov|ogg)$/i));
+      const ext = file.name.split('.').pop()?.toLowerCase() || (isVideo ? 'mp4' : 'webp');
+      const prefix = isVideo ? 'hero-bg-video' : 'hero-bg-photo';
+      const storagePath = `hero-backgrounds/${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 6)}.${ext}`;
+      const defaultContentType = isVideo ? (file.type || 'video/mp4') : (file.type || 'image/jpeg');
+
+      const res = await uploadMediaFile(storagePath, file, defaultContentType);
+      const publicUrl = res?.publicUrl || storagePath;
+      const mediaEntry = isVideo ? { url: publicUrl, type: 'video' } : { url: publicUrl, type: 'photo' };
+
+      const baseSlides = Array.isArray(profile.hero_bg_slides) && profile.hero_bg_slides.length > 0
+        ? [...profile.hero_bg_slides]
+        : [...DEFAULT_HERO_BG_SLIDES];
+
+      let newSlides;
+      if (targetIndex !== null && targetIndex < baseSlides.length) {
+        newSlides = [...baseSlides];
+        newSlides[targetIndex] = mediaEntry;
+      } else {
+        newSlides = [...baseSlides, mediaEntry].slice(0, 5);
+      }
+
+      const updatedProfile = { ...profile, hero_bg_slides: newSlides };
+      setProfile(updatedProfile);
+      try {
+        localStorage.setItem('prio_hero_bg_slides', JSON.stringify(newSlides));
+      } catch (err) {}
+      await updateSiteSettings(updatedProfile);
+      showToast(`${isVideo ? 'Video' : 'Foto'} background (${newSlides.length}/5) berhasil disimpan!`);
+    } catch (err) {
+      console.error('Error uploading hero background:', err);
+      showToast('Gagal mengunggah media background hero.');
+    } finally {
+      setUploadingHeroBg(false);
+      e.target.value = '';
+    }
+  };
+
+  const handleHeroBgAddDirectUrl = async () => {
+    const entered = window.prompt('Masukkan URL langsung file Foto atau Video (MP4/WebM/JPG/PNG):');
+    if (!entered || !entered.trim()) return;
+    const url = entered.trim();
+    const isVideo = isVideoSlide(url);
+    const mediaEntry = isVideo ? { url, type: 'video' } : { url, type: 'photo' };
+
+    const baseSlides = Array.isArray(profile.hero_bg_slides) && profile.hero_bg_slides.length > 0
+      ? [...profile.hero_bg_slides]
+      : [...DEFAULT_HERO_BG_SLIDES];
+
+    if (baseSlides.length >= 5) {
+      showToast('Batas maksimal adalah 5 media background.');
+      return;
+    }
+
+    const newSlides = [...baseSlides, mediaEntry].slice(0, 5);
+    const updatedProfile = { ...profile, hero_bg_slides: newSlides };
+    setProfile(updatedProfile);
+    try {
+      localStorage.setItem('prio_hero_bg_slides', JSON.stringify(newSlides));
+    } catch (err) {}
+    await updateSiteSettings(updatedProfile);
+    showToast(`URL ${isVideo ? 'Video' : 'Foto'} berhasil ditambahkan!`);
+  };
+
+  const handleHeroBgDelete = async (indexToDelete) => {
+    const baseSlides = Array.isArray(profile.hero_bg_slides) && profile.hero_bg_slides.length > 0
+      ? [...profile.hero_bg_slides]
+      : [...DEFAULT_HERO_BG_SLIDES];
+
+    if (baseSlides.length <= 1) {
+      showToast('Minimal harus ada 1 media background.');
+      return;
+    }
+
+    const newSlides = baseSlides.filter((_, idx) => idx !== indexToDelete);
+    const updatedProfile = { ...profile, hero_bg_slides: newSlides };
+    setProfile(updatedProfile);
+    try {
+      localStorage.setItem('prio_hero_bg_slides', JSON.stringify(newSlides));
+    } catch (err) {}
+    await updateSiteSettings(updatedProfile);
+    showToast(`Media background ke-${indexToDelete + 1} berhasil dihapus.`);
+  };
+
+  const handleHeroBgResetDefault = async () => {
+    const updatedProfile = { ...profile, hero_bg_slides: DEFAULT_HERO_BG_SLIDES };
+    setProfile(updatedProfile);
+    try {
+      localStorage.setItem('prio_hero_bg_slides', JSON.stringify(DEFAULT_HERO_BG_SLIDES));
+    } catch (err) {}
+    await updateSiteSettings(updatedProfile);
+    showToast('Background slideshow direset ke 5 default.');
+  };
+
+  // ==========================================
+  // SECTION 2: TRACK RECORD & 5 SPOTLIGHT ADMIN HANDLERS
+  // ==========================================
+  const [uploadingSpotlightIdx, setUploadingSpotlightIdx] = useState(null);
+
+  const currentTrackHeader = React.useMemo(() => {
+    let custom = profile.track_record_header;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    return {
+      ...DEFAULT_TRACK_RECORD_HEADER,
+      ...(custom && typeof custom === 'object' ? custom : {})
+    };
+  }, [profile.track_record_header]);
+
+  const currentTrackMetrics = React.useMemo(() => {
+    let custom = profile.track_record_metrics;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    if (Array.isArray(custom) && custom.length > 0) {
+      return DEFAULT_TRACK_RECORD_METRICS.map((def, idx) => ({
+        ...def,
+        ...(custom[idx] || {})
+      }));
+    }
+    return DEFAULT_TRACK_RECORD_METRICS;
+  }, [profile.track_record_metrics]);
+
+  const currentSpotlightItems = React.useMemo(() => {
+    const mappedFromCms = projects.slice(0, 5).map((p, idx) => {
+      const firstMedia = p.project_media?.[0];
+      const rawThumb = firstMedia?.storage_path || firstMedia?.thumb_path || firstMedia?.poster_path;
+      const resolvedImage =
+        getStoragePublicUrl(rawThumb) ||
+        DEFAULT_SPOTLIGHT_PROJECTS[idx % DEFAULT_SPOTLIGHT_PROJECTS.length].image;
+
+      const metaSpecs = p.meta
+        ? Object.entries(p.meta)
+            .filter(([, val]) => Boolean(val))
+            .map(([k, val]) => `${k.replace(/_/g, ' ').toUpperCase()}: ${val}`)
+        : [];
+      const fallbackSpecs = DEFAULT_SPOTLIGHT_PROJECTS[idx % DEFAULT_SPOTLIGHT_PROJECTS.length].specs;
+
+      return {
+        id: p.id || `cms-spot-${idx}`,
+        title: p.title || 'Untitled Project',
+        category: (p.categoryLabel || CATEGORY_LABELS[p.category] || 'FEATURED WORK').toUpperCase(),
+        discipline: p.category || 'design',
+        tag: (p.subCategory || p.role || 'ENTERPRISE DIRECTIVE').toUpperCase(),
+        client: p.client || 'Enterprise Partner',
+        locationYear:
+          p.locationYear ||
+          `${(p.meta?.location || 'DUMAI, RIAU, INDONESIA').toUpperCase()} / ${p.year || '2025'}`,
+        desc:
+          p.description ||
+          p.summary ||
+          p.excerpt ||
+          DEFAULT_SPOTLIGHT_PROJECTS[idx % DEFAULT_SPOTLIGHT_PROJECTS.length].desc,
+        specs: metaSpecs.length > 0 ? metaSpecs.slice(0, 3) : fallbackSpecs,
+        image: resolvedImage
+      };
+    });
+
+    const autoList = [...mappedFromCms];
+    for (let i = autoList.length; i < 5; i += 1) {
+      autoList.push(DEFAULT_SPOTLIGHT_PROJECTS[i]);
+    }
+
+    let customSpots = profile.spotlight_items;
+    if (typeof customSpots === 'string') {
+      try {
+        customSpots = JSON.parse(customSpots);
+      } catch (e) {
+        customSpots = null;
+      }
+    }
+
+    if (Array.isArray(customSpots) && customSpots.length > 0) {
+      return [0, 1, 2, 3, 4].map((idx) => {
+        const fallback = autoList[idx] || DEFAULT_SPOTLIGHT_PROJECTS[idx];
+        const item = customSpots[idx];
+        if (!item || typeof item !== 'object') return fallback;
+        return {
+          ...fallback,
+          ...item,
+          specs: Array.isArray(item.specs)
+            ? item.specs
+            : typeof item.specs === 'string'
+              ? item.specs.split(',').map((s) => s.trim()).filter(Boolean)
+              : fallback.specs
+        };
+      });
+    }
+
+    return autoList.slice(0, 5);
+  }, [projects, profile.spotlight_items]);
+
+  const handleUpdateTrackHeader = (field, value) => {
+    const nextHeader = { ...currentTrackHeader, [field]: value };
+    setProfile((prev) => ({ ...prev, track_record_header: nextHeader }));
+  };
+
+  const handleUpdateTrackMetric = (idx, field, value) => {
+    const nextMetrics = currentTrackMetrics.map((m, i) => (i === idx ? { ...m, [field]: value } : m));
+    setProfile((prev) => ({ ...prev, track_record_metrics: nextMetrics }));
+  };
+
+  const handleUpdateSpotlightItem = (idx, field, value) => {
+    const nextSpots = currentSpotlightItems.map((item, i) =>
+      i === idx ? { ...item, [field]: value } : item
+    );
+    setProfile((prev) => ({ ...prev, spotlight_items: nextSpots }));
+  };
+
+  const handleSpotlightSelectFromProject = (slotIdx, projectId) => {
+    if (!projectId) return;
+    const p = projects.find((proj) => String(proj.id) === String(projectId));
+    if (!p) return;
+
+    const firstMedia = p.project_media?.[0];
+    const rawThumb = firstMedia?.storage_path || firstMedia?.thumb_path || firstMedia?.poster_path;
+    const resolvedImage =
+      getStoragePublicUrl(rawThumb) ||
+      DEFAULT_SPOTLIGHT_PROJECTS[slotIdx % DEFAULT_SPOTLIGHT_PROJECTS.length].image;
+
+    const metaSpecs = p.meta
+      ? Object.entries(p.meta)
+          .filter(([, val]) => Boolean(val))
+          .map(([k, val]) => `${k.replace(/_/g, ' ').toUpperCase()}: ${val}`)
+      : [];
+
+    const mappedItem = {
+      id: p.id,
+      title: p.title || 'Untitled Project',
+      category: (p.categoryLabel || CATEGORY_LABELS[p.category] || 'FEATURED WORK').toUpperCase(),
+      discipline: p.category || 'design',
+      tag: (p.subCategory || p.role || 'ENTERPRISE DIRECTIVE').toUpperCase(),
+      client: p.client || 'Enterprise Partner',
+      locationYear:
+        p.locationYear ||
+        `${(p.meta?.location || 'DUMAI, RIAU, INDONESIA').toUpperCase()} / ${p.year || '2025'}`,
+      desc:
+        p.description ||
+        p.summary ||
+        p.excerpt ||
+        DEFAULT_SPOTLIGHT_PROJECTS[slotIdx % DEFAULT_SPOTLIGHT_PROJECTS.length].desc,
+      specs: metaSpecs.length > 0 ? metaSpecs.slice(0, 3) : DEFAULT_SPOTLIGHT_PROJECTS[slotIdx].specs,
+      image: resolvedImage
+    };
+
+    const nextSpots = currentSpotlightItems.map((item, i) => (i === slotIdx ? mappedItem : item));
+    setProfile((prev) => ({ ...prev, spotlight_items: nextSpots }));
+    showToast(`Slot 0${slotIdx + 1} diisi dari karya "${p.title}". Klik Simpan untuk menerapkan!`);
+  };
+
+  const handleSpotlightImageUpload = async (e, slotIdx) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingSpotlightIdx(slotIdx);
+    try {
+      const compressed = await resizeImageToWebP(file, 1400, 0.88);
+      const storagePath = `spotlight/spotlight-${slotIdx + 1}-${Date.now()}.webp`;
+      const res = await uploadMediaFile(storagePath, compressed.blob, 'image/webp');
+      const publicUrl = res?.publicUrl || storagePath;
+
+      const nextSpots = currentSpotlightItems.map((item, i) =>
+        i === slotIdx ? { ...item, image: publicUrl } : item
+      );
+      const updatedProfile = { ...profile, spotlight_items: nextSpots };
+      setProfile(updatedProfile);
+      await updateSiteSettings(updatedProfile);
+      showToast(`Gambar Spotlight 0${slotIdx + 1} berhasil diunggah & disimpan!`);
+    } catch (err) {
+      console.error('Error uploading spotlight image:', err);
+      showToast('Gagal mengunggah gambar Spotlight.');
+    } finally {
+      setUploadingSpotlightIdx(null);
+      e.target.value = '';
+    }
+  };
+
+  const handleSaveTrackAndSpotlight = async () => {
+    const updatedProfile = {
+      ...profile,
+      track_record_header: currentTrackHeader,
+      track_record_metrics: currentTrackMetrics,
+      spotlight_items: currentSpotlightItems
+    };
+    setProfile(updatedProfile);
+    await updateSiteSettings(updatedProfile);
+    showToast('Perubahan Track Record & 5 Spotlight berhasil disimpan ke website!');
+  };
+
+  const handleResetTrackMetrics = async () => {
+    const updatedProfile = {
+      ...profile,
+      track_record_header: DEFAULT_TRACK_RECORD_HEADER,
+      track_record_metrics: DEFAULT_TRACK_RECORD_METRICS
+    };
+    setProfile(updatedProfile);
+    await updateSiteSettings(updatedProfile);
+    showToast('Track Record Summary direset ke data default (10+, 42, 180+).');
+  };
+
+  const handleResetSpotlightItems = async () => {
+    const updatedProfile = {
+      ...profile,
+      spotlight_items: null
+    };
+    setProfile(updatedProfile);
+    await updateSiteSettings(updatedProfile);
+    showToast('5 Spotlight direset ke sinkronisasi otomatis dari Proyek & Karya.');
   };
 
   const handleAvatarFileSelect = async (e) => {
@@ -633,6 +1068,8 @@ export function AdminPage({ onBackToSite }) {
             >
               {[
                 { id: 'projects', label: 'Proyek & Karya', icon: FolderKanban, count: projects.length },
+                { id: 'hero_media', label: 'Media Background Hero', icon: Film, count: currentHeroBgSlides.length },
+                { id: 'track_spotlight', label: 'Track Record & Spotlight', icon: Sparkles },
                 { id: 'messages', label: 'Pesan Masuk', icon: Mail, badge: unreadMessagesCount },
                 { id: 'profile', label: 'Profil & Bio', icon: User },
                 { id: 'skills', label: 'Keahlian / Tools', icon: Wrench, count: skills.length },
@@ -719,6 +1156,72 @@ export function AdminPage({ onBackToSite }) {
               {/* TAB 1: PROYEK & KARYA */}
               {activeTab === 'projects' && (
                 <div>
+                  {/* Pembeda Upload Karya vs Media Background Hero */}
+                  <div
+                    style={{
+                      padding: '0.9rem 1.25rem',
+                      borderRadius: 'var(--radius-xl)',
+                      backgroundColor: 'rgba(0, 82, 155, 0.05)',
+                      border: '1px solid rgba(0, 82, 155, 0.16)',
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '0.75rem',
+                      marginBottom: '1.25rem'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <div
+                        style={{
+                          width: '32px',
+                          height: '32px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(0, 82, 155, 0.12)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: 'var(--color-primary-container)',
+                          flexShrink: 0
+                        }}
+                      >
+                        <FolderKanban size={16} />
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: '700', fontSize: '13px', color: 'var(--color-on-surface)' }}>
+                          Khusus Galeri Portofolio & Proyek Klien
+                        </div>
+                        <p style={{ fontSize: '11px', color: 'var(--color-on-surface-variant)', margin: '2px 0 0 0' }}>
+                          Foto dan video yang diunggah di tab ini adalah untuk studi kasus portofolio (Recent Works & Spotlight).
+                        </p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('hero_media')}
+                      className="font-label-mono-sm"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '0.5rem 1rem',
+                        borderRadius: 'var(--radius-full)',
+                        backgroundColor: '#ffffff',
+                        border: '1px solid rgba(0, 82, 155, 0.25)',
+                        color: 'var(--color-primary-container)',
+                        fontSize: '11px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                        boxShadow: 'var(--shadow-sm)'
+                      }}
+                    >
+                      <Film size={13} />
+                      <span>Atur Foto/Video Background Hero</span>
+                      <ArrowRight size={13} />
+                    </button>
+                  </div>
+
                   {/* Card Header inside container */}
                   <div
                     style={{
@@ -1033,7 +1536,1485 @@ export function AdminPage({ onBackToSite }) {
                 </div>
               )}
 
-              {/* TAB 2: PESAN MASUK */}
+              {/* TAB 2: MEDIA BACKGROUND HERO (FOTO ATAU VIDEO) */}
+              {activeTab === 'hero_media' && (
+                <div>
+                  {/* Card Header inside container */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '1rem',
+                      marginBottom: '1.25rem',
+                      paddingBottom: '1.25rem',
+                      borderBottom: '1px solid rgba(0, 0, 0, 0.05)'
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+                        <h2
+                          style={{
+                            fontFamily: 'var(--font-display)',
+                            fontSize: '1.25rem',
+                            fontWeight: '800',
+                            color: '#000000',
+                            margin: 0
+                          }}
+                        >
+                          Media Background Section 1 (Hero)
+                        </h2>
+                        <span
+                          className="font-label-mono-sm"
+                          style={{
+                            padding: '0.2rem 0.65rem',
+                            borderRadius: 'var(--radius-full)',
+                            backgroundColor: currentHeroBgSlides.length === 5 ? 'rgba(0, 82, 155, 0.12)' : 'rgba(122, 193, 66, 0.15)',
+                            color: currentHeroBgSlides.length === 5 ? 'var(--color-primary-container)' : '#2b6e12',
+                            fontSize: '10px',
+                            fontWeight: '700'
+                          }}
+                        >
+                          {currentHeroBgSlides.length}/5 Media Terpasang
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
+                        Khusus upload foto atau video latar belakang bergerak di balik nama Anda pada Section 1 (Hero).
+                      </p>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                      <button
+                        type="button"
+                        onClick={handleHeroBgResetDefault}
+                        className="font-label-mono-sm"
+                        style={{
+                          padding: '0.55rem 0.95rem',
+                          borderRadius: 'var(--radius-full)',
+                          backgroundColor: 'var(--color-surface-container)',
+                          color: 'var(--color-on-surface)',
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          border: '1px solid rgba(194, 198, 211, 0.4)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Reset 5 Default
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Penjelasan Pembeda: Upload Karya vs Media Background Hero */}
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                      gap: '0.85rem',
+                      marginBottom: '1.5rem'
+                    }}
+                  >
+                    <div
+                      style={{
+                        padding: '1rem 1.25rem',
+                        borderRadius: 'var(--radius-xl)',
+                        backgroundColor: 'rgba(0, 82, 155, 0.06)',
+                        border: '1.5px solid rgba(0, 82, 155, 0.25)'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                        <Film size={16} color="var(--color-primary-container)" />
+                        <span style={{ fontWeight: '700', fontSize: '12px', color: 'var(--color-primary-container)', textTransform: 'uppercase' }}>
+                          Media Background Hero (Tab Ini)
+                        </span>
+                      </div>
+                      <p style={{ fontSize: '11px', color: 'var(--color-on-surface-variant)', lineHeight: 1.5, margin: 0 }}>
+                        Foto atau Video bergerak looping di latar belakang Section 1 Hero. Berjalan otomatis dengan durasi transisi 3 detik gaya Apple. Maksimal 5 file.
+                      </p>
+                    </div>
+
+                    <div
+                      style={{
+                        padding: '1rem 1.25rem',
+                        borderRadius: 'var(--radius-xl)',
+                        backgroundColor: '#f8fafc',
+                        border: '1px solid rgba(194, 198, 211, 0.35)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between'
+                      }}
+                    >
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                          <FolderKanban size={16} color="#64748b" />
+                          <span style={{ fontWeight: '700', fontSize: '12px', color: '#334155', textTransform: 'uppercase' }}>
+                            Upload Foto/Video Karya (Tab 'Proyek & Karya')
+                          </span>
+                        </div>
+                        <p style={{ fontSize: '11px', color: '#64748b', lineHeight: 1.5, margin: 0 }}>
+                          Khusus untuk menambahkan karya klien, foto produk, video commercial, dan studi kasus galeri Recent Works.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab('projects')}
+                        style={{
+                          marginTop: '6px',
+                          alignSelf: 'flex-start',
+                          fontSize: '11px',
+                          color: 'var(--color-primary-container)',
+                          fontWeight: '700',
+                          border: 'none',
+                          background: 'none',
+                          padding: 0,
+                          cursor: 'pointer',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '3px'
+                        }}
+                      >
+                        <span>Kelola Portofolio Karya →</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Interactive Live Apple-Style Preview Box (Foto atau Video) */}
+                  <div
+                    style={{
+                      position: 'relative',
+                      width: '100%',
+                      height: '240px',
+                      borderRadius: 'var(--radius-xl)',
+                      overflow: 'hidden',
+                      backgroundColor: '#071320',
+                      marginBottom: '1.25rem',
+                      border: '1px solid rgba(255, 255, 255, 0.1)',
+                      boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)'
+                    }}
+                  >
+                    {/* Stacked background slideshow items with Apple Ken Burns + Crossfade */}
+                    {currentHeroBgSlides.map((slideItem, idx) => {
+                      const isActive = idx === adminBgPreviewIndex;
+                      const isVideo = isVideoSlide(slideItem);
+                      const mediaUrl = getSlideUrl(slideItem);
+
+                      return (
+                        <div
+                          key={`${mediaUrl}-${idx}`}
+                          style={{
+                            position: 'absolute',
+                            inset: 0,
+                            opacity: isActive ? 0.88 : 0,
+                            transform: isActive ? 'scale(1.04)' : 'scale(1.0)',
+                            transition: 'opacity 1100ms cubic-bezier(0.25, 1, 0.5, 1), transform 3200ms cubic-bezier(0.25, 1, 0.5, 1)',
+                            willChange: 'opacity, transform',
+                            overflow: 'hidden'
+                          }}
+                        >
+                          {isVideo ? (
+                            <video
+                              src={mediaUrl}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'cover',
+                                filter: 'contrast(1.05) brightness(0.98)'
+                              }}
+                            />
+                          ) : (
+                            <div
+                              style={{
+                                width: '100%',
+                                height: '100%',
+                                backgroundImage: `url('${mediaUrl}')`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                filter: 'contrast(1.05) brightness(0.98)'
+                              }}
+                            />
+                          )}
+                        </div>
+                      );
+                    })}
+
+                    {/* Ambient Lighting Scrims (Pekat di kiri, makin tipis dari tengah ke kanan) */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        pointerEvents: 'none',
+                        background:
+                          'linear-gradient(90deg, rgba(7, 19, 32, 0.95) 0%, rgba(7, 19, 32, 0.86) 36%, rgba(7, 19, 32, 0.50) 54%, rgba(7, 19, 32, 0.20) 76%, rgba(7, 19, 32, 0.06) 100%), linear-gradient(180deg, rgba(7, 19, 32, 0.50) 0%, rgba(7, 19, 32, 0.0) 22%, rgba(7, 19, 32, 0.0) 78%, rgba(7, 19, 32, 0.88) 100%)'
+                      }}
+                    />
+
+                    {/* Telemetry Header inside Live Preview */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        padding: '1.15rem',
+                        pointerEvents: 'none'
+                      }}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                          <span
+                            className="font-label-mono-sm"
+                            style={{
+                              backgroundColor: 'rgba(0, 82, 155, 0.8)',
+                              backdropFilter: 'blur(8px)',
+                              color: '#ffffff',
+                              padding: '0.2rem 0.6rem',
+                              borderRadius: 'var(--radius-full)',
+                              fontSize: '10px',
+                              fontWeight: '700',
+                              letterSpacing: '0.06em'
+                            }}
+                          >
+                            LIVE PREVIEW • TRANSISI APPLE (3s)
+                          </span>
+                          <span
+                            className="font-label-mono-sm"
+                            style={{
+                              backgroundColor: isVideoSlide(currentHeroBgSlides[adminBgPreviewIndex]) ? 'rgba(237, 28, 36, 0.8)' : 'rgba(122, 193, 66, 0.8)',
+                              color: '#ffffff',
+                              padding: '0.2rem 0.55rem',
+                              borderRadius: 'var(--radius-full)',
+                              fontSize: '10px',
+                              fontWeight: '700'
+                            }}
+                          >
+                            {isVideoSlide(currentHeroBgSlides[adminBgPreviewIndex]) ? '🎥 VIDEO AKTIF' : '📷 FOTO AKTIF'}
+                          </span>
+                        </div>
+
+                        <span
+                          className="font-label-mono-sm"
+                          style={{
+                            color: 'var(--color-secondary-fixed)',
+                            fontSize: '11px',
+                            fontWeight: '600'
+                          }}
+                        >
+                          DUMAI, RIAU | INDONESIA
+                        </span>
+                      </div>
+
+                      <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
+                        <div>
+                          <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                            {profile.headline || 'CREATIVE DIRECTOR & VISUAL STORYTELLER'}
+                          </div>
+                          <div style={{ fontSize: '22px', fontWeight: '800', color: '#ffffff', letterSpacing: '-0.03em' }}>
+                            {profile.name || 'PRIO SETYO'}
+                          </div>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', pointerEvents: 'auto' }}>
+                          <span className="font-label-mono-sm" style={{ color: '#ffffff', fontSize: '11px', fontWeight: '600' }}>
+                            0{adminBgPreviewIndex + 1} / 0{currentHeroBgSlides.length}
+                          </span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                            {currentHeroBgSlides.map((_, i) => (
+                              <button
+                                key={i}
+                                type="button"
+                                onClick={() => setAdminBgPreviewIndex(i)}
+                                style={{
+                                  width: i === adminBgPreviewIndex ? '20px' : '6px',
+                                  height: '4px',
+                                  borderRadius: 'var(--radius-full)',
+                                  backgroundColor: i === adminBgPreviewIndex ? '#ED1C24' : 'rgba(255, 255, 255, 0.35)',
+                                  transition: 'all 300ms ease',
+                                  padding: 0,
+                                  cursor: 'pointer'
+                                }}
+                                aria-label={`Slide ${i + 1}`}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 5 Slots Grid (Foto atau Video) */}
+                  <div style={{ marginBottom: '1.5rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                      <span className="font-label-mono-sm" style={{ fontWeight: '700', textTransform: 'uppercase', color: 'var(--color-secondary)' }}>
+                        Slot Media Background Hero (Maksimal 5)
+                      </span>
+                      <span style={{ fontSize: '11px', color: 'var(--text-secondary)' }}>
+                        Klik slot foto/video untuk menguji langsung di Live Preview
+                      </span>
+                    </div>
+
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+                        gap: '0.85rem'
+                      }}
+                    >
+                      {[0, 1, 2, 3, 4].map((slotIdx) => {
+                        const slide = currentHeroBgSlides[slotIdx];
+                        const isFilled = Boolean(slide);
+                        const isVideo = isVideoSlide(slide);
+                        const mediaUrl = getSlideUrl(slide);
+                        const isCurrentActive = adminBgPreviewIndex === slotIdx;
+
+                        return (
+                          <div
+                            key={slotIdx}
+                            style={{
+                              position: 'relative',
+                              borderRadius: 'var(--radius-xl)',
+                              overflow: 'hidden',
+                              border: isCurrentActive
+                                ? '2px solid #ED1C24'
+                                : '1px solid rgba(194, 198, 211, 0.5)',
+                              backgroundColor: 'var(--color-surface-container)',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              transition: 'all 200ms ease',
+                              boxShadow: isCurrentActive ? '0 0 12px rgba(237, 28, 36, 0.25)' : 'none'
+                            }}
+                          >
+                            {/* Slot Media Thumbnail / Video Box */}
+                            <div
+                              style={{
+                                position: 'relative',
+                                width: '100%',
+                                height: '110px',
+                                backgroundColor: '#071320',
+                                cursor: isFilled ? 'pointer' : 'default',
+                                overflow: 'hidden'
+                              }}
+                              onClick={() => {
+                                if (isFilled) setAdminBgPreviewIndex(slotIdx);
+                              }}
+                            >
+                              {isFilled ? (
+                                isVideo ? (
+                                  <video
+                                    src={mediaUrl}
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    style={{
+                                      width: '100%',
+                                      height: '100%',
+                                      objectFit: 'cover'
+                                    }}
+                                  />
+                                ) : (
+                                  <img
+                                    src={mediaUrl}
+                                    alt={`Hero Slide ${slotIdx + 1}`}
+                                    style={{
+                                      width: '100%',
+                                      height: '100%',
+                                      objectFit: 'cover'
+                                    }}
+                                  />
+                                )
+                              ) : (
+                                <div
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: 'rgba(255, 255, 255, 0.4)',
+                                    fontSize: '11px',
+                                    fontFamily: 'var(--font-mono)',
+                                    gap: '4px'
+                                  }}
+                                >
+                                  <span>Slot 0{slotIdx + 1}</span>
+                                  <span style={{ fontSize: '10px', opacity: 0.7 }}>Kosong</span>
+                                </div>
+                              )}
+
+                              {/* Slide & Type Badge */}
+                              <div
+                                style={{
+                                  position: 'absolute',
+                                  top: '6px',
+                                  left: '6px',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  gap: '4px'
+                                }}
+                              >
+                                <span
+                                  className="font-label-mono-sm"
+                                  style={{
+                                    padding: '1px 6px',
+                                    borderRadius: 'var(--radius-sm)',
+                                    backgroundColor: 'rgba(0,0,0,0.75)',
+                                    color: '#ffffff',
+                                    fontSize: '9px',
+                                    fontWeight: '700'
+                                  }}
+                                >
+                                  Slide 0{slotIdx + 1}
+                                </span>
+
+                                {isFilled && (
+                                  <span
+                                    className="font-label-mono-sm"
+                                    style={{
+                                      padding: '1px 5px',
+                                      borderRadius: 'var(--radius-sm)',
+                                      backgroundColor: isVideo ? '#ED1C24' : '#00529B',
+                                      color: '#ffffff',
+                                      fontSize: '9px',
+                                      fontWeight: '700'
+                                    }}
+                                  >
+                                    {isVideo ? 'VIDEO' : 'FOTO'}
+                                  </span>
+                                )}
+                              </div>
+
+                              {isCurrentActive && isFilled && (
+                                <span
+                                  className="font-label-mono-sm"
+                                  style={{
+                                    position: 'absolute',
+                                    bottom: '6px',
+                                    left: '6px',
+                                    padding: '2px 6px',
+                                    borderRadius: 'var(--radius-sm)',
+                                    backgroundColor: '#ED1C24',
+                                    color: '#ffffff',
+                                    fontSize: '9px',
+                                    fontWeight: '700'
+                                  }}
+                                >
+                                  Ditampilkan di Hero
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Action Row per Slot */}
+                            <div
+                              style={{
+                                padding: '0.5rem',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                gap: '4px',
+                                backgroundColor: '#ffffff',
+                                borderTop: '1px solid rgba(0,0,0,0.06)'
+                              }}
+                            >
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flex: 1 }}>
+                                {/* Upload/Ganti Foto */}
+                                <label
+                                  className="font-label-mono-sm"
+                                  style={{
+                                    flex: 1,
+                                    textAlign: 'center',
+                                    fontSize: '10px',
+                                    fontWeight: '700',
+                                    color: '#00529B',
+                                    backgroundColor: 'rgba(0, 82, 155, 0.08)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    cursor: uploadingHeroBg ? 'not-allowed' : 'pointer',
+                                    padding: '4px 2px'
+                                  }}
+                                >
+                                  {isFilled ? 'Ganti Foto' : '+ Foto'}
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    disabled={uploadingHeroBg}
+                                    onChange={(e) => handleHeroBgUpload(e, slotIdx, 'photo')}
+                                    style={{ display: 'none' }}
+                                  />
+                                </label>
+
+                                {/* Upload/Ganti Video */}
+                                <label
+                                  className="font-label-mono-sm"
+                                  style={{
+                                    flex: 1,
+                                    textAlign: 'center',
+                                    fontSize: '10px',
+                                    fontWeight: '700',
+                                    color: '#ED1C24',
+                                    backgroundColor: 'rgba(237, 28, 36, 0.08)',
+                                    borderRadius: 'var(--radius-sm)',
+                                    cursor: uploadingHeroBg ? 'not-allowed' : 'pointer',
+                                    padding: '4px 2px'
+                                  }}
+                                >
+                                  {isFilled ? 'Ganti Video' : '+ Video'}
+                                  <input
+                                    type="file"
+                                    accept="video/mp4,video/webm,video/quicktime"
+                                    disabled={uploadingHeroBg}
+                                    onChange={(e) => handleHeroBgUpload(e, slotIdx, 'video')}
+                                    style={{ display: 'none' }}
+                                  />
+                                </label>
+                              </div>
+
+                              {isFilled && currentHeroBgSlides.length > 1 && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleHeroBgDelete(slotIdx)}
+                                  title="Hapus media ini"
+                                  style={{
+                                    padding: '4px 6px',
+                                    color: '#ED1C24',
+                                    borderRadius: 'var(--radius-sm)',
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Action Buttons: Upload Foto, Upload Video, Direct URL */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '0.75rem',
+                      padding: '1.25rem',
+                      borderRadius: 'var(--radius-xl)',
+                      backgroundColor: 'var(--color-surface-container)',
+                      marginBottom: '1.5rem'
+                    }}
+                  >
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.75rem' }}>
+                      {/* Upload Foto Baru */}
+                      <label
+                        className="font-label-mono-sm"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '0.65rem 1.25rem',
+                          borderRadius: 'var(--radius-full)',
+                          backgroundColor: currentHeroBgSlides.length >= 5 ? 'var(--color-outline-variant)' : 'var(--color-primary-container)',
+                          color: '#ffffff',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.04em',
+                          cursor: currentHeroBgSlides.length >= 5 || uploadingHeroBg ? 'not-allowed' : 'pointer',
+                          opacity: uploadingHeroBg ? 0.7 : 1,
+                          boxShadow: 'var(--shadow-sm)'
+                        }}
+                      >
+                        <ImageIcon size={14} />
+                        <span>+ Upload Foto Background</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          disabled={currentHeroBgSlides.length >= 5 || uploadingHeroBg}
+                          onChange={(e) => handleHeroBgUpload(e, null, 'photo')}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+
+                      {/* Upload Video Baru */}
+                      <label
+                        className="font-label-mono-sm"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '0.65rem 1.25rem',
+                          borderRadius: 'var(--radius-full)',
+                          backgroundColor: currentHeroBgSlides.length >= 5 ? 'var(--color-outline-variant)' : '#ED1C24',
+                          color: '#ffffff',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.04em',
+                          cursor: currentHeroBgSlides.length >= 5 || uploadingHeroBg ? 'not-allowed' : 'pointer',
+                          opacity: uploadingHeroBg ? 0.7 : 1,
+                          boxShadow: 'var(--shadow-sm)'
+                        }}
+                      >
+                        <Video size={14} />
+                        <span>+ Upload Video Background (MP4)</span>
+                        <input
+                          type="file"
+                          accept="video/mp4,video/webm,video/quicktime"
+                          disabled={currentHeroBgSlides.length >= 5 || uploadingHeroBg}
+                          onChange={(e) => handleHeroBgUpload(e, null, 'video')}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+
+                      {/* Masukkan URL Video Direct */}
+                      <button
+                        type="button"
+                        onClick={handleHeroBgAddDirectUrl}
+                        className="font-label-mono-sm"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '0.65rem 1.15rem',
+                          borderRadius: 'var(--radius-full)',
+                          backgroundColor: '#ffffff',
+                          color: 'var(--color-on-surface)',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.04em',
+                          border: '1px solid rgba(194, 198, 211, 0.5)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        <Play size={13} />
+                        <span>+ Input URL Video (MP4)</span>
+                      </button>
+                    </div>
+
+                    <span className="font-label-mono-sm" style={{ fontSize: '11px', color: 'var(--color-outline)' }}>
+                      Mendukung Foto (JPG, PNG, WebP) & Video (MP4, WebM) • Max 5 File
+                    </span>
+                  </div>
+
+                  {/* Foto Profil PNG Hero (Tanpa Border — Sisi Kanan Hero) */}
+                  <div
+                    style={{
+                      padding: '1.25rem',
+                      borderRadius: 'var(--radius-xl)',
+                      backgroundColor: '#ffffff',
+                      border: '1px solid rgba(194, 198, 211, 0.4)',
+                      boxShadow: 'var(--shadow-sm)',
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '1rem'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                      <div
+                        style={{
+                          width: '84px',
+                          height: '84px',
+                          borderRadius: 'var(--radius-lg)',
+                          overflow: 'hidden',
+                          backgroundColor: '#071320',
+                          display: 'flex',
+                          alignItems: 'flex-end',
+                          justifyContent: 'center',
+                          flexShrink: 0
+                        }}
+                      >
+                        {profile.hero_png_url ? (
+                          <img
+                            src={getStoragePublicUrl(profile.hero_png_url)}
+                            alt="Foto PNG Hero"
+                            style={{ width: '100%', height: '100%', objectFit: 'contain', border: 'none' }}
+                          />
+                        ) : (
+                          <span
+                            className="font-label-mono-sm"
+                            style={{
+                              color: 'rgba(255,255,255,0.5)',
+                              fontSize: '10px',
+                              marginBottom: '28px'
+                            }}
+                          >
+                            PNG
+                          </span>
+                        )}
+                      </div>
+
+                      <div>
+                        <div className="font-headline-sm" style={{ fontWeight: '700', fontSize: '15px', color: 'var(--color-on-surface)' }}>
+                          Foto Profil Hero (PNG Tanpa Border — Sisi Kanan)
+                        </div>
+                        <p className="font-body-sm" style={{ color: 'var(--color-on-surface-variant)', margin: '3px 0 0 0' }}>
+                          Unggah foto profil dalam format PNG transparan untuk ditampilkan tanpa border di samping bio Hero.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <label
+                        className="font-label-mono-sm"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '0.65rem 1.25rem',
+                          borderRadius: 'var(--radius-full)',
+                          backgroundColor: 'var(--color-primary-container)',
+                          color: '#ffffff',
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.04em',
+                          cursor: uploadingHeroPortrait ? 'not-allowed' : 'pointer',
+                          opacity: uploadingHeroPortrait ? 0.7 : 1,
+                          transition: 'all 200ms ease',
+                          boxShadow: 'var(--shadow-sm)'
+                        }}
+                      >
+                        <Camera size={14} />
+                        <span>{uploadingHeroPortrait ? 'Mengunggah...' : 'Upload Foto PNG Hero'}</span>
+                        <input
+                          type="file"
+                          accept="image/png,image/webp"
+                          disabled={uploadingHeroPortrait}
+                          onChange={handleHeroPortraitFileSelect}
+                          style={{ display: 'none' }}
+                        />
+                      </label>
+
+                      {profile.hero_png_url && (
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            const updatedProfile = { ...profile, hero_png_url: '', hero_portrait_url: '' };
+                            setProfile(updatedProfile);
+                            try {
+                              localStorage.removeItem('prio_hero_portrait_url');
+                              localStorage.removeItem('prio_hero_png_url');
+                            } catch (err) {}
+                            await updateSiteSettings(updatedProfile);
+                            showToast('Foto PNG Hero berhasil dihapus.');
+                          }}
+                          className="font-label-mono-sm"
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '4px',
+                            padding: '0.65rem 1rem',
+                            borderRadius: 'var(--radius-full)',
+                            backgroundColor: 'rgba(237, 28, 36, 0.08)',
+                            color: '#ED1C24',
+                            fontSize: '11px',
+                            fontWeight: '700',
+                            textTransform: 'uppercase',
+                            border: '1px solid rgba(237, 28, 36, 0.25)',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          <Trash2 size={13} />
+                          <span>Hapus PNG</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB BARU: TRACK RECORD SUMMARY & 5 SPOTLIGHT (SECTION 2) */}
+              {activeTab === 'track_spotlight' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+                  {/* Header Section */}
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      gap: '1rem',
+                      paddingBottom: '1.25rem',
+                      borderBottom: '1px solid rgba(0, 0, 0, 0.06)'
+                    }}
+                  >
+                    <div>
+                      <h2
+                        style={{
+                          fontFamily: 'var(--font-display)',
+                          fontSize: '1.25rem',
+                          fontWeight: '800',
+                          color: '#000000',
+                          margin: 0
+                        }}
+                      >
+                        Pengaturan Section 2: Track Record Summary & 5 Spotlight
+                      </h2>
+                      <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
+                        Sesuaikan angka metrik utama (10+, 42, 180+), teks deskripsi, serta 5 kartu Spotlight unggulan di bawahnya.
+                      </p>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                      <button
+                        type="button"
+                        onClick={handleResetTrackMetrics}
+                        style={{
+                          padding: '0.55rem 0.95rem',
+                          borderRadius: '9999px',
+                          backgroundColor: '#f3f3f5',
+                          color: '#334155',
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          border: '1px solid rgba(0, 0, 0, 0.08)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Reset Metrik Default
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleSaveTrackAndSpotlight}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '0.6rem 1.25rem',
+                          borderRadius: '9999px',
+                          backgroundColor: '#000000',
+                          color: '#ffffff',
+                          fontSize: '12px',
+                          fontWeight: '700',
+                          border: 'none',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)'
+                        }}
+                      >
+                        <Save size={14} />
+                        <span>Simpan Perubahan Section 2</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* BAGIAN 1: HEADER TRACK RECORD SUMMARY */}
+                  <div
+                    style={{
+                      padding: '1.25rem',
+                      borderRadius: '1rem',
+                      backgroundColor: '#f8fafc',
+                      border: '1px solid rgba(0, 0, 0, 0.08)'
+                    }}
+                  >
+                    <div style={{ fontWeight: '800', fontSize: '13px', color: '#000000', marginBottom: '0.85rem', textTransform: 'uppercase' }}>
+                      1. Judul & Subjudul Track Record Summary
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem' }}>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '4px', textTransform: 'uppercase' }}>
+                          Label Kecil Atas (Eyebrow)
+                        </label>
+                        <input
+                          type="text"
+                          value={currentTrackHeader.eyebrow || ''}
+                          onChange={(e) => handleUpdateTrackHeader('eyebrow', e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '0.6rem 0.8rem',
+                            borderRadius: '0.6rem',
+                            border: '1px solid rgba(0,0,0,0.1)',
+                            backgroundColor: '#ffffff',
+                            fontSize: '13px',
+                            color: '#000000'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '4px', textTransform: 'uppercase' }}>
+                          Judul Utama Section 2
+                        </label>
+                        <input
+                          type="text"
+                          value={currentTrackHeader.title || ''}
+                          onChange={(e) => handleUpdateTrackHeader('title', e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '0.6rem 0.8rem',
+                            borderRadius: '0.6rem',
+                            border: '1px solid rgba(0,0,0,0.1)',
+                            backgroundColor: '#ffffff',
+                            fontSize: '13px',
+                            color: '#000000'
+                          }}
+                        />
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '4px', textTransform: 'uppercase' }}>
+                          Judul Baris Spotlight Bawah
+                        </label>
+                        <input
+                          type="text"
+                          value={currentTrackHeader.spotlightLabel || ''}
+                          onChange={(e) => handleUpdateTrackHeader('spotlightLabel', e.target.value)}
+                          style={{
+                            width: '100%',
+                            padding: '0.6rem 0.8rem',
+                            borderRadius: '0.6rem',
+                            border: '1px solid rgba(0,0,0,0.1)',
+                            backgroundColor: '#ffffff',
+                            fontSize: '13px',
+                            color: '#000000'
+                          }}
+                        />
+                      </div>
+                    </div>
+                    <div style={{ marginTop: '0.85rem' }}>
+                      <label style={{ display: 'block', fontSize: '11px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '4px', textTransform: 'uppercase' }}>
+                        Deskripsi Kanan Atas Section 2
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={currentTrackHeader.subtitle || ''}
+                        onChange={(e) => handleUpdateTrackHeader('subtitle', e.target.value)}
+                        style={{
+                          width: '100%',
+                          padding: '0.6rem 0.8rem',
+                          borderRadius: '0.6rem',
+                          border: '1px solid rgba(0,0,0,0.1)',
+                          backgroundColor: '#ffffff',
+                          fontSize: '13px',
+                          color: '#000000',
+                          resize: 'vertical'
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* BAGIAN 2: 3 KARTU METRIK UTAMA */}
+                  <div>
+                    <div style={{ fontWeight: '800', fontSize: '13px', color: '#000000', marginBottom: '0.85rem', textTransform: 'uppercase' }}>
+                      2. Tiga Kartu Metrik Utama (Angka, Judul & Deskripsi)
+                    </div>
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                        gap: '1rem'
+                      }}
+                    >
+                      {currentTrackMetrics.map((metric, idx) => (
+                        <div
+                          key={metric.id || idx}
+                          style={{
+                            padding: '1.25rem',
+                            borderRadius: '1rem',
+                            backgroundColor: '#0A2540',
+                            color: '#ffffff',
+                            border: '1px solid rgba(255, 255, 255, 0.1)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '0.75rem'
+                          }}
+                        >
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <span style={{ fontSize: '11px', fontWeight: '800', color: '#7AC142', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+                              KARTU METRIK 0{idx + 1}
+                            </span>
+                            <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)' }}>
+                              {idx === 0 ? 'Klik → Ke Riwayat' : idx === 1 ? 'Klik → Pop-up Awards' : 'Klik → Ke Galeri Karya'}
+                            </span>
+                          </div>
+
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem' }}>
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: '#d2e4ff', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                Angka Utama
+                              </label>
+                              <input
+                                type="text"
+                                value={metric.value || ''}
+                                onChange={(e) => handleUpdateTrackMetric(idx, 'value', e.target.value)}
+                                placeholder="10+"
+                                style={{
+                                  width: '100%',
+                                  padding: '0.5rem 0.7rem',
+                                  borderRadius: '0.5rem',
+                                  border: '1px solid rgba(255,255,255,0.18)',
+                                  backgroundColor: 'rgba(255,255,255,0.08)',
+                                  color: '#ffffff',
+                                  fontSize: '16px',
+                                  fontWeight: '800'
+                                }}
+                              />
+                            </div>
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: '#d2e4ff', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                Status Badge Kanan
+                              </label>
+                              <input
+                                type="text"
+                                value={metric.badge || ''}
+                                onChange={(e) => handleUpdateTrackMetric(idx, 'badge', e.target.value)}
+                                placeholder="Active Years"
+                                style={{
+                                  width: '100%',
+                                  padding: '0.5rem 0.7rem',
+                                  borderRadius: '0.5rem',
+                                  border: '1px solid rgba(255,255,255,0.18)',
+                                  backgroundColor: 'rgba(255,255,255,0.08)',
+                                  color: '#7AC142',
+                                  fontSize: '12px',
+                                  fontWeight: '700'
+                                }}
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: '#d2e4ff', marginBottom: '3px', textTransform: 'uppercase' }}>
+                              Judul Kartu Metrik
+                            </label>
+                            <input
+                              type="text"
+                              value={metric.title || ''}
+                              onChange={(e) => handleUpdateTrackMetric(idx, 'title', e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '0.55rem 0.7rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid rgba(255,255,255,0.18)',
+                                backgroundColor: 'rgba(255,255,255,0.08)',
+                                color: '#ffffff',
+                                fontSize: '13px',
+                                fontWeight: '700'
+                              }}
+                            />
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: '#d2e4ff', marginBottom: '3px', textTransform: 'uppercase' }}>
+                              Deskripsi Kartu
+                            </label>
+                            <textarea
+                              rows={3}
+                              value={metric.desc || ''}
+                              onChange={(e) => handleUpdateTrackMetric(idx, 'desc', e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '0.55rem 0.7rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid rgba(255,255,255,0.18)',
+                                backgroundColor: 'rgba(255,255,255,0.08)',
+                                color: '#e2e8f0',
+                                fontSize: '12px',
+                                lineHeight: 1.5,
+                                resize: 'vertical'
+                              }}
+                            />
+                          </div>
+
+                          <div>
+                            <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: '#d2e4ff', marginBottom: '3px', textTransform: 'uppercase' }}>
+                              Teks Footer Bawah {idx === 2 ? '(Kosongkan untuk hitung otomatis)' : ''}
+                            </label>
+                            <input
+                              type="text"
+                              value={metric.footerText || ''}
+                              onChange={(e) => handleUpdateTrackMetric(idx, 'footerText', e.target.value)}
+                              placeholder={idx === 2 ? `${projects.length} Featured in Curated Archive` : ''}
+                              style={{
+                                width: '100%',
+                                padding: '0.5rem 0.7rem',
+                                borderRadius: '0.5rem',
+                                border: '1px solid rgba(255,255,255,0.18)',
+                                backgroundColor: 'rgba(255,255,255,0.08)',
+                                color: '#d2e4ff',
+                                fontSize: '11px'
+                              }}
+                            />
+                          </div>
+
+                          {idx === 1 && (
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: '#ffdad6', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                Daftar Penghargaan di Pop-up (1 Baris per Item)
+                              </label>
+                              <textarea
+                                rows={3}
+                                value={
+                                  Array.isArray(metric.modalSpecs)
+                                    ? metric.modalSpecs.join('\n')
+                                    : metric.modalSpecs || ''
+                                }
+                                onChange={(e) =>
+                                  handleUpdateTrackMetric(
+                                    idx,
+                                    'modalSpecs',
+                                    e.target.value.split('\n')
+                                  )
+                                }
+                                style={{
+                                  width: '100%',
+                                  padding: '0.5rem 0.7rem',
+                                  borderRadius: '0.5rem',
+                                  border: '1px solid rgba(255,255,255,0.18)',
+                                  backgroundColor: 'rgba(255,255,255,0.08)',
+                                  color: '#ffffff',
+                                  fontSize: '11px',
+                                  lineHeight: 1.45,
+                                  resize: 'vertical'
+                                }}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* BAGIAN 3: 5 KARTU INTERACTIVE SPOTLIGHT */}
+                  <div
+                    style={{
+                      paddingTop: '1.25rem',
+                      borderTop: '1px solid rgba(0, 0, 0, 0.08)'
+                    }}
+                  >
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '0.75rem',
+                        marginBottom: '1rem'
+                      }}
+                    >
+                      <div>
+                        <div style={{ fontWeight: '800', fontSize: '13px', color: '#000000', textTransform: 'uppercase' }}>
+                          3. Lima Kartu Interactive Spotlight (Di Bawah Track Record Summary)
+                        </div>
+                        <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
+                          Pilih dari karya portofolio Anda atau kustomisasi langsung judul, kategori, klien, deskripsi, dan foto pop-up untuk masing-masing slot (01 – 05).
+                        </p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={handleResetSpotlightItems}
+                        style={{
+                          padding: '0.5rem 0.9rem',
+                          borderRadius: '9999px',
+                          backgroundColor: '#f3f3f5',
+                          color: '#334155',
+                          fontSize: '11px',
+                          fontWeight: '600',
+                          border: '1px solid rgba(0, 0, 0, 0.08)',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        Sinkron Otomatis dari Proyek
+                      </button>
+                    </div>
+
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+                        gap: '1rem'
+                      }}
+                    >
+                      {currentSpotlightItems.map((spot, idx) => (
+                        <div
+                          key={spot.id || idx}
+                          style={{
+                            borderRadius: '1rem',
+                            border: '1px solid rgba(0, 0, 0, 0.1)',
+                            backgroundColor: '#ffffff',
+                            overflow: 'hidden',
+                            display: 'flex',
+                            flexDirection: 'column'
+                          }}
+                        >
+                          {/* Slot Thumbnail & Quick Upload */}
+                          <div
+                            style={{
+                              position: 'relative',
+                              height: '130px',
+                              backgroundColor: '#071320',
+                              overflow: 'hidden'
+                            }}
+                          >
+                            {spot.image && (
+                              <img
+                                src={getStoragePublicUrl(spot.image) || spot.image}
+                                alt={spot.title}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+                              />
+                            )}
+                            <div
+                              style={{
+                                position: 'absolute',
+                                inset: 0,
+                                background: 'linear-gradient(180deg, rgba(7,19,32,0.55) 0%, rgba(7,19,32,0.85) 100%)',
+                                padding: '0.75rem',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between'
+                              }}
+                            >
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <span
+                                  style={{
+                                    padding: '2px 8px',
+                                    borderRadius: '9999px',
+                                    backgroundColor: '#ED1C24',
+                                    color: '#ffffff',
+                                    fontSize: '10px',
+                                    fontWeight: '800'
+                                  }}
+                                >
+                                  SPOTLIGHT 0{idx + 1}
+                                </span>
+
+                                <label
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    padding: '4px 10px',
+                                    borderRadius: '9999px',
+                                    backgroundColor: 'rgba(255,255,255,0.92)',
+                                    color: '#000000',
+                                    fontSize: '10px',
+                                    fontWeight: '700',
+                                    cursor: uploadingSpotlightIdx === idx ? 'not-allowed' : 'pointer'
+                                  }}
+                                >
+                                  <Upload size={11} />
+                                  <span>{uploadingSpotlightIdx === idx ? 'Upload...' : 'Ganti Foto'}</span>
+                                  <input
+                                    type="file"
+                                    accept="image/*"
+                                    disabled={uploadingSpotlightIdx === idx}
+                                    onChange={(e) => handleSpotlightImageUpload(e, idx)}
+                                    style={{ display: 'none' }}
+                                  />
+                                </label>
+                              </div>
+
+                              <div style={{ color: '#ffffff', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                {spot.title}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Slot Fields */}
+                          <div style={{ padding: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.6rem', flex: 1 }}>
+                            {projects.length > 0 && (
+                              <div>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                  Isi Cepat dari Karya Portofolio
+                                </label>
+                                <select
+                                  defaultValue=""
+                                  onChange={(e) => {
+                                    handleSpotlightSelectFromProject(idx, e.target.value);
+                                    e.target.value = '';
+                                  }}
+                                  style={{
+                                    width: '100%',
+                                    padding: '0.45rem 0.6rem',
+                                    borderRadius: '0.45rem',
+                                    border: '1px solid rgba(0,0,0,0.12)',
+                                    backgroundColor: '#f8fafc',
+                                    fontSize: '11px',
+                                    color: '#000000'
+                                  }}
+                                >
+                                  <option value="">-- Pilih Karya untuk Mengisi Slot 0{idx + 1} --</option>
+                                  {projects.map((p) => (
+                                    <option key={p.id} value={p.id}>
+                                      {p.title} ({CATEGORY_LABELS[p.category] || p.category})
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            )}
+
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                  Kategori Label
+                                </label>
+                                <input
+                                  type="text"
+                                  value={spot.category || ''}
+                                  onChange={(e) => handleUpdateSpotlightItem(idx, 'category', e.target.value)}
+                                  placeholder="CINEMA COMMERCIAL"
+                                  style={{
+                                    width: '100%',
+                                    padding: '0.45rem 0.6rem',
+                                    borderRadius: '0.45rem',
+                                    border: '1px solid rgba(0,0,0,0.1)',
+                                    backgroundColor: '#f3f3f5',
+                                    fontSize: '11px',
+                                    color: '#000000',
+                                    fontWeight: '700'
+                                  }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                  Nama Klien
+                                </label>
+                                <input
+                                  type="text"
+                                  value={spot.client || ''}
+                                  onChange={(e) => handleUpdateSpotlightItem(idx, 'client', e.target.value)}
+                                  placeholder="Pertamina"
+                                  style={{
+                                    width: '100%',
+                                    padding: '0.45rem 0.6rem',
+                                    borderRadius: '0.45rem',
+                                    border: '1px solid rgba(0,0,0,0.1)',
+                                    backgroundColor: '#f3f3f5',
+                                    fontSize: '11px',
+                                    color: '#000000'
+                                  }}
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                Judul Karya Spotlight
+                              </label>
+                              <input
+                                type="text"
+                                value={spot.title || ''}
+                                onChange={(e) => handleUpdateSpotlightItem(idx, 'title', e.target.value)}
+                                style={{
+                                  width: '100%',
+                                  padding: '0.45rem 0.6rem',
+                                  borderRadius: '0.45rem',
+                                  border: '1px solid rgba(0,0,0,0.1)',
+                                  backgroundColor: '#f3f3f5',
+                                  fontSize: '12px',
+                                  fontWeight: '700',
+                                  color: '#000000'
+                                }}
+                              />
+                            </div>
+
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                Lokasi & Tahun
+                              </label>
+                              <input
+                                type="text"
+                                value={spot.locationYear || ''}
+                                onChange={(e) => handleUpdateSpotlightItem(idx, 'locationYear', e.target.value)}
+                                placeholder="DUMAI, RIAU, INDONESIA / 2025"
+                                style={{
+                                  width: '100%',
+                                  padding: '0.45rem 0.6rem',
+                                  borderRadius: '0.45rem',
+                                  border: '1px solid rgba(0,0,0,0.1)',
+                                  backgroundColor: '#f3f3f5',
+                                  fontSize: '11px',
+                                  color: '#000000'
+                                }}
+                              />
+                            </div>
+
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                Deskripsi Pop-up Studi Kasus
+                              </label>
+                              <textarea
+                                rows={2}
+                                value={spot.desc || ''}
+                                onChange={(e) => handleUpdateSpotlightItem(idx, 'desc', e.target.value)}
+                                style={{
+                                  width: '100%',
+                                  padding: '0.45rem 0.6rem',
+                                  borderRadius: '0.45rem',
+                                  border: '1px solid rgba(0,0,0,0.1)',
+                                  backgroundColor: '#f3f3f5',
+                                  fontSize: '11px',
+                                  color: '#000000',
+                                  resize: 'vertical'
+                                }}
+                              />
+                            </div>
+
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                Spesifikasi & Tools (Pisahkan Koma)
+                              </label>
+                              <input
+                                type="text"
+                                value={Array.isArray(spot.specs) ? spot.specs.join(', ') : spot.specs || ''}
+                                onChange={(e) =>
+                                  handleUpdateSpotlightItem(
+                                    idx,
+                                    'specs',
+                                    e.target.value.split(',').map((s) => s.trim())
+                                  )
+                                }
+                                placeholder="RED V-Raptor 8K, Cooke Anamorphic, DaVinci"
+                                style={{
+                                  width: '100%',
+                                  padding: '0.45rem 0.6rem',
+                                  borderRadius: '0.45rem',
+                                  border: '1px solid rgba(0,0,0,0.1)',
+                                  backgroundColor: '#f3f3f5',
+                                  fontSize: '11px',
+                                  color: '#000000'
+                                }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1.25rem' }}>
+                      <button
+                        type="button"
+                        onClick={handleSaveTrackAndSpotlight}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          padding: '0.7rem 1.5rem',
+                          borderRadius: '9999px',
+                          backgroundColor: '#000000',
+                          color: '#ffffff',
+                          fontSize: '12px',
+                          fontWeight: '700',
+                          border: 'none',
+                          cursor: 'pointer',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                        }}
+                      >
+                        <Save size={14} />
+                        <span>Simpan Perubahan Track Record & 5 Spotlight</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: PESAN MASUK */}
               {activeTab === 'messages' && (
                 <div>
                   <div

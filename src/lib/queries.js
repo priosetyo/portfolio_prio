@@ -52,6 +52,54 @@ export function saveLocalExperiences(exps) {
 }
 
 /**
+ * Fetch avatar terbaru dari Supabase Storage bucket 'portfolio-media' subfolder 'avatars'
+ */
+export async function getLatestAvatarFromStorage() {
+  try {
+    const { data, error } = await supabase.storage
+      .from('portfolio-media')
+      .list('avatars', {
+        limit: 10,
+        sortBy: { column: 'created_at', order: 'desc' }
+      });
+
+    if (!error && Array.isArray(data) && data.length > 0) {
+      const validAvatar = data.find((f) => f.name && !f.name.startsWith('.'));
+      if (validAvatar) {
+        return getStoragePublicUrl(`avatars/${validAvatar.name}`);
+      }
+    }
+  } catch (e) {
+    console.warn('Error fetching avatar from Supabase storage:', e);
+  }
+  return null;
+}
+
+/**
+ * Fetch foto PNG Hero (tanpa border) terbaru dari Supabase Storage bucket 'portfolio-media' subfolder 'hero-portraits'
+ */
+export async function getLatestHeroPortraitFromStorage() {
+  try {
+    const { data, error } = await supabase.storage
+      .from('portfolio-media')
+      .list('hero-portraits', {
+        limit: 10,
+        sortBy: { column: 'created_at', order: 'desc' }
+      });
+
+    if (!error && Array.isArray(data) && data.length > 0) {
+      const validPortrait = data.find((f) => f.name && !f.name.startsWith('.'));
+      if (validPortrait) {
+        return getStoragePublicUrl(`hero-portraits/${validPortrait.name}`);
+      }
+    }
+  } catch (e) {
+    console.warn('Error fetching hero portrait from Supabase storage:', e);
+  }
+  return null;
+}
+
+/**
  * Fetch profil situs & info kontak
  */
 export async function getSiteSettings() {
@@ -65,13 +113,59 @@ export async function getSiteSettings() {
     if (!error && data) {
       const local = getLocalSettings() || {};
       const merged = { ...local, ...data };
+
+      // Jika avatar_url belum terisi atau masih placeholder lama, ambil foto profil aktual dari Supabase Storage
+      const isPlaceholder =
+        !merged.avatar_url ||
+        merged.avatar_url.includes('lh3.googleusercontent.com');
+
+      if (isPlaceholder) {
+        const storageAvatar = await getLatestAvatarFromStorage();
+        if (storageAvatar) {
+          merged.avatar_url = storageAvatar;
+        }
+      }
+
+      delete merged.hero_portrait_url;
+      if (!merged.hero_bg_slides) {
+        try {
+          const bgLocal = localStorage.getItem('prio_hero_bg_slides');
+          if (bgLocal) merged.hero_bg_slides = JSON.parse(bgLocal);
+        } catch (e) {}
+      }
+      if (!merged.track_record_header && local.track_record_header) {
+        merged.track_record_header = local.track_record_header;
+      }
+      if (!merged.track_record_metrics && local.track_record_metrics) {
+        merged.track_record_metrics = local.track_record_metrics;
+      }
+      if (!merged.spotlight_items && local.spotlight_items) {
+        merged.spotlight_items = local.spotlight_items;
+      }
       saveLocalSettings(merged);
       return merged;
     }
   } catch (err) {
     console.warn('Menggunakan fallback lokal untuk site_settings:', err);
   }
-  return getLocalSettings();
+
+  // Fallback lokal jika query database gagal
+  const local = getLocalSettings() || {};
+  delete local.hero_portrait_url;
+  if (!local.hero_bg_slides) {
+    try {
+      const bgLocal = localStorage.getItem('prio_hero_bg_slides');
+      if (bgLocal) local.hero_bg_slides = JSON.parse(bgLocal);
+    } catch (e) {}
+  }
+  if (!local.avatar_url || local.avatar_url.includes('lh3.googleusercontent.com')) {
+    const storageAvatar = await getLatestAvatarFromStorage();
+    if (storageAvatar) {
+      local.avatar_url = storageAvatar;
+      saveLocalSettings(local);
+    }
+  }
+  return local;
 }
 
 /**

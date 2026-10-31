@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
   name text NOT NULL DEFAULT 'Prio Setyo',
   headline text,
   summary text,
+  avatar_url text,
   email text,
   phone text,
   linkedin text,
@@ -41,6 +42,9 @@ CREATE TABLE IF NOT EXISTS site_settings (
   cv_path text,
   updated_at timestamptz NOT NULL DEFAULT now()
 );
+
+-- Pastikan kolom avatar_url tersedia jika tabel sudah ada sebelumnya
+ALTER TABLE site_settings ADD COLUMN IF NOT EXISTS avatar_url text;
 
 -- ------------------------------------------------------------------------------
 -- 3. TABEL: projects (Galeri Karya Utama)

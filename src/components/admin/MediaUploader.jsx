@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { resizeImageToWebP, captureVideoPoster } from '../../lib/image';
 import { uploadMediaFile, getStoragePublicUrl } from '../../lib/queries';
-import { Button } from '../ui/Button';
 import { Tag } from '../ui/Tag';
-import { Upload, Image as ImageIcon, Video, Link, Trash2, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Upload, Video, Link, Trash2, AlertCircle, Loader2 } from 'lucide-react';
 
 export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) {
   const [uploading, setUploading] = useState(false);
@@ -149,24 +148,27 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-4)' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
       {/* Upload Buttons & Options */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
         <label
+          className="font-label-mono-sm"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.45rem',
-            padding: '0.6rem 1.25rem',
-            borderRadius: '0.75rem',
-            backgroundColor: '#000000',
+            padding: '0.65rem 1.25rem',
+            borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-primary-container)',
             color: '#ffffff',
-            fontSize: 'var(--text-xs)',
+            fontSize: '11px',
             fontWeight: '700',
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
             cursor: uploading ? 'not-allowed' : 'pointer',
             opacity: uploading ? 0.7 : 1,
-            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-            transition: 'opacity 0.15s ease'
+            boxShadow: 'var(--shadow-sm)',
+            transition: 'all 200ms ease'
           }}
         >
           {uploading ? <Loader2 size={15} className="spin" /> : <Upload size={15} />}
@@ -183,18 +185,22 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
         <button
           type="button"
           onClick={() => setShowEmbedForm(!showEmbedForm)}
+          className="font-label-mono-sm"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '0.45rem',
-            padding: '0.6rem 1rem',
-            borderRadius: '0.75rem',
-            backgroundColor: '#f3f3f5',
-            border: '1px solid rgba(0, 0, 0, 0.08)',
-            color: '#1b1735',
-            fontSize: 'var(--text-xs)',
+            padding: '0.65rem 1.15rem',
+            borderRadius: 'var(--radius-full)',
+            backgroundColor: 'var(--color-surface-container)',
+            border: '1px solid rgba(194, 198, 211, 0.5)',
+            color: 'var(--color-primary-container)',
+            fontSize: '11px',
             fontWeight: '600',
-            cursor: 'pointer'
+            textTransform: 'uppercase',
+            letterSpacing: '0.04em',
+            cursor: 'pointer',
+            transition: 'all 200ms ease'
           }}
         >
           <Link size={14} />
@@ -207,16 +213,18 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
         <div
           style={{
             padding: '0.75rem 1rem',
-            borderRadius: '0.75rem',
-            backgroundColor: '#fee2e2',
-            color: '#dc2626',
-            fontSize: 'var(--text-xs)',
+            borderRadius: 'var(--radius-lg)',
+            backgroundColor: 'var(--color-tertiary-fixed)',
+            border: '1px solid rgba(168, 0, 16, 0.25)',
+            color: 'var(--color-tertiary)',
+            fontSize: '12px',
+            fontWeight: '600',
             display: 'flex',
             alignItems: 'center',
             gap: '0.5rem'
           }}
         >
-          <AlertCircle size={14} />
+          <AlertCircle size={15} color="#ED1C24" />
           <span>{errorMsg}</span>
         </div>
       )}
@@ -226,15 +234,24 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
         <div
           style={{
             padding: '1.25rem',
-            backgroundColor: '#f9f9fb',
-            borderRadius: '1rem',
-            border: '1px solid rgba(0, 0, 0, 0.08)',
+            backgroundColor: 'var(--color-section-bg)',
+            borderRadius: 'var(--radius-xl)',
+            border: '1px solid rgba(194, 198, 211, 0.45)',
             display: 'flex',
             flexDirection: 'column',
             gap: '0.75rem'
           }}
         >
-          <div style={{ fontWeight: '700', fontSize: 'var(--text-xs)', textTransform: 'uppercase', color: '#000000', letterSpacing: '0.04em' }}>
+          <div
+            className="font-label-mono-sm"
+            style={{
+              fontWeight: '700',
+              fontSize: '11px',
+              textTransform: 'uppercase',
+              color: 'var(--color-primary-container)',
+              letterSpacing: '0.06em'
+            }}
+          >
             Tautan Video Eksternal (YouTube / Vimeo)
           </div>
           <input
@@ -244,11 +261,11 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
             onChange={(e) => setEmbedUrl(e.target.value)}
             style={{
               padding: '0.65rem 0.85rem',
-              borderRadius: '0.65rem',
-              border: '1px solid rgba(0, 0, 0, 0.08)',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid rgba(194, 198, 211, 0.5)',
               backgroundColor: '#ffffff',
-              fontSize: 'var(--text-xs)',
-              color: '#000000',
+              fontSize: '12px',
+              color: 'var(--color-on-surface)',
               outline: 'none'
             }}
           />
@@ -260,11 +277,11 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
               onChange={(e) => setEmbedAlt(e.target.value)}
               style={{
                 padding: '0.65rem 0.85rem',
-                borderRadius: '0.65rem',
-                border: '1px solid rgba(0, 0, 0, 0.08)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid rgba(194, 198, 211, 0.5)',
                 backgroundColor: '#ffffff',
-                fontSize: 'var(--text-xs)',
-                color: '#000000',
+                fontSize: '12px',
+                color: 'var(--color-on-surface)',
                 outline: 'none'
               }}
             />
@@ -275,11 +292,11 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
               onChange={(e) => setEmbedDuration(e.target.value)}
               style={{
                 padding: '0.65rem 0.85rem',
-                borderRadius: '0.65rem',
-                border: '1px solid rgba(0, 0, 0, 0.08)',
+                borderRadius: 'var(--radius-md)',
+                border: '1px solid rgba(194, 198, 211, 0.5)',
                 backgroundColor: '#ffffff',
-                fontSize: 'var(--text-xs)',
-                color: '#000000',
+                fontSize: '12px',
+                color: 'var(--color-on-surface)',
                 outline: 'none'
               }}
             />
@@ -288,15 +305,18 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
             <button
               type="button"
               onClick={handleAddEmbed}
+              className="font-label-mono-sm"
               style={{
-                padding: '0.5rem 1rem',
-                borderRadius: '0.65rem',
-                backgroundColor: '#000000',
+                padding: '0.55rem 1.15rem',
+                borderRadius: 'var(--radius-full)',
+                backgroundColor: 'var(--color-primary-container)',
                 color: '#ffffff',
-                fontSize: 'var(--text-xs)',
+                fontSize: '11px',
                 fontWeight: '700',
+                textTransform: 'uppercase',
                 border: 'none',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                boxShadow: 'var(--shadow-sm)'
               }}
             >
               Simpan Tautan Video
@@ -307,8 +327,17 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
 
       {/* Daftar Media Terpasang */}
       {mediaList.length > 0 && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--text-tertiary)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+          <div
+            className="font-label-mono-sm"
+            style={{
+              fontSize: '11px',
+              fontWeight: '700',
+              color: 'var(--color-secondary)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em'
+            }}
+          >
             MEDIA TERKAIT ({mediaList.length}) — Teks Alt wajib diisi untuk kepatuhan aksesibilitas:
           </div>
 
@@ -326,9 +355,9 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                   alignItems: 'center',
                   gap: '0.75rem',
                   padding: '0.75rem',
-                  borderRadius: '0.85rem',
-                  backgroundColor: '#f9f9fb',
-                  border: `1px solid ${hasAlt ? 'rgba(0, 0, 0, 0.06)' : '#dc2626'}`
+                  borderRadius: 'var(--radius-xl)',
+                  backgroundColor: 'var(--color-section-bg)',
+                  border: `1px solid ${hasAlt ? 'rgba(194, 198, 211, 0.45)' : '#ED1C24'}`
                 }}
               >
                 {/* Thumbnail */}
@@ -336,14 +365,14 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                   style={{
                     width: '64px',
                     height: '48px',
-                    borderRadius: '0.5rem',
-                    backgroundColor: '#f3f3f5',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: 'var(--color-surface-container)',
                     overflow: 'hidden',
                     flexShrink: 0,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    border: '1px solid rgba(0, 0, 0, 0.06)'
+                    border: '1px solid rgba(194, 198, 211, 0.4)'
                   }}
                 >
                   {previewUrl ? (
@@ -353,7 +382,7 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   ) : (
-                    <Video size={18} color="#5b5866" />
+                    <Video size={18} color="var(--color-secondary)" />
                   )}
                 </div>
 
@@ -364,7 +393,10 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                       {media.kind.toUpperCase()} #{idx + 1}
                     </Tag>
                     {!hasAlt && (
-                      <span style={{ fontSize: '0.68rem', color: '#dc2626', fontWeight: '700' }}>
+                      <span
+                        className="font-label-mono-sm"
+                        style={{ fontSize: '10px', color: '#ED1C24', fontWeight: '700' }}
+                      >
                         *Wajib isi Alt Text
                       </span>
                     )}
@@ -378,11 +410,11 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                     style={{
                       width: '100%',
                       padding: '0.45rem 0.65rem',
-                      fontSize: 'var(--text-xs)',
-                      borderRadius: '0.5rem',
-                      border: '1px solid rgba(0, 0, 0, 0.08)',
+                      fontSize: '12px',
+                      borderRadius: 'var(--radius-md)',
+                      border: '1px solid rgba(194, 198, 211, 0.5)',
                       backgroundColor: '#ffffff',
-                      color: 'var(--text-primary)',
+                      color: 'var(--color-on-surface)',
                       outline: 'none'
                     }}
                   />
@@ -396,10 +428,10 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                   style={{
                     width: '32px',
                     height: '32px',
-                    borderRadius: '0.5rem',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    color: '#dc2626',
+                    borderRadius: 'var(--radius-md)',
+                    backgroundColor: 'rgba(237, 28, 36, 0.08)',
+                    border: '1px solid rgba(237, 28, 36, 0.2)',
+                    color: '#ED1C24',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -407,7 +439,7 @@ export function MediaUploader({ mediaList = [], onChange, projectId = 'temp' }) 
                     cursor: 'pointer'
                   }}
                 >
-                  <Trash2 size={16} />
+                  <Trash2 size={15} />
                 </button>
               </div>
             );

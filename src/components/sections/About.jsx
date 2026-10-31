@@ -1,484 +1,339 @@
 import React from 'react';
+import { getStoragePublicUrl } from '../../lib/queries';
 
-export function About({ settings, loading }) {
-  const quote =
-    settings?.quote ||
-    '“Desain bukan sekadar ornamen estetika, melainkan rekayasa persepsi yang memantik rasa penasaran dan memberikan dampak nyata.”';
+const FALLBACK_PORTRAIT = 'https://lh3.googleusercontent.com/aida-public/AB6AXuB2EkKmKy1mzccX4I1an4JCYgBgtk_w8S1-m35WYt9E0YXuyRr1XckjBude9kyhYHX0rKPUbdiVt0LeIoJvRGkxuNr2fVgHMElClPUKoifCTwhVdMv1_Oi01pkKi7ZR30OTL8gzOOrfnVlrIqQY_49iDJe4wUv6J3lbVA8yyetMJjVyWOfTsh0gL38Oe69oP9NL0cll9G1tm-Bm79kakjIzg_1cJaw2F4ZA0CpRXF1';
+
+export function About({ settings, onOpenDetailModal }) {
+  const avatarSrc = getStoragePublicUrl(settings?.avatar_url) || FALLBACK_PORTRAIT;
+  const name = settings?.name || 'PRIO SETYO';
+  const headline = settings?.headline || 'Principal Creative Director';
+
+  const pillars = [
+    {
+      num: '(01)',
+      title: 'Creative Direction & Narrative',
+      desc: 'Defining tonal voice, visual composition, and campaign architecture that resonate across touchpoints.',
+      specs: ['Standardized Visual Compass', 'Corporate Guidelines', 'Executive Creative Direction']
+    },
+    {
+      num: '(02)',
+      title: 'Cinematography & Lighting',
+      desc: 'Harnessing anamorphic optics, high dynamic contrast, and deliberate blocking to evoke emotional resonance.',
+      specs: ['Cooke Anamorphic /i', 'RED V-Raptor 8K VV', 'ARRI Lighting Setup']
+    },
+    {
+      num: '(03)',
+      title: 'Spatial Design & Composition',
+      desc: 'Swiss-disciplined structured layouts, generative typographic explorations, and exhibition spatial design.',
+      specs: ['Swiss Grid System', 'Exhibition Architecture', 'Spatial Typography']
+    },
+    {
+      num: '(04)',
+      title: 'Copywriting & Message Architecture',
+      desc: 'High-level verbal formulation, corporate manifestos, and high-conversion scripts provoking decisive action.',
+      specs: ['Corporate Manifesto', 'Kinetic Scripting', 'Commercial Tagline Engineering']
+    }
+  ];
 
   return (
     <section
-      id="tentang"
+      id="about"
       style={{
         width: '100%',
-        backgroundColor: 'var(--color-surface)',
-        paddingTop: 'var(--space-3xl)',
-        paddingBottom: 'var(--space-2xl)'
+        backgroundColor: '#F4F7FA',
+        padding: '5rem 0',
+        overflow: 'hidden'
       }}
     >
       <div
-        className="container"
         style={{
-          maxWidth: 'var(--max-width)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--space-2xl)'
+          maxWidth: '1440px',
+          margin: '0 auto',
+          padding: '0 var(--margin-mobile)'
         }}
       >
-        {/* Section Tagline */}
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            textAlign: 'center',
-            gap: 'var(--space-xs)'
-          }}
-        >
+        {/* Header */}
+        <div style={{ marginBottom: '2.5rem' }}>
           <span
+            className="font-label-mono-sm"
             style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '0.75rem',
+              color: 'var(--color-primary-container)',
               fontWeight: '600',
-              color: 'var(--color-primary)',
               textTransform: 'uppercase',
-              letterSpacing: '0.25em'
+              letterSpacing: '0.08em',
+              display: 'block',
+              marginBottom: '0.5rem'
             }}
           >
-            Manifesto &amp; Disiplin
+            PHILOSOPHY & METHODOLOGY
           </span>
           <h2
+            className="font-headline-lg"
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-              fontWeight: '800',
               color: 'var(--color-on-surface)',
-              letterSpacing: '-0.02em',
-              lineHeight: 1.15,
-              marginTop: 'var(--space-xs)'
+              fontWeight: '700',
+              letterSpacing: '-0.025em'
             }}
           >
-            Rekayasa Sensorik &amp; Nilai Estetika
+            The Equilibrium Between Artistic Instinct & Business Calculus
           </h2>
-          <p
-            style={{
-              fontFamily: 'var(--font-sans)',
-              fontSize: '1rem',
-              color: 'var(--color-on-surface-variant)',
-              maxWidth: '42rem',
-              marginTop: 'var(--space-xs)'
-            }}
-          >
-            Mengintegrasikan kedalaman naratif sinema dengan presisi teknologi antarmuka spasial untuk memantik rasa penasaran audiens.
-          </p>
         </div>
 
-        {/* Bento Box Layout Grid */}
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: 'var(--gutter)'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+            gap: 'var(--gutter-lg)',
+            alignItems: 'stretch'
           }}
-          className="bento-grid"
+          className="about-grid"
         >
-          {/* Bento Card 1: Filosofi Desain (7 cols) */}
-          <div
-            className="bento-card-7"
-            style={{
-              gridColumn: 'span 12',
-              backgroundColor: 'var(--color-surface-low)',
-              borderRadius: 'var(--radius-xl)',
-              padding: 'clamp(1.5rem, 4vw, 3rem)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              textAlign: 'center',
-              boxShadow: 'var(--shadow-md)',
-              position: 'relative',
-              overflow: 'hidden',
-              border: '1px solid rgba(230, 190, 178, 0.08)'
-            }}
-          >
-            {/* Ambient subtle light emitter */}
+          {/* Left Column: Portrait Frame */}
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div
+              className="group"
               style={{
-                position: 'absolute',
-                top: 0,
-                right: 0,
-                width: '20rem',
-                height: '20rem',
-                backgroundColor: 'rgba(255, 87, 26, 0.1)',
-                borderRadius: '50%',
-                filter: 'blur(64px)',
-                pointerEvents: 'none'
-              }}
-            />
-
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 'var(--space-sm)',
-                zIndex: 2,
-                width: '100%'
+                position: 'relative',
+                width: '100%',
+                height: '520px',
+                borderRadius: 'var(--radius-3xl)',
+                overflow: 'hidden',
+                boxShadow: 'var(--shadow-md)',
+                backgroundColor: 'var(--color-surface-container)'
               }}
             >
-              <span
+              <img
+                src={avatarSrc}
+                alt={`Portrait ${name}`}
                 style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  color: 'var(--color-primary)',
-                  fontWeight: '700'
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  transition: 'transform 700ms ease-out'
+                }}
+                className="group-hover:scale-105"
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  padding: '1.5rem',
+                  background: 'linear-gradient(to top, var(--color-inverse-surface) 0%, rgba(47, 48, 52, 0.7) 60%, transparent 100%)',
+                  color: 'var(--color-surface-container-lowest)'
                 }}
               >
-                Filosofi Desain
-              </span>
-              <span className="material-symbols-outlined" style={{ color: 'var(--color-outline)', fontSize: '24px' }}>
-                format_quote
-              </span>
+                <span
+                  className="font-label-mono-sm"
+                  style={{
+                    color: 'var(--color-secondary-fixed)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.04em',
+                    display: 'block',
+                    marginBottom: '0.25rem'
+                  }}
+                >
+                  {name}
+                </span>
+                <p className="font-headline-sm" style={{ fontWeight: '700', color: '#ffffff' }}>
+                  {headline}
+                </p>
+                <p className="font-body-sm" style={{ color: 'var(--color-outline-variant)', marginTop: '0.25rem' }}>
+                  Synthesizing cinematic visual sharpness with commercial message architecture.
+                </p>
+              </div>
             </div>
 
-            <blockquote
-              style={{
-                margin: 'var(--space-xl) auto',
-                zIndex: 2,
-                maxWidth: '36rem'
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(1.35rem, 2.5vw, 2.25rem)',
-                  fontWeight: '700',
-                  color: 'var(--color-on-surface)',
-                  lineHeight: 1.35,
-                  letterSpacing: '-0.015em'
-                }}
-              >
-                “Desain bukan sekadar ornamen estetika, melainkan{' '}
-                <span style={{ color: 'var(--color-secondary)' }}>rekayasa persepsi</span> yang memantik rasa penasaran dan memberikan dampak nyata.”
-              </p>
-            </blockquote>
-
             <div
               style={{
+                marginTop: '1rem',
+                padding: '1rem',
+                borderRadius: 'var(--radius-xl)',
+                backgroundColor: 'var(--color-surface-container-lowest)',
                 display: 'flex',
-                flexWrap: 'wrap',
                 alignItems: 'center',
-                justifyContent: 'center',
-                gap: 'var(--space-sm)',
-                zIndex: 2,
-                paddingTop: 'var(--space-md)'
+                justifyContent: 'space-between',
+                border: '1px solid rgba(194, 198, 211, 0.3)',
+                boxShadow: 'var(--shadow-sm)'
               }}
             >
-              <div
-                style={{
-                  padding: '0.35rem 1rem',
-                  borderRadius: 'var(--radius-full)',
-                  backgroundColor: 'var(--color-surface-high)',
-                  color: 'var(--color-on-surface)',
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  fontWeight: '500'
-                }}
-              >
-                Art &amp; Commerce Balance
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                <span className="material-symbols-outlined" style={{ color: 'var(--color-primary-container)' }}>camera</span>
+                <span className="font-label-mono-sm" style={{ color: 'var(--color-on-surface-variant)', fontWeight: '500' }}>
+                  Large Format Camera & Spatial Lighting Specialty
+                </span>
               </div>
-              <div
-                style={{
-                  padding: '0.35rem 1rem',
-                  borderRadius: 'var(--radius-full)',
-                  backgroundColor: 'var(--color-surface-high)',
-                  color: 'var(--color-on-surface)',
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  fontWeight: '500'
-                }}
-              >
-                Spatial Intelligence
-              </div>
-              <div
-                style={{
-                  padding: '0.35rem 1rem',
-                  borderRadius: 'var(--radius-full)',
-                  backgroundColor: 'var(--color-surface-high)',
-                  color: 'var(--color-on-surface)',
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  fontWeight: '500'
-                }}
-              >
-                Human Metaphor
-              </div>
+              <span className="font-label-mono-sm" style={{ color: 'var(--color-secondary)', fontWeight: '700' }}>
+                RED / ARRI Certified
+              </span>
             </div>
           </div>
 
-          {/* Bento Card 2: Pilar Strategis & Disiplin Kreasi (5 cols) */}
-          <div
-            className="bento-card-5"
-            style={{
-              gridColumn: 'span 12',
-              backgroundColor: 'var(--color-surface-container)',
-              borderRadius: 'var(--radius-xl)',
-              padding: 'clamp(1.5rem, 3.5vw, 2.5rem)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              textAlign: 'center',
-              boxShadow: 'var(--shadow-md)',
-              border: '1px solid rgba(230, 190, 178, 0.08)'
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)', alignItems: 'center' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--font-sans)',
-                  fontSize: '0.6875rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
-                  color: 'var(--color-secondary)',
-                  fontWeight: '700'
-                }}
-              >
-                Pilar Strategis
-              </span>
-              <h3
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '1.5rem',
-                  fontWeight: '700',
-                  color: 'var(--color-on-surface)'
-                }}
-              >
-                Disiplin Kreasi
+          {/* Right Column: Strategic Pillars Card Deck */}
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1rem' }}>
+            {/* Card 1: Solid Royal Blue Card */}
+            <div
+              className="card-motion"
+              style={{
+                padding: '2rem',
+                borderRadius: 'var(--radius-3xl)',
+                backgroundColor: '#00529B',
+                color: 'var(--color-surface-container-lowest)',
+                boxShadow: 'var(--shadow-lg)',
+                border: '1px solid rgba(255, 255, 255, 0.1)'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                <span
+                  className="font-label-mono-sm"
+                  style={{
+                    color: 'var(--color-primary-fixed)',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.08em',
+                    fontWeight: '600'
+                  }}
+                >
+                  Core Essence
+                </span>
+                <span
+                  className="font-label-mono-sm"
+                  style={{
+                    padding: '0.25rem 0.625rem',
+                    borderRadius: 'var(--radius-full)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                    color: 'var(--color-surface-container-lowest)'
+                  }}
+                >
+                  DESIGN PHILOSOPHY
+                </span>
+              </div>
+              <h3 className="font-headline-md" style={{ fontWeight: '700', marginBottom: '0.75rem' }}>
+                Design Philosophy
               </h3>
+              <div style={{ width: '3rem', height: '4px', backgroundColor: 'var(--color-surface-container-lowest)', marginBottom: '1rem', borderRadius: 'var(--radius-full)' }}></div>
+              <p className="font-body-lg" style={{ color: 'rgba(255, 255, 255, 0.9)', lineHeight: 1.6, fontWeight: '400' }}>
+                “Design is not merely what is visible on the surface; it is kinetic energy connecting an entity's core essence with the genuine pulse of its audience.”
+              </p>
             </div>
 
-            {/* 4 Discipline Rows */}
+            {/* Overlapping Pillar Cards Grid */}
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 'var(--space-md)',
-                margin: 'var(--space-lg) 0',
-                width: '100%'
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: '1rem'
               }}
             >
-              {/* Item 1 */}
-              <div
-                style={{
-                  padding: '0.875rem 1rem',
-                  borderRadius: 'var(--radius-lg)',
-                  backgroundColor: 'var(--color-surface-high)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 'var(--space-sm)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', textAlign: 'left' }}>
-                  <span className="material-symbols-outlined" style={{ color: 'var(--color-primary-container)' }}>
-                    theater_comedy
-                  </span>
-                  <div>
-                    <h4
+              {pillars.map((pillar) => (
+                <div
+                  key={pillar.title}
+                  className="card-motion group"
+                  onClick={() => {
+                    if (onOpenDetailModal) {
+                      onOpenDetailModal({
+                        title: pillar.title,
+                        category: `${pillar.num} STRATEGIC PILLAR`,
+                        description: pillar.desc,
+                        specs: pillar.specs
+                      });
+                    }
+                  }}
+                  style={{
+                    padding: '1.5rem',
+                    borderRadius: 'var(--radius-3xl)',
+                    backgroundColor: 'var(--color-surface-container-lowest)',
+                    boxShadow: 'var(--shadow-sm)',
+                    border: '1px solid rgba(194, 198, 211, 0.2)',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'rgba(237, 28, 36, 0.3)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'rgba(194, 198, 211, 0.2)')}
+                >
+                  <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                    <span className="font-label-mono-sm" style={{ color: 'var(--color-secondary)', fontWeight: '700' }}>
+                      {pillar.num} STRATEGIC PILLAR
+                    </span>
+                    <span
+                      className="material-symbols-outlined"
                       style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '1rem',
-                        fontWeight: '700',
-                        color: 'var(--color-on-surface)',
-                        margin: 0
-                      }}
-                    >
-                      Creative Direction
-                    </h4>
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.75rem',
                         color: 'var(--color-on-surface-variant)',
-                        margin: 0
+                        fontSize: '20px',
+                        transition: 'transform 200ms ease, color 200ms ease'
                       }}
                     >
-                      Narasi menyeluruh &amp; arsitektur ide
-                    </p>
+                      north_east
+                    </span>
                   </div>
+                  <h4
+                    className="font-headline-sm"
+                    style={{
+                      color: 'var(--color-on-surface)',
+                      fontWeight: '700',
+                      marginBottom: '0.5rem',
+                      fontSize: '17px'
+                    }}
+                  >
+                    {pillar.title}
+                  </h4>
+                  <div style={{ width: '2rem', height: '2px', backgroundColor: '#ED1C24', marginBottom: '0.75rem' }}></div>
+                  <p className="font-body-sm" style={{ color: 'var(--color-on-surface-variant)', lineHeight: 1.6 }}>
+                    {pillar.desc}
+                  </p>
                 </div>
-                <span className="material-symbols-outlined" style={{ color: 'var(--color-outline-variant)', fontSize: '20px' }}>
-                  north_east
-                </span>
-              </div>
-
-              {/* Item 2 */}
-              <div
-                style={{
-                  padding: '0.875rem 1rem',
-                  borderRadius: 'var(--radius-lg)',
-                  backgroundColor: 'var(--color-surface-high)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 'var(--space-sm)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', textAlign: 'left' }}>
-                  <span className="material-symbols-outlined" style={{ color: 'var(--color-secondary-container)' }}>
-                    view_in_ar
-                  </span>
-                  <div>
-                    <h4
-                      style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '1rem',
-                        fontWeight: '700',
-                        color: 'var(--color-on-surface)',
-                        margin: 0
-                      }}
-                    >
-                      UI/UX Spatial Design
-                    </h4>
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.75rem',
-                        color: 'var(--color-on-surface-variant)',
-                        margin: 0
-                      }}
-                    >
-                      Antarmuka imersif &amp; arsitektur sistem
-                    </p>
-                  </div>
-                </div>
-                <span className="material-symbols-outlined" style={{ color: 'var(--color-outline-variant)', fontSize: '20px' }}>
-                  north_east
-                </span>
-              </div>
-
-              {/* Item 3 */}
-              <div
-                style={{
-                  padding: '0.875rem 1rem',
-                  borderRadius: 'var(--radius-lg)',
-                  backgroundColor: 'var(--color-surface-high)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 'var(--space-sm)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', textAlign: 'left' }}>
-                  <span className="material-symbols-outlined" style={{ color: 'var(--color-primary)' }}>
-                    camera
-                  </span>
-                  <div>
-                    <h4
-                      style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '1rem',
-                        fontWeight: '700',
-                        color: 'var(--color-on-surface)',
-                        margin: 0
-                      }}
-                    >
-                      Editorial Photography
-                    </h4>
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.75rem',
-                        color: 'var(--color-on-surface-variant)',
-                        margin: 0
-                      }}
-                    >
-                      Cahaya terukur &amp; komposisi sinematik
-                    </p>
-                  </div>
-                </div>
-                <span className="material-symbols-outlined" style={{ color: 'var(--color-outline-variant)', fontSize: '20px' }}>
-                  north_east
-                </span>
-              </div>
-
-              {/* Item 4 */}
-              <div
-                style={{
-                  padding: '0.875rem 1rem',
-                  borderRadius: 'var(--radius-lg)',
-                  backgroundColor: 'var(--color-surface-high)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 'var(--space-sm)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-md)', textAlign: 'left' }}>
-                  <span className="material-symbols-outlined" style={{ color: 'var(--color-secondary)' }}>
-                    movie
-                  </span>
-                  <div>
-                    <h4
-                      style={{
-                        fontFamily: 'var(--font-display)',
-                        fontSize: '1rem',
-                        fontWeight: '700',
-                        color: 'var(--color-on-surface)',
-                        margin: 0
-                      }}
-                    >
-                      Film &amp; Motion
-                    </h4>
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-sans)',
-                        fontSize: '0.75rem',
-                        color: 'var(--color-on-surface-variant)',
-                        margin: 0
-                      }}
-                    >
-                      Ritme visual berdaya sentak tinggi
-                    </p>
-                  </div>
-                </div>
-                <span className="material-symbols-outlined" style={{ color: 'var(--color-outline-variant)', fontSize: '20px' }}>
-                  north_east
-                </span>
-              </div>
+              ))}
             </div>
 
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 'var(--space-xs)',
-                color: 'var(--color-secondary)',
-                fontFamily: 'var(--font-sans)',
-                fontSize: '0.75rem',
-                fontWeight: '600',
-                margin: '0 auto'
-              }}
-            >
-              <span>Diselaraskan untuk skala multi-platform</span>
-              <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                check_circle
+            {/* Bottom Controls */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingTop: '1rem' }}>
+              <span className="font-label-mono-sm" style={{ color: 'var(--color-secondary)', fontWeight: '600' }}>
+                INTEGRATED STRATEGIC ALIGNMENT (ISO 9001 ALIGNED)
               </span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <button
+                  type="button"
+                  aria-label="Previous"
+                  style={{
+                    width: '2.5rem',
+                    height: '2.5rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--color-surface-container)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--color-on-surface)',
+                    boxShadow: 'var(--shadow-sm)'
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>chevron_left</span>
+                </button>
+                <button
+                  type="button"
+                  aria-label="Next"
+                  style={{
+                    width: '2.5rem',
+                    height: '2.5rem',
+                    borderRadius: '50%',
+                    backgroundColor: 'var(--color-surface-container)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--color-on-surface)',
+                    boxShadow: 'var(--shadow-sm)'
+                  }}
+                >
+                  <span className="material-symbols-outlined" style={{ fontSize: '20px' }}>chevron_right</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        @media (min-width: 768px) {
-          .bento-card-7 {
-            grid-column: span 7 !important;
-          }
-          .bento-card-5 {
-            grid-column: span 5 !important;
+        @media (min-width: 1024px) {
+          .about-grid {
+            grid-template-columns: 5fr 7fr !important;
           }
         }
       `}</style>

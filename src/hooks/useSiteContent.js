@@ -6,11 +6,11 @@ const DEFAULT_SETTINGS = {
   name: 'Prio Setyo',
   headline: 'Creative Director & Visual Storyteller',
   summary: 'Membangun ekosistem visual spektakuler, identitas brand sinematik, dan antarmuka spasial masa depan. Mengubah narasi kompleks menjadi pengalaman sensorik bernilai komersial tinggi.',
-  avatar_url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY',
+  avatar_url: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/avatars/avatar-1793091534469.webp',
   email: 'prio@setyostudio.com',
   phone: '+62 812-3456-7890',
   linkedin: 'priosetyo',
-  location: 'Jakarta & Singapore',
+  location: 'Dumai, Riau, Indonesia',
   cv_path: null
 };
 

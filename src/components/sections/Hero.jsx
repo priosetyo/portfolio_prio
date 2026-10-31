@@ -1,1023 +1,1295 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { ArrowUpRight, ArrowRight, Layers, Award, Briefcase } from 'lucide-react';
 import { getStoragePublicUrl } from '../../lib/queries';
+import { useProjects } from '../../hooks/useProjects';
 
-export function Hero({ settings, onOpenFilosofi }) {
-  const [copied, setCopied] = useState(false);
-  const [isPlayingShowreel, setIsPlayingShowreel] = useState(false);
+const HERO_PORTRAIT_FALLBACK =
+  'https://lh3.googleusercontent.com/aida-public/AB6AXuCpHxtffRyMCl7o-J292Nepd-E2nswNXwo8wvxFNwYXyZ1HWF32bq4ZqGRfTQ8_v5VW71LxoFjFI-zlRb8fg5fcPONf3PfNeZFwSJvR0knkoYGQRnnvMMP3ImMcP41og8M4W2T9HrSb7IvCYv1oinkBTrlTz9fSEx5wKHDeekShJPspwR_ldIZFPcWzcoiMOozpASkGIID8kqd7PvtOAIl3xG-JHt9J0Q-hJjDYM51m';
 
-  const email = settings?.email || 'prio.setyo@creativestudio.id';
+const CATEGORY_LABELS = {
+  photo: 'Photography',
+  video: 'Videography',
+  design: 'Graphic Design',
+  copy: 'Copywriting'
+};
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+export const DEFAULT_TRACK_RECORD_HEADER = {
+  eyebrow: 'TRACK RECORD SUMMARY',
+  title: 'Enterprise-Scale Precision',
+  subtitle:
+    'Translating strategic vision for energy conglomerates, multinational ventures, and cultural institutions into high-impact kinetic assets.',
+  spotlightLabel: 'Film & Brand Identity Spotlight'
+};
+
+export const DEFAULT_TRACK_RECORD_METRICS = [
+  {
+    id: 'metric-1',
+    value: '10+',
+    badge: 'Active Years',
+    title: 'Years of Industry Experience',
+    desc: 'Leading creative direction from independent film production to multi-channel campaigns for national energy conglomerates and regional corporations.',
+    footerText: 'Est. 2014 — DUMAI, RIAU, INDONESIA'
+  },
+  {
+    id: 'metric-2',
+    value: '42',
+    badge: 'Honors',
+    title: 'Global Awards & Selections',
+    desc: 'International film festival curator selections, Asia-Pacific enterprise visual identity recognitions, and kinetic typography design showcases.',
+    footerText: 'Cannes Shortlist, Citra Pariwara Gold',
+    modalSpecs: [
+      'Citra Pariwara Gold — Best Direction & Cinematography',
+      'Cannes Lions Shortlist — Corporate Film Craft',
+      'Tokyo TDC Selection — Kinetic Typography & Spatial UI',
+      'Asia-Pacific Enterprise Brand Architecture Honor'
+    ]
+  },
+  {
+    id: 'metric-3',
+    value: '180+',
+    badge: 'Released Portfolio',
+    title: 'Commercial & Editorial Scale',
+    desc: '8K commercial resolution content, high-impact corporate monographs, and full-spectrum digital experience architectures.',
+    footerText: ''
+  }
+];
+
+export const DEFAULT_SPOTLIGHT_PROJECTS = [
+  {
+    id: 'default-spot-1',
+    title: 'Pertamina Patra Niaga Anthem',
+    category: 'CINEMA COMMERCIAL',
+    discipline: 'video',
+    tag: 'CAMPAIGN DIRECTION',
+    client: 'Pertamina Patra Niaga',
+    locationYear: 'DUMAI, RIAU, INDONESIA / 2025',
+    desc: 'High-energy commercial manifesto film for Pertamina Patra Niaga. Blending on-site footage of maritime and energy infrastructure with original orchestral scoring.',
+    specs: ['RED V-Raptor 8K VV', 'Cooke Anamorphic /i', 'DaVinci ACES Workflow'],
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuAw-HjHTxu0iiEQ5z7YvjAbVP9wfRoOcfUb13m1mFshL5HU6LfmOEyk_w9r7ILa2sS5f7YN6AT4xK9vAXIfYQRiV0s1IagWRXCZndw5C-09Y5hCK0pIeBZtWRgQ8ROcmnmez5qemMezfiQ9P0sdjBnbsAJkJRPodhoCrxzeh-quGgzLEdorxq0VQtnxJF_SLz3-iHG5jz2SojHZd69KaE4NN6YwL2UGlbXJTZ00ZV8'
+  },
+  {
+    id: 'default-spot-2',
+    title: 'Kinetic Spatials 2026',
+    category: 'SPATIAL UX',
+    discipline: 'design',
+    tag: 'INTERACTIVE SYSTEMS',
+    client: 'Nova Technologies',
+    locationYear: 'LONDON / 2025',
+    desc: 'Spatial UI tokens, variable typography systems, and high-fidelity interaction prototypes for next-generation spatial computing platforms.',
+    specs: ['Figma Spatial Engine', 'VisionOS Prototyping', 'Design Tokens'],
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuAEofPaya-ZGWveRCDy8cNUJRN_N5NCwX8ngR_QWgpEBmZTMQSRSh6bxRyttNiIroK5QcXboYpJxqPZs9QkCWZcOtUeAGvDkKGmo-uebF1mBjT3YA7YmeL8Csg_uPYRVhbCmdunD9DPNpU9f3Sb3ARiTfkBAzuu8v5JuA6WzP9sHblTo2IT7q4-IVdBGZ-q_-tkeuAJxBOf8ewixWB6K-4TYKjcKa2VI3i50WA3Er0'
+  },
+  {
+    id: 'default-spot-3',
+    title: 'Lumina Narrative Film',
+    category: 'CINEMA FILM',
+    discipline: 'video',
+    tag: 'NARRATIVE STORYTELLING',
+    client: 'Lumina Pictures',
+    locationYear: 'TOKYO / 2024',
+    desc: 'Short narrative cinema exploring high-contrast chiaroscuro and atmospheric volumetric lighting across urban nocturnal landscapes.',
+    specs: ['ARRI Alexa Mini LF', 'Cooke Panchro Classic', 'ACES 2065-1'],
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuDQDL8KyX67MLyaR7WRfaYFlh9D3zIMs9-FgF-5WUMaZP98VJN0u0HWQnagcNiYU21us6WzS1dos1hALtR8p9j1Y1cJS6p7Y5y8PF80Vcr0kUHLBjdnwxTe2og09FZy-SgOiug8FWF4K8yPNODiqBk7_L-EoD4JSpFPMnDuzUUCTGGo1s70qVEUA80yLgJdIy2XO46DFN7rIdbSRUJopu4F23RB7b9BsrukJGrePAc'
+  },
+  {
+    id: 'default-spot-4',
+    title: 'Monolith Corporate Identity',
+    category: 'BRAND SYSTEM',
+    discipline: 'copy',
+    tag: 'BRAND ARCHITECTURE',
+    client: 'Monolith Group',
+    locationYear: 'BERLIN / 2025',
+    desc: 'Comprehensive visual architecture, editorial voice manifesto, and corporate design guidelines for modern industrial enterprises.',
+    specs: ['Swiss Grid Architecture', 'Corporate Typographic System', 'Brand Guidelines'],
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuBOa2CZ7oJQpqn24tmFYPG-ipuAF3HbDXddDuzTXTZAyrz6xjDOt8yFhNRKAkgRmmKn_3QxK46zh2_b-h-2PhTyVYBzsVN65eou6dmKd4O_qZwRSwaU5k3tsRRZoV04gACDu0yG9lCCXLgVYWiFyCr-CGC8IHce3IttCfbl-wafpe7Vr5dh2EOaWiOF-_5xa6I5-wae3cbmqwVwku8JQRBHQ17xgv0hTGBrIAocOJg'
+  },
+  {
+    id: 'default-spot-5',
+    title: 'Silent Monolith Monograph',
+    category: 'ARCHITECTURAL PHOTO',
+    discipline: 'photo',
+    tag: 'BRUTALIST MONOGRAPH',
+    client: 'Monolith Foundation',
+    locationYear: 'KYOTO / 2024',
+    desc: 'Monochromatic and golden-hour architectural photography series investigating spatial silence and monumental concrete geometry.',
+    specs: ['Phase One XF 100MP', 'Schneider 35mm LS', 'Archival Pigment Print'],
+    image:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuAJJWJQHqgaJrmmXgNkWqjiPjVu7ZXUY93Ukc-HYliONfsYpK_nSAnrYbzGboJ0gyL8MSQnESy0w6V8M6mAAlq-Zh1zMtIsBlD2evEHv5yejd9hJk4BSVDi0ZThWFhJ2xzbDkXnZQ-qPEqNJyWPJc7Xiec9xXS4QrDZqG2jWs0Eg49tPpt08SC6Lc3RGOU5LszmeDEkUa64Dfvu31LzCX-tPZBOsWCs6Kz2FuKgrtU'
+  }
+];
+
+export const DEFAULT_HERO_BG_SLIDES = DEFAULT_SPOTLIGHT_PROJECTS.map((p) => p.image);
+
+export const isVideoSlide = (slide) => {
+  if (!slide) return false;
+  if (typeof slide === 'object') {
+    if (slide.type === 'video') return true;
+    if (slide.type === 'photo' || slide.type === 'image') return false;
+    slide = slide.url || '';
+  }
+  const s = String(slide).toLowerCase();
+  return (
+    s.endsWith('.mp4') ||
+    s.endsWith('.webm') ||
+    s.endsWith('.mov') ||
+    s.endsWith('.ogg') ||
+    s.includes('.mp4?') ||
+    s.includes('.webm?') ||
+    s.includes('/video/')
+  );
+};
+
+export const getSlideUrl = (slide) => {
+  if (!slide) return '';
+  const raw = typeof slide === 'object' ? slide.url : slide;
+  return getStoragePublicUrl(raw) || raw;
+};
+
+export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
+  const { projects = [] } = useProjects();
+  const [activeSpotlight, setActiveSpotlight] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isHoveringSpotlight, setIsHoveringSpotlight] = useState(false);
+  const [heroPortraitUrl, setHeroPortraitUrl] = useState(
+    () => settings?.hero_png_url || localStorage.getItem('prio_hero_png_url') || ''
+  );
+
+  useEffect(() => {
+    try {
+      localStorage.removeItem('prio_hero_portrait_url');
+    } catch (e) {}
+    if (settings?.hero_png_url !== undefined) {
+      setHeroPortraitUrl(settings.hero_png_url || '');
+    }
+  }, [settings?.hero_png_url]);
+
+  // Section 1: Hero Background Slideshow (Maks 5 Foto atau Video, 3 Detik Transisi Apple)
+  const heroBgSlides = useMemo(() => {
+    let customSlides = settings?.hero_bg_slides;
+    if (typeof customSlides === 'string') {
+      try {
+        customSlides = JSON.parse(customSlides);
+      } catch (e) {
+        customSlides = customSlides.split(',').map((s) => s.trim()).filter(Boolean);
+      }
+    }
+    if (!customSlides || !Array.isArray(customSlides) || customSlides.length === 0) {
+      try {
+        const local = localStorage.getItem('prio_hero_bg_slides');
+        if (local) customSlides = JSON.parse(local);
+      } catch (e) {}
+    }
+    if (Array.isArray(customSlides) && customSlides.length > 0) {
+      return customSlides.slice(0, 5).map((item) => {
+        if (typeof item === 'object') {
+          return { ...item, url: getSlideUrl(item) };
+        }
+        return getSlideUrl(item);
+      });
+    }
+    return DEFAULT_HERO_BG_SLIDES;
+  }, [settings?.hero_bg_slides]);
+
+  const [activeBgIndex, setActiveBgIndex] = useState(0);
+
+  // Transisi per foto/video 3 detik (gaya Apple)
+  useEffect(() => {
+    if (heroBgSlides.length <= 1) return undefined;
+    const timer = setInterval(() => {
+      setActiveBgIndex((prev) => (prev + 1) % heroBgSlides.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [heroBgSlides.length]);
+
+  // Section 2: Track Record Header & 3 Metrics (Customizable via Admin)
+  const trackRecordHeader = useMemo(() => {
+    let custom = settings?.track_record_header;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    return {
+      ...DEFAULT_TRACK_RECORD_HEADER,
+      ...(custom && typeof custom === 'object' ? custom : {})
+    };
+  }, [settings?.track_record_header]);
+
+  const trackRecordMetrics = useMemo(() => {
+    let custom = settings?.track_record_metrics;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    if (Array.isArray(custom) && custom.length > 0) {
+      return DEFAULT_TRACK_RECORD_METRICS.map((def, idx) => {
+        const item = custom[idx] || {};
+        return {
+          ...def,
+          ...item,
+          modalSpecs:
+            Array.isArray(item.modalSpecs) && item.modalSpecs.length > 0
+              ? item.modalSpecs
+              : typeof item.modalSpecs === 'string' && item.modalSpecs.trim()
+                ? item.modalSpecs.split('\n').map((s) => s.trim()).filter(Boolean)
+                : def.modalSpecs
+        };
+      });
+    }
+    return DEFAULT_TRACK_RECORD_METRICS;
+  }, [settings?.track_record_metrics]);
+
+  // Build 5 dynamic spotlight projects from Admin spotlight_items OR CMS projects, padded by defaults
+  const spotlightProjects = useMemo(() => {
+    const mappedFromCms = projects.slice(0, 5).map((p, idx) => {
+      const firstMedia = p.project_media?.[0];
+      const rawThumb = firstMedia?.storage_path || firstMedia?.thumb_path || firstMedia?.poster_path;
+      const resolvedImage =
+        getStoragePublicUrl(rawThumb) ||
+        DEFAULT_SPOTLIGHT_PROJECTS[idx % DEFAULT_SPOTLIGHT_PROJECTS.length].image;
+
+      const metaSpecs = p.meta
+        ? Object.entries(p.meta)
+            .filter(([, val]) => Boolean(val))
+            .map(([k, val]) => `${k.replace(/_/g, ' ').toUpperCase()}: ${val}`)
+        : [];
+
+      const fallbackSpecs = DEFAULT_SPOTLIGHT_PROJECTS[idx % DEFAULT_SPOTLIGHT_PROJECTS.length].specs;
+
+      return {
+        id: p.id || `cms-spot-${idx}`,
+        title: p.title || 'Untitled Project',
+        category: (p.categoryLabel || CATEGORY_LABELS[p.category] || 'FEATURED WORK').toUpperCase(),
+        discipline: p.category || 'design',
+        tag: (p.subCategory || p.role || 'ENTERPRISE DIRECTIVE').toUpperCase(),
+        client: p.client || 'Enterprise Partner',
+        locationYear:
+          p.locationYear ||
+          `${(p.meta?.location || 'DUMAI, RIAU, INDONESIA').toUpperCase()} / ${p.year || '2025'}`,
+        desc:
+          p.description ||
+          p.summary ||
+          p.excerpt ||
+          DEFAULT_SPOTLIGHT_PROJECTS[idx % DEFAULT_SPOTLIGHT_PROJECTS.length].desc,
+        specs: metaSpecs.length > 0 ? metaSpecs.slice(0, 3) : fallbackSpecs,
+        image: resolvedImage
+      };
+    });
+
+    const autoList = [...mappedFromCms];
+    for (let i = autoList.length; i < 5; i += 1) {
+      autoList.push(DEFAULT_SPOTLIGHT_PROJECTS[i]);
+    }
+
+    let customSpots = settings?.spotlight_items;
+    if (typeof customSpots === 'string') {
+      try {
+        customSpots = JSON.parse(customSpots);
+      } catch (e) {
+        customSpots = null;
+      }
+    }
+
+    if (Array.isArray(customSpots) && customSpots.length > 0) {
+      return [0, 1, 2, 3, 4].map((idx) => {
+        const fallback = autoList[idx] || DEFAULT_SPOTLIGHT_PROJECTS[idx];
+        const item = customSpots[idx];
+        if (!item || typeof item !== 'object') return fallback;
+        const specsArr = Array.isArray(item.specs)
+          ? item.specs.filter(Boolean)
+          : typeof item.specs === 'string' && item.specs.trim()
+            ? item.specs.split(',').map((s) => s.trim()).filter(Boolean)
+            : fallback.specs;
+
+        return {
+          id: item.id || fallback.id || `spot-${idx}`,
+          title: item.title || fallback.title,
+          category: (item.category || fallback.category || 'FEATURED WORK').toUpperCase(),
+          discipline: item.discipline || fallback.discipline || 'design',
+          tag: (item.tag || fallback.tag || 'ENTERPRISE DIRECTIVE').toUpperCase(),
+          client: item.client || fallback.client || 'Enterprise Partner',
+          locationYear: (item.locationYear || fallback.locationYear || 'DUMAI, RIAU, INDONESIA / 2025').toUpperCase(),
+          desc: item.desc || fallback.desc,
+          specs: specsArr.length > 0 ? specsArr : fallback.specs,
+          image: getStoragePublicUrl(item.image) || item.image || fallback.image
+        };
+      });
+    }
+
+    return autoList.slice(0, 5);
+  }, [projects, settings?.spotlight_items]);
+
+  const currentProject = spotlightProjects[activeSpotlight] || spotlightProjects[0];
+
+  // Auto-advance spotlight every 6.5 seconds unless paused or hovered
+  useEffect(() => {
+    if (!isAutoPlaying || isHoveringSpotlight) return undefined;
+    const timer = setInterval(() => {
+      setActiveSpotlight((prev) => (prev + 1) % spotlightProjects.length);
+    }, 6500);
+    return () => clearInterval(timer);
+  }, [isAutoPlaying, isHoveringSpotlight, spotlightProjects.length]);
+
+  const name = settings?.name || 'PRIO SETYO';
+  const headline = settings?.headline || 'CREATIVE DIRECTOR & VISUAL STORYTELLER';
+  const summary =
+    settings?.summary ||
+    'Orchestrating cinematic visual narratives, high-energy brand architectures, and world-class digital experiences with Swiss discipline precision and kinetic modernist energy.';
+  const locationLabel = 'DUMAI, RIAU, INDONESIA';
+
+  const scrollToSection = (e, targetId) => {
+    if (e) e.preventDefault();
+    const target = document.getElementById(targetId);
+    if (target) {
+      const navbarHeight = 80;
+      const top = target.getBoundingClientRect().top + window.scrollY - navbarHeight;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  };
+
+  const handleInspectProject = (projectItem) => {
+    if (!onOpenDetailModal || !projectItem) return;
+    onOpenDetailModal({
+      title: projectItem.title,
+      category: `${projectItem.category} • ${projectItem.locationYear}`,
+      description: projectItem.desc,
+      specs: projectItem.specs,
+      image: projectItem.image,
+      tags: [projectItem.tag, `CLIENT: ${projectItem.client}`]
+    });
+  };
+
+  const handlePrevSpotlight = () => {
+    setActiveSpotlight((prev) => (prev - 1 + spotlightProjects.length) % spotlightProjects.length);
+  };
+
+  const handleNextSpotlight = () => {
+    setActiveSpotlight((prev) => (prev + 1) % spotlightProjects.length);
   };
 
   return (
-    <section
-      id="hero"
-      style={{
-        width: '100%',
-        backgroundColor: 'var(--color-surface)',
-        paddingTop: '6.5rem',
-        paddingBottom: 'var(--space-lg)'
-      }}
-    >
-      <div
+    <>
+      {/* ==========================================
+          SECTION 1: HERO SECTION (CINEMATIC FULL-BLEED)
+          ========================================== */}
+      <section
+        id="hero"
         style={{
-          maxWidth: '1440px',
-          margin: '0 auto',
-          padding: '0 var(--margin-mobile)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 'var(--space-lg)'
+          position: 'relative',
+          width: '100%',
+          backgroundColor: '#071320',
+          color: 'var(--color-surface-bright)',
+          overflow: 'hidden',
+          paddingTop: '5.5rem' /* Offset sticky navbar height */
         }}
       >
-        {/* Super Headline & Architectural Statement Bar */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-sm)' }}>
-          {/* Top Micro Pills */}
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-sm)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-xs)' }}>
-              <span
+        {/* Ambient architectural lighting scrims */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            opacity: 0.45,
+            backgroundImage:
+              'radial-gradient(circle at 18% 22%, rgba(0, 82, 155, 0.5), transparent 58%), radial-gradient(circle at 82% 75%, rgba(237, 28, 36, 0.22), transparent 55%)'
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            opacity: 0.18,
+            backgroundImage:
+              'linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)',
+            backgroundSize: '4rem 4rem'
+          }}
+        />
+
+        {/* Dynamic Cinematic Background Slideshow (Foto atau Video, Apple-style Ken Burns & Smooth Crossfade, 3s duration, max 5 items) */}
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+          {heroBgSlides.map((slideItem, idx) => {
+            const isActive = idx === activeBgIndex;
+            const isVideo = isVideoSlide(slideItem);
+            const mediaUrl = getSlideUrl(slideItem);
+
+            return (
+              <div
+                key={`${mediaUrl}-${idx}`}
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '9999px',
-                  backgroundColor: 'var(--color-secondary-container)',
-                  color: 'var(--color-on-secondary-fixed)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase'
+                  position: 'absolute',
+                  inset: 0,
+                  opacity: isActive ? 0.88 : 0,
+                  transform: isActive ? 'scale(1.04)' : 'scale(1.0)',
+                  transition: 'opacity 1100ms cubic-bezier(0.25, 1, 0.5, 1), transform 3200ms cubic-bezier(0.25, 1, 0.5, 1)',
+                  willChange: 'opacity, transform',
+                  overflow: 'hidden'
                 }}
               >
-                Curated Index 2025
-              </span>
+                {isVideo ? (
+                  <video
+                    src={mediaUrl}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      filter: 'contrast(1.05) brightness(0.98)'
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      backgroundImage: `url('${mediaUrl}')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      filter: 'contrast(1.05) brightness(0.98)'
+                    }}
+                  />
+                )}
+              </div>
+            );
+          })}
+        </div>
 
-              <span
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '9999px',
-                  backgroundColor: 'var(--color-surface-container-high)',
-                  color: 'var(--color-on-surface-variant)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase'
-                }}
-              >
-                Jakarta (6.2° S) / Tokyo (35.6° N)
-              </span>
-            </div>
-          </div>
+        {/* Layer Overlay: Pekat di sisi kiri (teks jelas), makin tipis dari tengah ke kanan (foto/video background terang & jelas) */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            background:
+              'linear-gradient(90deg, rgba(7, 19, 32, 0.95) 0%, rgba(7, 19, 32, 0.86) 36%, rgba(7, 19, 32, 0.50) 54%, rgba(7, 19, 32, 0.20) 76%, rgba(7, 19, 32, 0.06) 100%), linear-gradient(180deg, rgba(7, 19, 32, 0.50) 0%, rgba(7, 19, 32, 0.0) 22%, rgba(7, 19, 32, 0.0) 76%, rgba(10, 37, 64, 0.94) 100%)'
+          }}
+        />
 
-          {/* Hero Typography Display */}
+        <div
+          className="container"
+          style={{
+            position: 'relative',
+            paddingTop: '2.25rem',
+            paddingBottom: 0,
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            minHeight: 'clamp(560px, 78vh, 760px)',
+            gap: '1.5rem'
+          }}
+        >
+          {/* Top Row: Regional Telemetry (Rata Kanan Rapi) */}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              gap: 'var(--space-md)'
+              alignItems: 'center',
+              justifyContent: 'flex-end',
+              width: '100%'
             }}
-            className="hero-headline-wrapper"
           >
-            <div>
-              <h1
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'clamp(2.75rem, 8vw, 4.5rem)',
-                  lineHeight: 1,
-                  fontWeight: '800',
-                  color: 'var(--color-primary)',
-                  letterSpacing: '-0.04em',
-                  textTransform: 'uppercase',
-                  margin: 0
-                }}
-              >
-                {settings?.name || 'PRIO SETYO'}
-              </h1>
-            </div>
-
             <div
+              className="font-label-mono-sm"
               style={{
                 display: 'flex',
-                flexDirection: 'column',
-                gap: '4px',
-                paddingBottom: '4px'
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+                textAlign: 'right',
+                gap: '0.5rem',
+                color: 'var(--color-secondary-fixed)',
+                letterSpacing: '0.08em',
+                fontWeight: '600'
               }}
             >
-              <span
+              <span>DUMAI, RIAU | INDONESIA</span>
+            </div>
+          </div>
+
+          {/* Main Hero Row: Monumental Typography (Left) + Borderless PNG Portrait Slot (Right, Flush Bottom) */}
+          <div className="hero-content-row">
+            {/* Left Side: Monumental Typography */}
+            <div
+              className="hero-text-column"
+              style={{
+                maxWidth: '50rem',
+                flex: '1 1 540px',
+                textAlign: 'left',
+                alignSelf: 'center',
+                padding: '2rem 0 4.5rem 0'
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', textAlign: 'left' }}>
+                <span
+                  className="font-label-mono-lg"
+                  style={{
+                    color: 'var(--color-secondary-fixed)',
+                    letterSpacing: '0.08em',
+                    textTransform: 'uppercase',
+                    fontWeight: '600',
+                    textAlign: 'left'
+                  }}
+                >
+                  {headline}
+                </span>
+              </div>
+
+              <h1
+                className="font-display-xl"
                 style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '20px',
-                  fontWeight: '600',
-                  color: 'var(--color-on-surface)',
-                  lineHeight: '26px',
-                  letterSpacing: '-0.01em'
+                  color: 'var(--color-surface-container-lowest)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '-0.04em',
+                  lineHeight: 0.92,
+                  marginBottom: '1.5rem',
+                  fontSize: 'clamp(3rem, 7vw, 7.5rem)',
+                  fontWeight: '800',
+                  textAlign: 'left'
                 }}
               >
-                {settings?.headline || 'Visual Creator, Designer & Copywriter'}
-              </span>
-              <span
+                {name}
+              </h1>
+
+              <p
+                className="font-body-lg"
                 style={{
-                  fontSize: '13px',
-                  color: 'var(--color-on-surface-variant)',
-                  lineHeight: '18px'
+                  color: 'var(--color-outline-variant)',
+                  maxWidth: '42rem',
+                  lineHeight: 1.65,
+                  marginBottom: 0,
+                  textAlign: 'left'
                 }}
               >
-                {settings?.summary || 'Membantu brand mengomunikasikan nilai mereka melalui visual yang kuat, desain fungsional, dan narasi yang berdaya pikat.'}
-              </span>
+                {summary}
+              </p>
+            </div>
+
+            {/* Right Side: Borderless PNG Profile Photo Slot (Flush to bottom edge, hidden on mobile if empty) */}
+            <div
+              className={`hero-portrait-slot ${!heroPortraitUrl ? 'hero-portrait-empty' : ''}`}
+              style={{
+                position: 'relative',
+                flex: '0 0 auto',
+                width: 'clamp(336px, 41vw, 552px)',
+                height: heroPortraitUrl ? 'clamp(408px, 53vw, 624px)' : '1px',
+                display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'center',
+                alignSelf: 'flex-end',
+                marginBottom: 0,
+                border: 'none',
+                background: 'transparent',
+                boxShadow: 'none',
+                pointerEvents: 'none'
+              }}
+            >
+              {heroPortraitUrl && (
+                <img
+                  src={getStoragePublicUrl(heroPortraitUrl)}
+                  alt={name}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    objectPosition: 'bottom center',
+                    border: 'none',
+                    background: 'transparent',
+                    boxShadow: 'none',
+                    display: 'block'
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>
 
-        {/* Bento Grid Section with Left Edge Vertical Rail */}
+        {/* Bottom Center: Apple-Style Background Slide Progress Bar (Animated 3s Fill, Tanpa Label FOTO/VIDEO) */}
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(12, 1fr)',
-            gap: 'var(--space-md)',
-            alignItems: 'stretch'
+            position: 'absolute',
+            bottom: '1.35rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 10,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '6px',
+            padding: '0.42rem 0.9rem',
+            borderRadius: 'var(--radius-full)',
+            backgroundColor: 'rgba(7, 19, 32, 0.52)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.1)'
           }}
-          className="bento-main-grid"
         >
-          {/* Left Rail: Architectural Vertical Nav Strip (Desktop Only) */}
-          <aside
-            className="desktop-rail"
-            style={{
-              gridColumn: 'span 1',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: 'var(--space-lg) 0',
-              borderRadius: 'var(--radius-xl)',
-              backgroundColor: 'var(--color-surface-container-low)',
-              minHeight: '640px',
-              userSelect: 'none'
-            }}
-          >
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-              <div
-                style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  backgroundColor: '#000000',
-                  color: '#ffffff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '12px',
-                  fontWeight: '800'
-                }}
-              >
-                PS
-              </div>
-              <span
-                style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  backgroundColor: 'var(--color-tertiary-fixed-dim)'
-                }}
-              />
-            </div>
-
-            <nav
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: 'var(--space-xl)',
-                padding: 'var(--space-md) 0'
-              }}
-            >
-              <a
-                href="#karya-terpilih"
-                style={{
-                  writingMode: 'vertical-rl',
-                  transform: 'rotate(180deg)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-on-surface)',
-                  textDecoration: 'none',
-                  padding: '8px 0',
-                  transition: 'color 150ms ease'
-                }}
-              >
-                Karya
-              </a>
-              <a
-                href="#filosofi"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (onOpenFilosofi) onOpenFilosofi();
-                  else {
-                    const d = document.getElementById('dialog-filosofi');
-                    if (d) d.showModal();
-                  }
-                }}
-                style={{
-                  writingMode: 'vertical-rl',
-                  transform: 'rotate(180deg)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-on-surface-variant)',
-                  textDecoration: 'none',
-                  padding: '8px 0',
-                  transition: 'color 150ms ease'
-                }}
-              >
-                Filosofi
-              </a>
-              <a
-                href="#toolkit-section"
-                style={{
-                  writingMode: 'vertical-rl',
-                  transform: 'rotate(180deg)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-on-surface-variant)',
-                  textDecoration: 'none',
-                  padding: '8px 0',
-                  transition: 'color 150ms ease'
-                }}
-              >
-                Toolkit
-              </a>
-              <a
-                href="#pengalaman-section"
-                style={{
-                  writingMode: 'vertical-rl',
-                  transform: 'rotate(180deg)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-on-surface-variant)',
-                  textDecoration: 'none',
-                  padding: '8px 0',
-                  transition: 'color 150ms ease'
-                }}
-              >
-                Pengalaman
-              </a>
-            </nav>
-
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '4px',
-                fontSize: '11px',
-                fontWeight: '600',
-                color: 'var(--color-on-surface-variant)'
-              }}
-            >
-              <span>01</span>
-              <div style={{ width: '2px', height: '32px', backgroundColor: 'var(--color-surface-variant)' }} />
-              <span>05</span>
-            </div>
-          </aside>
-
-          {/* Main Profile Bento Card (Lilac Field #e5deff) */}
-          <article
-            className="profile-bento-card"
-            style={{
-              borderRadius: 'var(--radius-xl)',
-              backgroundColor: 'var(--color-secondary-fixed)',
-              color: 'var(--color-on-secondary-fixed)',
-              padding: 'var(--space-lg)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              position: 'relative',
-              overflow: 'hidden',
-              minHeight: '640px',
-              boxShadow: 'var(--shadow-md)'
-            }}
-          >
-            {/* Ambient accent circle */}
-            <div
-              style={{
-                position: 'absolute',
-                top: '-4rem',
-                right: '-4rem',
-                width: '14rem',
-                height: '14rem',
-                borderRadius: '50%',
-                backgroundColor: 'rgba(255, 255, 255, 0.4)',
-                filter: 'blur(32px)',
-                pointerEvents: 'none'
-              }}
-            />
-
-            {/* Top Micro Badges */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '0.25rem 0.75rem',
-                  borderRadius: '9999px',
-                  backgroundColor: '#ffffff',
-                  color: 'var(--color-on-surface)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.08em',
-                  boxShadow: 'var(--shadow-sm)'
-                }}
-              >
-                <span
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    backgroundColor: 'var(--color-tertiary-container)'
-                  }}
-                />
-                <span>{(settings?.location || 'INDONESIA').toUpperCase()} BASED</span>
-              </div>
-
-              {/* Top Sticker Badge (Rotated) */}
-              <div
-                style={{
-                  width: '64px',
-                  height: '64px',
-                  borderRadius: '50%',
-                  backgroundColor: '#000000',
-                  color: '#ffffff',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                  boxShadow: 'var(--shadow-lg)',
-                  transform: 'rotate(6deg)',
-                  transition: 'transform 200ms ease'
-                }}
-              >
-                <span style={{ fontSize: '10px', fontWeight: '700', letterSpacing: '-0.05em' }}>★ TOP ★</span>
-                <span style={{ fontSize: '9px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--color-secondary-fixed)' }}>
-                  CREATIVE
-                </span>
-                <span style={{ fontSize: '10px', fontWeight: '800', fontFamily: 'var(--font-display)' }}>2025</span>
-              </div>
-            </div>
-
-            {/* Center Portrait & Frame */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', margin: 'var(--space-md) 0', position: 'relative', zIndex: 1 }}>
-              <div
+          {heroBgSlides.map((slideItem, i) => {
+            const isCurrent = i === activeBgIndex;
+            return (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActiveBgIndex(i)}
                 style={{
                   position: 'relative',
-                  width: '160px',
-                  height: '160px',
-                  borderRadius: '50%',
-                  padding: '6px',
-                  backgroundColor: '#ffffff',
-                  boxShadow: 'var(--shadow-xl)',
-                  marginBottom: 'var(--space-md)'
+                  width: isCurrent ? '32px' : '8px',
+                  height: '3px',
+                  borderRadius: 'var(--radius-full)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.28)',
+                  transition: 'width 400ms cubic-bezier(0.25, 1, 0.5, 1)',
+                  cursor: 'pointer',
+                  padding: 0,
+                  overflow: 'hidden',
+                  border: 'none'
                 }}
+                aria-label={`Background Slide ${i + 1}`}
               >
-                <img
-                  src={
-                    getStoragePublicUrl(settings?.avatar_url) ||
-                    "https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY"
-                  }
-                  alt={settings?.name || "Prio Setyo Creative Director"}
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%' }}
-                />
-                <span
-                  style={{
-                    position: 'absolute',
-                    bottom: '4px',
-                    right: '8px',
-                    padding: '2px 8px',
-                    borderRadius: '9999px',
-                    backgroundColor: 'var(--color-tertiary-fixed)',
-                    color: 'var(--color-on-tertiary-fixed)',
-                    fontSize: '10px',
-                    fontWeight: '700',
-                    letterSpacing: '0.05em'
-                  }}
-                >
-                  LEAD
-                </span>
-              </div>
+                {isCurrent && (
+                  <span
+                    key={`progress-${activeBgIndex}`}
+                    className="hero-slide-progress-fill"
+                  />
+                )}
+              </button>
+            );
+          })}
+          <span
+            className="font-label-mono-sm"
+            style={{
+              fontSize: '10px',
+              color: 'rgba(255, 255, 255, 0.72)',
+              marginLeft: '4px',
+              letterSpacing: '0.05em',
+              fontWeight: '600'
+            }}
+          >
+            0{activeBgIndex + 1} / 0{heroBgSlides.length}
+          </span>
+        </div>
+      </section>
 
-              <span
-                style={{
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-on-secondary-fixed-variant)'
-                }}
-              >
-                {settings?.headline?.toUpperCase() || 'CREATIVE DIRECTOR'}
-              </span>
-
-              <h2
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '40px',
-                  lineHeight: '46px',
-                  letterSpacing: '-0.03em',
-                  fontWeight: '700',
-                  color: 'var(--color-on-secondary-fixed)',
-                  margin: '4px 0 0 0'
-                }}
-              >
-                I'm {settings?.name || 'Prio Setyo'}
-              </h2>
-
-              <p
-                style={{
-                  fontSize: '15px',
-                  lineHeight: '24px',
-                  color: 'var(--color-on-secondary-fixed-variant)',
-                  marginTop: '8px',
-                  maxWidth: '320px'
-                }}
-              >
-                {settings?.summary || 'Merancang identitas visual, kampanye spasial, dan narasi digital untuk jenama global terkemuka.'}
-              </p>
-
-              {/* Dynamic Social Links */}
-              {(settings?.instagram || settings?.linkedin || settings?.github || settings?.youtube || settings?.behance || settings?.vimeo) && (
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexWrap: 'wrap',
-                    gap: '6px',
-                    marginTop: '12px',
-                    position: 'relative',
-                    zIndex: 1
-                  }}
-                >
-                  {settings?.instagram && (
-                    <a
-                      href={settings.instagram}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: '9999px',
-                        backgroundColor: '#ffffff',
-                        color: '#000000',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        textDecoration: 'none',
-                        boxShadow: 'var(--shadow-sm)'
-                      }}
-                    >
-                      Instagram
-                    </a>
-                  )}
-                  {settings?.linkedin && (
-                    <a
-                      href={settings.linkedin}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: '9999px',
-                        backgroundColor: '#ffffff',
-                        color: '#000000',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        textDecoration: 'none',
-                        boxShadow: 'var(--shadow-sm)'
-                      }}
-                    >
-                      LinkedIn
-                    </a>
-                  )}
-                  {settings?.behance && (
-                    <a
-                      href={settings.behance}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: '9999px',
-                        backgroundColor: '#ffffff',
-                        color: '#000000',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        textDecoration: 'none',
-                        boxShadow: 'var(--shadow-sm)'
-                      }}
-                    >
-                      Behance
-                    </a>
-                  )}
-                  {settings?.youtube && (
-                    <a
-                      href={settings.youtube}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: '9999px',
-                        backgroundColor: '#ffffff',
-                        color: '#000000',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        textDecoration: 'none',
-                        boxShadow: 'var(--shadow-sm)'
-                      }}
-                    >
-                      YouTube
-                    </a>
-                  )}
-                  {settings?.github && (
-                    <a
-                      href={settings.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{
-                        padding: '3px 10px',
-                        borderRadius: '9999px',
-                        backgroundColor: '#ffffff',
-                        color: '#000000',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        textDecoration: 'none',
-                        boxShadow: 'var(--shadow-sm)'
-                      }}
-                    >
-                      GitHub
-                    </a>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Bottom Bio & Micro Info */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-xs)', paddingTop: 'var(--space-sm)', position: 'relative', zIndex: 1 }}>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0.625rem 0.875rem',
-                  borderRadius: '1rem',
-                  backgroundColor: 'rgba(255, 255, 255, 0.85)',
-                  backdropFilter: 'blur(8px)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', overflow: 'hidden' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: '18px', color: 'var(--color-secondary)' }}>
-                    mail
-                  </span>
-                  <span style={{ fontSize: '12px', fontWeight: '500', color: 'var(--color-on-surface)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>
-                    {email}
-                  </span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={handleCopyEmail}
-                  title="Salin Email"
-                  style={{
-                    padding: '4px',
-                    borderRadius: '50%',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    color: copied ? '#10b981' : 'var(--color-on-surface-variant)'
-                  }}
-                >
-                  <span className="material-symbols-outlined" style={{ fontSize: '16px' }}>
-                    {copied ? 'check' : 'content_copy'}
-                  </span>
-                </button>
-              </div>
-
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  color: 'var(--color-on-secondary-fixed-variant)',
-                  fontSize: '11px',
-                  fontWeight: '600',
-                  letterSpacing: '0.06em',
-                  padding: '4px 8px 0 8px'
-                }}
-              >
-                <span>AVAILABILITY: IMMINENT</span>
-                <span>TIMEZONE: GMT+7</span>
-              </div>
-            </div>
-          </article>
-
-          {/* Right Column: Showreel & Metrics Stack */}
+      {/* ==========================================
+          SECTION 2: KEY METRICS ("TRACK RECORD SUMMARY") & SPOTLIGHT
+          ========================================== */}
+      <section
+        style={{
+          width: '100%',
+          backgroundColor: '#0A2540',
+          color: 'var(--color-surface-bright)',
+          padding: '4.5rem 0',
+          position: 'relative',
+          overflow: 'hidden',
+          borderTop: '1px solid rgba(255, 255, 255, 0.06)'
+        }}
+      >
+        <div className="container">
+          {/* Header Row */}
           <div
-            className="showreel-metrics-stack"
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 'var(--space-md)'
+              justifyContent: 'space-between',
+              gap: '1.25rem',
+              marginBottom: '2.5rem'
+            }}
+            className="md-row-header"
+          >
+            <div>
+              <span
+                className="font-label-mono-sm"
+                style={{
+                  color: 'var(--color-secondary-fixed)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  display: 'block',
+                  marginBottom: '0.5rem',
+                  textAlign: 'left'
+                }}
+              >
+                {trackRecordHeader.eyebrow}
+              </span>
+              <h2
+                className="font-headline-lg"
+                style={{
+                  color: 'var(--color-surface-container-lowest)',
+                  fontWeight: '700',
+                  letterSpacing: '-0.025em',
+                  margin: 0,
+                  textAlign: 'left'
+                }}
+              >
+                {trackRecordHeader.title}
+              </h2>
+            </div>
+            <p
+              className="font-body-sm md-text-right"
+              style={{
+                color: 'var(--color-outline-variant)',
+                maxWidth: '28rem',
+                lineHeight: 1.6,
+                margin: 0
+              }}
+            >
+              {trackRecordHeader.subtitle}
+            </p>
+          </div>
+
+          {/* 3 Columns Colossal Metrics */}
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: 'var(--gutter-lg)'
             }}
           >
-            {/* Cinematic Showreel Card */}
-            <article
+            {/* Metric 1: Years of Industry Experience */}
+            <div
+              className="card-motion"
+              onClick={(e) => scrollToSection(e, 'experiences')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') scrollToSection(e, 'experiences');
+              }}
               style={{
-                position: 'relative',
-                width: '100%',
-                borderRadius: 'var(--radius-xl)',
-                overflow: 'hidden',
-                minHeight: '360px',
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                padding: '2rem',
+                borderRadius: 'var(--radius-3xl)',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                padding: 'var(--space-lg)',
-                boxShadow: 'var(--shadow-md)'
+                cursor: 'pointer'
               }}
-              className="showreel-card"
             >
-              {/* Background Image with Scrim */}
-              <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-                <img
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA9Bw8naRYvQDN01ucwLtamVgIA7fSRvelaYIR35pGCC4LkMLUtgDaQrwC26rLyCwU_Eft5O0s5tGWFr8Tw3jz7rgfxGxNlfboQ8qQv7FbWwtpIg34o6Cvqu-kqw7IgsDD-N_I56LCfULu8OvSK9ARwqoj5FTKHWm6zl8ECBfv2uZ6TzudafeVPODgn_KRz7uQzpggYxYj4q62HG-Uh2d_UU7UMbgmo3wMqz-zcQY"
-                  alt="Cinematic Architectural Showreel"
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 700ms ease-out'
-                  }}
-                  className="showreel-img"
-                />
+              <div>
                 <div
                   style={{
-                    position: 'absolute',
-                    inset: 0,
-                    background: 'linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.35) 50%, transparent 100%)'
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    justifyContent: 'space-between',
+                    marginBottom: '1rem'
+                  }}
+                >
+                  <span
+                    className="font-display-xl"
+                    style={{
+                      fontWeight: '800',
+                      color: 'var(--color-surface-container-lowest)',
+                      letterSpacing: '-0.03em'
+                    }}
+                  >
+                    {trackRecordMetrics[0]?.value || '10+'}
+                  </span>
+                  <span
+                    className="font-label-mono-sm"
+                    style={{
+                      color: '#7AC142',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                      fontWeight: '600'
+                    }}
+                  >
+                    {trackRecordMetrics[0]?.badge || 'Active Years'}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    width: '4rem',
+                    height: '4px',
+                    backgroundColor: '#7AC142',
+                    marginBottom: '1.5rem',
+                    borderRadius: 'var(--radius-full)'
                   }}
                 />
-              </div>
-
-              {/* Top Meta Row */}
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-sm)' }}>
-                <span
+                <h3
+                  className="font-headline-sm"
                   style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    padding: '0.25rem 0.75rem',
-                    borderRadius: '9999px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                    backdropFilter: 'blur(12px)',
-                    color: 'var(--color-on-surface)',
-                    fontSize: '11px',
-                    fontWeight: '600',
-                    letterSpacing: '0.08em',
-                    textTransform: 'uppercase',
-                    boxShadow: 'var(--shadow-sm)'
+                    color: 'var(--color-surface-bright)',
+                    fontWeight: '700',
+                    marginBottom: '0.5rem'
                   }}
                 >
-                  <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ef4444', animation: 'pulse 1.5s infinite' }} />
-                  <span>SHOWREEL 2024–2025 • SPATIAL &amp; CINEMATIC DESIGN</span>
-                </span>
-
-                <span
-                  style={{
-                    padding: '0.25rem 0.75rem',
-                    borderRadius: '9999px',
-                    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                    backdropFilter: 'blur(8px)',
-                    color: '#ffffff',
-                    fontSize: '11px',
-                    fontWeight: '600',
-                    letterSpacing: '0.06em'
-                  }}
+                  {trackRecordMetrics[0]?.title || 'Years of Industry Experience'}
+                </h3>
+                <p
+                  className="font-body-sm"
+                  style={{ color: 'var(--color-outline-variant)', lineHeight: 1.6 }}
                 >
-                  03:42 MIN / 4K UHD
-                </span>
+                  {trackRecordMetrics[0]?.desc}
+                </p>
               </div>
 
-              {/* Center Glowing Frosted Play Trigger */}
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 'var(--space-md) 0' }}>
-                <button
-                  type="button"
-                  aria-label="Putar Showreel"
-                  onClick={() => setIsPlayingShowreel(true)}
+              <div
+                style={{
+                  marginTop: '2rem',
+                  paddingTop: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.5rem',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  color: 'var(--color-secondary-fixed)'
+                }}
+                className="font-label-mono-sm"
+              >
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Briefcase size={15} color="#7AC142" />
+                  <span>{trackRecordMetrics[0]?.footerText || `Est. 2014 — ${locationLabel}`}</span>
+                </span>
+                <ArrowRight size={15} color="#7AC142" />
+              </div>
+            </div>
+
+            {/* Metric 2: Global Awards & Selections */}
+            <div
+              className="card-motion"
+              onClick={() => {
+                if (onOpenDetailModal) {
+                  onOpenDetailModal({
+                    title: trackRecordMetrics[1]?.title || 'Global Awards & Festival Selections',
+                    category: `${(trackRecordMetrics[1]?.badge || 'HONORS').toUpperCase()} • TRACK RECORD`,
+                    description: trackRecordMetrics[1]?.desc,
+                    specs: trackRecordMetrics[1]?.modalSpecs || DEFAULT_TRACK_RECORD_METRICS[1].modalSpecs,
+                    image: spotlightProjects[0]?.image || DEFAULT_SPOTLIGHT_PROJECTS[0].image,
+                    tags: [`${trackRecordMetrics[1]?.value || '42'} ${(trackRecordMetrics[1]?.badge || 'HONORS').toUpperCase()}`, 'INTERNATIONAL CURATION']
+                  });
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && onOpenDetailModal) {
+                  e.preventDefault();
+                  onOpenDetailModal({
+                    title: trackRecordMetrics[1]?.title || 'Global Awards & Festival Selections',
+                    category: `${(trackRecordMetrics[1]?.badge || 'HONORS').toUpperCase()} • TRACK RECORD`,
+                    description: trackRecordMetrics[1]?.desc,
+                    specs: trackRecordMetrics[1]?.modalSpecs || DEFAULT_TRACK_RECORD_METRICS[1].modalSpecs,
+                    image: spotlightProjects[0]?.image || DEFAULT_SPOTLIGHT_PROJECTS[0].image,
+                    tags: [`${trackRecordMetrics[1]?.value || '42'} ${(trackRecordMetrics[1]?.badge || 'HONORS').toUpperCase()}`, 'INTERNATIONAL CURATION']
+                  });
+                }
+              }}
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                padding: '2rem',
+                borderRadius: 'var(--radius-3xl)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                cursor: 'pointer'
+              }}
+            >
+              <div>
+                <div
                   style={{
-                    position: 'relative',
-                    width: '80px',
-                    height: '80px',
-                    borderRadius: '50%',
-                    backgroundColor: 'rgba(255, 255, 255, 0.85)',
-                    backdropFilter: 'blur(16px)',
-                    color: '#000000',
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    boxShadow: 'var(--shadow-xl)',
-                    border: 'none',
-                    cursor: 'pointer',
-                    transition: 'transform 300ms ease'
+                    alignItems: 'baseline',
+                    justifyContent: 'space-between',
+                    marginBottom: '1rem'
                   }}
-                  className="play-btn"
                 >
                   <span
+                    className="font-display-xl"
                     style={{
-                      position: 'absolute',
-                      inset: 0,
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(255, 255, 255, 0.4)',
-                      animation: 'pingGlow 2s infinite',
-                      pointerEvents: 'none'
-                    }}
-                  />
-                  <span className="material-symbols-outlined" style={{ fontSize: '36px', fontVariationSettings: "'FILL' 1" }}>
-                    play_arrow
-                  </span>
-                </button>
-              </div>
-
-              {/* Bottom Summary Strip */}
-              <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end', justifyContent: 'space-between', gap: 'var(--space-sm)' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', color: '#ffffff' }}>
-                  <span style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.7)' }}>
-                    STUDIO HIGHLIGHT
-                  </span>
-                  <h3
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '26px',
-                      lineHeight: '32px',
-                      fontWeight: '700',
-                      letterSpacing: '-0.02em',
-                      margin: '4px 0 0 0'
+                      fontWeight: '800',
+                      color: 'var(--color-surface-container-lowest)',
+                      letterSpacing: '-0.03em'
                     }}
                   >
-                    Kinetika Spasial &amp; Narasi Visual
-                  </h3>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span
-                    style={{
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '9999px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      backdropFilter: 'blur(12px)',
-                      color: '#ffffff',
-                      fontSize: '12px',
-                      fontWeight: '500'
-                    }}
-                  >
-                    Direction
+                    {trackRecordMetrics[1]?.value || '42'}
                   </span>
                   <span
+                    className="font-label-mono-sm"
                     style={{
-                      padding: '0.25rem 0.75rem',
-                      borderRadius: '9999px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                      backdropFilter: 'blur(12px)',
-                      color: '#ffffff',
-                      fontSize: '12px',
-                      fontWeight: '500'
+                      color: '#7AC142',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                      fontWeight: '600'
                     }}
                   >
-                    CGI Architecture
+                    {trackRecordMetrics[1]?.badge || 'Honors'}
                   </span>
                 </div>
+                <div
+                  style={{
+                    width: '4rem',
+                    height: '4px',
+                    backgroundColor: '#7AC142',
+                    marginBottom: '1.5rem',
+                    borderRadius: 'var(--radius-full)'
+                  }}
+                />
+                <h3
+                  className="font-headline-sm"
+                  style={{
+                    color: 'var(--color-surface-bright)',
+                    fontWeight: '700',
+                    marginBottom: '0.5rem'
+                  }}
+                >
+                  {trackRecordMetrics[1]?.title || 'Global Awards & Selections'}
+                </h3>
+                <p
+                  className="font-body-sm"
+                  style={{ color: 'var(--color-outline-variant)', lineHeight: 1.6 }}
+                >
+                  {trackRecordMetrics[1]?.desc}
+                </p>
               </div>
-            </article>
 
-            {/* Metric Trio Bento Cards Row (3 Cards) */}
+              <div
+                style={{
+                  marginTop: '2rem',
+                  paddingTop: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.5rem',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  color: 'var(--color-secondary-fixed)'
+                }}
+                className="font-label-mono-sm"
+              >
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Award size={15} color="#ED1C24" />
+                  <span>{trackRecordMetrics[1]?.footerText || 'Cannes Shortlist, Citra Pariwara Gold'}</span>
+                </span>
+                <ArrowUpRight size={15} color="#7AC142" />
+              </div>
+            </div>
+
+            {/* Metric 3: Commercial & Editorial Scale Projects */}
+            <div
+              className="card-motion"
+              onClick={(e) => scrollToSection(e, 'recent-work')}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') scrollToSection(e, 'recent-work');
+              }}
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.08)',
+                padding: '2rem',
+                borderRadius: 'var(--radius-3xl)',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'space-between',
+                cursor: 'pointer'
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    justifyContent: 'space-between',
+                    marginBottom: '1rem'
+                  }}
+                >
+                  <span
+                    className="font-display-xl"
+                    style={{
+                      fontWeight: '800',
+                      color: 'var(--color-surface-container-lowest)',
+                      letterSpacing: '-0.03em'
+                    }}
+                  >
+                    {trackRecordMetrics[2]?.value || '180+'}
+                  </span>
+                  <span
+                    className="font-label-mono-sm"
+                    style={{
+                      color: '#7AC142',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                      fontWeight: '600'
+                    }}
+                  >
+                    {trackRecordMetrics[2]?.badge || 'Released Portfolio'}
+                  </span>
+                </div>
+                <div
+                  style={{
+                    width: '4rem',
+                    height: '4px',
+                    backgroundColor: '#7AC142',
+                    marginBottom: '1.5rem',
+                    borderRadius: 'var(--radius-full)'
+                  }}
+                />
+                <h3
+                  className="font-headline-sm"
+                  style={{
+                    color: 'var(--color-surface-bright)',
+                    fontWeight: '700',
+                    marginBottom: '0.5rem'
+                  }}
+                >
+                  {trackRecordMetrics[2]?.title || 'Commercial & Editorial Scale'}
+                </h3>
+                <p
+                  className="font-body-sm"
+                  style={{ color: 'var(--color-outline-variant)', lineHeight: 1.6 }}
+                >
+                  {trackRecordMetrics[2]?.desc}
+                </p>
+              </div>
+
+              <div
+                style={{
+                  marginTop: '2rem',
+                  paddingTop: '1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '0.5rem',
+                  borderTop: '1px solid rgba(255, 255, 255, 0.08)',
+                  color: 'var(--color-secondary-fixed)'
+                }}
+                className="font-label-mono-sm"
+              >
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <Layers size={15} color="#38BDF8" />
+                  <span>
+                    {trackRecordMetrics[2]?.footerText
+                      ? trackRecordMetrics[2].footerText
+                      : `${projects.length} Featured in Curated Archive`}
+                  </span>
+                </span>
+                <ArrowRight size={15} color="#7AC142" />
+              </div>
+            </div>
+          </div>
+
+          {/* Film & Brand Identity Spotlight (Moved below Track Record Summary) */}
+          <div
+            onMouseEnter={() => setIsHoveringSpotlight(true)}
+            onMouseLeave={() => setIsHoveringSpotlight(false)}
+            style={{
+              marginTop: '3.5rem',
+              paddingTop: '2.5rem',
+              borderTop: '1px solid rgba(255, 255, 255, 0.08)'
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                color: 'var(--color-outline-variant)',
+                marginBottom: '0.75rem'
+              }}
+            >
+              <span
+                className="font-label-mono-sm"
+                style={{
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  color: 'var(--color-secondary-fixed)'
+                }}
+              >
+                {trackRecordHeader.spotlightLabel || 'Film & Brand Identity Spotlight'}
+              </span>
+              <span className="font-label-mono-sm" id="hero-slider-counter" style={{ fontWeight: '600' }}>
+                0{activeSpotlight + 1} / 0{spotlightProjects.length}
+              </span>
+            </div>
+
             <div
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                gap: 'var(--space-md)'
+                gap: '0.75rem'
               }}
             >
-              {/* Metric Card 1: Mint Green */}
-              <article
-                style={{
-                  padding: 'var(--space-lg)',
-                  borderRadius: 'var(--radius-xl)',
-                  backgroundColor: 'var(--color-tertiary-fixed)',
-                  color: 'var(--color-on-tertiary-fixed)',
-                  boxShadow: 'var(--shadow-sm)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  minHeight: '220px'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-on-tertiary-fixed-variant)' }}>
-                    PORTOFOLIO
-                  </span>
-                  <span
-                    style={{
-                      padding: '2px 8px',
-                      borderRadius: '9999px',
-                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
-                      color: 'var(--color-on-surface)',
-                      fontSize: '10px',
-                      fontWeight: '600'
+              {spotlightProjects.map((p, idx) => {
+                const isActive = activeSpotlight === idx;
+                return (
+                  <button
+                    key={p.id || idx}
+                    type="button"
+                    onMouseEnter={() => setActiveSpotlight(idx)}
+                    onClick={() => {
+                      setActiveSpotlight(idx);
+                      handleInspectProject(p);
                     }}
+                    style={{
+                      textAlign: 'left',
+                      padding: '0.95rem 1rem',
+                      borderRadius: 'var(--radius-xl)',
+                      backgroundColor: isActive
+                        ? 'rgba(255, 255, 255, 0.1)'
+                        : 'rgba(255, 255, 255, 0.04)',
+                      border: isActive
+                        ? '1px solid #ED1C24'
+                        : '1px solid rgba(255, 255, 255, 0.08)',
+                      cursor: 'pointer',
+                      transition: 'all 300ms ease',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
+                    }}
+                    className="group"
                   >
-                    +24% YoY
-                  </span>
-                </div>
+                    <div>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '0.4rem',
+                          marginBottom: '0.4rem'
+                        }}
+                      >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', minWidth: 0 }}>
+                          <span
+                            style={{
+                              width: '7px',
+                              height: '7px',
+                              borderRadius: '50%',
+                              flexShrink: 0,
+                              backgroundColor: isActive ? '#ED1C24' : 'rgba(194, 198, 211, 0.4)',
+                              transition: 'background-color 200ms ease'
+                            }}
+                          />
+                          <span
+                            className="font-label-mono-sm"
+                            style={{
+                              fontSize: '10px',
+                              color: isActive ? '#ffdad6' : 'var(--color-outline-variant)',
+                              fontWeight: '600',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.04em',
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
+                            0{idx + 1} • {p.category}
+                          </span>
+                        </div>
+                        {isActive && (
+                          <span
+                            className="font-label-mono-sm"
+                            style={{
+                              fontSize: '9px',
+                              color: '#7AC142',
+                              fontWeight: '700',
+                              flexShrink: 0,
+                              letterSpacing: '0.04em'
+                            }}
+                          >
+                            OPEN ↗
+                          </span>
+                        )}
+                      </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', margin: 'var(--space-xs) 0' }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '56px', lineHeight: '56px', fontWeight: '800', letterSpacing: '-0.03em', color: 'var(--color-on-tertiary-fixed)' }}>
-                    120+
-                  </span>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '600', marginTop: '4px' }}>
-                    Proyek Komersial
-                  </span>
-                </div>
+                      <p
+                        className="font-body-sm"
+                        style={{
+                          color: isActive
+                            ? 'var(--color-surface-container-lowest)'
+                            : 'var(--color-outline-variant)',
+                          fontWeight: isActive ? '700' : '500',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          margin: 0
+                        }}
+                      >
+                        {p.title}
+                      </p>
+                    </div>
 
-                <p style={{ fontSize: '13px', lineHeight: '18px', color: 'var(--color-on-tertiary-fixed-variant)', margin: 0 }}>
-                  Skala korporasi internasional &amp; rintisan teknologi tier-1.
-                </p>
-              </article>
-
-              {/* Metric Card 2: Soft Violet/Lilac */}
-              <article
-                style={{
-                  padding: 'var(--space-lg)',
-                  borderRadius: 'var(--radius-xl)',
-                  backgroundColor: 'var(--color-secondary-fixed-dim)',
-                  color: 'var(--color-on-secondary-fixed)',
-                  boxShadow: 'var(--shadow-sm)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  minHeight: '220px'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-on-secondary-fixed-variant)' }}>
-                    REKOGNISI
-                  </span>
-                  <span className="material-symbols-outlined" style={{ fontSize: '20px', color: 'var(--color-secondary)', fontVariationSettings: "'FILL' 1" }}>
-                    emoji_events
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', margin: 'var(--space-xs) 0' }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '56px', lineHeight: '56px', fontWeight: '800', letterSpacing: '-0.03em', color: 'var(--color-on-secondary-fixed)' }}>
-                    35+
-                  </span>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '600', marginTop: '4px' }}>
-                    Penghargaan Global
-                  </span>
-                </div>
-
-                <p style={{ fontSize: '13px', lineHeight: '18px', color: 'var(--color-on-secondary-fixed-variant)', margin: 0 }}>
-                  Termasuk rekognisi Cannes Lions &amp; D&amp;AD Graphite Pencils.
-                </p>
-              </article>
-
-              {/* Metric Card 3: Warm Peach */}
-              <article
-                style={{
-                  padding: 'var(--space-lg)',
-                  borderRadius: 'var(--radius-xl)',
-                  backgroundColor: 'var(--color-peach-bg)',
-                  color: 'var(--color-peach-text)',
-                  boxShadow: 'var(--shadow-sm)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  minHeight: '220px'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                  <span style={{ fontSize: '11px', fontWeight: '600', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#9A3412' }}>
-                    JAM TERBANG
-                  </span>
-                  <span className="material-symbols-outlined" style={{ fontSize: '20px', color: '#EA580C' }}>
-                    timeline
-                  </span>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', margin: 'var(--space-xs) 0' }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '56px', lineHeight: '56px', fontWeight: '800', letterSpacing: '-0.03em', color: 'var(--color-peach-text)' }}>
-                    10+
-                  </span>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: '20px', fontWeight: '600', marginTop: '4px' }}>
-                    Tahun Pengalaman
-                  </span>
-                </div>
-
-                <p style={{ fontSize: '13px', lineHeight: '18px', color: '#7C2D12', margin: 0 }}>
-                  Kepemimpinan kreatif lintas Asia Pasifik dan Eropa.
-                </p>
-              </article>
+                    <div
+                      style={{
+                        height: '2px',
+                        width: isActive ? '100%' : '0%',
+                        backgroundColor: isActive ? '#ED1C24' : 'var(--color-primary-fixed-dim)',
+                        marginTop: '0.6rem',
+                        borderRadius: 'var(--radius-full)',
+                        transition: 'all 300ms ease'
+                      }}
+                    />
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Showreel Modal / Video Dialog */}
-      {isPlayingShowreel && (
-        <div
-          style={{
-            position: 'fixed',
-            inset: 0,
-            zIndex: 1000,
-            backgroundColor: 'rgba(0, 0, 0, 0.9)',
-            backdropFilter: 'blur(20px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1.5rem'
-          }}
-          onClick={() => setIsPlayingShowreel(false)}
-        >
-          <div
-            style={{
-              position: 'relative',
-              width: '100%',
-              maxWidth: '960px',
-              aspectRatio: '16/9',
-              borderRadius: '1.5rem',
-              overflow: 'hidden',
-              backgroundColor: '#000000',
-              boxShadow: 'var(--shadow-dialog)'
-            }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-              title="Creative Director Showreel"
-              style={{ width: '100%', height: '100%', border: 'none' }}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      )}
+      </section>
 
       <style>{`
-        @media (min-width: 1024px) {
-          .hero-headline-wrapper {
+        @keyframes heroSlideProgress {
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: 100%;
+          }
+        }
+        .hero-slide-progress-fill {
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          height: 100%;
+          background-color: #ED1C24;
+          border-radius: 9999px;
+          animation: heroSlideProgress 3000ms linear forwards;
+        }
+        .hero-content-row {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-between;
+          gap: 2rem;
+          flex: 1;
+          margin: 0;
+          padding: 0;
+          width: 100%;
+        }
+        @media (max-width: 1023px) {
+          .hero-portrait-empty {
+            display: none !important;
+          }
+          .hero-portrait-slot {
+            align-self: center !important;
+          }
+        }
+        @media (min-width: 768px) {
+          .hidden-mobile {
+            display: flex !important;
+          }
+          .md-row-header {
             flex-direction: row !important;
             align-items: flex-end !important;
           }
-          .bento-main-grid {
-            grid-template-columns: repeat(12, 1fr) !important;
-          }
-          .desktop-rail {
-            display: flex !important;
-            grid-column: span 1 !important;
-          }
-          .profile-bento-card {
-            grid-column: span 4 !important;
-          }
-          .showreel-metrics-stack {
-            grid-column: span 7 !important;
+          .md-text-right {
+            text-align: right !important;
           }
         }
-        @media (max-width: 1023px) {
-          .desktop-rail {
-            display: none !important;
+        @media (min-width: 1024px) {
+          .hero-content-row {
+            flex-direction: row;
+            align-items: stretch;
           }
-          .profile-bento-card {
-            grid-column: span 12 !important;
-          }
-          .showreel-metrics-stack {
-            grid-column: span 12 !important;
-          }
-        }
-        .showreel-card:hover .showreel-img {
-          transform: scale(1.05);
-        }
-        .play-btn:hover {
-          transform: scale(1.1);
         }
       `}</style>
-    </section>
+    </>
   );
 }

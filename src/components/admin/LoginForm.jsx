@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Mail, AlertCircle, ArrowLeft, ShieldCheck, Eye, EyeOff, Zap, CheckCircle2 } from 'lucide-react';
+import { Lock, Mail, AlertCircle, ArrowLeft, ShieldCheck, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 
 export function LoginForm({ onLogin, onBackToSite }) {
   const [email, setEmail] = useState('');
@@ -45,63 +45,61 @@ export function LoginForm({ onLogin, onBackToSite }) {
         alignItems: 'center',
         justifyContent: 'center',
         padding: 'var(--space-md)',
-        backgroundColor: '#f9f9fb',
-        overflow: 'hidden'
+        backgroundColor: '#071320',
+        overflow: 'hidden',
+        fontFamily: 'var(--font-body)'
       }}
     >
-      {/* Background Ambient Pastel Halos */}
+      {/* Stitch Ambient Architectural Lighting Scrims */}
       <div
         style={{
           position: 'absolute',
-          top: '15%',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: '540px',
-          height: '540px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(229, 222, 255, 0.6) 0%, rgba(220, 213, 253, 0.2) 45%, transparent 70%)',
+          inset: 0,
           pointerEvents: 'none',
-          filter: 'blur(50px)',
-          zIndex: 0
-        }}
-      />
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '10%',
-          right: '15%',
-          width: '360px',
-          height: '360px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(195, 236, 215, 0.4) 0%, transparent 65%)',
-          pointerEvents: 'none',
-          filter: 'blur(45px)',
+          opacity: 0.55,
+          backgroundImage:
+            'radial-gradient(circle at 20% 25%, rgba(0, 82, 155, 0.5), transparent 60%), radial-gradient(circle at 85% 75%, rgba(168, 0, 16, 0.3), transparent 55%)',
           zIndex: 0
         }}
       />
 
-      {/* Login Card */}
+      {/* Precision 4rem Architectural Grid Overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          opacity: 0.18,
+          backgroundImage:
+            'linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px)',
+          backgroundSize: '4rem 4rem',
+          zIndex: 0
+        }}
+      />
+
+      {/* Login Card (Stitch Enterprise Surface) */}
       <div
         style={{
           position: 'relative',
           zIndex: 1,
           width: '100%',
-          maxWidth: '440px',
+          maxWidth: '450px',
           padding: '2.5rem',
-          borderRadius: '1.5rem',
-          backgroundColor: '#ffffff',
-          border: '1px solid rgba(0, 0, 0, 0.08)',
-          boxShadow: '0 20px 40px -10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04)',
+          borderRadius: 'var(--radius-3xl)',
+          backgroundColor: 'var(--color-surface-lowest)',
+          border: '1px solid rgba(194, 198, 211, 0.35)',
+          boxShadow: 'var(--shadow-2xl)',
           display: 'flex',
           flexDirection: 'column',
           gap: '1.5rem'
         }}
       >
-        {/* Top Bar: Return to public site */}
+        {/* Top Bar: Return to public site & Status Pill */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <button
             type="button"
             onClick={onBackToSite}
+            className="font-label-mono-sm"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -109,20 +107,22 @@ export function LoginForm({ onLogin, onBackToSite }) {
               fontSize: '11px',
               fontWeight: '600',
               color: 'var(--color-on-surface-variant)',
-              backgroundColor: 'var(--color-surface-container-low)',
-              border: 'none',
-              padding: '0.35rem 0.85rem',
-              borderRadius: '9999px',
-              transition: 'all 150ms ease',
+              backgroundColor: 'var(--color-surface-container)',
+              border: '1px solid rgba(194, 198, 211, 0.4)',
+              padding: '0.4rem 0.9rem',
+              borderRadius: 'var(--radius-full)',
+              transition: 'all 200ms ease',
               cursor: 'pointer'
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = '#000000';
-              e.currentTarget.style.backgroundColor = 'var(--color-surface-container)';
+              e.currentTarget.style.color = '#ffffff';
+              e.currentTarget.style.backgroundColor = 'var(--color-primary-container)';
+              e.currentTarget.style.borderColor = 'var(--color-primary-container)';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.color = 'var(--color-on-surface-variant)';
-              e.currentTarget.style.backgroundColor = 'var(--color-surface-container-low)';
+              e.currentTarget.style.backgroundColor = 'var(--color-surface-container)';
+              e.currentTarget.style.borderColor = 'rgba(194, 198, 211, 0.4)';
             }}
           >
             <ArrowLeft size={13} />
@@ -130,69 +130,93 @@ export function LoginForm({ onLogin, onBackToSite }) {
           </button>
 
           <div
+            className="font-label-mono-sm"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '5px',
+              gap: '6px',
               fontSize: '10px',
               fontWeight: '700',
-              letterSpacing: '0.08em',
+              letterSpacing: '0.06em',
               textTransform: 'uppercase',
-              color: 'var(--color-on-secondary-fixed)',
+              color: 'var(--color-primary)',
               backgroundColor: 'var(--color-secondary-container)',
-              padding: '0.25rem 0.65rem',
-              borderRadius: '9999px'
+              padding: '0.3rem 0.75rem',
+              borderRadius: 'var(--radius-full)'
             }}
           >
+            <span
+              className="beacon-ping"
+              style={{
+                width: '7px',
+                height: '7px',
+                borderRadius: '50%',
+                backgroundColor: '#7AC142',
+                display: 'inline-block'
+              }}
+            />
             <ShieldCheck size={12} />
-            <span>Admin Portal</span>
+            <span>Atelier CMS</span>
           </div>
         </div>
 
         {/* Brand Header */}
         <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div
+            className="font-label-mono-lg"
             style={{
               width: '56px',
               height: '56px',
-              borderRadius: '1rem',
-              backgroundColor: '#000000',
+              borderRadius: 'var(--radius-xl)',
+              backgroundColor: 'var(--color-primary-container)',
               color: '#ffffff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              fontFamily: 'var(--font-display)',
-              fontWeight: '800',
+              fontWeight: '700',
               fontSize: '18px',
-              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.15)',
+              boxShadow: 'var(--shadow-md)',
               marginBottom: '0.85rem'
             }}
           >
             PS
           </div>
 
-          <h1
+          <span
+            className="font-label-mono-sm"
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: '24px',
+              color: 'var(--color-primary-container)',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              fontWeight: '600',
+              marginBottom: '0.25rem'
+            }}
+          >
+            ENTERPRISE STUDIO SYSTEM
+          </span>
+
+          <h1
+            className="font-headline-md"
+            style={{
+              fontSize: '26px',
               fontWeight: '800',
-              letterSpacing: '-0.02em',
-              color: '#000000',
+              letterSpacing: '-0.025em',
+              color: 'var(--color-on-surface)',
               margin: 0
             }}
           >
             Admin Portal
           </h1>
           <p
+            className="font-body-sm"
             style={{
-              fontSize: '13px',
               color: 'var(--color-on-surface-variant)',
               marginTop: '6px',
-              lineHeight: 1.5,
-              maxWidth: '320px'
+              lineHeight: 1.55,
+              maxWidth: '330px'
             }}
           >
-            Silakan masukkan kredensial administrator Anda untuk mengelola portofolio.
+            Silakan masukkan kredensial administrator Anda untuk mengelola arsitektur portofolio.
           </p>
         </div>
 
@@ -201,30 +225,32 @@ export function LoginForm({ onLogin, onBackToSite }) {
           <div
             style={{
               padding: '0.75rem 1rem',
-              borderRadius: '0.75rem',
-              backgroundColor: '#fef2f2',
-              border: '1px solid #fecaca',
-              color: '#b91c1c',
+              borderRadius: 'var(--radius-lg)',
+              backgroundColor: 'var(--color-tertiary-fixed)',
+              border: '1px solid rgba(168, 0, 16, 0.25)',
+              color: 'var(--color-tertiary)',
               fontSize: '12px',
+              fontWeight: '600',
               display: 'flex',
               alignItems: 'center',
               gap: '8px'
             }}
           >
-            <AlertCircle size={16} style={{ flexShrink: 0 }} />
+            <AlertCircle size={16} style={{ flexShrink: 0, color: '#ED1C24' }} />
             <span style={{ lineHeight: 1.4 }}>{errorMsg}</span>
           </div>
         )}
 
         {/* Form Fields */}
-        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
           <div>
             <label
+              className="font-label-mono-sm"
               style={{
                 display: 'block',
                 fontSize: '11px',
                 fontWeight: '700',
-                color: 'var(--color-on-surface-variant)',
+                color: 'var(--color-secondary)',
                 marginBottom: '6px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em'
@@ -235,8 +261,8 @@ export function LoginForm({ onLogin, onBackToSite }) {
             <div style={{ position: 'relative' }}>
               <Mail
                 size={16}
-                color="var(--color-outline)"
-                style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+                color="var(--color-secondary)"
+                style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
               />
               <input
                 type="email"
@@ -247,22 +273,24 @@ export function LoginForm({ onLogin, onBackToSite }) {
                 autoComplete="email"
                 style={{
                   width: '100%',
-                  padding: '0.75rem 0.85rem 0.75rem 2.4rem',
+                  padding: '0.8rem 0.9rem 0.8rem 2.5rem',
                   fontSize: '13px',
-                  borderRadius: '0.75rem',
-                  border: '1px solid var(--color-surface-container-high)',
-                  backgroundColor: 'var(--color-surface-container-low)',
+                  borderRadius: 'var(--radius-lg)',
+                  border: '1px solid rgba(194, 198, 211, 0.6)',
+                  backgroundColor: 'var(--color-surface-low)',
                   color: 'var(--color-on-surface)',
                   outline: 'none',
-                  transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
+                  transition: 'all 0.2s ease'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#000000';
+                  e.target.style.borderColor = 'var(--color-primary-container)';
                   e.target.style.backgroundColor = '#ffffff';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(0, 82, 155, 0.12)';
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = 'var(--color-surface-container-high)';
-                  e.target.style.backgroundColor = 'var(--color-surface-container-low)';
+                  e.target.style.borderColor = 'rgba(194, 198, 211, 0.6)';
+                  e.target.style.backgroundColor = 'var(--color-surface-low)';
+                  e.target.style.boxShadow = 'none';
                 }}
               />
             </div>
@@ -270,11 +298,12 @@ export function LoginForm({ onLogin, onBackToSite }) {
 
           <div>
             <label
+              className="font-label-mono-sm"
               style={{
                 display: 'block',
                 fontSize: '11px',
                 fontWeight: '700',
-                color: 'var(--color-on-surface-variant)',
+                color: 'var(--color-secondary)',
                 marginBottom: '6px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em'
@@ -285,8 +314,8 @@ export function LoginForm({ onLogin, onBackToSite }) {
             <div style={{ position: 'relative' }}>
               <Lock
                 size={16}
-                color="var(--color-outline)"
-                style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
+                color="var(--color-secondary)"
+                style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}
               />
               <input
                 type={showPassword ? 'text' : 'password'}
@@ -297,22 +326,24 @@ export function LoginForm({ onLogin, onBackToSite }) {
                 autoComplete="current-password"
                 style={{
                   width: '100%',
-                  padding: '0.75rem 2.4rem 0.75rem 2.4rem',
+                  padding: '0.8rem 2.5rem 0.8rem 2.5rem',
                   fontSize: '13px',
-                  borderRadius: '0.75rem',
-                  border: '1px solid var(--color-surface-container-high)',
-                  backgroundColor: 'var(--color-surface-container-low)',
+                  borderRadius: 'var(--radius-lg)',
+                  border: '1px solid rgba(194, 198, 211, 0.6)',
+                  backgroundColor: 'var(--color-surface-low)',
                   color: 'var(--color-on-surface)',
                   outline: 'none',
-                  transition: 'border-color 0.2s ease, box-shadow 0.2s ease'
+                  transition: 'all 0.2s ease'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#000000';
+                  e.target.style.borderColor = 'var(--color-primary-container)';
                   e.target.style.backgroundColor = '#ffffff';
+                  e.target.style.boxShadow = '0 0 0 3px rgba(0, 82, 155, 0.12)';
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = 'var(--color-surface-container-high)';
-                  e.target.style.backgroundColor = 'var(--color-surface-container-low)';
+                  e.target.style.borderColor = 'rgba(194, 198, 211, 0.6)';
+                  e.target.style.backgroundColor = 'var(--color-surface-low)';
+                  e.target.style.boxShadow = 'none';
                 }}
               />
               <button
@@ -325,7 +356,7 @@ export function LoginForm({ onLogin, onBackToSite }) {
                   transform: 'translateY(-50%)',
                   background: 'none',
                   border: 'none',
-                  color: 'var(--color-outline)',
+                  color: 'var(--color-secondary)',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
@@ -340,35 +371,40 @@ export function LoginForm({ onLogin, onBackToSite }) {
           <button
             type="submit"
             disabled={loading}
+            className="font-label-mono-sm"
             style={{
               width: '100%',
               marginTop: '8px',
-              padding: '0.85rem 1.25rem',
-              borderRadius: '0.75rem',
-              backgroundColor: '#000000',
+              padding: '0.9rem 1.5rem',
+              borderRadius: 'var(--radius-full)',
+              backgroundColor: 'var(--color-primary-container)',
               color: '#ffffff',
-              fontSize: '13px',
+              fontSize: '12px',
               fontWeight: '700',
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
               border: 'none',
               cursor: loading ? 'not-allowed' : 'pointer',
               opacity: loading ? 0.75 : 1,
-              transition: 'all 150ms ease',
+              transition: 'all 250ms ease',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
-              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.15)'
+              boxShadow: 'var(--shadow-lg)'
             }}
             onMouseEnter={(e) => {
               if (!loading) {
-                e.currentTarget.style.backgroundColor = '#262629';
-                e.currentTarget.style.transform = 'translateY(-1px)';
+                e.currentTarget.style.backgroundColor = 'var(--color-primary)';
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-xl)';
               }
             }}
             onMouseLeave={(e) => {
               if (!loading) {
-                e.currentTarget.style.backgroundColor = '#000000';
+                e.currentTarget.style.backgroundColor = 'var(--color-primary-container)';
                 e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
               }
             }}
           >
@@ -379,17 +415,20 @@ export function LoginForm({ onLogin, onBackToSite }) {
 
         {/* Security badge footer */}
         <div
+          className="font-label-mono-sm"
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             gap: '6px',
             fontSize: '11px',
-            color: 'var(--color-on-surface-variant)'
+            color: 'var(--color-secondary)',
+            paddingTop: '0.25rem',
+            borderTop: '1px solid rgba(194, 198, 211, 0.25)'
           }}
         >
-          <CheckCircle2 size={13} color="#10b981" />
-          <span>Sesi terenkripsi & dilindungi Supabase Auth</span>
+          <CheckCircle2 size={14} color="#7AC142" />
+          <span>ISO 27001 Aligned • Terlindungi Supabase Auth</span>
         </div>
       </div>
     </div>

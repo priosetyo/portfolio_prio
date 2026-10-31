@@ -1,551 +1,1025 @@
-<!DOCTYPE html><html lang="id" style=""><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Syne:wght@600;700;800&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"secondary-fixed":"#e5deff","tertiary-container":"#002115","on-tertiary-container":"#668c7a","on-primary-fixed":"#1b1b1d","inverse-on-surface":"#f0f0f2","error-container":"#ffdad6","surface":"#f9f9fb","on-tertiary-fixed-variant":"#294e3f","inverse-surface":"#2f3132","tertiary-fixed-dim":"#a8cfbc","background":"#f9f9fb","surface-dim":"#d9dadc","surface-container-low":"#f3f3f5","on-secondary":"#ffffff","tertiary":"#000000","inverse-primary":"#c8c6c8","secondary-fixed-dim":"#c8c2e9","primary":"#000000","on-secondary-container":"#605b7d","surface-tint":"#5f5e60","error":"#ba1a1a","on-error":"#ffffff","primary-fixed":"#e5e1e4","surface-container-high":"#e8e8ea","on-secondary-fixed-variant":"#474363","on-tertiary":"#ffffff","on-background":"#1a1c1d","secondary":"#5f5a7c","on-tertiary-fixed":"#002115","surface-variant":"#e2e2e4","primary-fixed-dim":"#c8c6c8","secondary-container":"#dcd5fd","tertiary-fixed":"#c3ecd7","on-error-container":"#93000a","surface-bright":"#f9f9fb","on-surface-variant":"#47464a","on-primary":"#ffffff","on-secondary-fixed":"#1b1735","outline":"#77767b","primary-container":"#1b1b1d","surface-container-lowest":"#ffffff","on-surface":"#1a1c1d","on-primary-container":"#858386","surface-container":"#edeef0","on-primary-fixed-variant":"#474649","surface-container-highest":"#e2e2e4","outline-variant":"#c8c6ca"},borderRadius:{"DEFAULT":"1rem","lg":"2rem","xl":"3rem","full":"9999px"},spacing:{"space-xl":"3rem","margin":"1.25rem","space-lg":"2rem","gutter":"1.25rem","space-xs":"0.375rem","space-sm":"0.75rem","space-md":"1.25rem","gutter-desktop":"1.5rem","margin-desktop":"3rem"},fontFamily:{"label-caps":["Inter"],"stat-display":["Syne"],"display-xl":["Syne"],"label-sm":["Inter"],"headline-lg-mobile":["Syne"],"headline-lg":["Syne"],"display-xl-mobile":["Syne"],"headline-sm":["Syne"],"headline-md":["Syne"],"body-lg":["Inter"],"body-md":["Inter"],"body-sm":["Inter"]},fontSize:{"label-caps":["11px",{"lineHeight":"14px","letterSpacing":"0.08em","fontWeight":"600"}],"stat-display":["56px",{"lineHeight":"56px","letterSpacing":"-0.03em","fontWeight":"800"}],"display-xl":["72px",{"lineHeight":"76px","letterSpacing":"-0.04em","fontWeight":"800"}],"label-sm":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"500"}],"headline-lg-mobile":["30px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-lg":["40px",{"lineHeight":"46px","letterSpacing":"-0.03em","fontWeight":"700"}],"display-xl-mobile":["44px",{"lineHeight":"48px","letterSpacing":"-0.03em","fontWeight":"800"}],"headline-sm":["20px",{"lineHeight":"26px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["26px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["18px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"400"}],"body-md":["15px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface antialiased selection:bg-secondary-container selection:text-on-secondary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.03)]"><div class="h-20 max-w-[1440px] mx-auto px-margin lg:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="group flex flex-col" data-path="karya" href="#"><span class="font-label-caps text-label-caps text-on-surface-variant">DIRECTOR © 2025</span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-surface-container-low text-on-surface"><span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span><span class="font-label-caps text-label-caps tracking-wider text-on-surface-variant uppercase">AVAILABLE FOR Q2 PROJECTS</span></div></div><nav class="hidden md:flex items-center gap-1 p-1 rounded-full bg-surface-container-low" data-active-classes="text-on-surface bg-surface-container font-semibold rounded-full"><a aria-current="page" class="px-space-md py-space-xs transition-colors text-on-surface bg-surface-container font-semibold rounded-full" data-path="karya" href="#">Karya</a><a class="px-space-md py-space-xs rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="filosofi" href="#">Filosofi</a><a class="px-space-md py-space-xs rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="toolkit" href="#">Toolkit</a><a class="px-space-md py-space-xs rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="pengalaman" href="#">Pengalaman</a></nav><div class="flex items-center gap-space-sm"><a class="inline-flex items-center justify-center px-space-md py-space-sm rounded-full bg-primary text-on-primary font-label-sm text-label-sm tracking-normal hover:bg-primary-container hover:text-on-primary transition-all duration-200 shadow-[0_2px_0_rgba(18,18,20,0.04)]" data-path="kontak" href="#">Mulai Diskusi</a><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY"></div></div></header><main class="w-full pt-20 bg-background min-h-screen"><div class="flex flex-col w-full">
-<!-- Master Bento Wrapper -->
-<div class="max-w-[1440px] w-full mx-auto px-margin lg:px-margin-desktop py-space-md lg:py-space-lg flex flex-col gap-space-lg">
-<!-- Super Headline & Architectural Statement Bar -->
-<section class="flex flex-col gap-space-sm">
-<div class="flex flex-wrap items-center justify-between gap-space-sm">
-<div class="flex items-center gap-space-xs">
-<span class="inline-flex items-center px-space-sm py-1 rounded-full bg-secondary-container text-on-secondary-fixed font-label-caps text-label-caps uppercase">
-            Curated Index 2025
-          </span>
-<span class="inline-flex items-center px-space-sm py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-caps text-label-caps uppercase">
-            Jakarta (6.2° S) / Tokyo (35.6° N)
-          </span>
-</div>
-<div class="flex items-center gap-space-sm">
-
-<span class="text-outline-variant font-label-sm text-label-sm">•</span>
-
-</div>
-</div>
-<!-- Hero Typography Display -->
-<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-md">
-<div class="flex flex-col">
-
-<h1 class="font-display-xl text-display-xl text-primary tracking-tighter uppercase leading-none">
-            PRIO SETYO
-          </h1>
-</div>
-<div class="flex flex-col sm:flex-row items-start sm:items-center gap-space-md lg:pb-2">
-<div class="flex flex-col">
-<span class="font-headline-sm text-headline-sm text-on-surface">Director &amp; Brand Architect</span>
-<span class="font-body-sm text-body-sm text-on-surface-variant">Translating human tension into resilient design systems</span>
-</div>
-
-</div>
-</div>
-</section>
-<!-- Bento Grid Section with Left Edge Vertical Rail -->
-<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md items-start">
-<!-- Left Rail: Architectural Vertical Nav Strip (Desktop Only) -->
-<aside class="hidden lg:flex lg:col-span-1 flex-col items-center justify-between py-space-lg rounded-3xl bg-surface-container-low min-h-[640px] shadow-sm select-none">
-<div class="flex flex-col items-center gap-2">
-<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-display-xl text-xs font-bold">
-            PS
-          </div>
-<span class="w-1.5 h-1.5 rounded-full bg-tertiary-fixed-dim"></span>
-</div>
-<nav class="flex flex-col items-center gap-space-xl py-space-md">
-<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface hover:text-primary tracking-widest transition-colors py-2" href="#karya-terpilih">
-            Karya
-          </a>
-<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface tracking-widest transition-colors py-2" href="#filosofi-modal" onclick="document.getElementById('dialog-filosofi').showModal()">
-            Filosofi
-          </a>
-<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface tracking-widest transition-colors py-2" href="#toolkit-section">
-            Toolkit
-          </a>
-<a class="[writing-mode:vertical-rl] rotate-180 font-label-caps text-label-caps uppercase text-on-surface-variant hover:text-on-surface tracking-widest transition-colors py-2" href="#pengalaman-section">
-            Pengalaman
-          </a>
-</nav>
-<div class="flex flex-col items-center gap-1 font-label-caps text-label-caps text-on-surface-variant">
-<span class="">01</span>
-<div class="w-0.5 h-8 bg-surface-variant"></div>
-<span class="">05</span>
-</div>
-</aside>
-<!-- Main Profile Bento Card (Lilac Field) -->
-<article class="lg:col-span-4 flex flex-col justify-between p-space-lg rounded-3xl bg-secondary-fixed text-on-secondary-fixed shadow-md relative overflow-hidden min-h-[640px]">
-<!-- Background Ambient Accent Circle -->
-<div class="absolute -right-16 -top-16 w-56 h-56 rounded-full bg-surface-container-lowest/40 pointer-events-none blur-2xl"></div>
-<!-- Top Profile Micro Badges -->
-<div class="flex items-start justify-between relative z-10">
-<div class="inline-flex items-center gap-1 px-space-sm py-1 rounded-full bg-surface-container-lowest text-on-surface font-label-caps text-label-caps shadow-sm">
-<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
-            JAKARTA BASED
-          </div>
-<!-- Sticker Badge -->
-<div class="w-16 h-16 rounded-full bg-primary text-on-primary flex flex-col items-center justify-center text-center p-1 shadow-lg transform rotate-6 hover:rotate-0 transition-transform">
-<span class="text-[10px] leading-tight font-label-caps tracking-tighter">★ TOP ★</span>
-<span class="text-[9px] font-label-caps uppercase tracking-tight text-secondary-fixed">CREATIVE</span>
-<span class="text-[10px] font-headline-sm leading-none font-bold">2025</span>
-</div>
-</div>
-<!-- Center: Profile Portrait & Frame -->
-<div class="flex flex-col items-center text-center my-space-md relative z-10">
-<div class="relative w-40 h-40 rounded-full p-1.5 bg-surface-container-lowest shadow-xl mb-space-md">
-<img alt="Prio Setyo Creative Director" class="w-full h-full object-cover rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDpOtpycEVr4MOXdR1AKcNCANcNvTVsDSJmHh4--o3QuTGlcu9KdCFNYac1HwyfyG6to15QrJ8R22G5cy1OyMRhZSiAA_Yx3IWJXQzq-LmOXl3Uvn2Cx4WEeIRb0jQK7TSboW9ycvAq0mEZnygI6EmxU9BaBz6WcqlXEeg7KRTG3s00S5sf_pZJTtrnFJxvQ4DFCJE22wFdmrlNchqwQ3YZcDPqP9_A5mNytlvjpY">
-<span class="absolute bottom-1 right-2 px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-caps text-[10px]">
-              LEAD
-            </span>
-</div>
-<span class="font-label-caps text-label-caps tracking-widest uppercase text-on-secondary-fixed-variant">CREATIVE DIRECTOR</span>
-<h2 class="font-headline-lg text-headline-lg text-on-secondary-fixed tracking-tight mt-1">
-            I'm Prio Setyo
-          </h2>
-<p class="font-body-md text-body-md text-on-secondary-fixed-variant mt-2 max-w-xs">
-            Merancang identitas visual, kampanye spasial, dan narasi digital untuk jenama global terkemuka.
-          </p>
-</div>
-<!-- Bottom Bio & Micro Info -->
-<div class="flex flex-col gap-space-xs pt-space-sm relative z-10">
-<div class="flex items-center justify-between p-space-sm rounded-2xl bg-surface-container-lowest/80 backdrop-blur-sm">
-<div class="flex items-center gap-space-xs">
-<span class="material-symbols-outlined text-secondary text-lg">mail</span>
-<span class="font-label-sm text-label-sm text-on-surface truncate">prio.setyo@creativestudio.id</span>
-</div>
-<button class="p-1 rounded-full hover:bg-surface-container-high transition-colors" onclick="navigator.clipboard.writeText('prio.setyo@creativestudio.id'); alert('Email disalin ke clipboard!');" title="Copy Email">
-<span class="material-symbols-outlined text-base text-on-surface-variant">content_copy</span>
-</button>
-</div>
-<div class="flex items-center justify-between text-on-secondary-fixed-variant font-label-caps text-label-caps px-2 pt-1">
-<span class="">AVAILABILITY: IMMINENT</span>
-<span class="">TIMEZONE: GMT+7</span>
-</div>
-</div>
-</article>
-<!-- Right Column: Showreel & Metrics Stack -->
-<div class="lg:col-span-7 flex flex-col gap-space-md">
-<!-- Cinematic Showreel Card -->
-<article class="relative w-full rounded-3xl overflow-hidden min-h-[360px] flex flex-col justify-between p-space-lg shadow-md group">
-<!-- Background Image with Scrim -->
-<div class="absolute inset-0 z-0">
-<img alt="Cinematic Architectural Showreel" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA9Bw8naRYvQDN01ucwLtamVgIA7fSRvelaYIR35pGCC4LkMLUtgDaQrwC26rLyCwU_Eft5O0s5tGWFr8Tw3jz7rgfxGxNlfboQ8qQv7FbWwtpIg34o6Cvqu-kqw7IgsDD-N_I56LCfULu8OvSK9ARwqoj5FTKHWm6zl8ECBfv2uZ6TzudafeVPODgn_KRz7uQzpggYxYj4q62HG-Uh2d_UU7UMbgmo3wMqz-zcQY">
-<div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
-</div>
-<!-- Top Meta Row -->
-<div class="relative z-10 flex flex-wrap items-center justify-between gap-space-sm">
-<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md text-on-surface font-label-caps text-label-caps uppercase shadow-sm">
-<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
-              SHOWREEL 2024–2025 • SPATIAL &amp; CINEMATIC DESIGN
-            </span>
-<span class="px-space-sm py-1 rounded-full bg-primary/70 backdrop-blur-sm text-on-primary font-label-caps text-label-caps">
-              03:42 MIN / 4K UHD
-            </span>
-</div>
-<!-- Center Glowing Frosted Play Trigger -->
-<div class="relative z-10 flex items-center justify-center my-space-md">
-<button aria-label="Putar Showreel" class="relative group/play flex items-center justify-center w-20 h-20 rounded-full bg-surface-container-lowest/80 backdrop-blur-md text-primary shadow-2xl hover:scale-110 transition-transform duration-300" onclick="alert('Memutar Creative Director Showreel 2024–2025...')">
-<span class="absolute inset-0 rounded-full bg-surface-container-lowest/40 animate-ping pointer-events-none"></span>
-<span class="material-symbols-outlined text-4xl" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
-</button>
-</div>
-<!-- Bottom Summary Strip -->
-<div class="relative z-10 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-space-sm">
-<div class="flex flex-col text-on-primary">
-<span class="font-label-caps text-label-caps text-surface-variant uppercase tracking-wider">STUDIO HIGHLIGHT</span>
-<h3 class="font-headline-md text-headline-md tracking-tight">Kinetika Spasial &amp; Narasi Visual</h3>
-</div>
-<div class="flex items-center gap-2">
-<span class="px-3 py-1 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
-                Direction
-              </span>
-<span class="px-3 py-1 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-on-primary font-label-sm text-label-sm">
-                CGI Architecture
-              </span>
-</div>
-</div>
-</article>
-<!-- Metric Trio Bento Cards Row -->
-<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md">
-<!-- Metric Card 1: Mint Green -->
-<article class="p-space-lg rounded-3xl bg-tertiary-fixed text-on-tertiary-fixed shadow-sm flex flex-col justify-between min-h-[220px]">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-tertiary-fixed-variant">PORTOFOLIO</span>
-<span class="px-2 py-0.5 rounded-full bg-surface-container-lowest/80 text-on-surface font-label-caps text-[10px]">
-                +24% YoY
-              </span>
-</div>
-<div class="flex flex-col my-space-xs">
-<span class="font-stat-display text-stat-display tracking-tight text-on-tertiary-fixed">120+</span>
-<span class="font-headline-sm text-headline-sm font-semibold mt-1">Proyek Komersial</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-tertiary-fixed-variant">
-              Skala korporasi internasional &amp; rintisan teknologi tier-1.
-            </p>
-</article>
-<!-- Metric Card 2: Soft Violet/Lilac -->
-<article class="p-space-lg rounded-3xl bg-secondary-fixed-dim text-on-secondary-fixed shadow-sm flex flex-col justify-between min-h-[220px]">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-on-secondary-fixed-variant">REKOGNISI</span>
-<span class="material-symbols-outlined text-secondary text-xl" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
-</div>
-<div class="flex flex-col my-space-xs">
-<span class="font-stat-display text-stat-display tracking-tight text-on-secondary-fixed">35+</span>
-<span class="font-headline-sm text-headline-sm font-semibold mt-1">Penghargaan Global</span>
-</div>
-<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant">
-              Termasuk rekognisi Cannes Lions &amp; D&amp;AD Graphite Pencils.
-            </p>
-</article>
-<!-- Metric Card 3: Warm Peach -->
-<article class="p-space-lg rounded-3xl bg-[#FFE8D6] text-[#422006] shadow-sm flex flex-col justify-between min-h-[220px]">
-<div class="flex items-center justify-between">
-<span class="font-label-caps text-label-caps uppercase tracking-wider text-[#9A3412]">JAM TERBANG</span>
-<span class="material-symbols-outlined text-[#EA580C] text-xl">timeline</span>
-</div>
-<div class="flex flex-col my-space-xs">
-<span class="font-stat-display text-stat-display tracking-tight text-[#422006]">10+</span>
-<span class="font-headline-sm text-headline-sm font-semibold mt-1">Tahun Pengalaman</span>
-</div>
-<p class="font-body-sm text-body-sm text-[#7C2D12]">
-              Kepemimpinan kreatif lintas Asia Pasifik dan Eropa.
-            </p>
-</article>
-</div>
-</div>
-</section>
-<!-- Toolkit & Creative Engine (Obsidian Solid Card) -->
-<section class="w-full p-space-lg rounded-3xl bg-primary text-on-primary shadow-xl flex flex-col lg:flex-row items-stretch justify-between gap-space-lg" id="toolkit-section">
-<div class="flex flex-col justify-between lg:max-w-md">
-<div class="flex flex-col gap-2">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-container text-on-primary-container font-label-caps text-label-caps uppercase w-max">
-<span class="w-2 h-2 rounded-full bg-tertiary-fixed animate-pulse"></span>
-            Realtime 3D &amp; Spatial Pipeline
-          </div>
-<h3 class="font-headline-lg text-headline-lg tracking-tight uppercase text-on-primary mt-2">
-            CREATIVE ENGINE &amp; TOOLKIT
-          </h3>
-<p class="font-body-md text-body-md text-on-primary-container">
-            Kombinasi komputasi spasial, tipografi parametrik, dan alur kerja sinematik untuk mewujudkan presisi visual tanpa kompromi.
-          </p>
-</div>
-<div class="pt-space-md flex items-center gap-space-md">
-<div class="flex flex-col">
-<span class="font-stat-display text-2xl font-bold text-on-primary">100%</span>
-<span class="font-label-caps text-label-caps text-on-primary-container uppercase">Fidelity Rate</span>
-</div>
-<div class="h-8 w-px bg-on-primary-container/30"></div>
-<div class="flex flex-col">
-<span class="font-stat-display text-2xl font-bold text-tertiary-fixed">Sub-second</span>
-<span class="font-label-caps text-label-caps text-on-primary-container uppercase">Spatial Iteration</span>
-</div>
-</div>
-</div>
-<!-- Tech Stack Badges Grid -->
-<div class="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-space-sm items-center content-center">
-<!-- Figma -->
-<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
-<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
-            Fg
-          </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-sm font-semibold text-on-primary">Figma</span>
-<span class="font-label-caps text-[10px] text-on-primary-container">Design Systems</span>
-</div>
-</div>
-<!-- Unreal Engine -->
-<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
-<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
-            UE5
-          </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-sm font-semibold text-on-primary">Unreal 5.4</span>
-<span class="font-label-caps text-[10px] text-on-primary-container">Real-time Sets</span>
-</div>
-</div>
-<!-- Blender -->
-<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
-<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
-            Bl
-          </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-sm font-semibold text-on-primary">Blender 4</span>
-<span class="font-label-caps text-[10px] text-on-primary-container">Procedural 3D</span>
-</div>
-</div>
-<!-- Cinema 4D -->
-<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
-<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
-            C4D
-          </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-sm font-semibold text-on-primary">Cinema 4D</span>
-<span class="font-label-caps text-[10px] text-on-primary-container">Redshift Engine</span>
-</div>
-</div>
-<!-- After Effects -->
-<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
-<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
-            Ae
-          </div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-sm font-semibold text-on-primary">After Effects</span>
-<span class="font-label-caps text-[10px] text-on-primary-container">Kinetic Motion</span>
-</div>
-</div>
-<!-- Apple Vision / Spatial -->
-<div class="flex items-center gap-space-xs p-space-sm rounded-2xl bg-primary-container hover:bg-surface-tint/20 transition-colors">
-<div class="w-9 h-9 rounded-xl bg-surface-container-lowest/10 flex items-center justify-center font-bold text-xs">
-<span class="material-symbols-outlined text-base">view_in_ar</span>
-</div>
-<div class="flex flex-col">
-<span class="font-headline-sm text-sm font-semibold text-on-primary">visionOS</span>
-<span class="font-label-caps text-[10px] text-on-primary-container">Spatial UX</span>
-</div>
-</div>
-</div>
-</section>
-<!-- Extended Work Gallery Section -->
-<section class="flex flex-col gap-space-md pt-space-lg" id="karya-terpilih">
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
-<div class="flex flex-col">
-<div class="flex items-center gap-space-xs">
-<span class="w-2 h-2 rounded-full bg-primary"></span>
-<span class="font-label-caps text-label-caps uppercase text-on-surface-variant">ARSIP TERPILIH 2023—2025</span>
-</div>
-<h2 class="font-headline-lg text-headline-lg text-primary tracking-tight mt-1">
-            Eksplorasi Karya Terpilih
-          </h2>
-</div>
-<!-- Interactive Filter Chips -->
-<div class="flex flex-wrap items-center gap-2 p-1 rounded-full bg-surface-container-low" id="gallery-filters">
-<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm bg-primary text-on-primary shadow-sm transition-all" data-filter="all">
-            Semua Karya
-          </button>
-<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="fotografi">
-            Fotografi
-          </button>
-<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="videografi">
-            Videografi
-          </button>
-<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="desain">
-            Desain
-          </button>
-<button class="filter-btn px-space-md py-1.5 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-all" data-filter="copywriting">
-            Copywriting
-          </button>
-</div>
-</div>
-<!-- 3-Column Curated Projects Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-md" id="projects-grid">
-<!-- Project 1: Desain / Spatial -->
-<article class="project-item group flex flex-col rounded-3xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-lg transition-all duration-300" data-category="desain">
-<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-space-md bg-surface-container">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Futuristic architectural pavilion interior with monumental concrete curved walls, minimalist soft diffused skylight, serene zen water basin reflection, high contrast editorial architecture photography in muted slate tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBa2KOlfDWEI_usA-OnOjp3a2gg2wYXQ8JqEKgT6dPfKs0QED6iQt-6apVB4u0Y88SYYSTkI7iEjrZyQWCwYncdE22z-HdmNDvCA29vfXKaNbMeKhdAgDI_zksjN4ETeC6oHeuFpLQYS7JZFaP4-fkZxU-IDqj82uUMJeraANVwimVd4jJX_52m0mJjIBk0KrLMGGuBwaGc7eKxh2kaKLD0mC8AbkpXv05T0or4Jlg">
-<div class="absolute top-space-sm left-space-sm">
-<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-caps text-label-caps text-on-surface">
-                SPATIAL SYSTEM
-              </span>
-</div>
-<div class="absolute bottom-space-sm right-space-sm">
-<span class="px-space-sm py-1 rounded-full bg-primary/80 text-on-primary font-label-caps text-[10px]">
-                JAKARTA / 2024
-              </span>
-</div>
-</div>
-<div class="flex flex-col flex-1 justify-between">
-<div class="flex flex-col gap-1">
-<span class="font-label-caps text-label-caps uppercase text-secondary">Pavilion Architecture</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary">Mono Spatial Pavilion</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-                Instalasi spasial interaktif berskala 1.200 meter persegi untuk pameran biennial seni rupa kontemporer.
-              </p>
-</div>
-<div class="pt-space-md mt-space-sm flex items-center justify-between">
-<span class="font-label-sm text-label-sm text-on-surface-variant">Client: Mono Foundation</span>
-<button class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-primary group-hover:text-on-primary flex items-center justify-center transition-colors" onclick="alert('Membuka dokumentasi: Mono Spatial Pavilion')">
-<span class="material-symbols-outlined text-lg">arrow_outward</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Project 2: Videografi -->
-<article class="project-item group flex flex-col rounded-3xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-lg transition-all duration-300" data-category="videografi">
-<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-space-md bg-surface-container">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Cinematic frame from a high fashion commercial with dramatic chiaroscuro studio lighting, athletic model captured mid-motion with luminous sheer fabric, cinematic 35mm grain aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw-HjHTxu0iiEQ5z7YvjAbVP9wfRoOcfUb13m1mFshL5HU6LfmOEyk_w9r7ILa2sS5f7YN6AT4xK9vAXIfYQRiV0s1IagWRXCZndw5C-09Y5hCK0pIeBZtWRgQ8ROcmnmez5qemMezfiQ9P0sdjBnbsAJkJRPodhoCrxzeh-quGgzLEdorxq0VQtnxJF_SLz3-iHG5jz2SojHZd69KaE4NN6YwL2UGlbXJTZ00ZV8">
-<div class="absolute top-space-sm left-space-sm">
-<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-caps text-label-caps text-on-surface">
-                COMMERCIAL FILM
-              </span>
-</div>
-<div class="absolute bottom-space-sm right-space-sm">
-<span class="px-space-sm py-1 rounded-full bg-primary/80 text-on-primary font-label-caps text-[10px]">
-                TOKYO / 2024
-              </span>
-</div>
-</div>
-<div class="flex flex-col flex-1 justify-between">
-<div class="flex flex-col gap-1">
-<span class="font-label-caps text-label-caps uppercase text-secondary">Campaign Direction</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary">Aura Kinetic Film</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-                Penyutradaraan kampanye sinematik global untuk peluncuran lini wearable cerdas generasi terbaru.
-              </p>
-</div>
-<div class="pt-space-md mt-space-sm flex items-center justify-between">
-<span class="font-label-sm text-label-sm text-on-surface-variant">Client: Aura Wearables</span>
-<button class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-primary group-hover:text-on-primary flex items-center justify-center transition-colors" onclick="alert('Membuka dokumentasi: Aura Kinetic Film')">
-<span class="material-symbols-outlined text-lg">arrow_outward</span>
-</button>
-</div>
-</div>
-</article>
-<!-- Project 3: Fotografi & Copywriting -->
-<article class="project-item group flex flex-col rounded-3xl bg-surface-container-lowest p-space-md shadow-sm hover:shadow-lg transition-all duration-300" data-category="fotografi copywriting">
-<div class="relative w-full aspect-[4/3] rounded-2xl overflow-hidden mb-space-md bg-surface-container">
-<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Monochrome minimalist editorial studio book cover mockup with extreme Swiss typographic grid, bold sans-serif lettering, subtle debossed foil textures on matte raw off-white paper" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOa2CZ7oJQpqn24tmFYPG-ipuAF3HbDXddDuzTXTZAyrz6xjDOt8yFhNRKAkgRmmKn_3QxK46zh2_b-h-2PhTyVYBzsVN65eou6dmKd4O_qZwRSwaU5k3tsRRZoV04gACDu0yG9lCCXLgVYWiFyCr-CGC8IHce3IttCfbl-wafpe7Vr5dh2EOaWiOF-_5xa6I5-wae3cbmqwVwku8JQRBHQ17xgv0hTGBrIAocOJg">
-<div class="absolute top-space-sm left-space-sm">
-<span class="px-space-sm py-1 rounded-full bg-surface-container-lowest/90 backdrop-blur-md font-label-caps text-label-caps text-on-surface">
-                EDITORIAL &amp; COPY
-              </span>
-</div>
-<div class="absolute bottom-space-sm right-space-sm">
-<span class="px-space-sm py-1 rounded-full bg-primary/80 text-on-primary font-label-caps text-[10px]">
-                BERLIN / 2025
-              </span>
-</div>
-</div>
-<div class="flex flex-col flex-1 justify-between">
-<div class="flex flex-col gap-1">
-<span class="font-label-caps text-label-caps uppercase text-secondary">Brand Manifesto</span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary">Kinetik Identity &amp; Voice</h3>
-<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-                Perumusan arsitektur naratif, pedoman copywriting, dan fotografi editorial untuk kendaraan listrik masa depan.
-              </p>
-</div>
-<div class="pt-space-md mt-space-sm flex items-center justify-between">
-<span class="font-label-sm text-label-sm text-on-surface-variant">Client: Kinetik Mobility</span>
-<button class="w-10 h-10 rounded-full bg-surface-container-low group-hover:bg-primary group-hover:text-on-primary flex items-center justify-center transition-colors" onclick="alert('Membuka dokumentasi: Kinetik Identity')">
-<span class="material-symbols-outlined text-lg">arrow_outward</span>
-</button>
-</div>
-</div>
-</article>
-</div>
-</section>
-<!-- Experience Timeline Strip -->
-<section class="flex flex-col p-space-lg rounded-3xl bg-surface-container-low shadow-sm gap-space-md" id="pengalaman-section">
-<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs">
-<div>
-<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">JEJAK KARIER &amp; PERJALANAN</span>
-<h3 class="font-headline-md text-headline-md text-on-surface tracking-tight">Kepemimpinan Kreatif Terpilih</h3>
-</div>
-<span class="px-space-sm py-1 rounded-full bg-surface-container-highest text-on-surface font-label-caps text-label-caps">
-          2015 — SEKARANG
-        </span>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
-<div class="flex flex-col p-space-md rounded-2xl bg-surface-container-lowest shadow-sm">
-<span class="font-label-caps text-label-caps text-secondary uppercase">2022 — SEKARANG</span>
-<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Executive Creative Director</h4>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Studio Kinetika Nusantara</span>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
-            Memimpin 28 desainer multidisiplin, produser 3D, dan sinematografer menangani portofolio enterprise APAC.
-          </p>
-</div>
-<div class="flex flex-col p-space-md rounded-2xl bg-surface-container-lowest shadow-sm">
-<span class="font-label-caps text-label-caps text-secondary uppercase">2019 — 2022</span>
-<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Head of Brand Architecture</h4>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Omni Creative Network</span>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
-            Merancang ulang sistem visual bagi 14 rintisan teknologi unicorn dan platform fintech multinasional.
-          </p>
-</div>
-<div class="flex flex-col p-space-md rounded-2xl bg-surface-container-lowest shadow-sm">
-<span class="font-label-caps text-label-caps text-secondary uppercase">2015 — 2019</span>
-<h4 class="font-headline-sm text-headline-sm text-on-surface mt-1">Senior Art Director</h4>
-<span class="font-label-sm text-label-sm text-on-surface-variant">Vanguard Media Tokyo</span>
-<p class="font-body-sm text-body-sm text-on-surface-variant mt-2">
-            Mengarahkan kampanye TVC global, instalasi imersif, dan identitas tipografi kontemporer.
-          </p>
-</div>
-</div>
-</section>
-<!-- Ultimate Call to Action Banner -->
-<section class="w-full rounded-3xl p-space-lg lg:p-space-xl bg-primary text-on-primary shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-space-lg" id="mulai-diskusi">
-<!-- Decorative Backdrop Graphic -->
-<div class="absolute right-0 top-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl pointer-events-none"></div>
-<div class="flex flex-col gap-2 relative z-10 max-w-xl">
-<span class="font-label-caps text-label-caps text-secondary-fixed uppercase tracking-widest">KOLABORASI EKSKLUSIF</span>
-<h2 class="font-display-xl text-3xl sm:text-display-xl tracking-tight leading-none text-on-primary">
-          Siap Mewujudkan Visi Kreatif Anda?
-        </h2>
-<p class="font-body-md text-body-md text-on-primary-container mt-2">
-          Terbuka untuk konsultasi strategis Q2/Q3 2025, dewan penasihat kreatif, dan arahan desain transformatif berskala global.
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style="width: 1280px; height: 6572px; overflow: hidden; position: relative;"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><meta content="web_standard" name="shell-type"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+@keyframes rippleBeacon {
+  0% { transform: scale(0.9); opacity: 0.9; box-shadow: 0 0 0 0 rgba(122, 193, 66, 0.7); }
+  70% { transform: scale(1.15); opacity: 0.2; box-shadow: 0 0 0 10px rgba(122, 193, 66, 0); }
+  100% { transform: scale(1.2); opacity: 0; box-shadow: 0 0 0 14px rgba(122, 193, 66, 0); }
+}
+.beacon-ping {
+  animation: rippleBeacon 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.card-motion {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+}
+.card-motion:hover {
+  transform: translateY(-6px);
+}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"secondary-fixed-dim":"#b0c8eb","on-surface-variant":"#424751","surface-tint":"#1d5fa8","secondary-container":"#c4dcff","on-secondary-container":"#49617f","surface-variant":"#e2e2e6","surface-bright":"#f9f9fd","tertiary":"#7c0009","secondary":"#49607e","surface-container-lowest":"#ffffff","background":"#f9f9fd","inverse-surface":"#2f3034","primary-fixed-dim":"#a6c8ff","tertiary-fixed-dim":"#ffb4ab","outline-variant":"#c2c6d3","surface-dim":"#dadade","on-secondary-fixed":"#001c37","on-error":"#ffffff","on-surface":"#1a1c1f","on-primary-container":"#a5c7ff","primary":"#003b72","on-tertiary-fixed":"#410002","surface-container":"#eeedf2","outline":"#727782","surface":"#f9f9fd","surface-container-highest":"#e2e2e6","on-primary-fixed":"#001c3b","on-background":"#1a1c1f","tertiary-fixed":"#ffdad6","on-secondary":"#ffffff","on-tertiary-fixed-variant":"#93000d","inverse-on-surface":"#f0f0f5","primary-container":"#00529b","on-primary-fixed-variant":"#004787","surface-container-high":"#e8e8ec","primary-fixed":"#d5e3ff","secondary-fixed":"#d2e4ff","on-secondary-fixed-variant":"#314865","on-error-container":"#93000a","on-tertiary":"#ffffff","on-primary":"#ffffff","surface-container-low":"#f3f3f7","tertiary-container":"#a80010","on-tertiary-container":"#ffb2a9","inverse-primary":"#a6c8ff","error":"#ba1a1a","error-container":"#ffdad6"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter-sm":"1rem","space-xs":"0.25rem","margin-desktop":"3.5rem","space-lg":"1.5rem","margin":"2rem","gutter-lg":"2rem","space-md":"1rem","space-sm":"0.5rem","margin-mobile":"1.25rem","space-xl":"2.5rem","gutter":"1.5rem"},"fontFamily":{"body-md":["Inter"],"body-lg":["Inter"],"display-xl":["Inter"],"label-mono-sm":["JetBrains Mono"],"headline-sm":["Inter"],"headline-lg":["Inter"],"headline-lg-mobile":["Inter"],"label-mono-lg":["JetBrains Mono"],"body-sm":["Inter"],"display-xl-mobile":["Inter"],"headline-md":["Inter"]},"fontSize":{"body-md":["15px",{"lineHeight":"24px","letterSpacing":"0em","fontWeight":"400"}],"body-lg":["18px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"400"}],"display-xl":["64px",{"lineHeight":"72px","letterSpacing":"-0.03em","fontWeight":"800"}],"label-mono-sm":["11px",{"lineHeight":"16px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-sm":["20px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-lg":["44px",{"lineHeight":"52px","letterSpacing":"-0.025em","fontWeight":"700"}],"headline-lg-mobile":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"label-mono-lg":["14px",{"lineHeight":"20px","letterSpacing":"-0.01em","fontWeight":"500"}],"body-sm":["13px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}],"display-xl-mobile":["40px",{"lineHeight":"48px","letterSpacing":"-0.025em","fontWeight":"800"}],"headline-md":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md border-b border-outline-variant/30 shadow-[0_1px_6px_rgba(10,37,64,0.04)]"><div class="h-20 max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-md"><a class="flex items-center gap-space-sm group" data-path="about" href="#about"><div class="flex flex-col"><span class="font-label-mono-sm text-label-mono-sm uppercase text-secondary font-semibold tracking-wider mt-1">ENERGIZING BRANDS, ELEVATING VISUALS</span></div></a></div><nav class="hidden xl:flex items-center gap-space-lg" data-active-classes="text-primary-container font-semibold border-b-2 border-primary-container"><a aria-current="page" class="py-2 transition-all text-primary-container font-semibold border-b-2 border-primary-container hover:text-primary" data-path="about" href="#about">ABOUT ME</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary-container py-2 border-b-2 border-transparent hover:border-primary-container/40 transition-all" data-path="skills" href="#skills">SKILLS</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary-container py-2 border-b-2 border-transparent hover:border-primary-container/40 transition-all" data-path="recent-work" href="#recent-work">RECENT WORK</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary-container py-2 border-b-2 border-transparent hover:border-primary-container/40 transition-all" data-path="experiences" href="#experiences">EXPERIENCES</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary-container py-2 border-b-2 border-transparent hover:border-primary-container/40 transition-all" data-path="contact" href="#contact">CONTACT</a></nav><div class="flex items-center gap-space-sm sm:gap-space-md"><button aria-label="Search portfolio" class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-all active:scale-95" type="button"><span class="material-symbols-outlined text-[20px]">search</span></button><a class="hidden sm:inline-flex items-center justify-center px-space-md py-2 border-[1.5px] border-primary-container text-primary-container font-label-mono-sm text-label-mono-sm rounded-full tracking-wide hover:bg-primary-container hover:text-on-primary transition-all duration-300 group hover:shadow-md" data-path="contact" href="#contact"><span class="">Start Discussion</span><span class="material-symbols-outlined text-[16px] ml-1 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">north_east</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1 shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]"><div class="flex flex-col w-full font-body-md text-body-md text-on-surface antialiased selection:bg-primary-container selection:text-on-primary">
+<!-- ==========================================
+       SECTION 1: HERO SECTION (CINEMATIC FULL-BLEED)
+       ========================================== -->
+<section class="relative w-full bg-[#071320] text-surface-bright overflow-hidden">
+<!-- Ambient architectural lighting scrims -->
+<div class="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(circle_at_20%_25%,rgba(0,82,155,0.45),transparent_60%),radial-gradient(circle_at_85%_75%,rgba(168,0,16,0.25),transparent_55%)]"></div>
+<div class="absolute inset-0 pointer-events-none opacity-20 bg-[linear-gradient(to_right,rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.05)_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+<!-- Cinematic background portrait overlay with detailed prompt -->
+<div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity transform scale-100 transition-transform duration-1000 ease-out hover:scale-102" data-alt="Cinematic wide architectural film studio portrait of an Indonesian creative director standing beside professional cinema equipment and an anamorphic lens setup. Moody high-contrast studio rim lighting, deep navy blues, subtle crimson accent flares, subtle smoke haze, shot on 65mm film, premium editorial lighting." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuCpHxtffRyMCl7o-J292Nepd-E2nswNXwo8wvxFNwYXyZ1HWF32bq4ZqGRfTQ8_v5VW71LxoFjFI-zlRb8fg5fcPONf3PfNeZFwSJvR0knkoYGQRnnvMMP3ImMcP41og8M4W2T9HrSb7IvCYv1oinkBTrlTz9fSEx5wKHDeekShJPspwR_ldIZFPcWzcoiMOozpASkGIID8kqd7PvtOAIl3xG-JHt9J0Q-hJjDYM51m&quot;);"></div>
+<div class="relative max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop pt-16 pb-20 md:pt-24 md:pb-28 flex flex-col justify-between min-h-[901px]">
+<!-- Top Row Status Pill -->
+<div class="flex items-center justify-between w-full">
+<div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface-container-lowest/10 backdrop-blur-md border border-white/10 hover:border-[#7AC142]/40 transition-colors shadow-sm group">
+<span class="relative flex h-2.5 w-2.5 items-center justify-center">
+<span class="beacon-ping absolute inline-flex h-4 w-4 rounded-full bg-[#7AC142]"></span>
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#7AC142] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#7AC142] shadow-[0_0_8px_#7AC142]"></span>
+</span>
+<span class="font-label-mono-sm text-label-mono-sm text-surface-bright tracking-wider uppercase font-semibold">AVAILABLE FOR COLLABORATION Q2/Q3</span>
+</div>
+<div class="hidden md:flex items-center gap-2 font-label-mono-sm text-label-mono-sm text-outline-variant">
+<span class="text-secondary-fixed">JAKARTA / REGIONAL ARCHIVE</span>
+<span class="">•</span>
+<span class="text-surface-bright">SYS.ACTV.2025</span>
+</div>
+</div>
+<!-- Main Monumental Typography -->
+<div class="my-auto py-12 md:py-16 max-w-5xl">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-8 h-[2px] bg-tertiary-container"></div>
+<span class="font-label-mono-lg text-label-mono-lg text-secondary-fixed tracking-widest uppercase font-semibold">CREATIVE DIRECTOR &amp; VISUAL STORYTELLER</span>
+</div>
+<h1 class="text-5xl sm:text-7xl lg:text-9xl font-extrabold tracking-tighter text-surface-container-lowest leading-[0.92] uppercase font-display-xl mb-6">
+          PRIO SETYO
+        </h1>
+<p class="font-body-lg text-body-lg text-outline-variant max-w-2xl leading-relaxed mb-10">
+          Orchestrating cinematic visual narratives, high-energy brand architectures, and world-class digital experiences with Swiss discipline precision and kinetic modernist energy.
         </p>
-</div>
-<div class="flex flex-col sm:flex-row items-center gap-space-sm relative z-10 w-full sm:w-auto">
-<a class="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-4 rounded-full bg-secondary-container text-on-secondary-fixed font-headline-sm text-sm tracking-normal hover:bg-surface-container-lowest transition-all duration-200 shadow-lg hover:-translate-y-0.5" href="mailto:prio.setyo@creativestudio.id?subject=Inquiry%20Proyek%20Kreatif%202025">
-<span class="">Mulai Diskusi Sekarang</span>
-<span class="material-symbols-outlined text-base">arrow_forward</span>
+<!-- CTA Buttons -->
+<div class="flex flex-wrap items-center gap-4">
+<a class="group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-primary-container text-on-primary font-label-mono-sm text-label-mono-sm uppercase tracking-wider font-semibold shadow-xl hover:bg-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl active:translate-y-0" href="#recent-work">
+<span class="">EXPLORE WORKS</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200">north_east</span>
+</a>
+<a class="group inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full bg-surface-container-lowest/10 backdrop-blur-sm border border-white/10 text-surface-container-lowest hover:bg-surface-container-lowest hover:text-on-surface font-label-mono-sm text-label-mono-sm uppercase tracking-wider font-semibold transition-all duration-300 hover:-translate-y-1 hover:shadow-xl active:translate-y-0" href="#contact">
+<span class="">CONTACT PRIO</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1.5 transition-transform duration-200">arrow_forward</span>
 </a>
 </div>
-</section>
 </div>
-<!-- Interactive Modal for Filosofi (Accessible Dialog) -->
-<dialog class="p-0 rounded-3xl bg-surface-container-lowest text-on-surface backdrop:bg-primary/50 shadow-2xl max-w-lg w-full m-auto" id="dialog-filosofi">
-<div class="p-space-lg flex flex-col gap-space-md">
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-2">
-<span class="w-3 h-3 rounded-full bg-secondary-fixed-dim"></span>
-<h3 class="font-headline-sm text-headline-sm text-on-surface">Filosofi Desain</h3>
+<!-- Bottom Interactive Project Indicator Bar -->
+<div class="pt-8">
+<div class="flex items-center justify-between text-outline-variant font-label-mono-sm text-label-mono-sm mb-3">
+<span class="uppercase tracking-widest text-secondary-fixed">Film &amp; Brand Identity Spotlight</span>
+<span class="font-label-mono-sm" id="hero-slider-counter">01 / 05</span>
 </div>
-<button class="p-1 rounded-full hover:bg-surface-container transition-colors" onclick="document.getElementById('dialog-filosofi').close()">
-<span class="material-symbols-outlined text-lg">close</span>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" id="hero-project-bar">
+<button class="hero-spotlight-btn group text-left p-3.5 rounded-xl bg-surface-container-lowest/10 border border-[#ED1C24]/50 shadow-[0_0_15px_rgba(237,28,36,0.15)] hover:bg-surface-container-lowest/15 transition-all duration-300 cursor-pointer" onclick="switchSpotlight(0, 'Pertamina Patra Niaga Anthem')" type="button">
+<div class="flex items-center gap-2 mb-1.5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ED1C24] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#ED1C24] shadow-[0_0_8px_#ED1C24]"></span>
+</span>
+<span class="font-label-mono-sm text-[10px] text-tertiary-fixed font-semibold uppercase tracking-wider">NOW SHOWCASING</span>
+</div>
+<p class="font-body-sm text-body-sm text-surface-container-lowest font-medium truncate group-hover:text-primary-fixed transition-colors">Pertamina Patra Niaga Anthem</p>
+<div class="h-0.5 w-full bg-[#ED1C24] mt-2 rounded-full"></div>
+</button>
+<button class="hero-spotlight-btn group text-left p-3.5 rounded-xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 transition-all duration-300 cursor-pointer" onclick="switchSpotlight(1, 'Kinetic Spatials 2026')" type="button">
+<div class="flex items-center gap-2 mb-1.5">
+<span class="w-2 h-2 rounded-full bg-outline-variant/40 group-hover:bg-[#ED1C24] transition-colors"></span>
+<span class="font-label-mono-sm text-[10px] text-outline-variant group-hover:text-surface-bright font-semibold uppercase tracking-wider transition-colors">SPATIAL UX</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline-variant truncate group-hover:text-surface-container-lowest transition-colors">Kinetic Spatials 2026</p>
+<div class="h-0.5 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-300 mt-2 rounded-full"></div>
+</button>
+<button class="hero-spotlight-btn group text-left p-3.5 rounded-xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 transition-all duration-300 cursor-pointer" onclick="switchSpotlight(2, 'Lumina Narrative Film')" type="button">
+<div class="flex items-center gap-2 mb-1.5">
+<span class="w-2 h-2 rounded-full bg-outline-variant/40 group-hover:bg-[#ED1C24] transition-colors"></span>
+<span class="font-label-mono-sm text-[10px] text-outline-variant group-hover:text-surface-bright font-semibold uppercase tracking-wider transition-colors">CINEMA FILM</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline-variant truncate group-hover:text-surface-container-lowest transition-colors">Lumina Narrative Film</p>
+<div class="h-0.5 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-300 mt-2 rounded-full"></div>
+</button>
+<button class="hero-spotlight-btn group text-left p-3.5 rounded-xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 transition-all duration-300 cursor-pointer" onclick="switchSpotlight(3, 'Monolith Corporate Identity')" type="button">
+<div class="flex items-center gap-2 mb-1.5">
+<span class="w-2 h-2 rounded-full bg-outline-variant/40 group-hover:bg-[#ED1C24] transition-colors"></span>
+<span class="font-label-mono-sm text-[10px] text-outline-variant group-hover:text-surface-bright font-semibold uppercase tracking-wider transition-colors">BRAND SYSTEM</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline-variant truncate group-hover:text-surface-container-lowest transition-colors">Monolith Corporate Identity</p>
+<div class="h-0.5 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-300 mt-2 rounded-full"></div>
+</button>
+<button class="hero-spotlight-btn group text-left p-3.5 rounded-xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 transition-all duration-300 cursor-pointer col-span-2 sm:col-span-1" onclick="switchSpotlight(4, 'Neo Jakarta Commercial')" type="button">
+<div class="flex items-center gap-2 mb-1.5">
+<span class="w-2 h-2 rounded-full bg-outline-variant/40 group-hover:bg-[#ED1C24] transition-colors"></span>
+<span class="font-label-mono-sm text-[10px] text-outline-variant group-hover:text-surface-bright font-semibold uppercase tracking-wider transition-colors">COMMERCIAL</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline-variant truncate group-hover:text-surface-container-lowest transition-colors">Neo Jakarta Commercial</p>
+<div class="h-0.5 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-300 mt-2 rounded-full"></div>
 </button>
 </div>
-<p class="font-body-md text-body-md text-on-surface-variant">
-        “Desain bukan sekadar ornamen estetika, melainkan peredam friksi antara intensi manusia dan kompleksitas teknologi modern.”
-      </p>
-<div class="p-space-sm rounded-2xl bg-surface-container-low flex flex-col gap-2">
-<span class="font-label-caps text-label-caps text-secondary uppercase">3 PILAR UTAMA</span>
-<ul class="font-body-sm text-body-sm text-on-surface flex flex-col gap-1.5 list-disc pl-4">
-<li class=""><strong>Disiplin Struktural:</strong> Menolak kekacauan visual tanpa mengurangi kedalaman ekspresi.</li>
-<li class=""><strong>Ketepatan Spasial:</strong> Menyelaraskan tipografi, skala, dan gerak dalam ritme yang harmonis.</li>
-<li class=""><strong>Dampak Emosional:</strong> Menciptakan resonansi instan yang bertahan melampaui tren sesaat.</li>
-</ul>
-</div>
-<div class="flex justify-end pt-2">
-<button class="px-space-md py-2 rounded-full bg-primary text-on-primary font-label-sm text-label-sm" onclick="document.getElementById('dialog-filosofi').close()">
-          Tutup
-        </button>
 </div>
 </div>
-</dialog>
-<!-- Interactive JavaScript for Client-side Project Filtering -->
+</section>
+<!-- ==========================================
+       SECTION 2: KEY METRICS ("AT A GLANCE")
+       ========================================== -->
+<section class="w-full bg-[#0A2540] text-surface-bright py-space-xl overflow-hidden relative">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+<div>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary-fixed uppercase tracking-widest block mb-2">TRACK RECORD SUMMARY</span>
+<h2 class="font-headline-lg text-headline-lg text-surface-container-lowest font-bold tracking-tight">Enterprise-Scale Precision</h2>
+</div>
+<p class="font-body-sm text-body-sm text-outline-variant max-w-md">
+          Translating strategic vision for energy conglomerates, multinational ventures, and cultural institutions into high-impact kinetic assets.
+        </p>
+</div>
+<!-- 3 Columns Colossal Metrics -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg">
+<div class="card-motion bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 p-8 rounded-2xl flex flex-col justify-between group">
+<div>
+<div class="flex items-baseline justify-between mb-4">
+<span class="font-display-xl text-display-xl font-extrabold text-surface-container-lowest tracking-tighter group-hover:text-primary-fixed transition-colors">10+</span>
+<span class="font-label-mono-sm text-label-mono-sm text-[#7AC142] uppercase tracking-wider font-semibold">Active Years</span>
+</div>
+<div class="w-16 h-1 bg-[#7AC142] mb-6 rounded-full group-hover:w-24 transition-all duration-500"></div>
+<h3 class="font-headline-sm text-headline-sm text-surface-bright font-bold mb-2">Years of Industry Experience</h3>
+<p class="font-body-sm text-body-sm text-outline-variant leading-relaxed">
+              Leading creative direction from independent film production to multi-channel campaigns for national energy conglomerates and regional corporations.
+            </p>
+</div>
+<div class="mt-8 pt-4 flex items-center gap-2 font-label-mono-sm text-label-mono-sm text-secondary-fixed border-t border-white/5">
+<span class="material-symbols-outlined text-[16px] text-[#7AC142]">verified</span>
+<span class="">Est. 2014 — Jakarta HQ</span>
+</div>
+</div>
+<div class="card-motion bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 p-8 rounded-2xl flex flex-col justify-between group">
+<div>
+<div class="flex items-baseline justify-between mb-4">
+<span class="font-display-xl text-display-xl font-extrabold text-surface-container-lowest tracking-tighter group-hover:text-primary-fixed transition-colors">35+</span>
+<span class="font-label-mono-sm text-label-mono-sm text-[#7AC142] uppercase tracking-wider font-semibold">Honors</span>
+</div>
+<div class="w-16 h-1 bg-[#7AC142] mb-6 rounded-full group-hover:w-24 transition-all duration-500"></div>
+<h3 class="font-headline-sm text-headline-sm text-surface-bright font-bold mb-2">Global Awards &amp; Selections</h3>
+<p class="font-body-sm text-body-sm text-outline-variant leading-relaxed">
+              International film festival curator selections, Asia-Pacific enterprise visual identity recognitions, and kinetic typography design showcases.
+            </p>
+</div>
+<div class="mt-8 pt-4 flex items-center gap-2 font-label-mono-sm text-label-mono-sm text-secondary-fixed border-t border-white/5">
+<span class="material-symbols-outlined text-[16px] text-tertiary-fixed">award_star</span>
+<span class="">Cannes Lion Nominee, Citra Pariwara Gold</span>
+</div>
+</div>
+<div class="card-motion bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 p-8 rounded-2xl flex flex-col justify-between group">
+<div>
+<div class="flex items-baseline justify-between mb-4">
+<span class="font-display-xl text-display-xl font-extrabold text-surface-container-lowest tracking-tighter group-hover:text-primary-fixed transition-colors">120+</span>
+<span class="font-label-mono-sm text-label-mono-sm text-[#7AC142] uppercase tracking-wider font-semibold">Released Portfolio</span>
+</div>
+<div class="w-16 h-1 bg-[#7AC142] mb-6 rounded-full group-hover:w-24 transition-all duration-500"></div>
+<h3 class="font-headline-sm text-headline-sm text-surface-bright font-bold mb-2">Commercial &amp; Editorial Scale Projects</h3>
+<p class="font-body-sm text-body-sm text-outline-variant leading-relaxed">
+              8K commercial resolution content, high-impact corporate monographs, and full-spectrum digital experience architectures.
+            </p>
+</div>
+<div class="mt-8 pt-4 flex items-center gap-2 font-label-mono-sm text-label-mono-sm text-secondary-fixed border-t border-white/5">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">domain</span>
+<span class="">98.6% On-Budget Enterprise Delivery</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 3: ABOUT ME & 4 STRATEGIC PILLARS
+       ========================================== -->
+<section class="w-full bg-[#F4F7FA] py-space-xl overflow-hidden" id="about">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop">
+<div class="mb-space-lg">
+<span class="font-label-mono-sm text-label-mono-sm text-primary-container font-semibold uppercase tracking-widest block mb-2">PHILOSOPHY &amp; METHODOLOGY</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">The Equilibrium Between Artistic Instinct &amp; Business Calculus</h2>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg items-stretch">
+<!-- Left Column: Portrait Frame -->
+<div class="lg:col-span-5 flex flex-col justify-between">
+<div class="relative w-full h-[520px] rounded-2xl overflow-hidden shadow-md bg-surface-container group">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Monochromatic portrait photo of Prio Setyo wearing a minimalist structured black jacket holding a heavy cinema lens in a modern daylight studio. Neutral high-contrast background with soft shadows and sharp focal clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2EkKmKy1mzccX4I1an4JCYgBgtk_w8S1-m35WYt9E0YXuyRr1XckjBude9kyhYHX0rKPUbdiVt0LeIoJvRGkxuNr2fVgHMElClPUKoifCTwhVdMv1_Oi01pkKi7ZR30OTL8gzOOrfnVlrIqQY_49iDJe4wUv6J3lbVA8yyetMJjVyWOfTsh0gL38Oe69oP9NL0cll9G1tm-Bm79kakjIzg_1cJaw2F4ZA0CpRXF1">
+<div class="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-inverse-surface via-inverse-surface/70 to-transparent text-surface-container-lowest">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary-fixed uppercase tracking-wider block mb-1">PRIO SETYO</span>
+<p class="font-headline-sm text-headline-sm font-bold">Principal Creative Director</p>
+<p class="font-body-sm text-body-sm text-outline-variant mt-1">Synthesizing cinematic visual sharpness with commercial message architecture.</p>
+</div>
+</div>
+<div class="mt-4 p-4 rounded-xl bg-surface-container-lowest flex items-center justify-between border border-outline-variant/30 shadow-sm hover:border-primary-container/40 transition-colors">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">camera</span>
+<span class="font-label-mono-sm text-label-mono-sm text-on-surface-variant font-medium">Large Format Camera &amp; Spatial Lighting Specialty</span>
+</div>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold">RED / ARRI Certified</span>
+</div>
+</div>
+<!-- Right Column: Strategic Pillars Card Deck -->
+<div class="lg:col-span-7 flex flex-col justify-between">
+<div class="space-y-4" id="pillars-container">
+<!-- Card 1: Solid Royal Blue Card -->
+<div class="card-motion p-8 rounded-2xl bg-[#00529B] text-surface-container-lowest shadow-lg border border-white/10 group cursor-default">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label-mono-sm text-label-mono-sm text-primary-fixed uppercase tracking-widest font-semibold">Core Essence</span>
+<span class="font-label-mono-sm text-label-mono-sm px-2.5 py-1 rounded-full bg-surface-container-lowest/15 text-surface-container-lowest">DESIGN PHILOSOPHY</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-bold mb-3">Design Philosophy</h3>
+<div class="w-12 h-1 bg-surface-container-lowest mb-4 group-hover:w-20 transition-all duration-300"></div>
+<p class="font-body-lg text-body-lg text-surface-container-lowest/90 leading-relaxed font-normal">
+                “Design is not merely what is visible on the surface; it is kinetic energy connecting an entity's core essence with the genuine pulse of its audience.”
+              </p>
+</div>
+<!-- Overlapping Pillar Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Card 2 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest hover:bg-surface-bright transition-all shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#ED1C24]/30 group cursor-pointer" onclick="openWorkModal('Creative Direction &amp; Narrative', 'Strategic Pillar 01', 'Defining tonal voice, visual composition, and campaign architecture that resonate across touchpoints.', 'Standardized Visual Compass &amp; Corporate Guidelines')">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold">(01) STRATEGIC PILLAR</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-[#ED1C24] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200">north_east</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-2 group-hover:text-primary-container transition-colors">Creative Direction &amp; Narrative</h4>
+<div class="w-8 h-0.5 bg-[#ED1C24] mb-3 group-hover:w-16 transition-all duration-300"></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  Defining tonal voice, visual composition, and campaign architecture that resonate across touchpoints.
+                </p>
+</div>
+<!-- Card 3 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest hover:bg-surface-bright transition-all shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#ED1C24]/30 group cursor-pointer" onclick="openWorkModal('Cinematography &amp; Lighting', 'Strategic Pillar 02', 'Harnessing anamorphic optics, high dynamic contrast, and deliberate blocking to evoke emotional resonance.', 'Cooke Anamorphic /i, RED V-Raptor 8K VV')">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold">(02) STRATEGIC PILLAR</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-[#ED1C24] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200">north_east</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-2 group-hover:text-primary-container transition-colors">Cinematography &amp; Lighting</h4>
+<div class="w-8 h-0.5 bg-[#ED1C24] mb-3 group-hover:w-16 transition-all duration-300"></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  Harnessing anamorphic optics, high dynamic contrast, and deliberate blocking to evoke emotional resonance.
+                </p>
+</div>
+<!-- Card 4 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest hover:bg-surface-bright transition-all shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#ED1C24]/30 group cursor-pointer" onclick="openWorkModal('Spatial Design &amp; Composition', 'Strategic Pillar 03', 'Swiss-disciplined structured layouts, generative typographic explorations, and exhibition spatial design.', 'Swiss Grid System, Exhibition Architecture')">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold">(03) STRATEGIC PILLAR</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-[#ED1C24] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200">north_east</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-2 group-hover:text-primary-container transition-colors">Spatial Design &amp; Composition</h4>
+<div class="w-8 h-0.5 bg-[#ED1C24] mb-3 group-hover:w-16 transition-all duration-300"></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  Swiss-disciplined structured layouts, generative typographic explorations, and exhibition spatial design.
+                </p>
+</div>
+<!-- Card 5 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest hover:bg-surface-bright transition-all shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#ED1C24]/30 group cursor-pointer" onclick="openWorkModal('Copywriting &amp; Message Architecture', 'Strategic Pillar 04', 'High-level verbal formulation, corporate manifestos, and high-conversion scripts provoking decisive action.', 'Corporate Manifesto &amp; Kinetic Scripting')">
+<div class="flex items-start justify-between mb-3">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold">(04) STRATEGIC PILLAR</span>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-[#ED1C24] group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200">north_east</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-2 group-hover:text-primary-container transition-colors">Copywriting &amp; Message Architecture</h4>
+<div class="w-8 h-0.5 bg-[#ED1C24] mb-3 group-hover:w-16 transition-all duration-300"></div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                  High-level verbal formulation, corporate manifestos, and high-conversion scripts provoking decisive action.
+                </p>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Controls -->
+<div class="flex items-center justify-between pt-6">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-semibold">INTEGRATED STRATEGIC ALIGNMENT (ISO 9001 ALIGNED)</span>
+<div class="flex items-center gap-2">
+<button aria-label="Previous" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-primary-container hover:text-on-primary transition-all active:scale-95 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button aria-label="Next" class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface hover:bg-primary-container hover:text-on-primary transition-all active:scale-95 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 4: CREATIVE TOOLKIT & VISUAL EXPERIMENTS
+       ========================================== -->
+<section class="w-full bg-surface py-space-xl" id="skills">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop">
+<!-- Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md mb-space-lg">
+<div>
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container font-label-mono-sm text-label-mono-sm uppercase tracking-wider font-semibold mb-3">
+<span class="">CREATIVE PIPELINE</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Toolkit &amp; Experiments</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xl mt-2">
+            Industry-standard suites and real-time simulation platforms orchestrated with precision to power enterprise-grade creative delivery.
+          </p>
+</div>
+<a class="group inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface-container text-primary-container font-label-mono-sm text-label-mono-sm font-semibold hover:bg-primary-container hover:text-on-primary transition-all duration-300 hover:shadow-md" href="#recent-work">
+<span class="">View Detailed Pipeline</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- 5 Vertical Portrait Cards with animated skill bars -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-space-xl">
+<!-- Tool 1 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary-container mb-4 group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">layers</span>
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider">UI / Spatial System</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 mb-2 group-hover:text-primary-container transition-colors">Figma Spatials</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Enterprise design tokens, massive spatial prototypes, and corporate guideline documentation.
+            </p>
+</div>
+<div class="mt-6 pt-4">
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-primary-container h-full rounded-full transition-all duration-1000 ease-out group-hover:bg-[#ED1C24]" style="width: 98%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-mono-sm text-label-mono-sm font-semibold">Proficiency: Expert</span>
+<span class="font-label-mono-sm text-label-mono-sm font-bold text-primary-container">98%</span>
+</div>
+</div>
+</div>
+<!-- Tool 2 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary-container mb-4 group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">view_in_ar</span>
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider">Virtual Production</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 mb-2 group-hover:text-primary-container transition-colors">Unreal Engine 5</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Lumen real-time lighting, Nanite environment construction, and LED volume virtual production.
+            </p>
+</div>
+<div class="mt-6 pt-4">
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-primary-container h-full rounded-full transition-all duration-1000 ease-out group-hover:bg-[#ED1C24]" style="width: 90%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-mono-sm text-label-mono-sm font-semibold">Proficiency: Advanced</span>
+<span class="font-label-mono-sm text-label-mono-sm font-bold text-primary-container">90%</span>
+</div>
+</div>
+</div>
+<!-- Tool 3 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary-container mb-4 group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">palette</span>
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider">Color Science</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 mb-2 group-hover:text-primary-container transition-colors">DaVinci Resolve</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              ACES workflow color grading, theatrical cinema mastering, HDR color science, and cinematic finishing.
+            </p>
+</div>
+<div class="mt-6 pt-4">
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-primary-container h-full rounded-full transition-all duration-1000 ease-out group-hover:bg-[#ED1C24]" style="width: 96%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-mono-sm text-label-mono-sm font-semibold">Proficiency: Expert</span>
+<span class="font-label-mono-sm text-label-mono-sm font-bold text-primary-container">96%</span>
+</div>
+</div>
+</div>
+<!-- Tool 4 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary-container mb-4 group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">animation</span>
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider">Kinetic Motion</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 mb-2 group-hover:text-primary-container transition-colors">Cinema 4D</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Redshift dynamic simulations, high-speed 3D kinetic typography, and broadcast package systems.
+            </p>
+</div>
+<div class="mt-6 pt-4">
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-primary-container h-full rounded-full transition-all duration-1000 ease-out group-hover:bg-[#ED1C24]" style="width: 92%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-mono-sm text-label-mono-sm font-semibold">Proficiency: Advanced</span>
+<span class="font-label-mono-sm text-label-mono-sm font-bold text-primary-container">92%</span>
+</div>
+</div>
+</div>
+<!-- Tool 5 -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-secondary-container flex items-center justify-center text-primary-container mb-4 group-hover:scale-110 group-hover:bg-primary-container group-hover:text-on-primary transition-all duration-300">
+<span class="material-symbols-outlined text-[24px]">auto_fix_high</span>
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider">Editorial &amp; Vector</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1 mb-2 group-hover:text-primary-container transition-colors">Adobe Creative Cloud</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+              Photoshop, Illustrator, and InDesign for precision editorial layouts and global brand identities.
+            </p>
+</div>
+<div class="mt-6 pt-4">
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mb-2">
+<div class="bg-primary-container h-full rounded-full transition-all duration-1000 ease-out group-hover:bg-[#ED1C24]" style="width: 99%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary">
+<span class="font-label-mono-sm text-label-mono-sm font-semibold">Proficiency: Expert</span>
+<span class="font-label-mono-sm text-label-mono-sm font-bold text-primary-container">99%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Dark Showcase Container: Q1 Aesthetic Experiments -->
+<div class="w-full bg-[#0A2540] text-surface-bright rounded-3xl p-8 md:p-12 relative overflow-hidden border border-white/5 shadow-2xl">
+<div class="absolute -right-24 -top-24 w-96 h-96 rounded-full bg-primary-container/30 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+<div class="max-w-xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ED1C24]/20 border border-[#ED1C24]/40 text-tertiary-fixed font-label-mono-sm text-label-mono-sm uppercase tracking-wider font-semibold mb-3">
+<span class="w-1.5 h-1.5 rounded-full bg-[#ED1C24] animate-pulse"></span>
+<span class="">R&amp;D VISUAL LAB</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-bold text-surface-container-lowest mb-3">Q1 Aesthetic Experiments</h3>
+<p class="font-body-md text-body-md text-outline-variant leading-relaxed">
+              Continuous exploration examining chromatic light limits, generative typography posters, and parametric motion loops prior to commercial rollout.
+            </p>
+</div>
+<!-- 3 Fanned-out mini preview cards with zoom effect and modal trigger -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full lg:w-auto">
+<div class="card-motion p-4 rounded-xl bg-surface-container-lowest/10 backdrop-blur-sm border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/15 cursor-pointer group" onclick="openWorkModal('Chromatic Light Study', 'R&amp;D Visual Lab (Stage 01)', 'Volumetric refraction experiment in chromatic red, deep royal blue, and electric white tones over clean dark glass.', 'Prism Optical Engine, Lumina HDR')">
+<div class="w-full h-24 rounded-lg bg-surface-container/20 mb-3 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out" data-alt="Abstract cinematic light prism experiment showing volumetric refraction in chromatic red, deep royal blue, and electric white tones over clean dark glass." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOed9W-d1e0L3y5JDIRg1cf2Nfo9QaOORQGr3c-GO_zMJuM00uHYMWFPUkoyWToYvT_8XDJ2NYPMO0nlDXnTFc243XF5HsMebaJaTHHa2lo2VSf0ZyFubkbGnitncmdsNKW5NVQYAJ7Y5ldJ_uHcmlKFulN9Ve5UYkgOZB1iamQkpzRW3vsE5-__O21FT4v5GziE_6PP1u0VPTbuaPhDXDyysKdBOUUgYSs8IMYLC6">
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary-fixed block">STAGE 01</span>
+<p class="font-headline-sm text-[15px] font-bold text-surface-container-lowest group-hover:text-primary-fixed transition-colors">Chromatic Light</p>
+</div>
+<div class="card-motion p-4 rounded-xl bg-surface-container-lowest/10 backdrop-blur-sm border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/15 cursor-pointer group" onclick="openWorkModal('Generative Typographic Poster', 'R&amp;D Visual Lab (Stage 02)', 'Generative Swiss constructivist poster system featuring parametric grid structures and dynamic kinetic vector typography.', 'Nodebox, Type Engine, Swiss Grid')">
+<div class="w-full h-24 rounded-lg bg-surface-container/20 mb-3 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out" data-alt="Generative Swiss constructivist typographic poster system featuring dynamic black letters with kinetic red vector lines and minimal grid notation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCTsmqR_bDZA_j42jqzPYN_z7WAQ1lFqsQ4mID9hqgFxac5vO9mTzIjuBa4fCttyj6dqlmR1NJcATCfJYLXbI6LqUovGbzJNNkZ6hEVNZlghtv_4STFqLhDfwP0IEe7Z6csXedpkUJ03vo1eYjf3IB4sv33h3zs85tMKugMds3csOj4TDSpl7bTgHug91Y05op86SzsMgdK2Y7JRX1TjqwD3lVrwecTb7gDRJ8cbB_F">
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary-fixed block">STAGE 02</span>
+<p class="font-headline-sm text-[15px] font-bold text-surface-container-lowest group-hover:text-primary-fixed transition-colors">Generative Poster</p>
+</div>
+<div class="card-motion p-4 rounded-xl bg-surface-container-lowest/10 backdrop-blur-sm border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/15 cursor-pointer group" onclick="openWorkModal('Parametric Chrome Loops', 'R&amp;D Visual Lab (Stage 03)', 'Kinetic 3D chrome geometries suspended in a minimalist architectural void with specular cyan and crimson studio highlights.', 'Cinema 4D, Redshift Raytracing')">
+<div class="w-full h-24 rounded-lg bg-surface-container/20 mb-3 overflow-hidden relative">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 ease-out" data-alt="Sleek 3D kinetic chrome loop geometry suspended in a pure dark architectural vacuum with sharp cyan and crimson studio highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbhfltJZI3xYKKSvpA12L4IKsgh7rayLRjFX-45rkgMC7cyfNigBJSuiq-IU5I9Y69xBIXvRhdBsCsRS2vD89MJhNC-h99yhoRRutJH05gYdjBs3VL3JScpp-2RojYBbpH-lU6IF4qsQJhyxpgTtPIIfiBI74ayF6ELhPBMjkdcpDbl8LIXGewR44ABDuhM36IWzgk1VxSpNPAkwP8pzE77A3EvzoOEW5Wsnp-FeGM">
+</div>
+<span class="font-label-mono-sm text-[10px] text-secondary-fixed block">STAGE 03</span>
+<p class="font-headline-sm text-[15px] font-bold text-surface-container-lowest group-hover:text-primary-fixed transition-colors">Parametric Loops</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 5: CURATED WORK GALLERY
+       ========================================== -->
+<section class="w-full bg-[#F4F7FA] py-space-xl" id="recent-work">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop">
+<!-- Section Title & Filter System -->
+<div class="flex flex-col gap-6 mb-space-lg">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<span class="font-label-mono-sm text-label-mono-sm text-primary-container font-semibold uppercase tracking-widest block mb-2">CURATED PORTFOLIO</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Selected Works Gallery</h2>
+</div>
+<!-- Tier 1 Filter: Macro Scope -->
+<div class="inline-flex p-1 rounded-full bg-surface-container border border-outline-variant/30" id="tier1-filter">
+<button class="macro-btn px-5 py-2 rounded-full bg-primary-container text-on-primary font-label-mono-sm text-label-mono-sm font-semibold transition-all duration-300 shadow-sm" onclick="setMacroFilter(this, 'all')" type="button">All Works</button>
+<button class="macro-btn px-5 py-2 rounded-full text-on-surface-variant hover:text-on-surface font-label-mono-sm text-label-mono-sm font-semibold transition-all duration-300" onclick="setMacroFilter(this, 'studio')" type="button">Studio Experiments</button>
+</div>
+</div>
+<!-- Tier 2 Filter: Discipline Scope (Interactive Filter System) -->
+<div class="flex flex-wrap items-center gap-2 pt-2" id="tier2-filter">
+<button class="discipline-btn px-4 py-1.5 rounded-full bg-surface-container-lowest text-primary-container font-label-mono-sm text-label-mono-sm font-semibold shadow-sm border border-primary-container/20 transition-all duration-300 hover:scale-105 active:scale-95" onclick="filterGallery('all', this)" type="button">All Disciplines</button>
+<button class="discipline-btn px-4 py-1.5 rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant font-label-mono-sm text-label-mono-sm transition-all duration-300 hover:scale-105 active:scale-95 border border-transparent" onclick="filterGallery('fotografi', this)" type="button">Photography</button>
+<button class="discipline-btn px-4 py-1.5 rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant font-label-mono-sm text-label-mono-sm transition-all duration-300 hover:scale-105 active:scale-95 border border-transparent" onclick="filterGallery('videografi', this)" type="button">Videography &amp; Directing</button>
+<button class="discipline-btn px-4 py-1.5 rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant font-label-mono-sm text-label-mono-sm transition-all duration-300 hover:scale-105 active:scale-95 border border-transparent" onclick="filterGallery('desain', this)" type="button">Graphic Design</button>
+<button class="discipline-btn px-4 py-1.5 rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant font-label-mono-sm text-label-mono-sm transition-all duration-300 hover:scale-105 active:scale-95 border border-transparent" onclick="filterGallery('copywriting', this)" type="button">Copywriting &amp; Narrative</button>
+</div>
+</div>
+<!-- Asymmetric Bento Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-lg mb-space-lg items-stretch" id="bento-container">
+<!-- Large Left Vertical Bento Card (spans 7 cols on desktop) -->
+<div class="gallery-item lg:col-span-7 bg-[#0A2540] rounded-3xl overflow-hidden shadow-md hover:shadow-2xl border border-white/5 flex flex-col justify-between relative group cursor-pointer transition-all duration-500 hover:-translate-y-1.5" data-category="videografi" onclick="openWorkModal('Pertamina Patra Niaga — Energizing Horizons 2025', 'Videography &amp; Creative Direction', 'High-energy commercial manifesto film for Pertamina Patra Niaga. Blending on-site footage of maritime and energy infrastructure with original orchestral scoring.', 'Cooke Anamorphic /i • RED V-Raptor 8K VV • DaVinci ACES')">
+<div class="relative w-full h-[380px] lg:h-[460px] overflow-hidden">
+<img class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out" data-alt="High-budget cinematic commercial still for Pertamina energy corporation showing industrial refinery towers illuminated with dramatic golden hour volumetric light and deep royal blue twilight, shot on anamorphic lens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuGJpQ0bvyGF_evdEgD6ypGR0OzCkBPkAKUGHNvIPEd0SOnoUkq6_50UaEOgILMSilR4Y2RxZVwGtj1vUdhsZLEPJo62Q0q08L8ycvGqcwGJRiabnD-_IGB3EHvCuxxOAyZ3dSx5jN67aoZaOYVj2xKIdPVv_fql6GyQVjnD-4vmWrM0fQQEoYkN-xxXR31ARxiSoyD8UP-AZ2ebnp68wBcTQldVTOYRN5R-mGSNgh">
+<div class="absolute inset-0 bg-gradient-to-t from-[#0A2540] via-[#0A2540]/30 to-transparent"></div>
+<div class="absolute top-6 left-6 flex items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-[#ED1C24] text-white font-label-mono-sm text-[11px] font-semibold uppercase tracking-wider shadow-sm">Videography &amp; Creative Direction</span>
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest/20 backdrop-blur-md text-white font-label-mono-sm text-[11px]">2025</span>
+</div>
+<div class="absolute top-6 right-6 flex items-center gap-2 bg-[#0A2540]/80 backdrop-blur-md px-3 py-1 rounded-full text-white font-label-mono-sm text-[11px]">
+<span class="material-symbols-outlined text-[16px] text-[#7AC142]">schedule</span>
+<span class="">03:45 4K Master</span>
+</div>
+</div>
+<div class="p-8 text-surface-container-lowest">
+<div class="flex items-center justify-between gap-4 mb-3">
+<h3 class="font-headline-md text-headline-md font-bold text-surface-container-lowest group-hover:text-primary-fixed transition-colors">Pertamina Patra Niaga — Energizing Horizons 2025</h3>
+<div class="w-12 h-12 rounded-full bg-primary-container hover:bg-[#ED1C24] flex items-center justify-center text-on-primary transition-all duration-300 group-hover:scale-110 group-hover:rotate-45 shrink-0 shadow-lg">
+<span class="material-symbols-outlined text-[20px]">north_east</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-outline-variant max-w-xl leading-relaxed mb-6">
+              High-energy commercial manifesto film for Pertamina Patra Niaga. Blending on-site footage of maritime and energy infrastructure with original orchestral scoring.
+            </p>
+<div class="flex flex-wrap items-center gap-4 pt-4 border-t border-surface-container-lowest/10 font-label-mono-sm text-label-mono-sm text-secondary-fixed">
+<span class="">Optics: Cooke Anamorphic /i</span>
+<span class="">•</span>
+<span class="">Sensor: RED V-Raptor 8K VV</span>
+<span class="">•</span>
+<span class="">Color: DaVinci ACES</span>
+</div>
+</div>
+</div>
+<!-- 4 Medium Bento Cards in 2x2 grid on right (5 cols) -->
+<div class="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Bento 1 -->
+<div class="gallery-item card-motion bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group cursor-pointer" data-category="desain" onclick="openWorkModal('Neo Jakarta Spatial Pavilion', 'Graphic &amp; Spatial Design (2025)', 'Exhibition pavilion identity and kinetic typography installation for a contemporary architectural pavilion.', 'Exhibition System, Swiss Architectural Typo')">
+<div class="w-full h-36 rounded-xl bg-surface-container overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" data-alt="Futuristic architectural spatial exhibition pavilion with clean typography and minimalist steel fixtures in modern Jakarta convention center." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIXTSazWM_NfVo1v7Jw_a7GoLAhpAPWCDMSUAc3XvbJyuTb1O9TslO_ZReGZxB2ZQsD5U_GSlxX9rI-uBwbr73SfBFzOLIb7IFzJzyvdoqVC-clmfWh2QfRxWpNs7gPXYIYmuPJcjTPSLmyyhuLJTSj0lSWWhH-6YYwopdhbnfjvjdHeRgN0kPuOElmMnE24XllW_oLN1JlEt2SWEzZDRnKllreT94QXvojWUchRD-">
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-surface-container-lowest/90 font-label-mono-sm text-[10px] text-on-surface font-semibold shadow-sm">2025</span>
+</div>
+<div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider block mb-1">Graphic &amp; Spatial Design</span>
+<h4 class="font-headline-sm text-[17px] font-bold text-on-surface group-hover:text-primary-container transition-colors mb-2">Neo Jakarta Spatial Pavilion</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Exhibition pavilion identity and kinetic typography installation for an architectural pavilion.</p>
+</div>
+<div class="mt-4 pt-2 flex items-center justify-between text-primary-container font-label-mono-sm text-label-mono-sm font-semibold">
+<span class="group-hover:translate-x-1 transition-transform">Explore</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Bento 2 -->
+<div class="gallery-item card-motion bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group cursor-pointer" data-category="fotografi" onclick="openWorkModal('Lumina High-Jewelry', 'Editorial Photography (2024)', 'Haute joaillerie visual campaign featuring sculptural chiaroscuro lighting and deep micro-contrast.', 'Hasselblad H6D-100c, Broncolor Lighting')">
+<div class="w-full h-36 rounded-xl bg-surface-container overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" data-alt="Editorial high jewelry macro photography featuring diamonds resting on obsidian stone with harsh sculptural directional light." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1nN812ZrBgDkgKbBWajCyBH_HgX5Wa8LhTtbj0NSy7jdhtw2zG05pnYfMyoN1xUwpgR0CEidYvIbVoGMwpf306_eX1vwhNeVeGbNGWGMsT4TaYP-hMI6gicXp0Md0tluohncFsw1pzs4sGVFZ_Ca29tTCI4gR302tFfxeY2aRHxDI0InTkkZvjqaw8S7sbkKLGnixb-oX95xDrAgpcsCQ4ADnUgS03awcBrSccQeu">
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-surface-container-lowest/90 font-label-mono-sm text-[10px] text-on-surface font-semibold shadow-sm">2024</span>
+</div>
+<div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider block mb-1">Editorial Photography</span>
+<h4 class="font-headline-sm text-[17px] font-bold text-on-surface group-hover:text-primary-container transition-colors mb-2">Lumina High-Jewelry</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Haute joaillerie visual campaign with dramatic chiaroscuro lighting.</p>
+</div>
+<div class="mt-4 pt-2 flex items-center justify-between text-primary-container font-label-mono-sm text-label-mono-sm font-semibold">
+<span class="group-hover:translate-x-1 transition-transform">Explore</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Bento 3 -->
+<div class="gallery-item card-motion bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group cursor-pointer" data-category="copywriting" onclick="openWorkModal('Apex Kinetic Rebrand', 'Brand Architecture &amp; Copy (2024)', 'Visual identity transformation for venture capital fund in Singapore and Jakarta, encompassing verbal guidelines and kinetic typography.', 'Design Tokens, Manifesto Strategy, Enterprise Typography')">
+<div class="w-full h-36 rounded-xl bg-surface-container overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" data-alt="Minimalist kinetic brand identity guidelines book on slate desk with red ribbon bookmark and high-contrast Swiss typography layout." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqAxvOJ0njZRSOnyT4Huvi_WfZdjbQX3UdUOGvnOr2SnmF_hrL5frDnp6LmO2Twg7ECEqlW5-vt5652YFei-5wbXp5PZA62UaxK4NUNNACMj2Y6SrZUW5z9mXXaWebW8F2YRSdo1-aYtB-7FsHkhx-A4y7TaN9UbLL4NcNxSaPx0st5WF0a5oX70hX5xTNcnY-_dxiEdpJysYiJfBDxcyaZTiOhNeiTcGwnFsO5Ne4">
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-surface-container-lowest/90 font-label-mono-sm text-[10px] text-on-surface font-semibold shadow-sm">2024</span>
+</div>
+<div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider block mb-1">Brand Architecture</span>
+<h4 class="font-headline-sm text-[17px] font-bold text-on-surface group-hover:text-primary-container transition-colors mb-2">Apex Kinetic Rebrand</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Visual identity transformation for regional venture capital firm in Singapore and Jakarta.</p>
+</div>
+<div class="mt-4 pt-2 flex items-center justify-between text-primary-container font-label-mono-sm text-label-mono-sm font-semibold">
+<span class="group-hover:translate-x-1 transition-transform">Explore</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+<!-- Bento 4 -->
+<div class="gallery-item card-motion bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group cursor-pointer" data-category="videografi" onclick="openWorkModal('Echoes of Nusantara', 'Cinematography &amp; Docudrama (2024)', 'Short documentary highlighting heritage preservation with authentic 35mm grain color grading and ambisonic spatial audio.', 'ARRI Alexa Mini LF, Cooke Panchro Classic')">
+<div class="w-full h-36 rounded-xl bg-surface-container overflow-hidden mb-4 relative">
+<img class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out" data-alt="Atmospheric cinema frame of traditional Indonesian archipelago coastline under dramatic mist and low key warm tungsten lantern lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOL6vGBo20ewsYQKUTzURPkTL04YcL9CzWFGFG_oQM8hccTsK5rO4HrB0i6glNJQ9V2iPbTkg21pQRf0cZhzXhugAxVNwSRhM0SpfwjDf8cZ8xOPKmGE4JXcbOJ5cA70FKOisPNu50GyQ474bLjiNBTVGoNaenBc3gDXt_-lcwriq1IM0MFgkpwoLAU2ofFMbpZSV1U5VsJeqKyHD0ES7gigpYyQRa-tHImaHXnDSA">
+<span class="absolute top-2 left-2 px-2 py-0.5 rounded bg-surface-container-lowest/90 font-label-mono-sm text-[10px] text-on-surface font-semibold shadow-sm">2024</span>
+</div>
+<div>
+<span class="font-label-mono-sm text-[10px] text-secondary font-semibold uppercase tracking-wider block mb-1">Cinematography</span>
+<h4 class="font-headline-sm text-[17px] font-bold text-on-surface group-hover:text-primary-container transition-colors mb-2">Echoes of Nusantara</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">Short documentary highlighting heritage preservation with authentic 35mm grain grading.</p>
+</div>
+<div class="mt-4 pt-2 flex items-center justify-between text-primary-container font-label-mono-sm text-label-mono-sm font-semibold">
+<span class="group-hover:translate-x-1 transition-transform">Explore</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3-Column Clean Card Showcase underneath -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg mb-space-lg">
+<div class="gallery-item card-motion bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#ED1C24]/30 flex flex-col justify-between group cursor-pointer" data-category="videografi" onclick="openWorkModal('Pertamina Lubricants Global Campaign', 'Videography / 2025', 'High-speed circuit filming for international lubricants campaign, integrating gyro-stabilized camera rigs and ultra-high-speed cinema cinematography.', 'Sony FX9, Gyro Rig, Phantom Flex 4K')">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="px-2.5 py-1 rounded bg-[#ED1C24]/10 text-[#ED1C24] font-label-mono-sm text-[11px] font-bold uppercase tracking-wider">Videography / 2025</span>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary">Global Broadcast</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-2 group-hover:text-primary-container transition-colors">Pertamina Lubricants Global Campaign</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-4">
+              High-speed circuit filming for international lubricants campaign, integrating gyro-stabilized rigs and high-speed cinema optics.
+            </p>
+</div>
+<div class="inline-flex items-center gap-1.5 text-primary-container group-hover:text-[#ED1C24] font-label-mono-sm text-label-mono-sm font-semibold pt-4 transition-colors">
+<span class="">View Project</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+<div class="gallery-item card-motion bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#ED1C24]/30 flex flex-col justify-between group cursor-pointer" data-category="desain" onclick="openWorkModal('Studio Artefak Monograph Vol. 4', 'Graphic Design / 2025', 'Hardcover linen monograph with gold foil finishing capturing five years of contemporary visual practice.', 'Fedrigoni Papers, Hot Foil Stamping, Offset 6-Colors')">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="px-2.5 py-1 rounded bg-[#ED1C24]/10 text-[#ED1C24] font-label-mono-sm text-[11px] font-bold uppercase tracking-wider">Graphic Design / 2025</span>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary">Editorial Print</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-2 group-hover:text-primary-container transition-colors">Studio Artefak Monograph Vol. 4</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-4">
+              Hardcover linen monograph with gold foil finishing capturing five years of contemporary visual practice.
+            </p>
+</div>
+<div class="inline-flex items-center gap-1.5 text-primary-container group-hover:text-[#ED1C24] font-label-mono-sm text-label-mono-sm font-semibold pt-4 transition-colors">
+<span class="">View Project</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+<div class="gallery-item card-motion bg-surface-container-lowest p-6 rounded-2xl shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#ED1C24]/30 flex flex-col justify-between group cursor-pointer" data-category="fotografi" onclick="openWorkModal('Solaris Industrial Energy Essay', 'Photography / 2024', 'Artistic photographic essay documenting renewable energy plants in East Kalimantan through human-scale geometry and environmental perspective.', 'Leica SL2, Summilux 35mm f/1.4 ASPH')">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="px-2.5 py-1 rounded bg-[#ED1C24]/10 text-[#ED1C24] font-label-mono-sm text-[11px] font-bold uppercase tracking-wider">Photography / 2024</span>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary">Industrial Essay</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold mb-2 group-hover:text-primary-container transition-colors">Solaris Industrial Energy Essay</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed mb-4">
+              Artistic photographic essay documenting renewable energy plants in East Kalimantan through human-scale geometry.
+            </p>
+</div>
+<div class="inline-flex items-center gap-1.5 text-primary-container group-hover:text-[#ED1C24] font-label-mono-sm text-label-mono-sm font-semibold pt-4 transition-colors">
+<span class="">View Project</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">chevron_right</span>
+</div>
+</div>
+</div>
+<!-- Work Detail Interactive Badge / Technical Specifications -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm border border-outline-variant/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-6" id="modal-preview">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-md">
+<span class="material-symbols-outlined text-[24px]">tune</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-[#7AC142]"></span>
+<span class="font-headline-sm text-[16px] font-bold text-on-surface">Production &amp; Studio Standards</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Every work executed to cinema-grade studio hardware specifications and Academy Color Encoding standards.</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-3 font-label-mono-sm text-label-mono-sm">
+<div class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-variant transition-colors">
+<span class="text-secondary">Camera:</span> RED V-Raptor 8K VV
+          </div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-variant transition-colors">
+<span class="text-secondary">Lens:</span> Cooke Anamorphic /i Full Frame
+          </div>
+<div class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface hover:bg-surface-variant transition-colors">
+<span class="text-secondary">Color:</span> DaVinci Resolve Studio 19
+          </div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 6: PROFESSIONAL TIMELINE
+       ========================================== -->
+<section class="w-full bg-[#0A2540] text-surface-bright py-space-xl overflow-hidden" id="experiences">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-space-lg">
+<div>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary-fixed uppercase tracking-widest block mb-2">CAREER JOURNEY</span>
+<h2 class="font-headline-lg text-headline-lg text-surface-container-lowest font-bold tracking-tight">Creative Leadership Timeline</h2>
+</div>
+<p class="font-body-sm text-body-sm text-outline-variant max-w-md">
+          A consistent record of steering multidisciplinary teams across commercial advertising and independent studio production.
+        </p>
+</div>
+<!-- 4 Full-Bleed Interactive Vertical Timeline Columns -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter-lg">
+<!-- Timeline Column 1 -->
+<div class="card-motion p-8 rounded-2xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 flex flex-col justify-between group cursor-pointer" onclick="openWorkModal('Studio Artefak', 'Principal Creative Director (2024 — Present)', 'Directing creative vision for energy conglomerates, luxury brands, and commercial scale productions.', 'Executive Creative Direction, TVC, Post-production Supervision')">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-[#ED1C24] text-white font-label-mono-sm text-label-mono-sm font-semibold shadow-sm">2024 — Present</span>
+<span class="w-2.5 h-2.5 rounded-full bg-[#7AC142] animate-ping"></span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest mb-1 group-hover:text-primary-fixed transition-colors">Studio Artefak</h3>
+<p class="font-label-mono-sm text-label-mono-sm text-secondary-fixed mb-4">Principal Creative Director</p>
+<p class="font-body-sm text-body-sm text-outline-variant leading-relaxed">
+              Directing creative vision for energy conglomerates, luxury brands, and commercial scale productions.
+            </p>
+</div>
+<div class="mt-8 pt-6 flex items-center justify-between border-t border-white/5">
+<span class="font-label-mono-sm text-[11px] text-outline-variant uppercase">Jakarta HQ</span>
+<div class="w-9 h-9 rounded-full bg-surface-container-lowest/10 group-hover:bg-[#ED1C24] group-hover:rotate-45 flex items-center justify-center text-surface-container-lowest transition-all duration-300">
+<span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+</div>
+</div>
+</div>
+<!-- Timeline Column 2 -->
+<div class="card-motion p-8 rounded-2xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 flex flex-col justify-between group cursor-pointer" onclick="openWorkModal('Global Kinetic Agency', 'Head of Visual Storytelling (2022 — 2024)', 'Directed international video production campaigns for the Southeast Asia market with virtual production integration.', 'Virtual Production LED Volume, Unreal Engine Realtime')">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest/15 text-surface-container-lowest font-label-mono-sm text-label-mono-sm font-semibold">2022 — 2024</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest mb-1 group-hover:text-primary-fixed transition-colors">Global Kinetic Agency</h3>
+<p class="font-label-mono-sm text-label-mono-sm text-secondary-fixed mb-4">Head of Visual Storytelling</p>
+<p class="font-body-sm text-body-sm text-outline-variant leading-relaxed">
+              Directed international video production campaigns for the Southeast Asia market with virtual production integration.
+            </p>
+</div>
+<div class="mt-8 pt-6 flex items-center justify-between border-t border-white/5">
+<span class="font-label-mono-sm text-[11px] text-outline-variant uppercase">Singapore Hub</span>
+<div class="w-9 h-9 rounded-full bg-surface-container-lowest/10 group-hover:bg-[#ED1C24] group-hover:rotate-45 flex items-center justify-center text-surface-container-lowest transition-all duration-300">
+<span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+</div>
+</div>
+</div>
+<!-- Timeline Column 3 -->
+<div class="card-motion p-8 rounded-2xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 flex flex-col justify-between group cursor-pointer" onclick="openWorkModal('Monolith Creative Lab', 'Senior Art Director (2020 — 2022)', 'Architected integrated brand systems, exhibition identities, and exclusive corporate collateral packaging.', 'Spatial Identity, Corporate Rebranding, Packaging Design')">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest/15 text-surface-container-lowest font-label-mono-sm text-label-mono-sm font-semibold">2020 — 2022</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest mb-1 group-hover:text-primary-fixed transition-colors">Monolith Creative Lab</h3>
+<p class="font-label-mono-sm text-label-mono-sm text-secondary-fixed mb-4">Senior Art Director</p>
+<p class="font-body-sm text-body-sm text-outline-variant leading-relaxed">
+              Architected integrated brand systems, exhibition identities, and exclusive corporate collateral packaging.
+            </p>
+</div>
+<div class="mt-8 pt-6 flex items-center justify-between border-t border-white/5">
+<span class="font-label-mono-sm text-[11px] text-outline-variant uppercase">Jakarta Studio</span>
+<div class="w-9 h-9 rounded-full bg-surface-container-lowest/10 group-hover:bg-[#ED1C24] group-hover:rotate-45 flex items-center justify-center text-surface-container-lowest transition-all duration-300">
+<span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+</div>
+</div>
+</div>
+<!-- Timeline Column 4 -->
+<div class="card-motion p-8 rounded-2xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 flex flex-col justify-between group cursor-pointer" onclick="openWorkModal('Neo Jakarta Advertising', 'Visual Designer &amp; Motion Specialist (2018 — 2020)', 'Created kinetic motion graphics, commercial TV boards, and dynamic typography for massive-scale campaigns.', 'Motion Graphics Broadcast, Kinetic Typography')">
+<div>
+<div class="flex items-center justify-between mb-6">
+<span class="px-3 py-1 rounded-full bg-surface-container-lowest/15 text-surface-container-lowest font-label-mono-sm text-label-mono-sm font-semibold">2018 — 2020</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest mb-1 group-hover:text-primary-fixed transition-colors">Neo Jakarta Advertising</h3>
+<p class="font-label-mono-sm text-label-mono-sm text-secondary-fixed mb-4">Visual Designer &amp; Motion Specialist</p>
+<p class="font-body-sm text-body-sm text-outline-variant leading-relaxed">
+              Created kinetic motion graphics, commercial TV boards, and dynamic typography for massive-scale campaigns.
+            </p>
+</div>
+<div class="mt-8 pt-6 flex items-center justify-between border-t border-white/5">
+<span class="font-label-mono-sm text-[11px] text-outline-variant uppercase">Jakarta Agency</span>
+<div class="w-9 h-9 rounded-full bg-surface-container-lowest/10 group-hover:bg-[#ED1C24] group-hover:rotate-45 flex items-center justify-center text-surface-container-lowest transition-all duration-300">
+<span class="material-symbols-outlined text-[18px]">arrow_outward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ==========================================
+       SECTION 7: INTERACTIVE CONTACT
+       ========================================== -->
+<section class="w-full bg-[#F4F7FA] py-space-xl" id="contact">
+<div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop">
+<!-- Large Rounded-3xl Dark Card Banner with Photography Overlay -->
+<div class="relative w-full rounded-3xl bg-[#071320] text-surface-bright overflow-hidden p-8 md:p-16 mb-space-lg shadow-2xl border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-screen pointer-events-none" data-alt="High contrast atmospheric production studio stage at night with dim blue floodlights and film equipment silhouetted against a cinematic backdrop." style="background-image: url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuC-ltxDU8TxfjSWHefWdIKKe-IVWKU-6qqCHUuJ8lYZvPen4BZXJn9iiRax7Xnx5_6gVkVr8Z1d6L3IMsv_fHd_tD6PXn0VgHMCbybUXwYeH6opu4biUurhTA6EUD1pqNfTO2fzBxm4xSAQ4b8AKY8SHmEeIjhy8IlfHuLw7tK5h6Z7ulwni1iaI-ovylZ5qAYj_6ufLMMbESynddjKSLzGMuGfuk999Jh0A0jNrvSV&quot;);"></div>
+<div class="absolute inset-0 bg-gradient-to-r from-[#071320] via-[#071320]/80 to-transparent pointer-events-none"></div>
+<div class="relative z-10 max-w-2xl">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#ED1C24] text-surface-bright font-label-mono-sm text-label-mono-sm uppercase tracking-wider font-semibold mb-4 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span class="">STRATEGIC PROJECT COLLABORATION</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg font-bold text-surface-container-lowest tracking-tight mb-4">
+            Initiate Collaboration
+          </h2>
+<p class="font-body-lg text-body-lg text-outline-variant leading-relaxed mb-8">
+            Ready to elevate your visual standards and strategic brand impact to the next frontier? Let's discuss creative briefs, commercial direction, or long-term team advisory.
+          </p>
+<a class="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[#00529B] hover:bg-[#ED1C24] text-surface-container-lowest font-label-mono-sm text-label-mono-sm uppercase tracking-wider font-semibold transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 active:translate-y-0" href="mailto:contact@prioworks.my.id">
+<span class="">Schedule 1-on-1 Consultation</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">north_east</span>
+</a>
+</div>
+</div>
+<!-- 3 Clean White CopyField Cards with Micro-Feedback -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter-lg">
+<!-- Field 1: Email -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold uppercase tracking-wider">Official Email</span>
+<span class="material-symbols-outlined text-primary-container">mail</span>
+</div>
+<p class="font-headline-sm text-[17px] font-bold text-on-surface select-all break-all mb-1" id="copy-email-val">contact@prioworks.my.id</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Formal response within 1x24 business hours.</p>
+</div>
+<button class="mt-6 w-full py-2.5 rounded-full bg-surface-container hover:bg-primary-container hover:text-on-primary text-on-surface font-label-mono-sm text-label-mono-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 shadow-sm" id="btn-copy-email" onclick="copyToClipboard('contact@prioworks.my.id', this, 'Copy Email')" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span class="">Copy Email</span>
+</button>
+</div>
+<!-- Field 2: WhatsApp -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-[#7AC142]/50 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold uppercase tracking-wider">Business WhatsApp</span>
+<span class="material-symbols-outlined text-[#7AC142]">chat</span>
+</div>
+<p class="font-headline-sm text-[17px] font-bold text-on-surface select-all mb-1" id="copy-phone-val">+62 811-9820-7712</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Direct executive &amp; curatorial coordination.</p>
+</div>
+<button class="mt-6 w-full py-2.5 rounded-full bg-surface-container hover:bg-[#00529B] hover:text-on-primary text-on-surface font-label-mono-sm text-label-mono-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 shadow-sm" id="btn-copy-phone" onclick="copyToClipboard('+6281198207712', this, 'Copy Number')" type="button">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+<span class="">Copy Number</span>
+</button>
+</div>
+<!-- Field 3: LinkedIn -->
+<div class="card-motion p-6 rounded-2xl bg-surface-container-lowest shadow-sm hover:shadow-xl border border-outline-variant/20 hover:border-primary-container/40 flex flex-col justify-between group">
+<div>
+<div class="flex items-center justify-between mb-3">
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold uppercase tracking-wider">LinkedIn Profile</span>
+<span class="material-symbols-outlined text-primary-container">link</span>
+</div>
+<p class="font-headline-sm text-[17px] font-bold text-on-surface truncate mb-1">linkedin.com/in/priosetyo</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Executive networking and publication feed.</p>
+</div>
+<a class="mt-6 w-full py-2.5 rounded-full bg-surface-container hover:bg-primary-container hover:text-on-primary text-on-surface font-label-mono-sm text-label-mono-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 active:scale-95 shadow-sm" href="https://linkedin.com" rel="noopener noreferrer" target="_blank">
+<span class="">View Profile</span>
+<span class="material-symbols-outlined text-[16px] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">open_in_new</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+</div></main>
+<!-- ==========================================
+     INTERACTIVE WORK DETAIL MODAL DIALOG
+     ========================================== -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300" id="work-detail-modal">
+<div class="relative w-full max-w-2xl bg-surface-container-lowest rounded-3xl shadow-2xl border border-outline-variant/30 overflow-hidden transform scale-95 transition-transform duration-300 p-8" id="work-detail-dialog">
+<button aria-label="Close" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-surface-container hover:bg-surface-variant text-on-surface flex items-center justify-center transition-colors" onclick="closeWorkModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+<div class="flex items-center gap-2 mb-3">
+<span class="w-2.5 h-2.5 rounded-full bg-[#ED1C24]"></span>
+<span class="font-label-mono-sm text-label-mono-sm text-secondary font-bold uppercase tracking-wider" id="modal-category">Curated Portfolio</span>
+</div>
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface mb-4" id="modal-title">Project Title</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed mb-6" id="modal-desc">
+  Comprehensive description regarding the art direction and visual narrative of this project.
+</p>
+<div class="p-4 rounded-xl bg-surface-container-low border border-outline-variant/30 mb-8">
+<span class="font-label-mono-sm text-[11px] text-secondary uppercase font-semibold block mb-1">Equipment &amp; Execution Standards</span>
+<p class="font-label-mono-sm text-label-mono-sm text-on-surface font-semibold" id="modal-specs">RED V-Raptor 8K VV • Cooke Anamorphic /i</p>
+</div>
+<div class="flex items-center justify-end gap-3">
+<button class="px-5 py-2.5 rounded-full bg-surface-container hover:bg-surface-variant text-on-surface font-label-mono-sm text-label-mono-sm font-semibold transition-colors" onclick="closeWorkModal()" type="button">Close</button>
+<a class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-primary-container hover:bg-primary text-on-primary font-label-mono-sm text-label-mono-sm font-semibold transition-colors shadow-sm" href="#contact" onclick="closeWorkModal()">
+<span class="">Discuss Similar Project</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+<footer class="w-full bg-[#0A2540] text-surface-bright pt-space-xl pb-space-lg border-t border-outline/20"><div class="max-w-[1440px] mx-auto px-margin-mobile md:px-margin lg:px-margin-desktop"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-gutter-lg pb-space-xl border-b border-surface-container-highest/10"><div class="lg:col-span-5 flex flex-col gap-space-md"><div class="flex items-center gap-space-sm"><div class="w-9 h-9 rounded-lg bg-surface-container-lowest text-primary flex items-center justify-center font-label-mono-lg text-label-mono-lg font-bold shadow-sm">PS</div><span class="font-headline-sm text-headline-sm font-bold text-surface-container-lowest tracking-tight">Prio Setyo</span></div><p class="font-body-sm text-body-sm text-outline-variant max-w-md leading-relaxed">Portfolio architecture of enterprise visual systems, narrative strategy, and international-standard digital transformations.</p><div class="flex flex-wrap items-center gap-space-sm pt-space-xs"><div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest/10 border border-surface-container-lowest/15 hover:border-[#7AC142]/40 transition-colors"><span class="w-2 h-2 rounded-full bg-[#7AC142] animate-pulse"></span><span class="font-label-mono-sm text-label-mono-sm text-surface-bright tracking-wider uppercase">Jakarta HQ</span></div><div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest/10 border border-surface-container-lowest/15 hover:border-secondary-container/40 transition-colors"><span class="w-2 h-2 rounded-full bg-secondary-container"></span><span class="font-label-mono-sm text-label-mono-sm text-surface-bright tracking-wider uppercase">Singapore Hub</span></div></div></div><div class="lg:col-span-4 flex flex-col gap-space-sm"><span class="font-label-mono-sm text-label-mono-sm uppercase text-secondary-fixed tracking-widest">Quick Navigation</span><div class="grid grid-cols-2 gap-y-space-sm gap-x-space-md pt-space-xs"><a class="font-body-sm text-body-sm text-outline-variant hover:text-surface-bright transition-colors" data-path="about" href="#about">About Me</a><a class="font-body-sm text-body-sm text-outline-variant hover:text-surface-bright transition-colors" data-path="skills" href="#skills">Core Expertise</a><a class="font-body-sm text-body-sm text-outline-variant hover:text-surface-bright transition-colors" data-path="recent-work" href="#recent-work">Curated Gallery</a><a class="font-body-sm text-body-sm text-outline-variant hover:text-surface-bright transition-colors" data-path="experiences" href="#experiences">Career Journey</a><a class="font-body-sm text-body-sm text-outline-variant hover:text-surface-bright transition-colors" data-path="contact" href="#contact">Contact &amp; Inquiry</a></div></div><div class="lg:col-span-3 flex flex-col gap-space-sm"><span class="font-label-mono-sm text-label-mono-sm uppercase text-secondary-fixed tracking-widest">Professional Links</span><div class="flex flex-col gap-space-xs pt-space-xs"><a class="inline-flex items-center gap-2 text-outline-variant hover:text-surface-bright transition-colors font-body-sm text-body-sm group" href="https://linkedin.com" target="_blank"><span class="material-symbols-outlined text-[18px] text-secondary-fixed group-hover:translate-x-0.5 transition-transform">link</span><span class="">LinkedIn Network</span></a><a class="inline-flex items-center gap-2 text-outline-variant hover:text-surface-bright transition-colors font-body-sm text-body-sm group" href="https://github.com" target="_blank"><span class="material-symbols-outlined text-[18px] text-secondary-fixed group-hover:translate-x-0.5 transition-transform">terminal</span><span class="">GitHub Repositories</span></a><a class="inline-flex items-center gap-2 text-outline-variant hover:text-surface-bright transition-colors font-body-sm text-body-sm group" href="mailto:contact@prioworks.my.id"><span class="material-symbols-outlined text-[18px] text-secondary-fixed group-hover:translate-x-0.5 transition-transform">mail</span><span class="">Direct Mail</span></a></div></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-mono-sm text-label-mono-sm text-outline-variant"><p class="">© 2025 Prio Setyo. All Rights Reserved.</p><div class="flex items-center gap-space-md"><span class="text-outline-variant/60">ISO 27001 Aligned</span><span class="w-1 h-1 rounded-full bg-outline-variant/40"></span><span class="">Enterprise Portfolio System</span></div></div></div></footer>
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const filterButtons = document.querySelectorAll('#gallery-filters .filter-btn');
-      const projectItems = document.querySelectorAll('#projects-grid .project-item');
-
-      filterButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const filter = btn.getAttribute('data-filter');
-
-          // Toggle button styles
-          filterButtons.forEach(b => {
-            b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
-            b.classList.add('text-on-surface-variant');
-          });
-          btn.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
-          btn.classList.remove('text-on-surface-variant');
-
-          // Filter card items
-          projectItems.forEach(item => {
-            const categories = item.getAttribute('data-category') || '';
-            if (filter === 'all' || categories.includes(filter)) {
-              item.style.display = 'flex';
-            } else {
-              item.style.display = 'none';
-            }
-          });
-        });
-      });
+// 1-Click Copy Interaction with instant feedback
+function copyToClipboard(text, btnElement, defaultLabel) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      showCopyFeedback(btnElement, defaultLabel);
+    }).catch(() => {
+      fallbackCopy(text, btnElement, defaultLabel);
     });
-  </script>
-</div></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_12px_rgba(0,0,0,0.02)] mt-space-xl"><div class="max-w-[1440px] mx-auto px-margin lg:px-margin-desktop py-space-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-lg"><div class="flex flex-col gap-1"><span class="font-headline-sm text-headline-sm text-on-surface">Prio Setyo</span><p class="font-body-sm text-body-sm text-on-surface-variant max-w-md">Executive Creative Direction, Brand Systems &amp; High-Impact Digital Experiences.</p></div><div class="flex flex-wrap items-center gap-space-md font-label-caps text-label-caps uppercase text-on-surface-variant"><span class="hover:text-on-surface transition-colors cursor-pointer">JAKARTA / REMOTE</span><span class="hover:text-on-surface transition-colors cursor-pointer">ARCHIVE 2020—2025</span><span class="hover:text-on-surface transition-colors cursor-pointer">ALL RIGHTS RESERVED</span></div></div></footer>
+  } else {
+    fallbackCopy(text, btnElement, defaultLabel);
+  }
+}
 
+function fallbackCopy(text, btnElement, defaultLabel) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  document.body.appendChild(textArea);
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showCopyFeedback(btnElement, defaultLabel);
+  } catch (err) {}
+  document.body.removeChild(textArea);
+}
+
+function showCopyFeedback(btnElement, defaultLabel) {
+  const originalHTML = btnElement.innerHTML;
+  btnElement.innerHTML = `<span class="material-symbols-outlined text-[16px] text-[#7AC142]">check_circle</span><span class="text-[#7AC142] font-bold">Copied! ✓</span>`;
+  btnElement.classList.add('bg-[#7AC142]/10', 'border', 'border-[#7AC142]/40');
+  setTimeout(() => {
+    btnElement.innerHTML = originalHTML;
+    btnElement.classList.remove('bg-[#7AC142]/10', 'border', 'border-[#7AC142]/40');
+  }, 2200);
+}
+
+// Hero Project Spotlight Selector
+function switchSpotlight(index, title) {
+  const counter = document.getElementById('hero-slider-counter');
+  if (counter) counter.innerText = `0${index + 1} / 05`;
+  const buttons = document.querySelectorAll('.hero-spotlight-btn');
+  buttons.forEach((btn, i) => {
+    const dot = btn.querySelector('span:first-child');
+    const badge = btn.querySelector('.font-label-mono-sm');
+    const line = btn.querySelector('div:last-child');
+    if (i === index) {
+      btn.className = "hero-spotlight-btn group text-left p-3.5 rounded-xl bg-surface-container-lowest/10 border border-[#ED1C24]/50 shadow-[0_0_15px_rgba(237,28,36,0.15)] transition-all duration-300 cursor-pointer";
+      if (line) line.className = "h-0.5 w-full bg-[#ED1C24] mt-2 rounded-full transition-all duration-300";
+    } else {
+      btn.className = "hero-spotlight-btn group text-left p-3.5 rounded-xl bg-surface-container-lowest/5 border border-white/5 hover:border-white/20 hover:bg-surface-container-lowest/10 transition-all duration-300 cursor-pointer";
+      if (line) line.className = "h-0.5 w-0 group-hover:w-full bg-primary-fixed-dim transition-all duration-300 mt-2 rounded-full";
+    }
+  });
+}
+
+// Gallery Filtering Engine
+function filterGallery(discipline, btn) {
+  const buttons = document.querySelectorAll('.discipline-btn');
+  buttons.forEach(b => {
+    b.className = "discipline-btn px-4 py-1.5 rounded-full bg-transparent hover:bg-surface-container text-on-surface-variant font-label-mono-sm text-label-mono-sm transition-all duration-300 hover:scale-105 active:scale-95 border border-transparent";
+  });
+  btn.className = "discipline-btn px-4 py-1.5 rounded-full bg-surface-container-lowest text-primary-container font-label-mono-sm text-label-mono-sm font-semibold shadow-sm border border-primary-container/20 transition-all duration-300 hover:scale-105 active:scale-95";
+
+  const items = document.querySelectorAll('.gallery-item');
+  items.forEach(item => {
+    const cat = item.getAttribute('data-category');
+    if (discipline === 'all' || cat === discipline) {
+      item.style.display = '';
+      item.style.opacity = '0';
+      item.style.transform = 'scale(0.96)';
+      setTimeout(() => {
+        item.style.transition = 'all 0.35s ease';
+        item.style.opacity = '1';
+        item.style.transform = 'scale(1)';
+      }, 30);
+    } else {
+      item.style.transition = 'all 0.2s ease';
+      item.style.opacity = '0';
+      item.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        item.style.display = 'none';
+      }, 200);
+    }
+  });
+}
+
+function setMacroFilter(btn, mode) {
+  const btns = document.querySelectorAll('.macro-btn');
+  btns.forEach(b => {
+    b.className = "macro-btn px-5 py-2 rounded-full text-on-surface-variant hover:text-on-surface font-label-mono-sm text-label-mono-sm font-semibold transition-all duration-300";
+  });
+  btn.className = "macro-btn px-5 py-2 rounded-full bg-primary-container text-on-primary font-label-mono-sm text-label-mono-sm font-semibold transition-all duration-300 shadow-sm";
+  
+  if (mode === 'studio') {
+    filterGallery('desain', document.querySelectorAll('.discipline-btn')[3]);
+  } else {
+    filterGallery('all', document.querySelectorAll('.discipline-btn')[0]);
+  }
+}
+
+// Work Detail Modal Handling
+function openWorkModal(title, category, desc, specs) {
+  const modal = document.getElementById('work-detail-modal');
+  const dialog = document.getElementById('work-detail-dialog');
+  document.getElementById('modal-title').innerText = title;
+  document.getElementById('modal-category').innerText = category;
+  document.getElementById('modal-desc').innerText = desc;
+  document.getElementById('modal-specs').innerText = specs || "RED V-Raptor 8K VV • Cooke Anamorphic /i";
+
+  modal.classList.remove('pointer-events-none', 'opacity-0');
+  modal.classList.add('opacity-100');
+  dialog.classList.remove('scale-95');
+  dialog.classList.add('scale-100');
+}
+
+function closeWorkModal() {
+  const modal = document.getElementById('work-detail-modal');
+  const dialog = document.getElementById('work-detail-dialog');
+  modal.classList.add('opacity-0');
+  dialog.classList.remove('scale-100');
+  dialog.classList.add('scale-95');
+  setTimeout(() => {
+    modal.classList.add('pointer-events-none');
+  }, 250);
+}
+
+// Close on backdrop click & ESC key
+document.getElementById('work-detail-modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeWorkModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeWorkModal();
+});
+</script>
 </body></html>

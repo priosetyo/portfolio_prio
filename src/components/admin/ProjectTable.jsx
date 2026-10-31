@@ -99,14 +99,14 @@ export function ProjectTable({ projects = [], onEdit, onDelete, onTogglePublish 
                 padding: '0.65rem 2rem 0.65rem 2.3rem',
                 fontSize: 'var(--text-xs)',
                 borderRadius: '0.75rem',
-                border: '1px solid rgba(0, 0, 0, 0.08)',
-                backgroundColor: '#f3f3f5',
-                color: 'var(--text-primary)',
+                border: '1px solid rgba(194, 198, 211, 0.55)',
+                backgroundColor: 'var(--color-surface-low)',
+                color: 'var(--color-on-surface)',
                 outline: 'none',
                 transition: 'border-color 0.2s ease'
               }}
-              onFocus={(e) => (e.target.style.borderColor = '#000000')}
-              onBlur={(e) => (e.target.style.borderColor = 'rgba(0, 0, 0, 0.08)')}
+              onFocus={(e) => (e.target.style.borderColor = 'var(--color-primary-container)')}
+              onBlur={(e) => (e.target.style.borderColor = 'rgba(194, 198, 211, 0.55)')}
             />
             {search && (
               <button
