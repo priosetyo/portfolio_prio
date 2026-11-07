@@ -146,9 +146,10 @@ export function About({ settings }) {
           <p
             className="font-body-md"
             style={{
-              color: 'var(--color-outline-variant)',
-              maxWidth: '44rem',
-              lineHeight: 1.6,
+              color: '#334155',
+              fontSize: '1.05rem',
+              maxWidth: '46rem',
+              lineHeight: 1.65,
               margin: 0
             }}
           >
