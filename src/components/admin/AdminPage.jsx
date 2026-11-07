@@ -2572,7 +2572,7 @@ export function AdminPage({ onBackToSite }) {
                                   borderRadius: '0.5rem',
                                   border: '1px solid rgba(255,255,255,0.18)',
                                   backgroundColor: 'rgba(255,255,255,0.08)',
-                                  color: '#7AC142',
+                                  color: '#ffffff',
                                   fontSize: '12px',
                                   fontWeight: '700'
                                 }}

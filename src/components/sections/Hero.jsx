@@ -789,7 +789,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                   <span
                     className="font-label-mono-sm"
                     style={{
-                      color: '#7AC142',
+                      color: '#ffffff',
                       textTransform: 'uppercase',
                       letterSpacing: '0.04em',
                       fontWeight: '600'
@@ -802,7 +802,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                   style={{
                     width: '4rem',
                     height: '4px',
-                    backgroundColor: '#7AC142',
+                    backgroundColor: '#ffffff',
                     marginBottom: '1.5rem',
                     borderRadius: 'var(--radius-full)'
                   }}
@@ -839,10 +839,10 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                 className="font-label-mono-sm"
               >
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Briefcase size={15} color="#7AC142" />
+                  <Briefcase size={15} color="#ffffff" />
                   <span>{trackRecordMetrics[0]?.footerText || `Est. 2014 — ${locationLabel}`}</span>
                 </span>
-                <ArrowRight size={15} color="#7AC142" />
+                <ArrowRight size={15} color="#ffffff" />
               </div>
             </div>
 
@@ -909,7 +909,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                   <span
                     className="font-label-mono-sm"
                     style={{
-                      color: '#7AC142',
+                      color: '#ffffff',
                       textTransform: 'uppercase',
                       letterSpacing: '0.04em',
                       fontWeight: '600'
@@ -922,7 +922,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                   style={{
                     width: '4rem',
                     height: '4px',
-                    backgroundColor: '#7AC142',
+                    backgroundColor: '#ffffff',
                     marginBottom: '1.5rem',
                     borderRadius: 'var(--radius-full)'
                   }}
@@ -959,10 +959,10 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                 className="font-label-mono-sm"
               >
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Award size={15} color="#ED1C24" />
+                  <Award size={15} color="#ffffff" />
                   <span>{trackRecordMetrics[1]?.footerText || 'Cannes Shortlist, Citra Pariwara Gold'}</span>
                 </span>
-                <ArrowUpRight size={15} color="#7AC142" />
+                <ArrowUpRight size={15} color="#ffffff" />
               </div>
             </div>
 
@@ -1008,7 +1008,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                   <span
                     className="font-label-mono-sm"
                     style={{
-                      color: '#7AC142',
+                      color: '#ffffff',
                       textTransform: 'uppercase',
                       letterSpacing: '0.04em',
                       fontWeight: '600'
@@ -1021,7 +1021,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                   style={{
                     width: '4rem',
                     height: '4px',
-                    backgroundColor: '#7AC142',
+                    backgroundColor: '#ffffff',
                     marginBottom: '1.5rem',
                     borderRadius: 'var(--radius-full)'
                   }}
@@ -1058,12 +1058,12 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                 className="font-label-mono-sm"
               >
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <Layers size={15} color="#38BDF8" />
+                  <Layers size={15} color="#ffffff" />
                   <span>
                     {trackRecordMetrics[2]?.footerText || 'PT Pertamina Patra Niaga Refinery Unit Dumai'}
                   </span>
                 </span>
-                <ArrowUpRight size={15} color="#7AC142" />
+                <ArrowUpRight size={15} color="#ffffff" />
               </div>
             </a>
           </div>
