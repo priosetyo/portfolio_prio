@@ -30,6 +30,7 @@ import {
   DEFAULT_TRACK_RECORD_METRICS,
   DEFAULT_SPOTLIGHT_PROJECTS
 } from '../sections/Hero';
+import { DEFAULT_ABOUT_ROLES } from '../sections/About';
 import {
   FolderKanban,
   Mail,
@@ -450,6 +451,53 @@ export function AdminPage({ onBackToSite }) {
     setProfile((prev) => ({ ...prev, track_record_metrics: nextMetrics }));
   };
 
+  const currentAboutRoles = React.useMemo(() => {
+    let custom = profile.about_roles;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    if (Array.isArray(custom) && custom.length > 0) {
+      return DEFAULT_ABOUT_ROLES.map((def, idx) => ({
+        ...def,
+        ...(custom[idx] || {})
+      }));
+    }
+    return DEFAULT_ABOUT_ROLES;
+  }, [profile.about_roles]);
+
+  const [uploadingRolePhotoIdx, setUploadingRolePhotoIdx] = useState(null);
+
+  const handleUpdateAboutRole = (idx, field, value) => {
+    const nextRoles = currentAboutRoles.map((r, i) => (i === idx ? { ...r, [field]: value } : r));
+    setProfile((prev) => ({ ...prev, about_roles: nextRoles }));
+  };
+
+  const handleRolePhotoFileSelect = async (idx, e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingRolePhotoIdx(idx);
+    try {
+      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+      const storagePath = `about-roles/role-${idx + 1}-${Date.now()}.${ext}`;
+      const res = await uploadMediaFile(storagePath, file, file.type || 'image/jpeg');
+      const publicUrl = res?.publicUrl || storagePath;
+      if (publicUrl) {
+        handleUpdateAboutRole(idx, 'photo', publicUrl);
+        showToast(`Foto untuk "${currentAboutRoles[idx]?.title}" berhasil diunggah!`);
+      }
+    } catch (err) {
+      console.error('Gagal upload foto peran:', err);
+      showToast('Gagal mengunggah foto. Silakan coba lagi.');
+    } finally {
+      setUploadingRolePhotoIdx(null);
+    }
+  };
+
   const handleUpdateSpotlightItem = (idx, field, value) => {
     const nextSpots = currentSpotlightItems.map((item, i) =>
       i === idx ? { ...item, [field]: value } : item
@@ -530,11 +578,12 @@ export function AdminPage({ onBackToSite }) {
       ...profile,
       track_record_header: currentTrackHeader,
       track_record_metrics: currentTrackMetrics,
-      spotlight_items: currentSpotlightItems
+      spotlight_items: currentSpotlightItems,
+      about_roles: currentAboutRoles
     };
     setProfile(updatedProfile);
     await updateSiteSettings(updatedProfile);
-    showToast('Perubahan Track Record & 5 Spotlight berhasil disimpan ke website!');
+    showToast('Perubahan Track Record & 4 Peran About Me berhasil disimpan ke website!');
   };
 
   const handleResetTrackMetrics = async () => {
@@ -1071,7 +1120,7 @@ export function AdminPage({ onBackToSite }) {
               {[
                 { id: 'projects', label: 'Proyek & Karya', icon: FolderKanban, count: projects.length },
                 { id: 'hero_media', label: 'Media Background Hero', icon: Film, count: currentHeroBgSlides.length },
-                { id: 'track_spotlight', label: 'Track Record & Spotlight', icon: Sparkles },
+                { id: 'track_spotlight', label: 'Track Record & About Me', icon: Sparkles },
                 { id: 'messages', label: 'Pesan Masuk', icon: Mail, badge: unreadMessagesCount },
                 { id: 'profile', label: 'Profil & Bio', icon: User },
                 { id: 'skills', label: 'Keahlian / Tools', icon: Wrench, count: skills.length },
@@ -2706,7 +2755,7 @@ export function AdminPage({ onBackToSite }) {
                     </div>
                   </div>
 
-                  {/* BAGIAN 3: 5 KARTU INTERACTIVE SPOTLIGHT */}
+                  {/* BAGIAN 3: 4 KARTU EKSPLORASI PERAN & ABOUT ME (GAYA PERTAMINA PATRA NIAGA) */}
                   <div
                     style={{
                       paddingTop: '1.25rem',
@@ -2724,42 +2773,25 @@ export function AdminPage({ onBackToSite }) {
                       }}
                     >
                       <div>
-                        <div style={{ fontWeight: '800', fontSize: '13px', color: '#000000', textTransform: 'uppercase' }}>
-                          3. Lima Kartu Interactive Spotlight (Di Bawah Track Record Summary)
+                        <div style={{ fontWeight: '800', fontSize: '13px', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                          3. Empat Kartu Peran Kreatif (Section About Me — Interaktif Hover)
                         </div>
                         <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
-                          Pilih dari karya portofolio Anda atau kustomisasi langsung judul, kategori, klien, deskripsi, dan foto pop-up untuk masing-masing slot (01 – 05).
+                          Atur foto latar, judul kartu, badge pill, deskripsi keahlian, dan warna saat di-hover untuk 4 pilar peran Anda (Fotografer, Videografer, Desainer Grafis, Social Media Specialist).
                         </p>
                       </div>
-
-                      <button
-                        type="button"
-                        onClick={handleResetSpotlightItems}
-                        style={{
-                          padding: '0.5rem 0.9rem',
-                          borderRadius: '9999px',
-                          backgroundColor: '#f3f3f5',
-                          color: '#334155',
-                          fontSize: '11px',
-                          fontWeight: '600',
-                          border: '1px solid rgba(0, 0, 0, 0.08)',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        Sinkron Otomatis dari Proyek
-                      </button>
                     </div>
 
                     <div
                       style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(290px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                         gap: '1rem'
                       }}
                     >
-                      {currentSpotlightItems.map((spot, idx) => (
+                      {currentAboutRoles.map((role, idx) => (
                         <div
-                          key={spot.id || idx}
+                          key={role.id || idx}
                           style={{
                             borderRadius: '1rem',
                             border: '1px solid rgba(0, 0, 0, 0.1)',
@@ -2769,27 +2801,27 @@ export function AdminPage({ onBackToSite }) {
                             flexDirection: 'column'
                           }}
                         >
-                          {/* Slot Thumbnail & Quick Upload */}
+                          {/* Role Photo Header & Quick Preview */}
                           <div
                             style={{
                               position: 'relative',
-                              height: '130px',
-                              backgroundColor: '#071320',
+                              height: '140px',
+                              backgroundColor: role.hoverColor || '#00529B',
                               overflow: 'hidden'
                             }}
                           >
-                            {spot.image && (
+                            {role.photo && (
                               <img
-                                src={getStoragePublicUrl(spot.image) || spot.image}
-                                alt={spot.title}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.85 }}
+                                src={getStoragePublicUrl(role.photo) || role.photo}
+                                alt={role.title}
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                               />
                             )}
                             <div
                               style={{
                                 position: 'absolute',
                                 inset: 0,
-                                background: 'linear-gradient(180deg, rgba(7,19,32,0.55) 0%, rgba(7,19,32,0.85) 100%)',
+                                background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%)',
                                 padding: '0.75rem',
                                 display: 'flex',
                                 flexDirection: 'column',
@@ -2799,134 +2831,74 @@ export function AdminPage({ onBackToSite }) {
                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <span
                                   style={{
-                                    padding: '2px 8px',
+                                    padding: '3px 10px',
                                     borderRadius: '9999px',
-                                    backgroundColor: '#ED1C24',
-                                    color: '#ffffff',
-                                    fontSize: '10px',
-                                    fontWeight: '800'
+                                    backgroundColor: '#ffffff',
+                                    color: '#071320',
+                                    fontSize: '11px',
+                                    fontWeight: '800',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.04em'
                                   }}
                                 >
-                                  SPOTLIGHT 0{idx + 1}
+                                  {role.badge || `Role 0${idx + 1}`}
                                 </span>
+                                <span
+                                  style={{
+                                    display: 'inline-block',
+                                    width: '14px',
+                                    height: '14px',
+                                    borderRadius: '50%',
+                                    backgroundColor: role.hoverColor,
+                                    border: '2px solid #ffffff'
+                                  }}
+                                  title={`Hover Color: ${role.hoverColor}`}
+                                />
+                              </div>
 
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <span style={{ color: '#ffffff', fontSize: '13px', fontWeight: '800' }}>
+                                  {role.title}
+                                </span>
                                 <label
                                   style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',
                                     gap: '4px',
-                                    padding: '4px 10px',
-                                    borderRadius: '9999px',
-                                    backgroundColor: 'rgba(255,255,255,0.92)',
-                                    color: '#000000',
+                                    padding: '4px 8px',
+                                    borderRadius: '6px',
+                                    backgroundColor: 'rgba(255,255,255,0.9)',
+                                    color: '#071320',
                                     fontSize: '10px',
                                     fontWeight: '700',
-                                    cursor: uploadingSpotlightIdx === idx ? 'not-allowed' : 'pointer'
+                                    cursor: 'pointer'
                                   }}
                                 >
                                   <Upload size={11} />
-                                  <span>{uploadingSpotlightIdx === idx ? 'Upload...' : 'Ganti Foto'}</span>
+                                  <span>{uploadingRolePhotoIdx === idx ? 'Mengunggah...' : 'Ganti Foto'}</span>
                                   <input
                                     type="file"
                                     accept="image/*"
-                                    disabled={uploadingSpotlightIdx === idx}
-                                    onChange={(e) => handleSpotlightImageUpload(e, idx)}
                                     style={{ display: 'none' }}
+                                    disabled={uploadingRolePhotoIdx === idx}
+                                    onChange={(e) => handleRolePhotoFileSelect(idx, e)}
                                   />
                                 </label>
-                              </div>
-
-                              <div style={{ color: '#ffffff', fontWeight: '700', fontSize: '13px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                {spot.title}
                               </div>
                             </div>
                           </div>
 
-                          {/* Slot Fields */}
-                          <div style={{ padding: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.6rem', flex: 1 }}>
-                            {projects.length > 0 && (
-                              <div>
-                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
-                                  Isi Cepat dari Karya Portofolio
-                                </label>
-                                <select
-                                  defaultValue=""
-                                  onChange={(e) => {
-                                    handleSpotlightSelectFromProject(idx, e.target.value);
-                                    e.target.value = '';
-                                  }}
-                                  style={{
-                                    width: '100%',
-                                    padding: '0.45rem 0.6rem',
-                                    borderRadius: '0.45rem',
-                                    border: '1px solid rgba(0,0,0,0.12)',
-                                    backgroundColor: '#f8fafc',
-                                    fontSize: '11px',
-                                    color: '#000000'
-                                  }}
-                                >
-                                  <option value="">-- Pilih Karya untuk Mengisi Slot 0{idx + 1} --</option>
-                                  {projects.map((p) => (
-                                    <option key={p.id} value={p.id}>
-                                      {p.title} ({CATEGORY_LABELS[p.category] || p.category})
-                                    </option>
-                                  ))}
-                                </select>
-                              </div>
-                            )}
-
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
-                                  Kategori Label
-                                </label>
-                                <input
-                                  type="text"
-                                  value={spot.category || ''}
-                                  onChange={(e) => handleUpdateSpotlightItem(idx, 'category', e.target.value)}
-                                  placeholder="CINEMA COMMERCIAL"
-                                  style={{
-                                    width: '100%',
-                                    padding: '0.45rem 0.6rem',
-                                    borderRadius: '0.45rem',
-                                    border: '1px solid rgba(0,0,0,0.1)',
-                                    backgroundColor: '#f3f3f5',
-                                    fontSize: '11px',
-                                    color: '#000000',
-                                    fontWeight: '700'
-                                  }}
-                                />
-                              </div>
-                              <div>
-                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
-                                  Nama Klien
-                                </label>
-                                <input
-                                  type="text"
-                                  value={spot.client || ''}
-                                  onChange={(e) => handleUpdateSpotlightItem(idx, 'client', e.target.value)}
-                                  placeholder="Pertamina"
-                                  style={{
-                                    width: '100%',
-                                    padding: '0.45rem 0.6rem',
-                                    borderRadius: '0.45rem',
-                                    border: '1px solid rgba(0,0,0,0.1)',
-                                    backgroundColor: '#f3f3f5',
-                                    fontSize: '11px',
-                                    color: '#000000'
-                                  }}
-                                />
-                              </div>
-                            </div>
-
+                          {/* Role Form Inputs */}
+                          <div style={{ padding: '0.9rem', display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                             <div>
-                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
-                                Judul Karya Spotlight
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                Judul Kartu
                               </label>
                               <input
                                 type="text"
-                                value={spot.title || ''}
-                                onChange={(e) => handleUpdateSpotlightItem(idx, 'title', e.target.value)}
+                                value={role.title || ''}
+                                onChange={(e) => handleUpdateAboutRole(idx, 'title', e.target.value)}
+                                placeholder="Contoh: As a Photographer"
                                 style={{
                                   width: '100%',
                                   padding: '0.45rem 0.6rem',
@@ -2940,35 +2912,74 @@ export function AdminPage({ onBackToSite }) {
                               />
                             </div>
 
-                            <div>
-                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
-                                Lokasi & Tahun
-                              </label>
-                              <input
-                                type="text"
-                                value={spot.locationYear || ''}
-                                onChange={(e) => handleUpdateSpotlightItem(idx, 'locationYear', e.target.value)}
-                                placeholder="DUMAI, RIAU, INDONESIA / 2025"
-                                style={{
-                                  width: '100%',
-                                  padding: '0.45rem 0.6rem',
-                                  borderRadius: '0.45rem',
-                                  border: '1px solid rgba(0,0,0,0.1)',
-                                  backgroundColor: '#f3f3f5',
-                                  fontSize: '11px',
-                                  color: '#000000'
-                                }}
-                              />
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                  Badge Pill (Saat Hover)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={role.badge || ''}
+                                  onChange={(e) => handleUpdateAboutRole(idx, 'badge', e.target.value)}
+                                  placeholder="Contoh: Photographer"
+                                  style={{
+                                    width: '100%',
+                                    padding: '0.45rem 0.6rem',
+                                    borderRadius: '0.45rem',
+                                    border: '1px solid rgba(0,0,0,0.1)',
+                                    backgroundColor: '#f3f3f5',
+                                    fontSize: '11px',
+                                    color: '#000000'
+                                  }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                  Warna Hover
+                                </label>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <input
+                                    type="color"
+                                    value={role.hoverColor || '#00529B'}
+                                    onChange={(e) => handleUpdateAboutRole(idx, 'hoverColor', e.target.value)}
+                                    style={{
+                                      width: '32px',
+                                      height: '28px',
+                                      padding: '0',
+                                      border: 'none',
+                                      borderRadius: '4px',
+                                      cursor: 'pointer'
+                                    }}
+                                  />
+                                  <input
+                                    type="text"
+                                    value={role.hoverColor || ''}
+                                    onChange={(e) => handleUpdateAboutRole(idx, 'hoverColor', e.target.value)}
+                                    placeholder="#00529B"
+                                    style={{
+                                      width: '100%',
+                                      padding: '0.45rem 0.5rem',
+                                      borderRadius: '0.45rem',
+                                      border: '1px solid rgba(0,0,0,0.1)',
+                                      backgroundColor: '#f3f3f5',
+                                      fontSize: '10px',
+                                      fontFamily: 'var(--font-mono)',
+                                      color: '#000000'
+                                    }}
+                                  />
+                                </div>
+                              </div>
                             </div>
 
                             <div>
-                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
-                                Deskripsi Pop-up Studi Kasus
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                Deskripsi Keahlian (Tampil saat Hover)
                               </label>
                               <textarea
-                                rows={2}
-                                value={spot.desc || ''}
-                                onChange={(e) => handleUpdateSpotlightItem(idx, 'desc', e.target.value)}
+                                rows={3}
+                                value={role.description || ''}
+                                onChange={(e) => handleUpdateAboutRole(idx, 'description', e.target.value)}
+                                placeholder="Jelaskan peran dan kontribusi Anda..."
                                 style={{
                                   width: '100%',
                                   padding: '0.45rem 0.6rem',
@@ -2976,37 +2987,55 @@ export function AdminPage({ onBackToSite }) {
                                   border: '1px solid rgba(0,0,0,0.1)',
                                   backgroundColor: '#f3f3f5',
                                   fontSize: '11px',
+                                  lineHeight: 1.45,
                                   color: '#000000',
                                   resize: 'vertical'
                                 }}
                               />
                             </div>
 
-                            <div>
-                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
-                                Spesifikasi & Tools (Pisahkan Koma)
-                              </label>
-                              <input
-                                type="text"
-                                value={Array.isArray(spot.specs) ? spot.specs.join(', ') : spot.specs || ''}
-                                onChange={(e) =>
-                                  handleUpdateSpotlightItem(
-                                    idx,
-                                    'specs',
-                                    e.target.value.split(',').map((s) => s.trim())
-                                  )
-                                }
-                                placeholder="RED V-Raptor 8K, Cooke Anamorphic, DaVinci"
-                                style={{
-                                  width: '100%',
-                                  padding: '0.45rem 0.6rem',
-                                  borderRadius: '0.45rem',
-                                  border: '1px solid rgba(0,0,0,0.1)',
-                                  backgroundColor: '#f3f3f5',
-                                  fontSize: '11px',
-                                  color: '#000000'
-                                }}
-                              />
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '0.5rem' }}>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                  Teks Link
+                                </label>
+                                <input
+                                  type="text"
+                                  value={role.actionText || 'Selengkapnya'}
+                                  onChange={(e) => handleUpdateAboutRole(idx, 'actionText', e.target.value)}
+                                  placeholder="Selengkapnya"
+                                  style={{
+                                    width: '100%',
+                                    padding: '0.45rem 0.6rem',
+                                    borderRadius: '0.45rem',
+                                    border: '1px solid rgba(0,0,0,0.1)',
+                                    backgroundColor: '#f3f3f5',
+                                    fontSize: '11px',
+                                    color: '#000000'
+                                  }}
+                                />
+                              </div>
+                              <div>
+                                <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                  Tautan Aksi (URL / Anchor)
+                                </label>
+                                <input
+                                  type="text"
+                                  value={role.actionLink || ''}
+                                  onChange={(e) => handleUpdateAboutRole(idx, 'actionLink', e.target.value)}
+                                  placeholder="#recent-work atau link instagram"
+                                  style={{
+                                    width: '100%',
+                                    padding: '0.45rem 0.6rem',
+                                    borderRadius: '0.45rem',
+                                    border: '1px solid rgba(0,0,0,0.1)',
+                                    backgroundColor: '#f3f3f5',
+                                    fontSize: '11px',
+                                    color: '#000000',
+                                    fontFamily: 'var(--font-mono)'
+                                  }}
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -3033,7 +3062,7 @@ export function AdminPage({ onBackToSite }) {
                         }}
                       >
                         <Save size={14} />
-                        <span>Simpan Perubahan Track Record & 5 Spotlight</span>
+                        <span>Simpan Perubahan Track Record & About Me</span>
                       </button>
                     </div>
                   </div>
