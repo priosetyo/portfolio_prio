@@ -674,14 +674,14 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
       </section>
 
       {/* ==========================================
-          SECTION 2: KEY METRICS ("TRACK RECORD SUMMARY") & SPOTLIGHT
+          SECTION 2: KEY METRICS ("TRACK RECORD SUMMARY")
           ========================================== */}
       <section
         style={{
           width: '100%',
           backgroundColor: '#0A2540',
           color: 'var(--color-surface-bright)',
-          padding: '4.5rem 0',
+          padding: '3.75rem 0 4rem 0',
           position: 'relative',
           overflow: 'hidden',
           borderTop: '1px solid rgba(255, 255, 255, 0.06)'
@@ -695,7 +695,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
               flexDirection: 'column',
               justifyContent: 'space-between',
               gap: '1.25rem',
-              marginBottom: '2.5rem'
+              marginBottom: '2rem'
             }}
             className="md-row-header"
           >
@@ -1066,162 +1066,6 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                 <ArrowUpRight size={15} color="#ffffff" />
               </div>
             </a>
-          </div>
-
-          {/* Film & Brand Identity Spotlight (Moved below Track Record Summary) */}
-          <div
-            onMouseEnter={() => setIsHoveringSpotlight(true)}
-            onMouseLeave={() => setIsHoveringSpotlight(false)}
-            style={{
-              marginTop: '3.5rem',
-              paddingTop: '2.5rem',
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)'
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                color: 'var(--color-outline-variant)',
-                marginBottom: '0.75rem'
-              }}
-            >
-              <span
-                className="font-label-mono-sm"
-                style={{
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  color: 'var(--color-secondary-fixed)'
-                }}
-              >
-                {trackRecordHeader.spotlightLabel || 'Film & Brand Identity Spotlight'}
-              </span>
-              <span className="font-label-mono-sm" id="hero-slider-counter" style={{ fontWeight: '600' }}>
-                0{activeSpotlight + 1} / 0{spotlightProjects.length}
-              </span>
-            </div>
-
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                gap: '0.75rem'
-              }}
-            >
-              {spotlightProjects.map((p, idx) => {
-                const isActive = activeSpotlight === idx;
-                return (
-                  <button
-                    key={p.id || idx}
-                    type="button"
-                    onMouseEnter={() => setActiveSpotlight(idx)}
-                    onClick={() => {
-                      setActiveSpotlight(idx);
-                      handleInspectProject(p);
-                    }}
-                    style={{
-                      textAlign: 'left',
-                      padding: '0.95rem 1rem',
-                      borderRadius: 'var(--radius-xl)',
-                      backgroundColor: isActive
-                        ? 'rgba(255, 255, 255, 0.1)'
-                        : 'rgba(255, 255, 255, 0.04)',
-                      border: isActive
-                        ? '1px solid #ED1C24'
-                        : '1px solid rgba(255, 255, 255, 0.08)',
-                      cursor: 'pointer',
-                      transition: 'all 300ms ease',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between'
-                    }}
-                    className="group"
-                  >
-                    <div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          gap: '0.4rem',
-                          marginBottom: '0.4rem'
-                        }}
-                      >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', minWidth: 0 }}>
-                          <span
-                            style={{
-                              width: '7px',
-                              height: '7px',
-                              borderRadius: '50%',
-                              flexShrink: 0,
-                              backgroundColor: isActive ? '#ED1C24' : 'rgba(194, 198, 211, 0.4)',
-                              transition: 'background-color 200ms ease'
-                            }}
-                          />
-                          <span
-                            className="font-label-mono-sm"
-                            style={{
-                              fontSize: '10px',
-                              color: isActive ? '#ffdad6' : 'var(--color-outline-variant)',
-                              fontWeight: '600',
-                              textTransform: 'uppercase',
-                              letterSpacing: '0.04em',
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              whiteSpace: 'nowrap'
-                            }}
-                          >
-                            0{idx + 1} • {p.category}
-                          </span>
-                        </div>
-                        {isActive && (
-                          <span
-                            className="font-label-mono-sm"
-                            style={{
-                              fontSize: '9px',
-                              color: '#7AC142',
-                              fontWeight: '700',
-                              flexShrink: 0,
-                              letterSpacing: '0.04em'
-                            }}
-                          >
-                            OPEN ↗
-                          </span>
-                        )}
-                      </div>
-
-                      <p
-                        className="font-body-sm"
-                        style={{
-                          color: isActive
-                            ? 'var(--color-surface-container-lowest)'
-                            : 'var(--color-outline-variant)',
-                          fontWeight: isActive ? '700' : '500',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          whiteSpace: 'nowrap',
-                          margin: 0
-                        }}
-                      >
-                        {p.title}
-                      </p>
-                    </div>
-
-                    <div
-                      style={{
-                        height: '2px',
-                        width: isActive ? '100%' : '0%',
-                        backgroundColor: isActive ? '#ED1C24' : 'var(--color-primary-fixed-dim)',
-                        marginTop: '0.6rem',
-                        borderRadius: 'var(--radius-full)',
-                        transition: 'all 300ms ease'
-                      }}
-                    />
-                  </button>
-                );
-              })}
-            </div>
           </div>
         </div>
       </section>
