@@ -631,7 +631,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '6px',
-            padding: '0.42rem 0.9rem',
+            padding: '0.42rem 0.75rem',
             borderRadius: 'var(--radius-full)',
             backgroundColor: 'rgba(7, 19, 32, 0.52)',
             backdropFilter: 'blur(12px)',
@@ -669,18 +669,6 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
               </button>
             );
           })}
-          <span
-            className="font-label-mono-sm"
-            style={{
-              fontSize: '10px',
-              color: 'rgba(255, 255, 255, 0.72)',
-              marginLeft: '4px',
-              letterSpacing: '0.05em',
-              fontWeight: '600'
-            }}
-          >
-            0{activeBgIndex + 1} / 0{heroBgSlides.length}
-          </span>
         </div>
       </section>
 
