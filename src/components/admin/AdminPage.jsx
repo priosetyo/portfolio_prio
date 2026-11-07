@@ -2531,7 +2531,7 @@ export function AdminPage({ onBackToSite }) {
                               KARTU METRIK 0{idx + 1}
                             </span>
                             <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.6)' }}>
-                              {idx === 0 ? 'Klik → Ke Riwayat' : idx === 1 ? 'Klik → Pop-up Awards' : 'Klik → Ke Galeri Karya'}
+                              {idx === 0 ? 'Klik → Ke Riwayat' : idx === 1 ? 'Klik → Pop-up Awards' : 'Klik → Buka Instagram @pertaminaru2'}
                             </span>
                           </div>
 
@@ -2631,7 +2631,7 @@ export function AdminPage({ onBackToSite }) {
                               type="text"
                               value={metric.footerText || ''}
                               onChange={(e) => handleUpdateTrackMetric(idx, 'footerText', e.target.value)}
-                              placeholder={idx === 2 ? `${projects.length} Featured in Curated Archive` : ''}
+                              placeholder={idx === 2 ? 'PT Pertamina Patra Niaga Refinery Unit Dumai' : ''}
                               style={{
                                 width: '100%',
                                 padding: '0.5rem 0.7rem',
@@ -2643,6 +2643,30 @@ export function AdminPage({ onBackToSite }) {
                               }}
                             />
                           </div>
+
+                          {idx === 2 && (
+                            <div>
+                              <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: '#a5c7ff', marginBottom: '3px', textTransform: 'uppercase' }}>
+                                Link Tautan Klik (Instagram / Eksternal)
+                              </label>
+                              <input
+                                type="url"
+                                value={metric.url || ''}
+                                onChange={(e) => handleUpdateTrackMetric(idx, 'url', e.target.value)}
+                                placeholder="https://www.instagram.com/pertaminaru2/"
+                                style={{
+                                  width: '100%',
+                                  padding: '0.5rem 0.7rem',
+                                  borderRadius: '0.5rem',
+                                  border: '1px solid rgba(255,255,255,0.18)',
+                                  backgroundColor: 'rgba(255,255,255,0.08)',
+                                  color: '#7AC142',
+                                  fontSize: '11px',
+                                  fontFamily: 'var(--font-mono)'
+                                }}
+                              />
+                            </div>
+                          )}
 
                           {idx === 1 && (
                             <div>

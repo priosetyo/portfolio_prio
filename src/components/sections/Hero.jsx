@@ -46,11 +46,12 @@ export const DEFAULT_TRACK_RECORD_METRICS = [
   },
   {
     id: 'metric-3',
-    value: '180+',
-    badge: 'Released Portfolio',
-    title: 'Commercial & Editorial Scale',
-    desc: '8K commercial resolution content, high-impact corporate monographs, and full-spectrum digital experience architectures.',
-    footerText: ''
+    value: '#1',
+    badge: 'THE MOST FOLLOWED INSTAGRAM ACCOUNT',
+    title: 'Growing its audience from 8,000 to over 67,000 followers',
+    desc: "Spearheaded the growth of Pertamina Refinery Unit Dumai's digital presence, elevating its Instagram account to become the most-followed account among all Pertamina Refinery Units nationwide, growing its audience from 8,000 to over 67,000 followers.",
+    footerText: 'PT Pertamina Patra Niaga Refinery Unit Dumai',
+    url: 'https://www.instagram.com/pertaminaru2/'
   }
 ];
 
@@ -965,15 +966,12 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
               </div>
             </div>
 
-            {/* Metric 3: Commercial & Editorial Scale Projects */}
-            <div
-              className="card-motion"
-              onClick={(e) => scrollToSection(e, 'recent-work')}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') scrollToSection(e, 'recent-work');
-              }}
+            {/* Metric 3: #1 Most Followed Instagram Account (@pertaminaru2) */}
+            <a
+              href={trackRecordMetrics[2]?.url || 'https://www.instagram.com/pertaminaru2/'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="card-motion group"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.05)',
                 border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -982,8 +980,11 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'space-between',
-                cursor: 'pointer'
+                cursor: 'pointer',
+                textDecoration: 'none',
+                color: 'inherit'
               }}
+              aria-label={`${trackRecordMetrics[2]?.title || 'Pertamina RU2 Instagram'} (Buka di Instagram @pertaminaru2)`}
             >
               <div>
                 <div
@@ -1002,7 +1003,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                       letterSpacing: '-0.03em'
                     }}
                   >
-                    {trackRecordMetrics[2]?.value || '180+'}
+                    {trackRecordMetrics[2]?.value || '#1'}
                   </span>
                   <span
                     className="font-label-mono-sm"
@@ -1013,7 +1014,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                       fontWeight: '600'
                     }}
                   >
-                    {trackRecordMetrics[2]?.badge || 'Released Portfolio'}
+                    {trackRecordMetrics[2]?.badge || 'THE MOST FOLLOWED INSTAGRAM ACCOUNT'}
                   </span>
                 </div>
                 <div
@@ -1033,7 +1034,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                     marginBottom: '0.5rem'
                   }}
                 >
-                  {trackRecordMetrics[2]?.title || 'Commercial & Editorial Scale'}
+                  {trackRecordMetrics[2]?.title || 'Growing its audience from 8,000 to over 67,000 followers'}
                 </h3>
                 <p
                   className="font-body-sm"
@@ -1059,14 +1060,12 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                 <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
                   <Layers size={15} color="#38BDF8" />
                   <span>
-                    {trackRecordMetrics[2]?.footerText
-                      ? trackRecordMetrics[2].footerText
-                      : `${projects.length} Featured in Curated Archive`}
+                    {trackRecordMetrics[2]?.footerText || 'PT Pertamina Patra Niaga Refinery Unit Dumai'}
                   </span>
                 </span>
-                <ArrowRight size={15} color="#7AC142" />
+                <ArrowUpRight size={15} color="#7AC142" />
               </div>
-            </div>
+            </a>
           </div>
 
           {/* Film & Brand Identity Spotlight (Moved below Track Record Summary) */}
