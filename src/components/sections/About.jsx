@@ -229,15 +229,15 @@ export function About({ settings }) {
                   overflow: 'hidden',
                   cursor: 'pointer',
                   backgroundColor: '#071320',
-                  border: isHovered && isLight ? '1px solid rgba(0, 0, 0, 0.08)' : '1px solid transparent',
+                  border: 'none',
                   boxShadow: isHovered
                     ? isLight
-                      ? '0 20px 38px rgba(0, 0, 0, 0.12)'
+                      ? '0 24px 48px rgba(10, 37, 64, 0.12)'
                       : '0 20px 38px rgba(10, 37, 64, 0.22)'
                     : '0 4px 16px rgba(10, 37, 64, 0.08)',
                   transform: isHovered ? 'translateY(-6px)' : 'translateY(0)',
                   transition:
-                    'transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1), border 350ms ease'
+                    'transform 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1)'
                 }}
               >
                 {/* Background Photo */}
@@ -334,21 +334,22 @@ export function About({ settings }) {
                         marginBottom: isHovered ? '0.5rem' : '0'
                       }}
                     >
-                      {/* Pill Badge (Pertamina Style / Inverted Dark Pill for White Card) */}
+                      {/* Pill Badge (Pertamina Style / Soft Neutral Pill for White Card) */}
                       <span
                         className="font-label-mono-sm"
                         style={{
                           display: 'inline-block',
                           padding: '0.35rem 0.85rem',
                           borderRadius: '9999px',
-                          backgroundColor: isLight ? '#071320' : '#ffffff',
-                          color: isLight ? '#ffffff' : (role.hoverColor || role.color || '#00529B'),
+                          backgroundColor: isLight ? 'rgba(7, 19, 32, 0.06)' : '#ffffff',
+                          color: isLight ? '#071320' : (role.hoverColor || role.color || '#00529B'),
                           fontSize: '11px',
-                          fontWeight: '800',
+                          fontWeight: '700',
                           letterSpacing: '0.02em',
                           marginBottom: '0.85rem',
-                          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)',
-                          transition: 'all 300ms ease'
+                          border: 'none',
+                          boxShadow: isLight ? 'none' : '0 2px 10px rgba(0, 0, 0, 0.15)',
+                          transition: 'all 350ms ease'
                         }}
                       >
                         {role.badge}
@@ -363,7 +364,7 @@ export function About({ settings }) {
                           color: isLight ? '#334155' : 'rgba(255, 255, 255, 0.95)',
                           margin: 0,
                           fontWeight: isLight ? '500' : '400',
-                          transition: 'color 300ms ease'
+                          transition: 'color 350ms ease'
                         }}
                       >
                         {role.desc}
@@ -377,12 +378,10 @@ export function About({ settings }) {
                         alignItems: 'center',
                         justifyContent: isHovered ? 'space-between' : 'flex-end',
                         paddingTop: isHovered ? '0.85rem' : '0',
-                        borderTop: isHovered
-                          ? isLight
-                            ? '1px solid rgba(0, 0, 0, 0.1)'
-                            : '1px solid rgba(255, 255, 255, 0.22)'
+                        borderTop: isHovered && !isLight
+                          ? '1px solid rgba(255, 255, 255, 0.22)'
                           : '1px solid transparent',
-                        transition: 'all 300ms ease'
+                        transition: 'all 350ms ease'
                       }}
                     >
                       {isHovered && (
@@ -393,7 +392,7 @@ export function About({ settings }) {
                             fontWeight: '700',
                             color: isLight ? '#071320' : '#ffffff',
                             letterSpacing: '0.02em',
-                            transition: 'color 300ms ease'
+                            transition: 'color 350ms ease'
                           }}
                         >
                           {role.actionLabel || 'Selengkapnya'}
@@ -406,7 +405,7 @@ export function About({ settings }) {
                           borderRadius: '50%',
                           backgroundColor: isHovered
                             ? isLight
-                              ? '#071320'
+                              ? 'rgba(7, 19, 32, 0.08)'
                               : 'rgba(255, 255, 255, 0.2)'
                             : 'rgba(7, 19, 32, 0.5)',
                           backdropFilter: 'blur(8px)',
@@ -414,8 +413,9 @@ export function About({ settings }) {
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: '#ffffff',
-                          transition: 'all 300ms ease'
+                          color: isHovered && isLight ? '#071320' : '#ffffff',
+                          border: 'none',
+                          transition: 'all 350ms ease'
                         }}
                       >
                         <ArrowUpRight
