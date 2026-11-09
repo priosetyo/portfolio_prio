@@ -523,20 +523,22 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
             </div>
           </div>
 
-          {/* Main Hero Row: Monumental Typography (Left) + Borderless PNG Portrait Slot (Right, Flush Bottom) */}
+          {/* Main Hero Row: Monumental Typography (Left) + Borderless PNG Portrait Slot (Right, Flush Bottom, Konsisten Desktop & Mobile) */}
           <div className="hero-content-row">
             {/* Left Side: Monumental Typography */}
             <div
               className="hero-text-column"
               style={{
                 maxWidth: '50rem',
-                flex: '1 1 540px',
+                flex: '1 1 0%',
+                minWidth: 0,
                 textAlign: 'left',
                 alignSelf: 'center',
-                padding: '2rem 0 4.5rem 0'
+                padding: '2rem 0 4.5rem 0',
+                zIndex: 2
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem', textAlign: 'left' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '0.85rem', textAlign: 'left' }}>
                 <span
                   className="font-label-mono-lg"
                   style={{
@@ -544,7 +546,8 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                     letterSpacing: '0.08em',
                     textTransform: 'uppercase',
                     fontWeight: '600',
-                    textAlign: 'left'
+                    textAlign: 'left',
+                    fontSize: 'clamp(0.72rem, 1.8vw, 0.875rem)'
                   }}
                 >
                   {headline}
@@ -558,8 +561,8 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                   textTransform: 'uppercase',
                   letterSpacing: '-0.04em',
                   lineHeight: 0.92,
-                  marginBottom: '1.5rem',
-                  fontSize: 'clamp(3rem, 7vw, 7.5rem)',
+                  marginBottom: '1.25rem',
+                  fontSize: 'clamp(2.1rem, 6.5vw, 7.5rem)',
                   fontWeight: '800',
                   textAlign: 'left'
                 }}
@@ -572,32 +575,34 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                 style={{
                   color: 'var(--color-outline-variant)',
                   maxWidth: '42rem',
-                  lineHeight: 1.65,
+                  lineHeight: 1.55,
                   marginBottom: 0,
-                  textAlign: 'left'
+                  textAlign: 'left',
+                  fontSize: 'clamp(0.85rem, 1.8vw, 1.125rem)'
                 }}
               >
                 {summary}
               </p>
             </div>
 
-            {/* Right Side: Borderless PNG Profile Photo Slot (Flush to bottom edge, hidden on mobile if empty) */}
+            {/* Right Side: Borderless PNG Profile Photo Slot (Flush to bottom edge, konsisten di kanan) */}
             <div
               className={`hero-portrait-slot ${!heroPortraitUrl ? 'hero-portrait-empty' : ''}`}
               style={{
                 position: 'relative',
                 flex: '0 0 auto',
-                width: 'clamp(336px, 41vw, 552px)',
-                height: heroPortraitUrl ? 'clamp(408px, 53vw, 624px)' : '1px',
+                width: 'clamp(140px, 36vw, 552px)',
+                height: heroPortraitUrl ? 'clamp(210px, 48vw, 624px)' : '1px',
                 display: 'flex',
                 alignItems: 'flex-end',
-                justifyContent: 'center',
+                justifyContent: 'flex-end',
                 alignSelf: 'flex-end',
                 marginBottom: 0,
                 border: 'none',
                 background: 'transparent',
                 boxShadow: 'none',
-                pointerEvents: 'none'
+                pointerEvents: 'none',
+                zIndex: 1
               }}
             >
               {heroPortraitUrl && (
@@ -608,7 +613,7 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
                     width: '100%',
                     height: '100%',
                     objectFit: 'contain',
-                    objectPosition: 'bottom center',
+                    objectPosition: 'bottom right',
                     border: 'none',
                     background: 'transparent',
                     boxShadow: 'none',
@@ -1091,21 +1096,43 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
         }
         .hero-content-row {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+          flex-direction: row;
+          align-items: stretch;
           justify-content: space-between;
-          gap: 2rem;
+          gap: 1.25rem;
           flex: 1;
           margin: 0;
           padding: 0;
           width: 100%;
+          position: relative;
         }
-        @media (max-width: 1023px) {
-          .hero-portrait-empty {
-            display: none !important;
+        .hero-portrait-slot {
+          position: relative;
+          flex: 0 0 auto;
+          display: flex;
+          align-items: flex-end;
+          justify-content: flex-end;
+          align-self: flex-end !important;
+          margin-bottom: 0;
+          border: none;
+          background: transparent;
+          box-shadow: none;
+          pointer-events: none;
+          z-index: 1;
+        }
+        .hero-portrait-empty {
+          display: none !important;
+        }
+        @media (max-width: 767px) {
+          .hero-content-row {
+            gap: 0.5rem;
+          }
+          .hero-text-column {
+            padding: 1.25rem 0 2.5rem 0 !important;
           }
           .hero-portrait-slot {
-            align-self: center !important;
+            align-self: flex-end !important;
+            justify-content: flex-end !important;
           }
         }
         @media (min-width: 768px) {
@@ -1118,12 +1145,6 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
           }
           .md-text-right {
             text-align: right !important;
-          }
-        }
-        @media (min-width: 1024px) {
-          .hero-content-row {
-            flex-direction: row;
-            align-items: stretch;
           }
         }
       `}</style>
