@@ -744,11 +744,12 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
             </p>
           </div>
 
-          {/* 3 Columns Colossal Metrics */}
+          {/* 3 Columns Colossal Metrics (Konsisten 3 Kolom Sejajar Desktop & Horizontal Row Mobile) */}
           <div
+            className="track-record-metrics-grid"
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(3, 1fr)',
               gap: 'var(--gutter-lg)'
             }}
           >
@@ -1123,6 +1124,12 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
         .hero-portrait-empty {
           display: none !important;
         }
+        .track-record-metrics-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+          width: 100%;
+        }
         @media (max-width: 767px) {
           .hero-content-row {
             gap: 0.5rem;
@@ -1134,17 +1141,42 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
             align-self: flex-end !important;
             justify-content: flex-end !important;
           }
+          .track-record-metrics-grid {
+            display: flex !important;
+            flex-direction: row !important;
+            overflow-x: auto !important;
+            scroll-snap-type: x mandatory !important;
+            -webkit-overflow-scrolling: touch !important;
+            gap: 1rem !important;
+            padding-bottom: 0.75rem !important;
+            padding-right: 1.25rem !important;
+            margin-right: calc(-1 * var(--margin-mobile)) !important;
+            scrollbar-width: none !important;
+          }
+          .track-record-metrics-grid::-webkit-scrollbar {
+            display: none !important;
+          }
+          .track-record-metrics-grid > * {
+            flex: 0 0 84% !important;
+            max-width: 320px !important;
+            min-width: 270px !important;
+            scroll-snap-align: start !important;
+            padding: 1.5rem !important;
+          }
+        }
+        @media (min-width: 640px) {
+          .md-row-header {
+            flex-direction: row !important;
+            align-items: flex-end !important;
+            justify-content: space-between !important;
+          }
+          .md-text-right {
+            text-align: right !important;
+          }
         }
         @media (min-width: 768px) {
           .hidden-mobile {
             display: flex !important;
-          }
-          .md-row-header {
-            flex-direction: row !important;
-            align-items: flex-end !important;
-          }
-          .md-text-right {
-            text-align: right !important;
           }
         }
       `}</style>
