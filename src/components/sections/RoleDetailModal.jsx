@@ -1,20 +1,11 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Search,
   X,
   Play,
   Plus,
   ArrowLeft,
   ArrowRight,
   ArrowUpRight,
-  Camera,
-  Video,
-  Palette,
-  Share2,
-  ExternalLink,
-  Layers,
-  Award,
-  Maximize2,
   CheckCircle2
 } from 'lucide-react';
 import { getStoragePublicUrl } from '../../lib/queries';
@@ -27,14 +18,12 @@ export const DISCIPLINE_GALLERY_DATA = {
     disciplineKey: 'photo',
     name: 'Photography',
     badge: 'Commercial & Industrial Photography',
-    icon: Camera,
     themeColor: '#00529B',
     accentColor: '#38bdf8',
     summary: 'Presisi visual skala industri energi, dokumentasi kilang migas, infrastruktur maritim, dan potret korporat komersial.',
     projects: [
       {
         id: 'photo-1',
-        indexNumber: '01',
         title: 'Refinery Twilight Operations',
         category: 'Kilang & Industri',
         client: 'PT Pertamina Patra Niaga RU II',
@@ -48,7 +37,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'photo-2',
-        indexNumber: '02',
         title: 'Offshore Marine Terminal & Fleet',
         category: 'Maritim & Logistik',
         client: 'PT Pertamina Patra Niaga',
@@ -62,7 +50,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'photo-3',
-        indexNumber: '03',
         title: 'Turnaround Engineering Precision',
         category: 'Inspeksi & Engineering',
         client: 'Refinery Unit Dumai',
@@ -76,7 +63,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'photo-4',
-        indexNumber: '04',
         title: 'Perwira Energi Executive Portrait',
         category: 'Komersial & Portret',
         client: 'PT Pertamina (Persero)',
@@ -90,7 +76,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'photo-5',
-        indexNumber: '05',
         title: 'Mangrove Coastal Conservation',
         category: 'ESG & Lingkungan Hidup',
         client: 'Pertamina RU II Dumai',
@@ -104,7 +89,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'photo-6',
-        indexNumber: '06',
         title: 'Spherical Geometry & Storage',
         category: 'Arsitektur Industri',
         client: 'Infrastruktur Migas',
@@ -118,7 +102,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'photo-7',
-        indexNumber: '07',
         title: 'Emergency Response Drill & Action',
         category: 'HSSE & Tanggap Darurat',
         client: 'Emergency Response Team',
@@ -136,14 +119,12 @@ export const DISCIPLINE_GALLERY_DATA = {
     disciplineKey: 'video',
     name: 'Videography',
     badge: 'Broadcast & Corporate Cinema',
-    icon: Video,
     themeColor: '#ED1C24',
     accentColor: '#f87171',
     summary: 'Sinematografi korporat berstandar broadcast, drone aerial bersertifikasi, commercial anthem, dan video dokumenter peraih penghargaan nasional AHI.',
     projects: [
       {
         id: 'video-1',
-        indexNumber: '01',
         title: 'Pertamina Patra Niaga Anthem',
         category: 'Cinema Commercial',
         client: 'PT Pertamina Patra Niaga',
@@ -157,7 +138,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'video-2',
-        indexNumber: '02',
         title: 'Beyond Zero Incident (HSSE Film)',
         category: 'Dokumenter Keselamatan',
         client: 'Pertamina RU II Dumai',
@@ -171,7 +151,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'video-3',
-        indexNumber: '03',
         title: 'Selat Malaka Aerial Symphony',
         category: 'Sinematografi Drone',
         client: 'Corporate Communication',
@@ -185,7 +164,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'video-4',
-        indexNumber: '04',
         title: 'Turnaround: The Pulse of Energy',
         category: 'Video Profil Turnaround',
         client: 'Refinery Unit Dumai',
@@ -199,7 +177,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'video-5',
-        indexNumber: '05',
         title: 'Anugrah Humas Indonesia Winner Film',
         category: 'Penghargaan Nasional',
         client: 'Pertamina RU II Dumai',
@@ -213,7 +190,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'video-6',
-        indexNumber: '06',
         title: 'Lumina Narrative Cinematic',
         category: 'Cinema Narrative',
         client: 'Creative Lab Studio',
@@ -227,7 +203,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'video-7',
-        indexNumber: '07',
         title: 'Community Empowerment Voices',
         category: 'ESG CSR Video',
         client: 'TJSL Pertamina Dumai',
@@ -245,14 +220,12 @@ export const DISCIPLINE_GALLERY_DATA = {
     disciplineKey: 'design',
     name: 'Graphic Design',
     badge: 'Swiss Modernist & Visual Identity',
-    icon: Palette,
     themeColor: '#7AC142',
     accentColor: '#86efac',
     summary: 'Sistem identitas visual terstruktur berdisiplin Swiss Modernist, desain editorial laporan korporat, infografis industri presisi tinggi, dan panduan brand komersial.',
     projects: [
       {
         id: 'design-1',
-        indexNumber: '01',
         title: 'Corporate Sustainability Report',
         category: 'Desain Editorial',
         client: 'PT Pertamina Patra Niaga',
@@ -266,7 +239,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'design-2',
-        indexNumber: '02',
         title: 'Refinery Spatial Infographic System',
         category: 'Infografis Teknis',
         client: 'Humas Kilang Dumai',
@@ -280,7 +252,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'design-3',
-        indexNumber: '03',
         title: 'HSSE Golden Rules Iconography',
         category: 'Sistem Piktogram',
         client: 'Fungsi HSSE Pertamina',
@@ -294,7 +265,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'design-4',
-        indexNumber: '04',
         title: 'Annual Energy Summit Brand Identity',
         category: 'Brand Identity',
         client: 'Indonesian Energy Forum',
@@ -308,7 +278,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'design-5',
-        indexNumber: '05',
         title: 'Gema Kilang Internal Magazine',
         category: 'Desain Majalah',
         client: 'Corporate Communication',
@@ -322,7 +291,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'design-6',
-        indexNumber: '06',
         title: 'Monolith Corporate Design System',
         category: 'Sistem Desain Visual',
         client: 'Monolith Global Architecture',
@@ -336,7 +304,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'design-7',
-        indexNumber: '07',
         title: 'Dumai Green Refinery Logo & Identity',
         category: 'Identitas Produk Hijau',
         client: 'Green Refinery Initiative',
@@ -354,7 +321,6 @@ export const DISCIPLINE_GALLERY_DATA = {
     disciplineKey: 'social',
     name: 'Social Media Strategy',
     badge: 'Digital Audience & Community Growth',
-    icon: Share2,
     themeColor: '#ffffff',
     accentColor: '#ffffff',
     isLight: true,
@@ -362,7 +328,6 @@ export const DISCIPLINE_GALLERY_DATA = {
     projects: [
       {
         id: 'social-1',
-        indexNumber: '01',
         title: 'Instagram 8K to 67K+ Hyper-Growth',
         category: 'Studi Kasus Pertumbuhan',
         client: 'PT Pertamina Patra Niaga RU II',
@@ -376,7 +341,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'social-2',
-        indexNumber: '02',
         title: 'Hari Energi Nasional Carousel Campaign',
         category: 'Kampanye Edukasi Viral',
         client: 'Pertamina RU II Dumai',
@@ -390,7 +354,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'social-3',
-        indexNumber: '03',
         title: 'Behind the Helmet Reels Series',
         category: 'Serial Video Humanis',
         client: 'Corporate Communication',
@@ -404,7 +367,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'social-4',
-        indexNumber: '04',
         title: 'Digital Crisis Communication Protocol',
         category: 'Manajemen Reputasi',
         client: 'Tim Krisis Humas RU II',
@@ -418,7 +380,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'social-5',
-        indexNumber: '05',
         title: 'Interactive Live Session & Q&A',
         category: 'Keterlibatan Komunitas',
         client: 'Humas Pertamina RU II',
@@ -432,7 +393,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'social-6',
-        indexNumber: '06',
         title: 'National PR Award-Winning Digital Campaign',
         category: 'Kampanye Media Sosial AHI',
         client: 'Pertamina RU II Dumai',
@@ -446,7 +406,6 @@ export const DISCIPLINE_GALLERY_DATA = {
       },
       {
         id: 'social-7',
-        indexNumber: '07',
         title: 'Employer Branding & Recruitment Push',
         category: 'Branding Pemberi Kerja',
         client: 'Fungsi HR & Komunikasi RU II',
@@ -477,14 +436,11 @@ export function RoleDetailModal({
   isOpen,
   onClose,
   role,
-  allRoles = [],
-  onSelectRole,
   onOpenContact
 }) {
   const [selectedDisciplineKey, setSelectedDisciplineKey] = useState('photo');
   const [hoveredStripIdx, setHoveredStripIdx] = useState(null);
   const [activeProjectIdx, setActiveProjectIdx] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
   const [showDetailDrawer, setShowDetailDrawer] = useState(false);
   const [showMediaLightbox, setShowMediaLightbox] = useState(false);
 
@@ -538,19 +494,9 @@ export function RoleDetailModal({
     return DISCIPLINE_GALLERY_DATA[selectedDisciplineKey] || DISCIPLINE_GALLERY_DATA.photo;
   }, [selectedDisciplineKey]);
 
-  // Saring 7 proyek berdasarkan pencarian (jika ada)
   const displayProjects = useMemo(() => {
-    const list = activeDiscipline.projects || [];
-    if (!searchQuery.trim()) return list;
-    const q = searchQuery.toLowerCase();
-    return list.filter(
-      (p) =>
-        p.title.toLowerCase().includes(q) ||
-        p.category.toLowerCase().includes(q) ||
-        p.client.toLowerCase().includes(q) ||
-        p.synopsis.toLowerCase().includes(q)
-    );
-  }, [activeDiscipline, searchQuery]);
+    return activeDiscipline.projects || [];
+  }, [activeDiscipline]);
 
   if (!isOpen) return null;
 
@@ -598,260 +544,48 @@ export function RoleDetailModal({
         ))}
       </div>
 
-      {/* 2. Header Minimalis di Bagian Atas */}
-      <header
-        style={{
-          position: 'relative',
-          zIndex: 40,
-          height: '72px',
-          padding: '0 clamp(1.25rem, 3.5vw, 3rem)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.07)',
-          backgroundColor: 'rgba(11, 11, 11, 0.82)',
-          backdropFilter: 'blur(16px)',
-          WebkitBackdropFilter: 'blur(16px)'
-        }}
-      >
-        {/* Kiri: Pencarian Minimalis */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '280px' }}>
-          <Search size={15} style={{ color: 'rgba(255, 255, 255, 0.45)', flexShrink: 0 }} />
-          <input
-            type="text"
-            placeholder="Cari karya atau kategori..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            style={{
-              width: '100%',
-              backgroundColor: 'transparent',
-              border: 'none',
-              outline: 'none',
-              color: '#ffffff',
-              fontSize: '12px',
-              letterSpacing: '0.02em',
-              fontWeight: '500'
-            }}
-          />
-        </div>
-
-        {/* Tengah: Nama / Logo Portofolio */}
-        <div style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              fontSize: '14px',
-              fontWeight: '800',
-              letterSpacing: '0.22em',
-              textTransform: 'uppercase',
-              color: '#ffffff'
-            }}
-          >
-            PRIO SETYO
-          </div>
-          <div
-            style={{
-              fontSize: '9px',
-              fontWeight: '600',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'rgba(255, 255, 255, 0.45)',
-              marginTop: '2px'
-            }}
-          >
-            {activeDiscipline.name} Showcase // 7 Curated Works
-          </div>
-        </div>
-
-        {/* Kanan: Profil Singkat & Tombol Close */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div
-              style={{
-                width: '32px',
-                height: '32px',
-                borderRadius: '50%',
-                overflow: 'hidden',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                backgroundColor: '#1a1a1a',
-                flexShrink: 0
-              }}
-            >
-              <img
-                src="https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/avatars/avatar-1793091534469.webp"
-                alt="Prio Setyo"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            </div>
-            <div className="hidden sm:block" style={{ textAlign: 'left' }}>
-              <div style={{ fontSize: '11px', fontWeight: '700', color: '#ffffff', lineHeight: 1.2 }}>
-                Prio Setyo
-              </div>
-              <div style={{ fontSize: '9px', color: 'rgba(255, 255, 255, 0.45)', letterSpacing: '0.04em' }}>
-                Visual Practitioner
-              </div>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Tutup Galeri (ESC)"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '6px',
-              padding: '6px 12px',
-              borderRadius: '9999px',
-              backgroundColor: 'rgba(255, 255, 255, 0.08)',
-              color: '#ffffff',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              fontSize: '11px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              transition: 'all 200ms ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(237, 28, 36, 0.85)';
-              e.currentTarget.style.borderColor = 'transparent';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-            }}
-          >
-            <span>ESC</span>
-            <X size={13} />
-          </button>
-        </div>
-      </header>
-
-      {/* 3. Badan Konten: Sidebar Navigasi Vertikal + Area Galeri Accordion */}
-      <div style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}>
-        {/* Sidebar Navigasi Vertikal di Sebelah Kiri (Home, Works, UI/UX, Web Dev, Contact + Disciplines) */}
-        <aside
+      {/* 2. Tombol Tutup Floating Minimalis di Kanan Atas */}
+      {activeProjectIdx === null && (
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Tutup Galeri (ESC)"
           style={{
-            width: '84px',
-            borderRight: '1px solid rgba(255, 255, 255, 0.07)',
-            backgroundColor: 'rgba(11, 11, 11, 0.95)',
-            display: 'flex',
-            flexDirection: 'column',
+            position: 'absolute',
+            top: '24px',
+            right: 'clamp(1.5rem, 3.5vw, 2.5rem)',
+            zIndex: 50,
+            display: 'inline-flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            padding: '2rem 0',
-            zIndex: 35,
-            flexShrink: 0
+            gap: '6px',
+            padding: '8px 14px',
+            borderRadius: '9999px',
+            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+            color: '#ffffff',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            backdropFilter: 'blur(12px)',
+            fontSize: '11px',
+            fontWeight: '700',
+            letterSpacing: '0.06em',
+            cursor: 'pointer',
+            transition: 'all 200ms ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(237, 28, 36, 0.85)';
+            e.currentTarget.style.borderColor = 'transparent';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
           }}
         >
-          {/* Menu Navigasi Atas (Disiplin Visual) */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'center' }}>
-            {Object.keys(DISCIPLINE_GALLERY_DATA).map((key) => {
-              const disc = DISCIPLINE_GALLERY_DATA[key];
-              const IconComp = disc.icon;
-              const isSelected = selectedDisciplineKey === key;
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  onClick={() => {
-                    setSelectedDisciplineKey(key);
-                    setActiveProjectIdx(null);
-                    setHoveredStripIdx(null);
-                  }}
-                  title={disc.name}
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '12px',
-                    backgroundColor: isSelected ? disc.themeColor : 'rgba(255, 255, 255, 0.05)',
-                    color: isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.5)',
-                    border: isSelected ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid rgba(255, 255, 255, 0.08)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    transition: 'all 250ms ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-                      e.currentTarget.style.color = '#ffffff';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)';
-                    }
-                  }}
-                >
-                  <IconComp size={18} />
-                </button>
-              );
-            })}
-          </div>
+          <span>ESC</span>
+          <X size={13} />
+        </button>
+      )}
 
-          {/* Navigasi Vertikal Teks Uppercase Elegan (Home, Works, UI/UX, Web Dev, Contact) */}
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-              alignItems: 'center',
-              writingMode: 'vertical-rl',
-              transform: 'rotate(180deg)'
-            }}
-          >
-            {['HOME', 'WORKS', 'UI/UX', 'WEB DEV', 'CONTACT'].map((item, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => {
-                  if (item === 'HOME' || item === 'WORKS') {
-                    setActiveProjectIdx(null);
-                  } else if (item === 'CONTACT' && onOpenContact) {
-                    onClose();
-                    onOpenContact();
-                  }
-                }}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  padding: '4px 2px',
-                  fontSize: '10px',
-                  fontWeight: item === 'WORKS' ? '800' : '600',
-                  letterSpacing: '0.2em',
-                  color: item === 'WORKS' ? '#ffffff' : 'rgba(255, 255, 255, 0.35)',
-                  cursor: 'pointer',
-                  transition: 'color 200ms ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.color = '#ffffff';
-                }}
-                onMouseLeave={(e) => {
-                  if (item !== 'WORKS') e.currentTarget.style.color = 'rgba(255, 255, 255, 0.35)';
-                }}
-              >
-                {item}
-              </button>
-            ))}
-          </div>
-
-          {/* Status Indicator Bawah */}
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-            <div
-              style={{
-                width: '6px',
-                height: '6px',
-                borderRadius: '50%',
-                backgroundColor: '#7AC142',
-                boxShadow: '0 0 10px #7AC142'
-              }}
-            />
-            <span style={{ fontSize: '9px', color: 'rgba(255, 255, 255, 0.3)', letterSpacing: '0.1em' }}>2025</span>
-          </div>
-        </aside>
-
-        {/* 4. Komponen Utama Galeri: 7 Kartu Vertikal Ramping (Vertical Strips Accordion) */}
+      {/* 3. Badan Konten Utama: 7 Kartu Vertikal Ramping (Vertical Strips Accordion) */}
+      <div style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}>
         <main
           style={{
             flex: 1,
@@ -970,21 +704,6 @@ export function RoleDetailModal({
                         <ArrowLeft size={14} />
                         <span>KEMBALI KE GALERI</span>
                       </button>
-
-                      <div
-                        style={{
-                          fontSize: '12px',
-                          fontWeight: '700',
-                          letterSpacing: '0.15em',
-                          color: 'rgba(255, 255, 255, 0.5)',
-                          padding: '6px 12px',
-                          borderRadius: '9999px',
-                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                          border: '1px solid rgba(255, 255, 255, 0.1)'
-                        }}
-                      >
-                        {project.indexNumber} / 07
-                      </div>
                     </div>
 
                     {/* Navigasi Next & Prev di Kanan Atas */}
@@ -1038,6 +757,36 @@ export function RoleDetailModal({
                         }}
                       >
                         <ArrowRight size={15} />
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={onClose}
+                        title="Tutup Galeri"
+                        style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(11, 11, 11, 0.75)',
+                          color: '#ffffff',
+                          border: '1px solid rgba(255, 255, 255, 0.15)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          backdropFilter: 'blur(10px)',
+                          marginLeft: '4px'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(237, 28, 36, 0.85)';
+                          e.currentTarget.style.borderColor = 'transparent';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(11, 11, 11, 0.75)';
+                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+                        }}
+                      >
+                        <X size={15} />
                       </button>
                     </div>
 
@@ -1343,53 +1092,6 @@ export function RoleDetailModal({
                     }}
                   />
 
-                  {/* Header Kartu: Nomor Urut */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      top: '16px',
-                      left: '16px',
-                      right: '16px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                      zIndex: 3
-                    }}
-                  >
-                    <span
-                      style={{
-                        fontSize: '11px',
-                        fontWeight: '800',
-                        letterSpacing: '0.12em',
-                        color: isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.55)',
-                        backgroundColor: 'rgba(0, 0, 0, 0.45)',
-                        padding: '3px 8px',
-                        borderRadius: '6px',
-                        backdropFilter: 'blur(8px)'
-                      }}
-                    >
-                      {project.indexNumber}
-                    </span>
-
-                    {isHovered && (
-                      <span
-                        style={{
-                          fontSize: '10px',
-                          fontWeight: '800',
-                          letterSpacing: '0.1em',
-                          textTransform: 'uppercase',
-                          color: activeDiscipline.accentColor || '#38bdf8',
-                          backgroundColor: 'rgba(0, 0, 0, 0.6)',
-                          padding: '3px 8px',
-                          borderRadius: '6px',
-                          animation: 'fadeInUpContent 200ms ease'
-                        }}
-                      >
-                        KLIK UNTUK DETAIL ↗
-                      </span>
-                    )}
-                  </div>
-
                   {/* Teks Judul Kategori/Karya Tepat di Tengah Kartu */}
                   <div
                     style={{
@@ -1405,7 +1107,7 @@ export function RoleDetailModal({
                     }}
                   >
                     {!isHovered ? (
-                      /* Saat Tidak di-Hover: Judul Vertikal Artistik atau Ramping */
+                      /* Saat Tidak di-Hover: Judul Kategori & Judul Karya Ramping */
                       <div
                         style={{
                           display: 'flex',
@@ -1440,7 +1142,7 @@ export function RoleDetailModal({
                         </span>
                       </div>
                     ) : (
-                      /* Saat di-Hover: Judul Melebar Penuh & Deskripsi Singkat */
+                      /* Saat di-Hover: Judul Melebar Penuh & Info Klien */
                       <div
                         style={{
                           display: 'flex',
@@ -1510,7 +1212,7 @@ export function RoleDetailModal({
         </main>
       </div>
 
-      {/* 5. Drawer Modal: "Detail Project" (Popup Slide-In dari Kanan) */}
+      {/* 4. Drawer Modal: "Detail Project" (Popup Slide-In dari Kanan) */}
       {showDetailDrawer && currentProject && (
         <div
           role="dialog"
@@ -1555,7 +1257,7 @@ export function RoleDetailModal({
                     color: activeDiscipline.accentColor || '#38bdf8'
                   }}
                 >
-                  PROJECT SPECIFICATIONS // {currentProject.indexNumber}
+                  PROJECT SPECIFICATIONS
                 </span>
                 <h2 style={{ fontSize: '24px', fontWeight: '900', color: '#ffffff', margin: '6px 0 0 0' }}>
                   {currentProject.title}
@@ -1671,7 +1373,7 @@ export function RoleDetailModal({
         </div>
       )}
 
-      {/* 6. Lightbox Fullscreen: "Lihat Karya" */}
+      {/* 5. Lightbox Fullscreen: "Lihat Karya" */}
       {showMediaLightbox && currentProject && (
         <div
           role="dialog"
@@ -1700,7 +1402,7 @@ export function RoleDetailModal({
           >
             <div>
               <span style={{ fontSize: '11px', color: '#38bdf8', fontWeight: '800', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                {currentProject.category} // {currentProject.indexNumber}
+                {currentProject.category}
               </span>
               <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff', margin: '4px 0 0 0' }}>
                 {currentProject.title}
