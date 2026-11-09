@@ -259,8 +259,8 @@ export function RoleDetailModal({
           display: 'flex',
           justifyContent: 'space-between',
           padding: '0 4vw',
-          opacity: isAnyActive ? 0.3 : 1,
-          transition: 'opacity 750ms ease'
+          opacity: isAnyActive ? 0.2 : 1,
+          transition: 'opacity 700ms ease'
         }}
       >
         {[...Array(6)].map((_, i) => (
@@ -297,7 +297,7 @@ export function RoleDetailModal({
           gap: '6px',
           padding: '8px 14px',
           borderRadius: '9999px',
-          backgroundColor: isAnyActive ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.08)',
+          backgroundColor: isAnyActive ? 'rgba(0, 0, 0, 0.75)' : 'rgba(255, 255, 255, 0.08)',
           color: '#ffffff',
           border: '1px solid rgba(255, 255, 255, 0.22)',
           backdropFilter: 'blur(12px)',
@@ -315,7 +315,7 @@ export function RoleDetailModal({
         }}
         onMouseLeave={(e) => {
           e.currentTarget.style.backgroundColor = isAnyActive
-            ? 'rgba(0, 0, 0, 0.65)'
+            ? 'rgba(0, 0, 0, 0.75)'
             : 'rgba(255, 255, 255, 0.08)';
           e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.22)';
         }}
@@ -324,8 +324,13 @@ export function RoleDetailModal({
         <X size={14} />
       </button>
 
-      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Efek Unmasking Reveal Halus */}
-      <div style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}>
+      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Ukuran Media Player Normal Saat Dibuka */}
+      <div
+        style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}
+        onClick={() => {
+          if (isAnyActive) setActiveProjectIdx(null);
+        }}
+      >
         <main
           style={{
             flex: 1,
@@ -333,8 +338,8 @@ export function RoleDetailModal({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: isAnyActive ? '0px' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
-            transition: 'padding 800ms cubic-bezier(0.16, 1, 0.3, 1)',
+            padding: isAnyActive ? '2rem clamp(1rem, 3vw, 2.5rem)' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
+            transition: 'padding 750ms cubic-bezier(0.16, 1, 0.3, 1)',
             overflow: 'hidden'
           }}
         >
@@ -347,10 +352,10 @@ export function RoleDetailModal({
               gap: isAnyActive ? '0px' : '16px',
               width: '100%',
               height: '100%',
-              maxWidth: isAnyActive ? '100%' : '1360px',
+              maxWidth: isAnyActive ? '1020px' : '1360px',
               position: 'relative',
               transition:
-                'gap 800ms cubic-bezier(0.16, 1, 0.3, 1), max-width 800ms cubic-bezier(0.16, 1, 0.3, 1)'
+                'gap 750ms cubic-bezier(0.16, 1, 0.3, 1), max-width 750ms cubic-bezier(0.16, 1, 0.3, 1)'
             }}
           >
             {displayProjects.map((project, idx) => {
@@ -359,7 +364,7 @@ export function RoleDetailModal({
               const isHovered = hoveredStripIdx === idx && !isAnyActive;
               const stagger = STAGGER_PRESETS[idx % STAGGER_PRESETS.length];
 
-              // Penentuan Flex, Tinggi, dan Transform untuk Transisi Mulus Unmasking
+              // Penentuan Dimensi Media Player Normal Saat Dibuka
               let flexValue = '1';
               let heightValue = stagger.height;
               let transformValue = `translateY(${stagger.translateY})`;
@@ -368,11 +373,11 @@ export function RoleDetailModal({
               let zIndexValue = 2;
 
               if (isSelected) {
-                // Saat diklik: melebar 100% penuh, tinggi 100%, tanpa offset vertikal, border radius rata
+                // Saat diklik: membuka ke ukuran normal foto / video player (bukan full-bleed raksasa)
                 flexValue = '1 1 100%';
-                heightValue = '100%';
+                heightValue = 'clamp(340px, 74vh, 600px)';
                 transformValue = 'translateY(0px)';
-                borderRadiusValue = '0px';
+                borderRadiusValue = '16px';
                 zIndexValue = 40;
               } else if (isOtherSelected) {
                 // Kartu lainnya menyusut halus ke 0
@@ -390,7 +395,8 @@ export function RoleDetailModal({
               return (
                 <div
                   key={project.id}
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (isSelected) {
                       setActiveProjectIdx(null);
                     } else {
@@ -417,30 +423,30 @@ export function RoleDetailModal({
                     borderRadius: borderRadiusValue,
                     overflow: 'hidden',
                     cursor: isSelected ? 'zoom-out' : 'pointer',
-                    backgroundColor: '#070707',
+                    backgroundColor: '#000000',
                     border: isSelected
-                      ? 'none'
+                      ? '1px solid rgba(255, 255, 255, 0.16)'
                       : isHovered
                       ? `1px solid ${activeDiscipline.accentColor || '#38bdf8'}`
                       : '1px solid rgba(255, 255, 255, 0.09)',
                     boxShadow: isSelected
-                      ? 'none'
+                      ? '0 24px 60px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.2)'
                       : isHovered
                       ? '0 24px 48px rgba(0, 0, 0, 0.8)'
                       : '0 10px 24px rgba(0, 0, 0, 0.4)',
                     transition:
-                      'flex 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'height 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'transform 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'border-radius 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'flex 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'height 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'transform 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'border-radius 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'opacity 550ms cubic-bezier(0.16, 1, 0.3, 1), ' +
                       'border-color 300ms ease, ' +
                       'box-shadow 400ms ease',
                     pointerEvents: isOtherSelected ? 'none' : 'auto',
                     zIndex: zIndexValue
                   }}
                 >
-                  {/* Gambar Karya: Membuka Sisi yang Belum Terlihat & Memperbesar Skala Secara Halus */}
+                  {/* Media Karya: Skala Normal Foto / Video Player */}
                   {project.videoUrl && isSelected ? (
                     <video
                       src={project.videoUrl}
@@ -468,27 +474,27 @@ export function RoleDetailModal({
                         inset: 0,
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover',
+                        objectFit: isSelected ? 'contain' : 'cover',
                         objectPosition: 'center',
-                        // Skala membesar halus saat diklik (1.05) atau saat di-hover (1.08)
+                        // Skala normal 1 saat dibuka (tidak over-zoomed)
                         transform: isSelected
-                          ? 'scale(1.05)'
+                          ? 'scale(1)'
                           : isHovered
-                          ? 'scale(1.08)'
+                          ? 'scale(1.05)'
                           : 'scale(1)',
                         filter: isSelected
-                          ? 'brightness(1) contrast(1.04)'
+                          ? 'brightness(1) contrast(1.02)'
                           : isHovered
                           ? 'brightness(0.95) contrast(1.06)'
                           : 'brightness(0.55) contrast(1.02)',
                         transition:
-                          'transform 950ms cubic-bezier(0.16, 1, 0.3, 1), filter 600ms ease',
-                        willChange: 'transform'
+                          'transform 750ms cubic-bezier(0.16, 1, 0.3, 1), filter 500ms ease',
+                        backgroundColor: '#000000'
                       }}
                     />
                   )}
 
-                  {/* Efek Gelap (Overlay Hitam): Menghilang Penuh Saat Kartu Diklik */}
+                  {/* Efek Gelap (Overlay Hitam): Menghilang Penuh Saat Kartu Dibuka */}
                   <div
                     style={{
                       position: 'absolute',
@@ -497,12 +503,12 @@ export function RoleDetailModal({
                         ? 'linear-gradient(180deg, rgba(11, 11, 11, 0.15) 0%, rgba(11, 11, 11, 0.72) 100%)'
                         : 'linear-gradient(180deg, rgba(11, 11, 11, 0.55) 0%, rgba(11, 11, 11, 0.85) 100%)',
                       opacity: isSelected ? 0 : 1,
-                      transition: 'opacity 500ms ease, background 400ms ease',
+                      transition: 'opacity 450ms ease, background 400ms ease',
                       pointerEvents: 'none'
                     }}
                   />
 
-                  {/* Teks Judul Kategori/Karya di Tengah Kartu: Fade-out Halus Saat Terbuka */}
+                  {/* Teks Judul Kategori/Karya di Tengah Kartu: Fade-out Halus Saat Dibuka */}
                   <div
                     style={{
                       position: 'absolute',
@@ -517,7 +523,7 @@ export function RoleDetailModal({
                       opacity: isSelected ? 0 : 1,
                       transform: isSelected ? 'scale(0.92) translateY(16px)' : 'scale(1) translateY(0)',
                       transition:
-                        'opacity 350ms ease, transform 450ms cubic-bezier(0.16, 1, 0.3, 1)',
+                        'opacity 300ms ease, transform 400ms cubic-bezier(0.16, 1, 0.3, 1)',
                       pointerEvents: 'none'
                     }}
                   >
@@ -595,7 +601,7 @@ export function RoleDetailModal({
                     )}
                   </div>
 
-                  {/* Indikator Garis Aksen Halus di Dasar Kartu (Hilang Saat Terbuka) */}
+                  {/* Indikator Garis Aksen Halus di Dasar Kartu (Hilang Saat Dibuka) */}
                   <div
                     style={{
                       position: 'absolute',
