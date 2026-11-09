@@ -1,269 +1,477 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import {
+  Search,
   X,
+  Play,
+  Plus,
+  ArrowLeft,
+  ArrowRight,
   ArrowUpRight,
-  ArrowDown,
   Camera,
   Video,
   Palette,
   Share2,
-  Award,
-  Layers,
-  Sparkles,
   ExternalLink,
-  CheckCircle2,
-  Maximize2
+  Layers,
+  Award,
+  Maximize2,
+  CheckCircle2
 } from 'lucide-react';
 import { getStoragePublicUrl } from '../../lib/queries';
 
 const HELVETICA_STACK = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
-// Data kurasi karya mendalam untuk masing-masing peran visual
-const DISCIPLINE_DATA = {
+// 7 Proyek Kurasi Sinematik untuk Masing-Masing Disiplin (Total 28 Karya)
+export const DISCIPLINE_GALLERY_DATA = {
   photo: {
-    tagline: 'Presisi Visual Skala Industri, Dokumentasi Operasi Energi & Fotografi Komersial',
+    disciplineKey: 'photo',
+    name: 'Photography',
+    badge: 'Commercial & Industrial Photography',
     icon: Camera,
-    themeColor: '#00529B', // Pertamina Blue
-    stats: [
-      { label: 'Pengalaman', value: '6+ Tahun', desc: 'Sektor Migas & Industri Energi' },
-      { label: 'Kualitas Sensor', value: '8K / Full-Frame', desc: 'Optik Anamorphic & Cinema Prime' },
-      { label: 'Dokumentasi', value: '500+ Aset', desc: 'Kilang, Maritim & Operasi Site' },
-      { label: 'Cakupan Area', value: 'Nasional', desc: 'Dumai, Riau & Seluruh Indonesia' }
-    ],
-    filters: ['Semua', 'Kilang & Industri', 'Komersial & Portret', 'ESG & Lingkungan'],
-    gallery: [
+    themeColor: '#00529B',
+    accentColor: '#38bdf8',
+    summary: 'Presisi visual skala industri energi, dokumentasi kilang migas, infrastruktur maritim, dan potret korporat komersial.',
+    projects: [
       {
         id: 'photo-1',
+        indexNumber: '01',
         title: 'Refinery Twilight Operations',
         category: 'Kilang & Industri',
         client: 'PT Pertamina Patra Niaga RU II',
         year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
-        desc: 'Dokumentasi lanskap unit distilasi kilang minyak Dumai pada momen golden hour, menangkap interaksi struktur baja monumental dengan pencahayaan operasional malam.',
-        specs: ['Sony Alpha 7R V', 'FE 24-70mm f/2.8 GM II', 'Raw 14-bit Uncompressed']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
+        synopsis: 'Dokumentasi monumental unit distilasi kilang minyak Dumai pada golden hour, menangkap interaksi struktur baja raksasa dengan pencahayaan operasional malam.',
+        story: 'Mengabadikan dinamika operasi kilang minyak 24/7 di pesisir Selat Malaka. Menggunakan teknik long-exposure berstandar keselamatan kilang minyak zona ATEX untuk memotret flare stack dan unit fraksinasi tanpa mengorbankan ketajaman detail struktural.',
+        deliverables: ['Foto Hero Komersial Kalender Perusahaan', 'Aset Visual Laporan Keberlanjutan Tahunan', 'Arsip Digital Humas Pertamina'],
+        specs: ['Sony Alpha 7R V (61MP)', 'FE 24-70mm f/2.8 GM II', 'Raw 14-bit Uncompressed', 'Tripod Karbon Anti-Static'],
+        metrics: 'Dijadikan visual utama laporan korporat & pameran energi nasional.'
       },
       {
         id: 'photo-2',
-        title: 'Offshore Energy Transfer & Marine Terminal',
-        category: 'Kilang & Industri',
+        indexNumber: '02',
+        title: 'Offshore Marine Terminal & Fleet',
+        category: 'Maritim & Logistik',
         client: 'PT Pertamina Patra Niaga',
         year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
-        desc: 'Visualisasi presisi transfer energi maritim dari dermaga khusus kilang Dumai menuju armada kapal tanker di perairan strategis Selat Malaka.',
-        specs: ['FE 70-200mm f/2.8 GM OSS II', 'CPL Polarizer', 'High Shutter Precision']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
+        synopsis: 'Visualisasi presisi transfer energi maritim dari dermaga khusus kilang Dumai menuju armada kapal tanker di jalur pelayaran tersibuk dunia.',
+        story: 'Pemotretan dilakukan dari tugboat pendamping saat manuver sandar kapal tanker minyak mentah berbobot mati puluhan ribu ton. Mengutamakan komposisi leading lines haluan kapal dengan latar kilang.',
+        deliverables: ['Dokumentasi Armada Maritim Nasional', 'Materi Publikasi Media Nasional', 'Visual Kampanye Ketahanan Energi'],
+        specs: ['FE 70-200mm f/2.8 GM OSS II', 'Filter Polarizer CPL B+W', 'Shutter 1/1600s Dynamic Tracking'],
+        metrics: 'Liputan featured di portal berita nasional & majalah maritim BUMN.'
       },
       {
         id: 'photo-3',
+        indexNumber: '03',
         title: 'Turnaround Engineering Precision',
-        category: 'Kilang & Industri',
+        category: 'Inspeksi & Engineering',
         client: 'Refinery Unit Dumai',
         year: '2024',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368636694-7mq2.jpg',
-        desc: 'Liputan teknis intensif perbaikan dan pemeliharaan berkala (Turnaround) komponen krusial kilang dengan kepatuhan standar keselamatan kerja HSSE tertinggi.',
-        specs: ['FE 16-35mm f/2.8 GM II', 'ATEX Intrinsically Safe Zone Workflow']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368636694-7mq2.jpg',
+        synopsis: 'Liputan intensif pemeliharaan berkala komponen krusial kilang dengan disiplin keselamatan kerja (HSSE) tanpa kompromi.',
+        story: 'Turnaround adalah momen sakral pemeliharaan menyeluruh kilang. Melibatkan ribuan engineer dan teknisi ahli. Dokumentasi berfokus pada ketelitian visual pengerjaan reaktor kolom perengkahan suhu tinggi.',
+        deliverables: ['Buku Dokumentasi Turnaround 2024', 'Arsip Audit Keselamatan Kerja', 'Video Still Sequence'],
+        specs: ['FE 16-35mm f/2.8 GM II', 'HSSE ATEX Certified Zone Kit', 'Color Calibrated X-Rite'],
+        metrics: 'Mendokumentasikan lebih dari 2.000 titik kerja kritis tanpa insiden.'
       },
       {
         id: 'photo-4',
-        title: 'Perwira Energi Executive Portraiture',
+        indexNumber: '04',
+        title: 'Perwira Energi Executive Portrait',
         category: 'Komersial & Portret',
         client: 'PT Pertamina (Persero)',
         year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
-        desc: 'Seri potret editorial kepemimpinan perwira energi dan operator garda depan dengan pencahayaan rim studio yang dramatis dan berwibawa.',
-        specs: ['FE 85mm f/1.4 GM', 'Elinchrom Off-Camera Flash', 'Color Checker Calibrated']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
+        synopsis: 'Seri potret editorial kepemimpinan operator garda depan dan jajaran manajemen dengan rim lighting studio yang tegas dan berwibawa.',
+        story: 'Menyoroti aspek humanis di balik industri berteknologi tinggi. Menangkap sorot mata optimisme pekerja energi Nusantara yang berdedikasi menjaga suplai energi Indonesia.',
+        deliverables: ['Editorial Portraiture Direksi & Pekerja', 'Billboard & Media Komunikasi Internal', 'Profil Media Cetak Humas'],
+        specs: ['Sony Alpha 1', 'FE 85mm f/1.4 GM', 'Elinchrom Mobile Battery Strobes', 'Softbox 120cm Octa'],
+        metrics: 'Digunakan pada seluruh media internal & signage resmi korporat.'
       },
       {
         id: 'photo-5',
-        title: 'Mangrove Ecosystem & CSR Sustainability',
-        category: 'ESG & Lingkungan',
+        indexNumber: '05',
+        title: 'Mangrove Coastal Conservation',
+        category: 'ESG & Lingkungan Hidup',
         client: 'Pertamina RU II Dumai',
         year: '2024',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
-        desc: 'Eksplorasi narasi visual program tanggung jawab sosial lingkungan (TJSL) rehabilitasi hutan mangrove pesisir Riau bersama kelompok tani lokal.',
-        specs: ['Sony Alpha 1', 'FE 24mm f/1.4 GM', 'Natural Light HDR']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
+        synopsis: 'Eksplorasi narasi visual program tanggung jawab sosial lingkungan (TJSL) rehabilitasi ekosistem hutan bakau pesisir Riau.',
+        story: 'Menggambarkan keseimbangan antara aktivitas kilang dengan pelestarian keanekaragaman hayati mangrove. Bekerja sama dengan kelompok tani lokal dalam aksi penanaman puluhan ribu bibit.',
+        deliverables: ['Foto Booklet Laporan ESG Pertamina', 'Galeri Pameran Hari Lingkungan Hidup', 'Aset Siaran Pers Media Hijau'],
+        specs: ['FE 24mm f/1.4 GM', 'Natural Light HDR Multi-Exposure', 'Drone Hasselblad Sensor'],
+        metrics: 'Mendukung perolehan PROPER Emas dari Kementerian LHK.'
+      },
+      {
+        id: 'photo-6',
+        indexNumber: '06',
+        title: 'Spherical Geometry & Storage',
+        category: 'Arsitektur Industri',
+        client: 'Infrastruktur Migas',
+        year: '2024',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAw-HjHTxu0iiEQ5z7YvjAbVP9wfRoOcfUb13m1mFshL5HU6LfmOEyk_w9r7ILa2sS5f7YN6AT4xK9vAXIfYQRiV0s1IagWRXCZndw5C-09Y5hCK0pIeBZtWRgQ8ROcmnmez5qemMezfiQ9P0sdjBnbsAJkJRPodhoCrxzeh-quGgzLEdorxq0VQtnxJF_SLz3-iHG5jz2SojHZd69KaE4NN6YwL2UGlbXJTZ00ZV8',
+        synopsis: 'Kajian geometri simetris tangki penyimpanan bola (spherical tank) di bawah langit senja dengan ritme pipa industrial kontras tinggi.',
+        story: 'Menemukan keindahan seni dalam infrastruktur mekanis. Menggunakan lensa tilt-shift perspektif lurus untuk menjaga garis tegak vertikal tanpa distorsi optik sudut lebar.',
+        deliverables: ['Koleksi Seni Visual Korporat', 'Poster Pameran Fotografi Industri', 'Aset Kalender Eksekutif'],
+        specs: ['Schneider 35mm Tilt-Shift', 'Full Frame 100% Optical Flat', 'ISO 50 Ultra Low Noise'],
+        metrics: 'Dipilih sebagai foto sampul buku arsip rekayasa kilang.'
+      },
+      {
+        id: 'photo-7',
+        indexNumber: '07',
+        title: 'Emergency Response Drill & Action',
+        category: 'HSSE & Tanggap Darurat',
+        client: 'Emergency Response Team',
+        year: '2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAJJWJQHqgaJrmmXgNkWqjiPjVu7ZXUY93Ukc-HYliONfsYpK_nSAnrYbzGboJ0gyL8MSQnESy0w6V8M6mAAlq-Zh1zMtIsBlD2evEHv5yejd9hJk4BSVDi0ZThWFhJ2xzbDkXnZQ-qPEqNJyWPJc7Xiec9xXS4QrDZqG2jWs0Eg49tPpt08SC6Lc3RGOU5LszmeDEkUa64Dfvu31LzCX-tPZBOsWCs6Kz2FuKgrtU',
+        synopsis: 'Aksi dramatis simulasi pemadaman kebakaran kilang skala besar oleh tim Fire & Safety dengan semprotan busa kimia berkecepatan tinggi.',
+        story: 'Menangkap aksi dinamis di tengah panasnya simulasi api dan uap air bertekanan tinggi. Memerlukan perlindungan kamera khusus serta timing rana cepat untuk membekukan partikel busa.',
+        deliverables: ['Dokumentasi Standar Kesiapsiagaan Darurat', 'Materi Video & Foto Pelatihan Tim Pemadam', 'Sosialisasi Budaya Keselamatan'],
+        specs: ['1/4000s High Speed Shutter', 'Weather-Sealed Magnesium Body', 'FE 135mm f/1.8 GM'],
+        metrics: 'Dipuji oleh pimpinan fungsi HSSE sebagai foto aksi drill terbaik tahun ini.'
       }
     ]
   },
   video: {
-    tagline: 'Sinematografi Korporat Berstandar Broadcast, Drone Aerial & Video Profil Peraih Penghargaan',
+    disciplineKey: 'video',
+    name: 'Videography',
+    badge: 'Broadcast & Corporate Cinema',
     icon: Video,
-    themeColor: '#ED1C24', // Pertamina Red
-    stats: [
-      { label: 'Penghargaan', value: 'Winner AHI', desc: 'Anugrah Humas Indonesia' },
-      { label: 'Format Produksi', value: '4K / 8K Cinema', desc: 'ACES Workflow & Broadcast Grade' },
-      { label: 'Sertifikasi', value: 'Licensed Pilot', desc: 'Remote Pilot Drone Komersial' },
-      { label: 'Karya Rilis', value: '40+ Produksi', desc: 'Video Profil, Anthem & ESG Doc' }
-    ],
-    filters: ['Semua', 'Video Profil Korporat', 'Commercial Anthem', 'Dokumenter ESG'],
-    gallery: [
+    themeColor: '#ED1C24',
+    accentColor: '#f87171',
+    summary: 'Sinematografi korporat berstandar broadcast, drone aerial bersertifikasi, commercial anthem, dan video dokumenter peraih penghargaan nasional AHI.',
+    projects: [
       {
         id: 'video-1',
-        title: 'Pertamina Patra Niaga Anthem: Mengalirkan Energi',
-        category: 'Commercial Anthem',
+        indexNumber: '01',
+        title: 'Pertamina Patra Niaga Anthem',
+        category: 'Cinema Commercial',
         client: 'PT Pertamina Patra Niaga',
         year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
-        desc: 'Manifesto sinematik berenergi tinggi yang memadukan keindahan instalasi energi industri, armada logistik maritim, dan ketangguhan pekerja kilang dengan komposisi orkestra megah.',
-        specs: ['RED V-Raptor 8K', 'Cooke Anamorphic /i', 'DaVinci Resolve Studio ACES']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
+        synopsis: 'Video manifesto komersial energi skala nasional yang menggabungkan rekaman operasi kilang darat dan armada laut dengan orkestrasi epik.',
+        story: 'Menjadi sutradara visual dan lead sinematografer untuk peluncuran anthem resmi. Memadukan warna sinematik ACES DaVinci Resolve dengan pacing dinamis 24fps film anamorphic.',
+        deliverables: ['Video Anthem Komersial TV & Bioskop 90s', 'Cutdown Media Sosial 30s & 15s', 'Original Score Audio Master'],
+        specs: ['RED V-Raptor 8K VV Cinema', 'Cooke Anamorphic /i Prime Lenses', 'ACES 2065-1 Color Pipeline'],
+        metrics: 'Ditayangkan pada seluruh perhelatan resmi dan kanal digital BUMN nasional.'
       },
       {
         id: 'video-2',
-        title: 'Refinery Unit Dumai: Resilience & Modernity',
-        category: 'Video Profil Korporat',
-        client: 'Refinery Unit Dumai',
+        indexNumber: '02',
+        title: 'Beyond Zero Incident (HSSE Film)',
+        category: 'Dokumenter Keselamatan',
+        client: 'Pertamina RU II Dumai',
         year: '2024',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
-        desc: 'Video profil resmi kilang minyak Dumai berdurasi 7 menit, memaparkan kapasitas produksi kilang, efisiensi energi hijau, serta pencapaian nihil kecelakaan kerja (Zero LTI).',
-        specs: ['Arri Alexa Mini LF', 'Angénieux EZ Zooms', 'Dolby 5.1 Surround Mastering']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
+        synopsis: 'Film dokumenter pendek tentang komitmen pekerja garda depan dalam menjaga nihil kecelakaan kerja (Zero Incident) di lingkungan kilang.',
+        story: 'Menghindari kesan edukasi kaku dengan menyajikan cerita dari sudut pandang keluarga pekerja yang menanti kepulangan mereka dengan selamat di rumah.',
+        deliverables: ['Film Edukasi Induksi Keselamatan', 'Versi Bahasa Indonesia & Inggris', 'Materi Briefing Harian ToolBox'],
+        specs: ['Sony FX9 Full-Frame 6K', 'Fujinon MK Cinema Zoom', 'Sennheiser Wireless Audio Pro'],
+        metrics: 'Mencapai skor evaluasi pemahaman keselamatan 98.4% bagi ribuan mitra kerja.'
       },
       {
         id: 'video-3',
-        title: 'Penjaga Selat: Ekspedisi Maritim Energi Riau',
-        category: 'Dokumenter ESG',
-        client: 'Pertamina RU II Dumai',
+        indexNumber: '03',
+        title: 'Selat Malaka Aerial Symphony',
+        category: 'Sinematografi Drone',
+        client: 'Corporate Communication',
         year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
-        desc: 'Dokumenter naratif menyusuri dedikasi tim Marine and Supply Chain dalam menjaga kestabilan pasokan energi nusantara melewati perairan tersibuk di dunia.',
-        specs: ['DJI Inspire 3 X9-8K Air', 'ProRes RAW 8K', 'Sound Design & Foley Studio']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
+        synopsis: 'Karya sinema udara yang menangkap geometri armada kapal tanker saat berlayar di jalur pelayaran energi tersibuk Selat Malaka.',
+        story: 'Penerbangan drone komersial berizin resmi di area maritim restricted. Mengikuti pergerakan kapal dengan koordinasi radio navigasi pelabuhan untuk angle sinematik terukur.',
+        deliverables: ['Kompilasi B-Roll 4K ProRes 422HQ', 'Video Showcase Pameran Maritim', 'Aset Grafis Pembuka Video Profil'],
+        specs: ['DJI Inspire 3 (8K Full Frame)', 'DL 24mm, 35mm, 50mm Cinema Lenses', 'CineCore 3.0 Processing'],
+        metrics: 'Ditayangkan pada International Maritime Forum di Bali.'
       },
       {
         id: 'video-4',
-        title: 'HSSE Golden Rules: Kampanye Keselamatan Kerja',
-        category: 'Commercial Anthem',
-        client: 'PT Pertamina (Persero)',
+        indexNumber: '04',
+        title: 'Turnaround: The Pulse of Energy',
+        category: 'Video Profil Turnaround',
+        client: 'Refinery Unit Dumai',
         year: '2024',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
-        desc: 'Video edukasi korporat dinamis bertema kepatuhan keselamatan kerja (Patuh, Peduli, Tanggap) dengan visual pacing cepat dan efek tipografi kinetik modern.',
-        specs: ['Sony FX6 & FX3 Rig', 'G Master Cinema Glass', 'Motion Graphics 3D Blender']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368636694-7mq2.jpg',
+        synopsis: 'Film dokumenter mendalam yang merekam kerja keras tanpa henti para insinyur kilang selama 35 hari siklus pemeliharaan akbar.',
+        story: 'Kamera berada di tengah percikan api pengelasan reaktor dan perakitan turbin raksasa, mengabadikan keringat dan keahlian teknis tingkat tinggi para perwira kilang.',
+        deliverables: ['Video Dokumenter Panjang 18 Menit', 'Highlight Reel Berita Resmi', 'Arsip Sejarah Turnaround Kilang'],
+        specs: ['ARRI Alexa Mini LF', 'Cooke Panchro Classic Primes', 'Sound Design 5.1 Surround'],
+        metrics: 'Meraih sambutan kehormatan dalam penutupan Turnaround oleh Dewan Direksi.'
+      },
+      {
+        id: 'video-5',
+        indexNumber: '05',
+        title: 'Anugrah Humas Indonesia Winner Film',
+        category: 'Penghargaan Nasional',
+        client: 'Pertamina RU II Dumai',
+        year: '2024',
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
+        synopsis: 'Video profil korporat strategis yang memenangkan Anugrah Humas Indonesia (AHI) sebagai karya komunikasi publik terbaik kategori BUMN.',
+        story: 'Menyatukan pesan ketahanan energi, kepedulian lingkungan, dan inovasi anak bangsa dalam kemasan visual puitis dan menggetarkan hati dewan juri.',
+        deliverables: ['Master Submission Video AHI 2024', 'Laporan Presentasi Studi Kasus', 'Piala & Piagam Penghargaan'],
+        specs: ['RED Cinema Camera', 'Angenieux Optimo Zoom', 'Color Grading Baselight'],
+        metrics: 'Pemenang Kategori Utama Video Profil Terpuji Anugrah Humas Indonesia.'
+      },
+      {
+        id: 'video-6',
+        indexNumber: '06',
+        title: 'Lumina Narrative Cinematic',
+        category: 'Cinema Narrative',
+        client: 'Creative Lab Studio',
+        year: '2024',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQDL8KyX67MLyaR7WRfaYFlh9D3zIMs9-FgF-5WUMaZP98VJN0u0HWQnagcNiYU21us6WzS1dos1hALtR8p9j1Y1cJS6p7Y5y8PF80Vcr0kUHLBjdnwxTe2og09FZy-SgOiug8FWF4K8yPNODiqBk7_L-EoD4JSpFPMnDuzUUCTGGo1s70qVEUA80yLgJdIy2XO46DFN7rIdbSRUJopu4F23RB7b9BsrukJGrePAc',
+        synopsis: 'Eksplorasi sinema naratif pendek chiaroscuro kontras tinggi dan pencahayaan volumetrik di malam hari perkotaan.',
+        story: 'Karya eksperimental mengeksplorasi kedalaman bayangan dan atmosfer misterius untuk memperkaya perbendaharaan visual komersial.',
+        deliverables: ['Short Film Festival 4K Master', 'Color Grading Breakdown Video', 'Stills Photography Catalog'],
+        specs: ['Cooke S4/i Cinema Primes', 'Volumetric Fog Systems', 'ACEScg Linear Workflow'],
+        metrics: 'Masuk dalam kurasi pameran visual indie art nusantara.'
+      },
+      {
+        id: 'video-7',
+        indexNumber: '07',
+        title: 'Community Empowerment Voices',
+        category: 'ESG CSR Video',
+        client: 'TJSL Pertamina Dumai',
+        year: '2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOa2CZ7oJQpqn24tmFYPG-ipuAF3HbDXddDuzTXTZAyrz6xjDOt8yFhNRKAkgRmmKn_3QxK46zh2_b-h-2PhTyVYBzsVN65eou6dmKd4O_qZwRSwaU5k3tsRRZoV04gACDu0yG9lCCXLgVYWiFyCr-CGC8IHce3IttCfbl-wafpe7Vr5dh2EOaWiOF-_5xa6I5-wae3cbmqwVwku8JQRBHQ17xgv0hTGBrIAocOJg',
+        synopsis: 'Dokumentasi suara hati masyarakat pesisir dan petani binaan CSR yang kini mandiri secara ekonomi berkat program berkelanjutan.',
+        story: 'Wawancara hangat dan tanpa rekayasa, membingkai senyum ketulusan warga desa dalam narasi pemberdayaan yang menyentuh.',
+        deliverables: ['Serial Video Mini-Doc 4 Episode', 'Konten Reels Edukasi ESG', 'Dokumentasi Audit Kemenko'],
+        specs: ['Sony FX6 Dual Base ISO', 'Rode Wireless Pro 32-bit Float', 'Natural Sunlight Diffusers'],
+        metrics: 'Ditonton lebih dari 250.000 kali di kanal media sosial korporat.'
       }
     ]
   },
   design: {
-    tagline: 'Perancangan Identitas Visual Berdisiplin Swiss Modernist, Infografis Presisi & Desain Editorial Korporat',
+    disciplineKey: 'design',
+    name: 'Graphic Design',
+    badge: 'Swiss Modernist & Visual Identity',
     icon: Palette,
-    themeColor: '#7AC142', // Pertamina Green
-    stats: [
-      { label: 'Metodologi', value: 'Swiss Modernist', desc: 'Grid Terstruktur & Tipografi Rasional' },
-      { label: 'Publikasi', value: '100+ Publikasi', desc: 'Buku Tahunan, Infografis & Brand Book' },
-      { label: 'Desain Sistem', value: 'Design Tokens', desc: 'Figma System & Corporate Assets' },
-      { label: 'Fokus Desain', value: 'High Contrast', desc: 'Kejelasan Hierarki Informasi' }
-    ],
-    filters: ['Semua', 'Identitas Brand & Guidelines', 'Desain Editorial & Buku', 'Infografis Industri'],
-    gallery: [
+    themeColor: '#7AC142',
+    accentColor: '#86efac',
+    summary: 'Sistem identitas visual terstruktur berdisiplin Swiss Modernist, desain editorial laporan korporat, infografis industri presisi tinggi, dan panduan brand komersial.',
+    projects: [
       {
         id: 'design-1',
-        title: 'Refinery Unit II Annual Monograph & Report',
-        category: 'Desain Editorial & Buku',
-        client: 'PT Pertamina Patra Niaga RU II',
-        year: '2024',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
-        desc: 'Buku monograf korporat hardbound setebal 180 halaman dengan tata letak grid Swiss ekstrem, huruf Neue Haas Grotesk, dan finishing debossed foil perak elegan.',
-        specs: ['Adobe InDesign', 'Foil Debossed Binding', 'Uncoated Munken Pure Paper']
+        indexNumber: '01',
+        title: 'Corporate Sustainability Report',
+        category: 'Desain Editorial',
+        client: 'PT Pertamina Patra Niaga',
+        year: '2025',
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
+        synopsis: 'Desain tata letak laporan keberlanjutan 180 halaman dengan disiplin grid Swiss, tipografi Helvetica modern, dan visualisasi data ESG berstandar GRI.',
+        story: 'Mengubah lembaran data emisi karbon dan metrik lingkungan yang rumit menjadi buku laporan berestetika tinggi yang mudah dipahami investor institusional dan publik.',
+        deliverables: ['Buku Laporan Cetak Hardcover Eksklusif', 'Versi Digital Interaktif PDF', 'Infografis Ringkasan Eksekutif'],
+        specs: ['Adobe InDesign Grid Master', 'Helvetica Neue Bold Typography', 'Pantone Spot Color Printing'],
+        metrics: 'Mendapat apresiasi tertinggi dalam peninjauan tata kelola ESG regional.'
       },
       {
         id: 'design-2',
-        title: 'Industrial Energy Processing Infographics System',
-        category: 'Infografis Industri',
-        client: 'Refinery Unit Dumai',
-        year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
-        desc: 'Sistem diagram dan infografis visual teknis yang menyederhanakan alur distilasi minyak mentah menjadi avtur dan solar ramah lingkungan.',
-        specs: ['Adobe Illustrator', 'Isometric Vector System', 'High-Contrast Print Specs']
+        indexNumber: '02',
+        title: 'Refinery Spatial Infographic System',
+        category: 'Infografis Teknis',
+        client: 'Humas Kilang Dumai',
+        year: '2024',
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
+        synopsis: 'Peta visual sistematis alur pengolahan minyak mentah menjadi BBM dan produk petrokimia bernilai tambah tinggi di Kilang Dumai.',
+        story: 'Menyederhanakan diagram piping and instrumentation (P&ID) pabrik menjadi ilustrasi isometrik yang artistik dan informatif untuk materi edukasi tamu VIP dan menteri.',
+        deliverables: ['Wall Display 6x2 Meter Ruang Kontrol', 'Flyer Edukasi Kunjungan Kerja', 'Format Vektor Modular'],
+        specs: ['Adobe Illustrator Vector Precision', 'Isometric Grid System', 'Micro-Typography Scale'],
+        metrics: 'Terpasang permanen di lobi VIP Kilang Dumai sebagai pusat orientasi tamu kenegaraan.'
       },
       {
         id: 'design-3',
-        title: 'Corporate Digital Guidelines & Asset Tokens',
-        category: 'Identitas Brand & Guidelines',
-        client: 'PT Pertamina Patra Niaga',
-        year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
-        desc: 'Perancangan manual grafis digital lengkap yang mengatur standarisasi penggunaan warna, rasio grid, dan komponen UI lintas saluran komunikasi korporat.',
-        specs: ['Figma Design Tokens', 'Atomic Design Methodology', 'Responsive Guidelines']
+        indexNumber: '03',
+        title: 'HSSE Golden Rules Iconography',
+        category: 'Sistem Piktogram',
+        client: 'Fungsi HSSE Pertamina',
+        year: '2024',
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368636694-7mq2.jpg',
+        synopsis: 'Perancangan ulang sistem simbol keselamatan kerja kilang dengan tingkat keterbacaan instan dalam kondisi pencahayaan darurat.',
+        story: 'Mengembangkan piktogram berbobot garis 3px dengan geometri universal agar pesan keselamatan dapat langsung dicerna sekilas oleh seluruh pekerja multi-bahasa.',
+        deliverables: ['Font Piktogram Keselamatan Khusus', 'Signboard Lapangan Standar ISO', 'Buku Panduan Standarisasi Simbol'],
+        specs: ['Optical Size Icon Testing', 'High Contrast Color Palette (RAL)', 'Screen Print Ready Vectors'],
+        metrics: 'Diterapkan di lebih dari 400 papan instruksi keselamatan di seluruh unit operasi.'
       },
       {
         id: 'design-4',
-        title: 'Hari Energi Nasional Kinetic Poster Series',
-        category: 'Identitas Brand & Guidelines',
-        client: 'National Energy Forum',
+        indexNumber: '04',
+        title: 'Annual Energy Summit Brand Identity',
+        category: 'Brand Identity',
+        client: 'Indonesian Energy Forum',
+        year: '2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAEofPaya-ZGWveRCDy8cNUJRN_N5NCwX8ngR_QWgpEBmZTMQSRSh6bxRyttNiIroK5QcXboYpJxqPZs9QkCWZcOtUeAGvDkKGmo-uebF1mBjT3YA7YmeL8Csg_uPYRVhbCmdunD9DPNpU9f3Sb3ARiTfkBAzuu8v5JuA6WzP9sHblTo2IT7q4-IVdBGZ-q_-tkeuAJxBOf8ewixWB6K-4TYKjcKa2VI3i50WA3Er0',
+        synopsis: 'Sistem identitas visual holistik untuk perhelatan akbar energi nasional: logo dinamis, motion assets, sertifikat, dan panggung konferensi.',
+        story: 'Mengambil inspirasi dari aliran energi kinetik yang menghubungkan nusantara. Sistem identitas dirancang adaptif dari lencana peserta hingga panggung LED 30 meter.',
+        deliverables: ['Brand Guidelines Book 60 Halaman', 'Desain Panggung LED & Backdrop Utama', 'Merchandise & Identitas Peserta'],
+        specs: ['Figma Brand Tokens', 'Variable Font Motion Kinetic', 'After Effects Asset Generator'],
+        metrics: 'Dihadiri lebih dari 1.500 delegasi internasional dan pejabat kementerian.'
+      },
+      {
+        id: 'design-5',
+        indexNumber: '05',
+        title: 'Gema Kilang Internal Magazine',
+        category: 'Desain Majalah',
+        client: 'Corporate Communication',
         year: '2024',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
-        desc: 'Koleksi poster tipografi kinetik yang mengusung pesan keberlanjutan energi hijau dengan sentuhan visual Bauhaus dan Swiss Style modern.',
-        specs: ['Swiss Grid System', 'Experimental Typography', 'Silkscreen Print Edition']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
+        synopsis: 'Tata letak editorial majalah internal edisi triwulan dengan sentuhan editorial modern gaya majalah monokrom internasional.',
+        story: 'Meningkatkan citra media internal korporat dengan tata letak artikel berani, kutipan besar (*pull-quotes*), dan penempatan foto jurnalistik yang bernapas lega.',
+        deliverables: ['Majalah Cetak Art Paper 56 Halaman', 'E-Magazine Interaktif Page-Flip', 'Kutipan Media Sosial Pendukung'],
+        specs: ['Editorial Swiss Layout 12-Column Grid', 'Custom Drop-Cap Font Design', 'High Dynamic CMYK Separation'],
+        metrics: 'Tingkat keterbacaan majalah internal meningkat 65% berdasarkan survei internal.'
+      },
+      {
+        id: 'design-6',
+        indexNumber: '06',
+        title: 'Monolith Corporate Design System',
+        category: 'Sistem Desain Visual',
+        client: 'Monolith Global Architecture',
+        year: '2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBOa2CZ7oJQpqn24tmFYPG-ipuAF3HbDXddDuzTXTZAyrz6xjDOt8yFhNRKAkgRmmKn_3QxK46zh2_b-h-2PhTyVYBzsVN65eou6dmKd4O_qZwRSwaU5k3tsRRZoV04gACDu0yG9lCCXLgVYWiFyCr-CGC8IHce3IttCfbl-wafpe7Vr5dh2EOaWiOF-_5xa6I5-wae3cbmqwVwku8JQRBHQ17xgv0hTGBrIAocOJg',
+        synopsis: 'Sistem visual monolitik beraliran brutalist modern untuk arsitektur identitas korporasi multi-sektor energi dan konstruksi.',
+        story: 'Menekankan kejujuran material dan kekuatan tipografi tanpa dekorasi berlebihan. Menghasilkan citra solid, matang, dan tahan uji waktu.',
+        deliverables: ['Panduan Brand Manual Lengkap', 'Stationery & Kop Surat Resmi', 'Aset Desain Presentasi Keynote'],
+        specs: ['Swiss Grid Architecture', 'Corporate Typographic Hierarchy', 'Minimal Contrast Ratio 12:1'],
+        metrics: 'Diadopsi sebagai standar identitas 5 anak perusahaan induk.'
+      },
+      {
+        id: 'design-7',
+        indexNumber: '07',
+        title: 'Dumai Green Refinery Logo & Identity',
+        category: 'Identitas Produk Hijau',
+        client: 'Green Refinery Initiative',
+        year: '2025',
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
+        synopsis: 'Logo dan kemasan identitas visual bahan bakar terbarukan (Biofuel & SAF) yang diproduksi langsung dari kilang hijau Dumai.',
+        story: 'Menggabungkan simbol daun kelapa sawit berkelanjutan dengan molekul hidrokarbon murni, merepresentasikan transisi energi ramah lingkungan.',
+        deliverables: ['Logo Vektor & Aset Paten Merek', 'Desain Kemasan Drum & Tangki Produk', 'Materi Kampanye Transisi Energi'],
+        specs: ['Geometric Logo Construction', 'Golden Ratio Circle Harmonics', 'Pantone Eco Green Inks'],
+        metrics: 'Resmi didaftarkan di Ditjen KI sebagai merek dagang terdaftar energi hijau.'
       }
     ]
   },
   social: {
-    tagline: 'Strategi Komunikasi Digital Terintegrasi, Akselerasi Audiens & Manajemen Akun Kilang #1 di Indonesia',
+    disciplineKey: 'social',
+    name: 'Social Media Strategy',
+    badge: 'Digital Audience & Community Growth',
     icon: Share2,
-    themeColor: '#00529B', // Deep Navy / White Accent
-    stats: [
-      { label: 'Pertumbuhan', value: '8K ➔ 67K+', desc: 'Pengikut Organik @pertaminaru2' },
-      { label: 'Peringkat', value: '#1 Nasional', desc: 'Akun Kilang Terpopuler di Indonesia' },
-      { label: 'Engagement', value: '4.8% Rata-rata', desc: 'Di Atas Standar Industri Korporat' },
-      { label: 'Konten Rilis', value: '500+ Aset', desc: 'Reels, Carousel, Story & Live' }
-    ],
-    filters: ['Semua', 'Strategi Kampanye', 'Serial Reels Kinetik', 'Crisis & Community'],
-    gallery: [
+    themeColor: '#ffffff',
+    accentColor: '#ffffff',
+    isLight: true,
+    summary: 'Strategi komunikasi digital terintegrasi yang berhasil melipatgandakan audiens Instagram @pertaminaru2 dari 8.000 ke 67.000+ followers—menjadikannya akun kilang #1 di Indonesia.',
+    projects: [
       {
         id: 'social-1',
-        title: 'Akselerasi Audiens Organik Instagram @pertaminaru2',
-        category: 'Strategi Kampanye',
+        indexNumber: '01',
+        title: 'Instagram 8K to 67K+ Hyper-Growth',
+        category: 'Studi Kasus Pertumbuhan',
         client: 'PT Pertamina Patra Niaga RU II',
-        year: '2024 - 2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
-        desc: 'Studi kasus orkestrasi konten yang berhasil menumbuhkan akun dari 8.000 menjadi lebih dari 67.000 pengikut loyal, menjadikannya kilang percontohan nasional.',
-        specs: ['Content Matrix Strategy', 'Data-Driven Analytics', 'Daily Engagement Protocol']
+        year: '2024-2025',
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
+        synopsis: 'Transformasi menyeluruh strategi konten digital yang mengantarkan akun @pertaminaru2 menjadi akun kilang migas nomor satu di Indonesia.',
+        story: 'Menggeser pola komunikasi satu arah konvensional menjadi narasi storytelling visual humanis yang beresonansi kuat dengan generasi muda dan masyarakat lokal.',
+        deliverables: ['Pilar Konten Komprehensif (Edu-Energy, Human, ESG)', 'Template Visual Feed & Story Berstandar Brand', 'Panduan Tone of Voice & Copywriting Terukur'],
+        specs: ['Data Analytics Instagram Meta Suite', 'Content Calendar Sprint Tiap Pekan', 'A/B Testing Hook Headline Visual'],
+        metrics: 'Pertumbuhan 8K → 67K+ Followers murni organik (#1 Refinery Account di Indonesia).'
       },
       {
         id: 'social-2',
-        title: 'Behind The Fuel: Serial Reels Edukasi Kilang',
-        category: 'Serial Reels Kinetik',
-        client: 'Refinery Unit Dumai',
+        indexNumber: '02',
+        title: 'Hari Energi Nasional Carousel Campaign',
+        category: 'Kampanye Edukasi Viral',
+        client: 'Pertamina RU II Dumai',
         year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
-        desc: 'Serial video vertikal 9:16 yang membongkar mitos dan fakta seputar bahan bakar avtur dan solar, mengumpulkan lebih dari 1,2 juta total penayangan organik.',
-        specs: ['Vertical 9:16 Cinema Rig', 'CapCut & Premiere Pro', 'Dynamic Motion Captions']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368810064-9uc6.jpg',
+        synopsis: 'Serial konten carousel interaktif 10 slide yang mengupas perjalanan satu liter minyak mentah hingga menjadi bahan bakar kendaraan.',
+        story: 'Disusun dengan gaya micro-storytelling berirama cepat dan infografis visual berkontras tinggi sehingga mendorong puluhan ribu aksi simpan (save) dan bagikan (share).',
+        deliverables: ['Serial Carousel Edukasi 10 Slide', 'Kuis Interaktif di Instagram Story', 'Infografis Ringkas Twitter/X Thread'],
+        specs: ['1080x1350 High Resolution Seamless Carousel', 'Copywriting Storytelling Hook Formula', 'Canva & Illustrator Hybrid Workflow'],
+        metrics: 'Meraih jangkauan organik 120.000+ akun dengan 6.400+ shares & saves.'
       },
       {
         id: 'social-3',
-        title: 'Dialog Komunitas & Manajemen Krisis Digital',
-        category: 'Crisis & Community',
-        client: 'Pertamina RU II Dumai',
+        indexNumber: '03',
+        title: 'Behind the Helmet Reels Series',
+        category: 'Serial Video Humanis',
+        client: 'Corporate Communication',
         year: '2024',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
-        desc: 'Protokol respons cepat dan mitigasi narasi negatif melalui transparansi operasional, infografis fakta lapangan, dan sesi interaktif tanya-jawab rutin.',
-        specs: ['Real-Time Social Listening', 'Crisis Playbook Response', 'Stakeholder Bridging']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
+        synopsis: 'Serial Reels dokumenter mikro yang menyoroti kisah kehidupan sehari-hari teknisi, operator wanita, dan penyelam bawah air dermaga kilang.',
+        story: 'Membangun empati publik dengan memperlihatkan dedikasi di balik pasokan BBM sehari-hari. Format vertikal sinematik dengan audio original suara lingkungan kilang.',
+        deliverables: ['12 Episode Serial Reels Instagram', 'Audio Voiceover & Sound Foley Kilang Asli', 'Format Vertikal 9:16 Full HD'],
+        specs: ['Sony FX3 Cinema Rig', 'CapCut & Premiere Pro Sound Design', 'Subtitles Kinetic Typography Dynamic'],
+        metrics: 'Total penayangan menembus 1.200.000+ views di Instagram & TikTok korporat.'
       },
       {
         id: 'social-4',
-        title: 'Inovasi Hijau Dumai: Carousel ESG Bertingkat',
-        category: 'Strategi Kampanye',
-        client: 'PT Pertamina (Persero)',
+        indexNumber: '04',
+        title: 'Digital Crisis Communication Protocol',
+        category: 'Manajemen Reputasi',
+        client: 'Tim Krisis Humas RU II',
+        year: '2024',
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368636694-7mq2.jpg',
+        synopsis: 'Protokol penanganan cepat isu dan disinformasi di media sosial dengan sistem klarifikasi transparan, terukur, dan berbasis fakta.',
+        story: 'Menyiapkan pedoman respon media dalam waktu kurang dari 15 menit, visual klarifikasi berkontras tinggi, dan pemantauan sentimen real-time.',
+        deliverables: ['SOP Respon Media Sosial Saat Insiden', 'Template Grafis Klarifikasi Siaga Darurat', 'Monitoring Dashboard Sentimen Netizen'],
+        specs: ['Social Listening Tools (Brand24 & Meltwater)', 'Crisis Template Vector Kit', 'Jalur Koordinasi Command Center'],
+        metrics: 'Membalikkan sentimen negatif dari 72% menjadi 88% netral-positif dalam tempo 24 jam.'
+      },
+      {
+        id: 'social-5',
+        indexNumber: '05',
+        title: 'Interactive Live Session & Q&A',
+        category: 'Keterlibatan Komunitas',
+        client: 'Humas Pertamina RU II',
         year: '2025',
-        image:
-          'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368767298-jnio.jpg',
-        desc: 'Format konten carousel geser dengan retention rate 82%, memaparkan dekarbonisasi operasional kilang dan konservasi ekosistem gambut Riau.',
-        specs: ['10-Slide Seamless Panoramic Grid', 'Infographic Visual Storytelling']
+        image: 'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368839399-7ioy.jpg',
+        synopsis: 'Program siaran langsung Instagram interaktif yang menghubungkan pimpinan kilang dengan generasi muda dan mahasiswa teknik perminyakan.',
+        story: 'Menghadirkan sesi tanya jawab terbuka seputar karier, inovasi energi terbarukan, dan kontribusi kilang bagi pembangunan daerah Dumai.',
+        deliverables: ['Produksi Multi-Camera Live Instagram', 'Grafis On-Screen Live lower-third', 'Rekap Konten Pasca Siaran'],
+        specs: ['OBS Studio Dual Camera Feed', 'Shure SM7B Broadcast Mic', 'Real-Time Comment Moderation'],
+        metrics: 'Dihadiri lebih dari 3.200 penonton langsung dengan 15.000+ interaksi komentar.'
+      },
+      {
+        id: 'social-6',
+        indexNumber: '06',
+        title: 'National PR Award-Winning Digital Campaign',
+        category: 'Kampanye Media Sosial AHI',
+        client: 'Pertamina RU II Dumai',
+        year: '2024',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDQDL8KyX67MLyaR7WRfaYFlh9D3zIMs9-FgF-5WUMaZP98VJN0u0HWQnagcNiYU21us6WzS1dos1hALtR8p9j1Y1cJS6p7Y5y8PF80Vcr0kUHLBjdnwxTe2og09FZy-SgOiug8FWF4K8yPNODiqBk7_L-EoD4JSpFPMnDuzUUCTGGo1s70qVEUA80yLgJdIy2XO46DFN7rIdbSRUJopu4F23RB7b9BsrukJGrePAc',
+        synopsis: 'Strategi kampanye digital terpadu yang memenangkan penghargaan bergengsi Anugrah Humas Indonesia kategori Pengelolaan Media Sosial BUMN.',
+        story: 'Membuktikan bahwa akun industri energi berat dapat menjadi ruang interaksi yang hangat, edukatif, dan membanggakan bagi seluruh masyarakat.',
+        deliverables: ['Buku Portofolio Strategi Konten 1 Tahun', 'Analisis Dampak & Return on Engagement', 'Video Reel Showcase Kampanye'],
+        specs: ['Comprehensive PR Case Study Deck', 'Audience Growth Data Visualization', 'Best Practices Playbook'],
+        metrics: 'Pemenang Gold Anugrah Humas Indonesia kategori Media Sosial Terpopuler.'
+      },
+      {
+        id: 'social-7',
+        indexNumber: '07',
+        title: 'Employer Branding & Recruitment Push',
+        category: 'Branding Pemberi Kerja',
+        client: 'Fungsi HR & Komunikasi RU II',
+        year: '2025',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAw-HjHTxu0iiEQ5z7YvjAbVP9wfRoOcfUb13m1mFshL5HU6LfmOEyk_w9r7ILa2sS5f7YN6AT4xK9vAXIfYQRiV0s1IagWRXCZndw5C-09Y5hCK0pIeBZtWRgQ8ROcmnmez5qemMezfiQ9P0sdjBnbsAJkJRPodhoCrxzeh-quGgzLEdorxq0VQtnxJF_SLz3-iHG5jz2SojHZd69KaE4NN6YwL2UGlbXJTZ00ZV8',
+        synopsis: 'Kampanye visual perekrutan talenta terbaik nusantara menjadi Perwira Energi baru melalui storytelling budaya kerja inklusif dan progresif.',
+        story: 'Menampilkan testimoni jujur para insinyur muda yang baru bergabung, fasilitas kerja modern kilang, dan peluang pengembangan karier global.',
+        deliverables: ['Serial Konten Karir & Beasiswa BUMN', 'Guidebook Pertanyaan Wawancara Kerja', 'Short Reels Q&A Rekrutmen Bersama'],
+        specs: ['1080x1350 Carousel & 9:16 Video Sync', 'High Engagement Polls & Interactive Stickers', 'Direct Message Auto-Responder FAQ'],
+        metrics: 'Meningkatkan pendaftar talenta terbaik dari universitas ternama hingga 300%.'
       }
     ]
   }
 };
+
+// Pola Staggered (Tinggi & Translasi Zig-zag) untuk 7 Kartu Vertikal
+const STAGGER_PRESETS = [
+  { height: '82%', translateY: '22px' },
+  { height: '90%', translateY: '-20px' },
+  { height: '84%', translateY: '18px' },
+  { height: '96%', translateY: '-24px' }, // Heroic center
+  { height: '86%', translateY: '22px' },
+  { height: '92%', translateY: '-16px' },
+  { height: '80%', translateY: '18px' }
+];
 
 export function RoleDetailModal({
   isOpen,
@@ -273,18 +481,43 @@ export function RoleDetailModal({
   onSelectRole,
   onOpenContact
 }) {
-  const [activeCategoryFilter, setActiveCategoryFilter] = useState('Semua');
-  const [lightboxItem, setLightboxItem] = useState(null);
+  const [selectedDisciplineKey, setSelectedDisciplineKey] = useState('photo');
+  const [hoveredStripIdx, setHoveredStripIdx] = useState(null);
+  const [activeProjectIdx, setActiveProjectIdx] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showDetailDrawer, setShowDetailDrawer] = useState(false);
+  const [showMediaLightbox, setShowMediaLightbox] = useState(false);
 
-  // Kunci scroll halaman utama saat modal terbuka
+  // Sinkronisasi disiplin awal saat modal dibuka berdasarkan kartu yang diklik di section About
+  useEffect(() => {
+    if (role && role.roleKey && DISCIPLINE_GALLERY_DATA[role.roleKey]) {
+      setSelectedDisciplineKey(role.roleKey);
+    } else {
+      setSelectedDisciplineKey('photo');
+    }
+    setActiveProjectIdx(null);
+    setHoveredStripIdx(null);
+    setShowDetailDrawer(false);
+    setShowMediaLightbox(false);
+  }, [role, isOpen]);
+
+  // Lock scroll background saat modal aktif & dengarkan tombol keyboard (Escape, Arrow Left, Arrow Right)
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        if (lightboxItem) {
-          setLightboxItem(null);
-        } else {
+        if (showMediaLightbox) {
+          setShowMediaLightbox(false);
+        } else if (showDetailDrawer) {
+          setShowDetailDrawer(false);
+        } else if (activeProjectIdx !== null) {
+          setActiveProjectIdx(null);
+        } else if (onClose) {
           onClose();
         }
+      } else if (e.key === 'ArrowRight' && activeProjectIdx !== null) {
+        setActiveProjectIdx((prev) => (prev + 1) % 7);
+      } else if (e.key === 'ArrowLeft' && activeProjectIdx !== null) {
+        setActiveProjectIdx((prev) => (prev - 1 + 7) % 7);
       }
     };
 
@@ -299,27 +532,29 @@ export function RoleDetailModal({
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpen, lightboxItem, onClose]);
+  }, [isOpen, activeProjectIdx, showDetailDrawer, showMediaLightbox, onClose]);
 
-  // Reset filter saat berpindah kartu peran
-  useEffect(() => {
-    setActiveCategoryFilter('Semua');
-    setLightboxItem(null);
-  }, [role?.roleKey]);
+  const activeDiscipline = useMemo(() => {
+    return DISCIPLINE_GALLERY_DATA[selectedDisciplineKey] || DISCIPLINE_GALLERY_DATA.photo;
+  }, [selectedDisciplineKey]);
 
-  if (!isOpen || !role) return null;
+  // Saring 7 proyek berdasarkan pencarian (jika ada)
+  const displayProjects = useMemo(() => {
+    const list = activeDiscipline.projects || [];
+    if (!searchQuery.trim()) return list;
+    const q = searchQuery.toLowerCase();
+    return list.filter(
+      (p) =>
+        p.title.toLowerCase().includes(q) ||
+        p.category.toLowerCase().includes(q) ||
+        p.client.toLowerCase().includes(q) ||
+        p.synopsis.toLowerCase().includes(q)
+    );
+  }, [activeDiscipline, searchQuery]);
 
-  const roleKey = role.roleKey || 'photo';
-  const disciplineInfo = DISCIPLINE_DATA[roleKey] || DISCIPLINE_DATA.photo;
-  const DisciplineIcon = disciplineInfo.icon || Camera;
+  if (!isOpen) return null;
 
-  // Saring galeri berdasarkan filter kategori aktif
-  const filteredGallery =
-    activeCategoryFilter === 'Semua'
-      ? disciplineInfo.gallery
-      : disciplineInfo.gallery.filter((item) => item.category === activeCategoryFilter);
-
-  const heroPhotoUrl = getStoragePublicUrl(role.photo) || role.photo || disciplineInfo.gallery[0]?.image;
+  const currentProject = activeProjectIdx !== null ? displayProjects[activeProjectIdx] || displayProjects[0] : null;
 
   return (
     <div
@@ -329,823 +564,1199 @@ export function RoleDetailModal({
         position: 'fixed',
         inset: 0,
         zIndex: 9999,
-        backgroundColor: 'rgba(7, 19, 32, 0.94)',
-        backdropFilter: 'blur(16px)',
-        WebkitBackdropFilter: 'blur(16px)',
-        overflowY: 'auto',
+        backgroundColor: '#0b0b0b',
+        color: '#ffffff',
         fontFamily: HELVETICA_STACK,
-        animation: 'roleModalFadeIn 280ms cubic-bezier(0.16, 1, 0.3, 1)'
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        userSelect: 'none'
       }}
     >
+      {/* 1. Latar Belakang Hitam Pekat dengan Aksen Garis Vertikal Tipis (Grid Lines) Transparan */}
       <div
+        aria-hidden="true"
         style={{
-          width: '100%',
-          maxWidth: '1240px',
-          margin: '0 auto',
-          minHeight: '100vh',
+          position: 'absolute',
+          inset: 0,
+          pointerEvents: 'none',
+          zIndex: 1,
           display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: '#071320',
-          boxShadow: '0 0 100px rgba(0, 0, 0, 0.8)',
-          borderLeft: '1px solid rgba(255, 255, 255, 0.08)',
-          borderRight: '1px solid rgba(255, 255, 255, 0.08)',
-          position: 'relative'
+          justifyContent: 'space-between',
+          padding: '0 4vw'
         }}
       >
-        {/* Sticky Top Bar (Navigasi Netflix-Style + Quick Switcher + Tombol Close) */}
-        <header
-          style={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 40,
-            backgroundColor: 'rgba(7, 19, 32, 0.88)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-            padding: '0.85rem 1.5rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '1rem'
-          }}
-        >
-          {/* Sisi Kiri: Badge Disiplin & Tombol Kembali */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <button
-              type="button"
-              onClick={onClose}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '6px',
-                padding: '6px 14px',
-                borderRadius: '9999px',
-                backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                color: '#ffffff',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                fontSize: '12px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 200ms ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.18)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-              }}
-            >
-              <span>← Kembali</span>
-            </button>
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            style={{
+              width: '1px',
+              height: '100%',
+              backgroundColor: 'rgba(255, 255, 255, 0.04)'
+            }}
+          />
+        ))}
+      </div>
 
+      {/* 2. Header Minimalis di Bagian Atas */}
+      <header
+        style={{
+          position: 'relative',
+          zIndex: 40,
+          height: '72px',
+          padding: '0 clamp(1.25rem, 3.5vw, 3rem)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.07)',
+          backgroundColor: 'rgba(11, 11, 11, 0.82)',
+          backdropFilter: 'blur(16px)',
+          WebkitBackdropFilter: 'blur(16px)'
+        }}
+      >
+        {/* Kiri: Pencarian Minimalis */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', width: '280px' }}>
+          <Search size={15} style={{ color: 'rgba(255, 255, 255, 0.45)', flexShrink: 0 }} />
+          <input
+            type="text"
+            placeholder="Cari karya atau kategori..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            style={{
+              width: '100%',
+              backgroundColor: 'transparent',
+              border: 'none',
+              outline: 'none',
+              color: '#ffffff',
+              fontSize: '12px',
+              letterSpacing: '0.02em',
+              fontWeight: '500'
+            }}
+          />
+        </div>
+
+        {/* Tengah: Nama / Logo Portofolio */}
+        <div style={{ textAlign: 'center' }}>
+          <div
+            style={{
+              fontSize: '14px',
+              fontWeight: '800',
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: '#ffffff'
+            }}
+          >
+            PRIO SETYO
+          </div>
+          <div
+            style={{
+              fontSize: '9px',
+              fontWeight: '600',
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'rgba(255, 255, 255, 0.45)',
+              marginTop: '2px'
+            }}
+          >
+            {activeDiscipline.name} Showcase // 7 Curated Works
+          </div>
+        </div>
+
+        {/* Kanan: Profil Singkat & Tombol Close */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '5px 12px',
-                borderRadius: '9999px',
-                backgroundColor: disciplineInfo.themeColor || '#00529B',
-                color: '#ffffff',
-                fontSize: '11px',
-                fontWeight: '800',
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase'
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                backgroundColor: '#1a1a1a',
+                flexShrink: 0
               }}
             >
-              <DisciplineIcon size={13} />
-              <span>{role.badge || role.title}</span>
+              <img
+                src="https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/avatars/avatar-1793091534469.webp"
+                alt="Prio Setyo"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            </div>
+            <div className="hidden sm:block" style={{ textAlign: 'left' }}>
+              <div style={{ fontSize: '11px', fontWeight: '700', color: '#ffffff', lineHeight: 1.2 }}>
+                Prio Setyo
+              </div>
+              <div style={{ fontSize: '9px', color: 'rgba(255, 255, 255, 0.45)', letterSpacing: '0.04em' }}>
+                Visual Practitioner
+              </div>
             </div>
           </div>
 
-          {/* Quick Switcher 4 Peran (Gaya Netflix Navigation) */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
-              overflowX: 'auto',
-              scrollbarWidth: 'none'
-            }}
-          >
-            {allRoles.map((r, idx) => {
-              const isActive = (r.roleKey || `role-${idx}`) === roleKey;
-              return (
-                <button
-                  key={r.id || idx}
-                  type="button"
-                  onClick={() => onSelectRole && onSelectRole(r, idx)}
-                  style={{
-                    padding: '6px 12px',
-                    borderRadius: '9999px',
-                    backgroundColor: isActive ? '#ffffff' : 'transparent',
-                    color: isActive ? '#071320' : 'rgba(255, 255, 255, 0.65)',
-                    border: isActive ? '1px solid #ffffff' : '1px solid rgba(255, 255, 255, 0.1)',
-                    fontSize: '11px',
-                    fontWeight: isActive ? '800' : '600',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                    transition: 'all 200ms ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) e.currentTarget.style.color = '#ffffff';
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) e.currentTarget.style.color = 'rgba(255, 255, 255, 0.65)';
-                  }}
-                >
-                  0{idx + 1} {r.badge || r.title.replace('As a ', '')}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Tombol Tutup Silang */}
           <button
             type="button"
             onClick={onClose}
-            aria-label="Tutup Halaman Detail"
+            aria-label="Tutup Galeri (ESC)"
             style={{
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 12px',
+              borderRadius: '9999px',
               backgroundColor: 'rgba(255, 255, 255, 0.08)',
               color: '#ffffff',
               border: '1px solid rgba(255, 255, 255, 0.12)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              fontSize: '11px',
+              fontWeight: '600',
               cursor: 'pointer',
               transition: 'all 200ms ease'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = 'rgba(237, 28, 36, 0.85)';
+              e.currentTarget.style.borderColor = 'transparent';
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
             }}
           >
-            <X size={18} />
+            <span>ESC</span>
+            <X size={13} />
           </button>
-        </header>
+        </div>
+      </header>
 
-        {/* Cinematic Widescreen Banner (Sesuai Video Referensi Netflix / Interstellar Showcase) */}
-        <div
+      {/* 3. Badan Konten: Sidebar Navigasi Vertikal + Area Galeri Accordion */}
+      <div style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}>
+        {/* Sidebar Navigasi Vertikal di Sebelah Kiri (Home, Works, UI/UX, Web Dev, Contact + Disciplines) */}
+        <aside
           style={{
-            position: 'relative',
-            width: '100%',
-            height: 'clamp(360px, 52vh, 520px)',
-            overflow: 'hidden',
-            backgroundColor: '#071320'
+            width: '84px',
+            borderRight: '1px solid rgba(255, 255, 255, 0.07)',
+            backgroundColor: 'rgba(11, 11, 11, 0.95)',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: '2rem 0',
+            zIndex: 35,
+            flexShrink: 0
           }}
         >
-          {/* Media Gambar Latar Sinematik */}
-          <img
-            src={heroPhotoUrl}
-            alt={role.title}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              filter: 'brightness(0.85) contrast(1.08)'
-            }}
-          />
-
-          {/* Gradient Overlay Menyeluruh (Gelap di Bawah & Kiri untuk Keterbacaan Teks Monumental) */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              background:
-                'linear-gradient(180deg, rgba(7, 19, 32, 0.4) 0%, rgba(7, 19, 32, 0.2) 30%, rgba(7, 19, 32, 0.85) 80%, #071320 100%), linear-gradient(90deg, rgba(7, 19, 32, 0.8) 0%, rgba(7, 19, 32, 0.4) 50%, transparent 100%)'
-            }}
-          />
-
-          {/* Konten Hero Banner */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: 0,
-              padding: 'clamp(1.5rem, 4vw, 3.5rem)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'flex-end',
-              zIndex: 2,
-              maxWidth: '920px'
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.75rem' }}>
-              <span
-                style={{
-                  fontSize: '11px',
-                  fontWeight: '800',
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: '#7AC142',
-                  backgroundColor: 'rgba(122, 193, 66, 0.15)',
-                  padding: '3px 10px',
-                  borderRadius: '4px',
-                  border: '1px solid rgba(122, 193, 66, 0.3)'
-                }}
-              >
-                DISCIPLINE SHOWCASE
-              </span>
-              <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.6)', fontWeight: '600' }}>
-                PRIO SETYO PORTFOLIO ARCHIVE
-              </span>
-            </div>
-
-            <h1
-              style={{
-                fontSize: 'clamp(2.2rem, 5.5vw, 4.2rem)',
-                fontWeight: '800',
-                lineHeight: 1.05,
-                color: '#ffffff',
-                margin: '0 0 1rem 0',
-                textTransform: 'uppercase',
-                letterSpacing: '-0.03em'
-              }}
-            >
-              {role.title}
-            </h1>
-
-            <p
-              style={{
-                fontSize: 'clamp(0.95rem, 1.8vw, 1.15rem)',
-                lineHeight: 1.6,
-                color: 'rgba(255, 255, 255, 0.9)',
-                margin: '0 0 1.75rem 0',
-                maxWidth: '720px'
-              }}
-            >
-              {disciplineInfo.tagline}
-            </p>
-
-            {/* Tombol Aksi Hero Banner */}
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.85rem' }}>
-              <a
-                href="#gallery-section"
-                onClick={(e) => {
-                  e.preventDefault();
-                  const target = document.getElementById('role-gallery-anchor');
-                  if (target) target.scrollIntoView({ behavior: 'smooth' });
-                }}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '0.85rem 1.65rem',
-                  borderRadius: '9999px',
-                  backgroundColor: '#ffffff',
-                  color: '#071320',
-                  fontSize: '13px',
-                  fontWeight: '800',
-                  textDecoration: 'none',
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.35)',
-                  transition: 'all 200ms ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                <span>Jelajahi Galeri Karya</span>
-                <ArrowDown size={15} />
-              </a>
-
-              {onOpenContact && (
+          {/* Menu Navigasi Atas (Disiplin Visual) */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', alignItems: 'center' }}>
+            {Object.keys(DISCIPLINE_GALLERY_DATA).map((key) => {
+              const disc = DISCIPLINE_GALLERY_DATA[key];
+              const IconComp = disc.icon;
+              const isSelected = selectedDisciplineKey === key;
+              return (
                 <button
+                  key={key}
                   type="button"
                   onClick={() => {
-                    onClose();
-                    onOpenContact();
+                    setSelectedDisciplineKey(key);
+                    setActiveProjectIdx(null);
+                    setHoveredStripIdx(null);
                   }}
+                  title={disc.name}
                   style={{
-                    display: 'inline-flex',
+                    width: '44px',
+                    height: '44px',
+                    borderRadius: '12px',
+                    backgroundColor: isSelected ? disc.themeColor : 'rgba(255, 255, 255, 0.05)',
+                    color: isSelected ? '#ffffff' : 'rgba(255, 255, 255, 0.5)',
+                    border: isSelected ? '1px solid rgba(255, 255, 255, 0.3)' : '1px solid rgba(255, 255, 255, 0.08)',
+                    display: 'flex',
                     alignItems: 'center',
-                    gap: '8px',
-                    padding: '0.85rem 1.5rem',
-                    borderRadius: '9999px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                    color: '#ffffff',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    fontSize: '13px',
-                    fontWeight: '700',
+                    justifyContent: 'center',
                     cursor: 'pointer',
-                    backdropFilter: 'blur(8px)',
-                    WebkitBackdropFilter: 'blur(8px)',
-                    transition: 'all 200ms ease'
+                    transition: 'all 250ms ease'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.18)';
+                    if (!isSelected) {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                      e.currentTarget.style.color = '#ffffff';
+                    }
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    if (!isSelected) {
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.color = 'rgba(255, 255, 255, 0.5)';
+                    }
                   }}
                 >
-                  <span>Mulai Diskusi Proyek</span>
-                  <ArrowUpRight size={15} />
+                  <IconComp size={18} />
                 </button>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Bagian Overview Filosofi & 4 Indikator Metrik Unggulan */}
-        <section
-          style={{
-            padding: '2.5rem clamp(1.5rem, 4vw, 3.5rem)',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-            backgroundColor: '#0A1726'
-          }}
-        >
-          {/* Deskripsi & Ringkasan Peran */}
-          <div style={{ maxWidth: '860px', marginBottom: '2.25rem' }}>
-            <span
-              style={{
-                fontSize: '11px',
-                fontWeight: '800',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
-                color: 'var(--color-secondary-fixed, #a5c7ff)',
-                display: 'block',
-                marginBottom: '0.5rem'
-              }}
-            >
-              IKHTISAR KOMPETENSI
-            </span>
-            <p
-              style={{
-                fontSize: '15px',
-                lineHeight: 1.7,
-                color: '#d2e4ff',
-                margin: 0
-              }}
-            >
-              {role.desc}
-            </p>
+              );
+            })}
           </div>
 
-          {/* Grid 4 Kartu Metrik Spesifik Disiplin */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: '1rem'
-            }}
-          >
-            {disciplineInfo.stats.map((st, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: '1.25rem 1.4rem',
-                  borderRadius: '1rem',
-                  backgroundColor: 'rgba(255, 255, 255, 0.04)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '4px'
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: '10px',
-                    fontWeight: '700',
-                    color: 'rgba(255, 255, 255, 0.6)',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.06em'
-                  }}
-                >
-                  {st.label}
-                </span>
-                <span
-                  style={{
-                    fontSize: '22px',
-                    fontWeight: '800',
-                    color: '#ffffff',
-                    letterSpacing: '-0.02em'
-                  }}
-                >
-                  {st.value}
-                </span>
-                <span
-                  style={{
-                    fontSize: '12px',
-                    color: 'rgba(255, 255, 255, 0.55)',
-                    lineHeight: 1.4,
-                    marginTop: '2px'
-                  }}
-                >
-                  {st.desc}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Section Galeri Karya Interaktif */}
-        <section
-          id="role-gallery-anchor"
-          style={{
-            padding: '3rem clamp(1.5rem, 4vw, 3.5rem) 5rem clamp(1.5rem, 4vw, 3.5rem)',
-            flex: 1
-          }}
-        >
-          {/* Header Galeri + Filter Kategori */}
+          {/* Navigasi Vertikal Teks Uppercase Elegan (Home, Works, UI/UX, Web Dev, Contact) */}
           <div
             style={{
               display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'flex-end',
-              justifyContent: 'space-between',
-              gap: '1.25rem',
-              marginBottom: '2rem'
+              flexDirection: 'column',
+              gap: '24px',
+              alignItems: 'center',
+              writingMode: 'vertical-rl',
+              transform: 'rotate(180deg)'
             }}
           >
-            <div>
-              <span
-                style={{
-                  fontSize: '11px',
-                  fontWeight: '800',
-                  letterSpacing: '0.08em',
-                  textTransform: 'uppercase',
-                  color: '#7AC142',
-                  display: 'block',
-                  marginBottom: '0.4rem'
-                }}
-              >
-                GALERI ARSIP TERKURASI
-              </span>
-              <h2
-                style={{
-                  fontSize: '28px',
-                  fontWeight: '800',
-                  color: '#ffffff',
-                  letterSpacing: '-0.02em',
-                  margin: 0
-                }}
-              >
-                Koleksi Karya Pilihan ({filteredGallery.length})
-              </h2>
-            </div>
-
-            {/* Filter Tabs */}
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '6px'
-              }}
-            >
-              {disciplineInfo.filters.map((filter) => {
-                const isCurrent = activeCategoryFilter === filter;
-                return (
-                  <button
-                    key={filter}
-                    type="button"
-                    onClick={() => setActiveCategoryFilter(filter)}
-                    style={{
-                      padding: '6px 14px',
-                      borderRadius: '9999px',
-                      backgroundColor: isCurrent ? '#ffffff' : 'rgba(255, 255, 255, 0.06)',
-                      color: isCurrent ? '#071320' : 'rgba(255, 255, 255, 0.75)',
-                      border: isCurrent ? '1px solid #ffffff' : '1px solid rgba(255, 255, 255, 0.1)',
-                      fontSize: '11px',
-                      fontWeight: isCurrent ? '800' : '600',
-                      cursor: 'pointer',
-                      transition: 'all 200ms ease'
-                    }}
-                  >
-                    {filter}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Grid Galeri Karya */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '1.5rem'
-            }}
-          >
-            {filteredGallery.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => setLightboxItem(item)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') setLightboxItem(item);
+            {['HOME', 'WORKS', 'UI/UX', 'WEB DEV', 'CONTACT'].map((item, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => {
+                  if (item === 'HOME' || item === 'WORKS') {
+                    setActiveProjectIdx(null);
+                  } else if (item === 'CONTACT' && onOpenContact) {
+                    onClose();
+                    onOpenContact();
+                  }
                 }}
                 style={{
-                  borderRadius: '1rem',
-                  backgroundColor: '#0c1a29',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  overflow: 'hidden',
+                  background: 'none',
+                  border: 'none',
+                  padding: '4px 2px',
+                  fontSize: '10px',
+                  fontWeight: item === 'WORKS' ? '800' : '600',
+                  letterSpacing: '0.2em',
+                  color: item === 'WORKS' ? '#ffffff' : 'rgba(255, 255, 255, 0.35)',
                   cursor: 'pointer',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  transition: 'transform 300ms ease, box-shadow 300ms ease, border-color 300ms ease'
+                  transition: 'color 200ms ease'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.boxShadow = '0 16px 36px rgba(0, 0, 0, 0.45)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.22)';
+                  e.currentTarget.style.color = '#ffffff';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                  if (item !== 'WORKS') e.currentTarget.style.color = 'rgba(255, 255, 255, 0.35)';
                 }}
               >
-                {/* Media Image Container */}
+                {item}
+              </button>
+            ))}
+          </div>
+
+          {/* Status Indicator Bawah */}
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
+            <div
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: '#7AC142',
+                boxShadow: '0 0 10px #7AC142'
+              }}
+            />
+            <span style={{ fontSize: '9px', color: 'rgba(255, 255, 255, 0.3)', letterSpacing: '0.1em' }}>2025</span>
+          </div>
+        </aside>
+
+        {/* 4. Komponen Utama Galeri: 7 Kartu Vertikal Ramping (Vertical Strips Accordion) */}
+        <main
+          style={{
+            flex: 1,
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '2rem clamp(1rem, 3vw, 3rem)',
+            overflow: 'hidden'
+          }}
+        >
+          {/* Kontainer Horizontal untuk 7 Kartu Vertikal */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: activeProjectIdx !== null ? '0px' : '14px',
+              width: '100%',
+              height: '100%',
+              maxWidth: '1440px',
+              position: 'relative',
+              transition: 'gap 500ms ease'
+            }}
+          >
+            {displayProjects.slice(0, 7).map((project, idx) => {
+              const isHovered = hoveredStripIdx === idx;
+              const isSelected = activeProjectIdx === idx;
+              const isOtherSelected = activeProjectIdx !== null && !isSelected;
+              const stagger = STAGGER_PRESETS[idx % STAGGER_PRESETS.length];
+
+              // State Melebar Penuh (Full-Width Detail Reveal)
+              if (isSelected) {
+                return (
+                  <div
+                    key={project.id}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      width: '100%',
+                      height: '100%',
+                      zIndex: 30,
+                      borderRadius: '0px',
+                      overflow: 'hidden',
+                      backgroundColor: '#071320',
+                      animation: 'fullRevealFade 600ms cubic-bezier(0.16, 1, 0.3, 1) forwards'
+                    }}
+                  >
+                    {/* Gambar Full-Width Latar Belakang */}
+                    <img
+                      src={getStoragePublicUrl(project.image) || project.image}
+                      alt={project.title}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        filter: 'brightness(0.72) contrast(1.08)',
+                        transform: 'scale(1)',
+                        animation: 'heroImageZoom 8000ms ease-out infinite alternate'
+                      }}
+                    />
+
+                    {/* Gradient Overlay Menyeluruh untuk Keterbacaan Teks Maksimal */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        background:
+                          'linear-gradient(180deg, rgba(11, 11, 11, 0.5) 0%, rgba(11, 11, 11, 0.2) 25%, rgba(11, 11, 11, 0.85) 75%, #0b0b0b 100%), linear-gradient(90deg, rgba(11, 11, 11, 0.95) 0%, rgba(11, 11, 11, 0.6) 45%, transparent 100%)'
+                      }}
+                    />
+
+                    {/* Tombol Kembali (Back to Gallery) di Kiri Atas */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '24px',
+                        left: 'clamp(1.5rem, 4vw, 3.5rem)',
+                        zIndex: 40,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '12px'
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setActiveProjectIdx(null)}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          padding: '8px 18px',
+                          borderRadius: '9999px',
+                          backgroundColor: 'rgba(11, 11, 11, 0.75)',
+                          color: '#ffffff',
+                          border: '1px solid rgba(255, 255, 255, 0.2)',
+                          backdropFilter: 'blur(12px)',
+                          fontSize: '12px',
+                          fontWeight: '700',
+                          letterSpacing: '0.04em',
+                          cursor: 'pointer',
+                          transition: 'all 200ms ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#ffffff';
+                          e.currentTarget.style.color = '#0b0b0b';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(11, 11, 11, 0.75)';
+                          e.currentTarget.style.color = '#ffffff';
+                        }}
+                      >
+                        <ArrowLeft size={14} />
+                        <span>KEMBALI KE GALERI</span>
+                      </button>
+
+                      <div
+                        style={{
+                          fontSize: '12px',
+                          fontWeight: '700',
+                          letterSpacing: '0.15em',
+                          color: 'rgba(255, 255, 255, 0.5)',
+                          padding: '6px 12px',
+                          borderRadius: '9999px',
+                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                          border: '1px solid rgba(255, 255, 255, 0.1)'
+                        }}
+                      >
+                        {project.indexNumber} / 07
+                      </div>
+                    </div>
+
+                    {/* Navigasi Next & Prev di Kanan Atas */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: '24px',
+                        right: 'clamp(1.5rem, 4vw, 3.5rem)',
+                        zIndex: 40,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setActiveProjectIdx((prev) => (prev - 1 + 7) % 7)}
+                        title="Proyek Sebelumnya"
+                        style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(11, 11, 11, 0.75)',
+                          color: '#ffffff',
+                          border: '1px solid rgba(255, 255, 255, 0.15)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          backdropFilter: 'blur(10px)'
+                        }}
+                      >
+                        <ArrowLeft size={15} />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setActiveProjectIdx((prev) => (prev + 1) % 7)}
+                        title="Proyek Berikutnya"
+                        style={{
+                          width: '38px',
+                          height: '38px',
+                          borderRadius: '50%',
+                          backgroundColor: 'rgba(11, 11, 11, 0.75)',
+                          color: '#ffffff',
+                          border: '1px solid rgba(255, 255, 255, 0.15)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          backdropFilter: 'blur(10px)'
+                        }}
+                      >
+                        <ArrowRight size={15} />
+                      </button>
+                    </div>
+
+                    {/* Konten Kiri-Tengah: Judul Karya Berukuran Besar & Informasi Narasi */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        left: 'clamp(1.5rem, 4.5vw, 4.5rem)',
+                        bottom: 'clamp(6rem, 15vh, 9rem)',
+                        maxWidth: '780px',
+                        zIndex: 35,
+                        animation: 'fadeInUpContent 500ms ease-out 150ms both'
+                      }}
+                    >
+                      {/* Label Kategori & Klien */}
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '10px',
+                          marginBottom: '1rem',
+                          flexWrap: 'wrap'
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: '11px',
+                            fontWeight: '800',
+                            letterSpacing: '0.12em',
+                            textTransform: 'uppercase',
+                            color: activeDiscipline.accentColor || '#38bdf8',
+                            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                            padding: '4px 12px',
+                            borderRadius: '9999px',
+                            border: '1px solid rgba(255, 255, 255, 0.15)'
+                          }}
+                        >
+                          {project.category}
+                        </span>
+                        <span
+                          style={{
+                            fontSize: '12px',
+                            color: 'rgba(255, 255, 255, 0.65)',
+                            fontWeight: '600'
+                          }}
+                        >
+                          {project.client} • {project.year}
+                        </span>
+                      </div>
+
+                      {/* Judul Karya Berukuran Besar */}
+                      <h1
+                        style={{
+                          fontSize: 'clamp(2.4rem, 5.8vw, 4.8rem)',
+                          fontWeight: '900',
+                          lineHeight: 1.04,
+                          letterSpacing: '-0.03em',
+                          textTransform: 'uppercase',
+                          color: '#ffffff',
+                          margin: '0 0 1.25rem 0',
+                          textShadow: '0 8px 30px rgba(0, 0, 0, 0.6)'
+                        }}
+                      >
+                        {project.title}
+                      </h1>
+
+                      {/* Sinopsis / Deskripsi Karya */}
+                      <p
+                        style={{
+                          fontSize: 'clamp(0.95rem, 1.4vw, 1.15rem)',
+                          lineHeight: 1.68,
+                          color: 'rgba(255, 255, 255, 0.88)',
+                          margin: 0,
+                          maxWidth: '680px',
+                          fontWeight: '400',
+                          textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)'
+                        }}
+                      >
+                        {project.synopsis}
+                      </p>
+                    </div>
+
+                    {/* Tombol Aksi di Kiri Bawah: "Lihat Karya" dengan Ikon Panah/Play Bulat */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: 'clamp(1.5rem, 4vh, 2.5rem)',
+                        left: 'clamp(1.5rem, 4.5vw, 4.5rem)',
+                        zIndex: 35,
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '14px',
+                        animation: 'fadeInUpContent 500ms ease-out 250ms both'
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setShowMediaLightbox(true)}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          padding: '12px 24px 12px 16px',
+                          borderRadius: '9999px',
+                          backgroundColor: '#ffffff',
+                          color: '#0b0b0b',
+                          border: 'none',
+                          fontSize: '13px',
+                          fontWeight: '800',
+                          letterSpacing: '0.04em',
+                          cursor: 'pointer',
+                          boxShadow: '0 8px 24px rgba(255, 255, 255, 0.25)',
+                          transition: 'all 250ms cubic-bezier(0.16, 1, 0.3, 1)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px) scale(1.02)';
+                          e.currentTarget.style.boxShadow = '0 12px 32px rgba(255, 255, 255, 0.4)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                          e.currentTarget.style.boxShadow = '0 8px 24px rgba(255, 255, 255, 0.25)';
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: '32px',
+                            height: '32px',
+                            borderRadius: '50%',
+                            backgroundColor: '#0b0b0b',
+                            color: '#ffffff',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center'
+                          }}
+                        >
+                          <Play size={13} fill="#ffffff" style={{ marginLeft: '2px' }} />
+                        </div>
+                        <span>Lihat Karya</span>
+                      </button>
+
+                      {/* Tombol Sekunder Diskusi Proyek */}
+                      {onOpenContact && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            onClose();
+                            onOpenContact();
+                          }}
+                          style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            padding: '12px 20px',
+                            borderRadius: '9999px',
+                            backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                            color: '#ffffff',
+                            border: '1px solid rgba(255, 255, 255, 0.2)',
+                            backdropFilter: 'blur(10px)',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'all 200ms ease'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.16)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
+                          }}
+                        >
+                          <span>Mulai Kolaborasi</span>
+                          <ArrowUpRight size={14} />
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Tombol Sekunder di Kanan Bawah: "Detail Project" dengan Ikon Tambah (+) Bulat */}
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: 'clamp(1.5rem, 4vh, 2.5rem)',
+                        right: 'clamp(1.5rem, 4vw, 3.5rem)',
+                        zIndex: 35,
+                        animation: 'fadeInUpContent 500ms ease-out 300ms both'
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => setShowDetailDrawer(true)}
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '12px',
+                          padding: '12px 22px 12px 16px',
+                          borderRadius: '9999px',
+                          backgroundColor: 'rgba(11, 11, 11, 0.85)',
+                          color: '#ffffff',
+                          border: '1px solid rgba(255, 255, 255, 0.22)',
+                          backdropFilter: 'blur(14px)',
+                          fontSize: '13px',
+                          fontWeight: '700',
+                          letterSpacing: '0.04em',
+                          cursor: 'pointer',
+                          transition: 'all 250ms ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.18)';
+                          e.currentTarget.style.borderColor = '#ffffff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(11, 11, 11, 0.85)';
+                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.22)';
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: '30px',
+                            height: '30px',
+                            borderRadius: '50%',
+                            border: '1px solid rgba(255, 255, 255, 0.4)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: 'rgba(255, 255, 255, 0.08)'
+                          }}
+                        >
+                          <Plus size={16} />
+                        </div>
+                        <span>Detail Project</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+
+              // Tampilan Normal: 7 Kartu Vertikal Ramping dengan Posisi Staggered (Zig-zag)
+              const flexValue = isHovered ? 4.2 : isOtherSelected ? 0 : 1;
+              const opacityValue = isOtherSelected ? 0 : 1;
+
+              return (
                 <div
+                  key={project.id}
+                  onClick={() => setActiveProjectIdx(idx)}
+                  onMouseEnter={() => setHoveredStripIdx(idx)}
+                  onMouseLeave={() => setHoveredStripIdx(null)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveProjectIdx(idx);
+                    }
+                  }}
+                  aria-label={`Buka karya ${project.title}`}
                   style={{
                     position: 'relative',
-                    width: '100%',
-                    height: '220px',
+                    flex: flexValue,
+                    height: stagger.height,
+                    transform: `translateY(${stagger.translateY})`,
+                    opacity: opacityValue,
+                    borderRadius: '14px',
                     overflow: 'hidden',
-                    backgroundColor: '#071320'
+                    cursor: 'pointer',
+                    backgroundColor: '#121212',
+                    border: isHovered
+                      ? `1px solid ${activeDiscipline.accentColor || '#38bdf8'}`
+                      : '1px solid rgba(255, 255, 255, 0.09)',
+                    boxShadow: isHovered
+                      ? '0 24px 48px rgba(0, 0, 0, 0.8)'
+                      : '0 10px 24px rgba(0, 0, 0, 0.4)',
+                    transition:
+                      'flex 650ms cubic-bezier(0.25, 1, 0.5, 1), transform 650ms cubic-bezier(0.25, 1, 0.5, 1), border-color 300ms ease, box-shadow 400ms ease, opacity 400ms ease',
+                    pointerEvents: isOtherSelected ? 'none' : 'auto'
                   }}
                 >
+                  {/* Gambar Preview Project (object-fit: cover) */}
                   <img
-                    src={getStoragePublicUrl(item.image) || item.image}
-                    alt={item.title}
+                    src={getStoragePublicUrl(project.image) || project.image}
+                    alt={project.title}
                     style={{
+                      position: 'absolute',
+                      inset: 0,
                       width: '100%',
                       height: '100%',
                       objectFit: 'cover',
-                      transition: 'transform 500ms ease'
+                      objectPosition: 'center',
+                      transform: isHovered ? 'scale(1.08)' : 'scale(1)',
+                      filter: isHovered ? 'brightness(0.95) contrast(1.06)' : 'brightness(0.55) contrast(1.02)',
+                      transition:
+                        'transform 750ms cubic-bezier(0.25, 1, 0.5, 1), filter 400ms ease'
                     }}
                   />
+
+                  {/* Efek Gelap (Overlay Hitam Transparan) */}
                   <div
                     style={{
                       position: 'absolute',
                       inset: 0,
-                      background: 'linear-gradient(180deg, transparent 40%, rgba(7, 19, 32, 0.85) 100%)'
+                      background: isHovered
+                        ? 'linear-gradient(180deg, rgba(11, 11, 11, 0.2) 0%, rgba(11, 11, 11, 0.75) 100%)'
+                        : 'linear-gradient(180deg, rgba(11, 11, 11, 0.55) 0%, rgba(11, 11, 11, 0.85) 100%)',
+                      transition: 'background 400ms ease'
                     }}
                   />
 
-                  {/* Kategori Tag & Year */}
+                  {/* Header Kartu: Nomor Urut */}
                   <div
                     style={{
                       position: 'absolute',
-                      top: '12px',
-                      left: '12px',
+                      top: '16px',
+                      left: '16px',
+                      right: '16px',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '6px'
+                      justifyContent: 'space-between',
+                      zIndex: 3
                     }}
                   >
                     <span
                       style={{
+                        fontSize: '11px',
+                        fontWeight: '800',
+                        letterSpacing: '0.12em',
+                        color: isHovered ? '#ffffff' : 'rgba(255, 255, 255, 0.55)',
+                        backgroundColor: 'rgba(0, 0, 0, 0.45)',
                         padding: '3px 8px',
-                        borderRadius: '4px',
-                        backgroundColor: 'rgba(7, 19, 32, 0.75)',
-                        backdropFilter: 'blur(8px)',
-                        color: '#ffffff',
-                        fontSize: '10px',
-                        fontWeight: '700',
-                        letterSpacing: '0.04em',
-                        textTransform: 'uppercase',
-                        border: '1px solid rgba(255, 255, 255, 0.15)'
+                        borderRadius: '6px',
+                        backdropFilter: 'blur(8px)'
                       }}
                     >
-                      {item.category}
+                      {project.indexNumber}
                     </span>
+
+                    {isHovered && (
+                      <span
+                        style={{
+                          fontSize: '10px',
+                          fontWeight: '800',
+                          letterSpacing: '0.1em',
+                          textTransform: 'uppercase',
+                          color: activeDiscipline.accentColor || '#38bdf8',
+                          backgroundColor: 'rgba(0, 0, 0, 0.6)',
+                          padding: '3px 8px',
+                          borderRadius: '6px',
+                          animation: 'fadeInUpContent 200ms ease'
+                        }}
+                      >
+                        KLIK UNTUK DETAIL ↗
+                      </span>
+                    )}
                   </div>
 
-                  {/* Icon Maximize Preview */}
+                  {/* Teks Judul Kategori/Karya Tepat di Tengah Kartu */}
                   <div
                     style={{
                       position: 'absolute',
-                      top: '12px',
-                      right: '12px',
-                      width: '28px',
-                      height: '28px',
-                      borderRadius: '50%',
-                      backgroundColor: 'rgba(7, 19, 32, 0.7)',
-                      color: '#ffffff',
+                      inset: 0,
                       display: 'flex',
+                      flexDirection: 'column',
                       alignItems: 'center',
-                      justifyContent: 'center'
+                      justifyContent: 'center',
+                      padding: '1.25rem',
+                      textAlign: 'center',
+                      zIndex: 3
                     }}
                   >
-                    <Maximize2 size={13} />
-                  </div>
-                </div>
-
-                {/* Deskripsi Karya */}
-                <div style={{ padding: '1.25rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
-                      <span style={{ fontSize: '11px', color: '#7AC142', fontWeight: '700' }}>
-                        {item.client}
-                      </span>
-                      <span style={{ fontSize: '11px', color: 'rgba(255, 255, 255, 0.45)', fontWeight: '600' }}>
-                        {item.year}
-                      </span>
-                    </div>
-
-                    <h3
-                      style={{
-                        fontSize: '16px',
-                        fontWeight: '700',
-                        color: '#ffffff',
-                        margin: '0 0 8px 0',
-                        lineHeight: 1.35
-                      }}
-                    >
-                      {item.title}
-                    </h3>
-
-                    <p
-                      style={{
-                        fontSize: '12px',
-                        lineHeight: 1.6,
-                        color: 'rgba(255, 255, 255, 0.7)',
-                        margin: '0 0 12px 0'
-                      }}
-                    >
-                      {item.desc}
-                    </p>
-                  </div>
-
-                  {/* Specs Tags */}
-                  {Array.isArray(item.specs) && item.specs.length > 0 && (
-                    <div
-                      style={{
-                        paddingTop: '10px',
-                        borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '4px'
-                      }}
-                    >
-                      {item.specs.map((sp, sIdx) => (
+                    {!isHovered ? (
+                      /* Saat Tidak di-Hover: Judul Vertikal Artistik atau Ramping */
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          gap: '8px'
+                        }}
+                      >
                         <span
-                          key={sIdx}
                           style={{
                             fontSize: '10px',
-                            padding: '2px 6px',
-                            borderRadius: '3px',
-                            backgroundColor: 'rgba(255, 255, 255, 0.06)',
-                            color: 'rgba(255, 255, 255, 0.65)',
-                            fontWeight: '500'
+                            fontWeight: '700',
+                            letterSpacing: '0.15em',
+                            textTransform: 'uppercase',
+                            color: 'rgba(255, 255, 255, 0.5)'
                           }}
                         >
-                          {sp}
+                          {project.category}
                         </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+                        <span
+                          style={{
+                            fontSize: '13px',
+                            fontWeight: '800',
+                            letterSpacing: '0.04em',
+                            textTransform: 'uppercase',
+                            color: '#ffffff',
+                            maxWidth: '130px',
+                            lineHeight: 1.3
+                          }}
+                        >
+                          {project.title}
+                        </span>
+                      </div>
+                    ) : (
+                      /* Saat di-Hover: Judul Melebar Penuh & Deskripsi Singkat */
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          maxWidth: '280px',
+                          animation: 'fadeInUpContent 300ms ease forwards'
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: '10px',
+                            fontWeight: '800',
+                            letterSpacing: '0.15em',
+                            textTransform: 'uppercase',
+                            color: activeDiscipline.accentColor || '#38bdf8',
+                            marginBottom: '6px'
+                          }}
+                        >
+                          {project.category}
+                        </span>
+                        <h3
+                          style={{
+                            fontSize: '20px',
+                            fontWeight: '900',
+                            lineHeight: 1.2,
+                            letterSpacing: '-0.02em',
+                            textTransform: 'uppercase',
+                            color: '#ffffff',
+                            margin: '0 0 8px 0'
+                          }}
+                        >
+                          {project.title}
+                        </h3>
+                        <p
+                          style={{
+                            fontSize: '11px',
+                            lineHeight: 1.5,
+                            color: 'rgba(255, 255, 255, 0.85)',
+                            margin: 0
+                          }}
+                        >
+                          {project.client} • {project.year}
+                        </p>
+                      </div>
+                    )}
+                  </div>
 
-        {/* Modal Lightbox Popup untuk Foto/Video Terpilih */}
-        {lightboxItem && (
+                  {/* Indikator Garis Aksen di Dasar Kartu */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: '3px',
+                      backgroundColor: isHovered
+                        ? activeDiscipline.accentColor || '#38bdf8'
+                        : 'rgba(255, 255, 255, 0.1)',
+                      transition: 'background-color 300ms ease'
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </main>
+      </div>
+
+      {/* 5. Drawer Modal: "Detail Project" (Popup Slide-In dari Kanan) */}
+      {showDetailDrawer && currentProject && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 10000,
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            backdropFilter: 'blur(10px)',
+            display: 'flex',
+            justifyContent: 'flex-end',
+            animation: 'fadeInOverlay 250ms ease'
+          }}
+          onClick={() => setShowDetailDrawer(false)}
+        >
           <div
-            role="dialog"
-            aria-modal="true"
             style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 10000,
-              backgroundColor: 'rgba(0, 0, 0, 0.92)',
-              backdropFilter: 'blur(16px)',
+              width: '100%',
+              maxWidth: '520px',
+              height: '100%',
+              backgroundColor: '#0f141c',
+              borderLeft: '1px solid rgba(255, 255, 255, 0.12)',
+              padding: '2.5rem clamp(1.5rem, 3vw, 2.5rem)',
+              overflowY: 'auto',
               display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1.5rem',
-              animation: 'roleModalFadeIn 200ms ease'
+              flexDirection: 'column',
+              boxShadow: '-20px 0 60px rgba(0, 0, 0, 0.8)',
+              animation: 'slideInRight 300ms cubic-bezier(0.16, 1, 0.3, 1)'
             }}
-            onClick={() => setLightboxItem(null)}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div
-              style={{
-                position: 'relative',
-                maxWidth: '960px',
-                width: '100%',
-                maxHeight: '90vh',
-                backgroundColor: '#071320',
-                borderRadius: '16px',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                overflow: 'hidden',
-                display: 'flex',
-                flexDirection: 'column'
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Tombol Tutup Lightbox */}
+            {/* Header Drawer */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '2rem' }}>
+              <div>
+                <span
+                  style={{
+                    fontSize: '11px',
+                    fontWeight: '800',
+                    letterSpacing: '0.12em',
+                    textTransform: 'uppercase',
+                    color: activeDiscipline.accentColor || '#38bdf8'
+                  }}
+                >
+                  PROJECT SPECIFICATIONS // {currentProject.indexNumber}
+                </span>
+                <h2 style={{ fontSize: '24px', fontWeight: '900', color: '#ffffff', margin: '6px 0 0 0' }}>
+                  {currentProject.title}
+                </h2>
+              </div>
               <button
                 type="button"
-                onClick={() => setLightboxItem(null)}
+                onClick={() => setShowDetailDrawer(false)}
                 style={{
-                  position: 'absolute',
-                  top: '16px',
-                  right: '16px',
-                  zIndex: 20,
                   width: '36px',
                   height: '36px',
                   borderRadius: '50%',
-                  backgroundColor: 'rgba(7, 19, 32, 0.8)',
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
                   color: '#ffffff',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   cursor: 'pointer'
                 }}
               >
-                <X size={18} />
+                <X size={16} />
               </button>
+            </div>
 
-              {/* Lightbox Image */}
+            {/* Cerita di Balik Karya (Narrative Story) */}
+            <div style={{ marginBottom: '2rem' }}>
+              <h4 style={{ fontSize: '12px', fontWeight: '800', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.45)', marginBottom: '8px' }}>
+                NARASI & PROSES KREATIF
+              </h4>
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: '#e2e8f0', margin: 0 }}>
+                {currentProject.story || currentProject.synopsis}
+              </p>
+            </div>
+
+            {/* Deliverables / Hasil Karya */}
+            {Array.isArray(currentProject.deliverables) && (
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ fontSize: '12px', fontWeight: '800', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.45)', marginBottom: '10px' }}>
+                  DELIVERABLES & FORMAT HASIL
+                </h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {currentProject.deliverables.map((del, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        padding: '10px 14px',
+                        borderRadius: '8px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.04)',
+                        border: '1px solid rgba(255, 255, 255, 0.07)',
+                        fontSize: '13px',
+                        color: '#ffffff'
+                      }}
+                    >
+                      <CheckCircle2 size={15} color="#7AC142" />
+                      <span>{del}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Spesifikasi Teknis / Gear & Tools */}
+            {Array.isArray(currentProject.specs) && (
+              <div style={{ marginBottom: '2rem' }}>
+                <h4 style={{ fontSize: '12px', fontWeight: '800', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255, 255, 255, 0.45)', marginBottom: '10px' }}>
+                  PERANGKAT & WORKFLOW TEKNIS
+                </h4>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                  {currentProject.specs.map((sp, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        fontSize: '12px',
+                        color: '#dbeafe',
+                        backgroundColor: 'rgba(56, 189, 248, 0.12)',
+                        border: '1px solid rgba(56, 189, 248, 0.25)',
+                        padding: '6px 12px',
+                        borderRadius: '6px',
+                        fontWeight: '600'
+                      }}
+                    >
+                      {sp}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Dampak / Metrik Prestasi */}
+            {currentProject.metrics && (
               <div
                 style={{
-                  width: '100%',
-                  height: 'clamp(280px, 50vh, 520px)',
-                  backgroundColor: '#000000',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  marginTop: 'auto',
+                  padding: '1.25rem',
+                  borderRadius: '12px',
+                  backgroundColor: 'rgba(122, 193, 66, 0.1)',
+                  border: '1px solid rgba(122, 193, 66, 0.25)'
                 }}
               >
-                <img
-                  src={getStoragePublicUrl(lightboxItem.image) || lightboxItem.image}
-                  alt={lightboxItem.title}
-                  style={{
-                    maxWidth: '100%',
-                    maxHeight: '100%',
-                    objectFit: 'contain'
-                  }}
-                />
-              </div>
-
-              {/* Lightbox Details */}
-              <div style={{ padding: '1.5rem 1.75rem', backgroundColor: '#0A1726' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                  <span
-                    style={{
-                      fontSize: '10px',
-                      fontWeight: '800',
-                      textTransform: 'uppercase',
-                      color: '#7AC142',
-                      backgroundColor: 'rgba(122, 193, 66, 0.15)',
-                      padding: '2px 8px',
-                      borderRadius: '4px'
-                    }}
-                  >
-                    {lightboxItem.category}
-                  </span>
-                  <span style={{ fontSize: '12px', color: 'rgba(255, 255, 255, 0.6)' }}>
-                    {lightboxItem.client} • {lightboxItem.year}
-                  </span>
+                <div style={{ fontSize: '10px', fontWeight: '800', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#7AC142', marginBottom: '4px' }}>
+                  IMPACT & HIGHLIGHT
                 </div>
-
-                <h3 style={{ fontSize: '20px', fontWeight: '800', color: '#ffffff', margin: '0 0 8px 0' }}>
-                  {lightboxItem.title}
-                </h3>
-
-                <p style={{ fontSize: '13px', lineHeight: 1.6, color: '#d2e4ff', margin: '0 0 12px 0' }}>
-                  {lightboxItem.desc}
-                </p>
-
-                {Array.isArray(lightboxItem.specs) && (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                    {lightboxItem.specs.map((s, idx) => (
-                      <span
-                        key={idx}
-                        style={{
-                          fontSize: '11px',
-                          color: '#ffffff',
-                          backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                          padding: '3px 8px',
-                          borderRadius: '4px'
-                        }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                <div style={{ fontSize: '13px', color: '#ffffff', fontWeight: '600', lineHeight: 1.5 }}>
+                  {currentProject.metrics}
+                </div>
               </div>
-            </div>
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
+      {/* 6. Lightbox Fullscreen: "Lihat Karya" */}
+      {showMediaLightbox && currentProject && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 10001,
+            backgroundColor: 'rgba(0, 0, 0, 0.94)',
+            backdropFilter: 'blur(20px)',
+            display: 'flex',
+            flexDirection: 'column',
+            animation: 'fadeInOverlay 250ms ease'
+          }}
+          onClick={() => setShowMediaLightbox(false)}
+        >
+          {/* Header Lightbox */}
+          <div
+            style={{
+              padding: '1.5rem 2rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
+            }}
+          >
+            <div>
+              <span style={{ fontSize: '11px', color: '#38bdf8', fontWeight: '800', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                {currentProject.category} // {currentProject.indexNumber}
+              </span>
+              <h3 style={{ fontSize: '18px', fontWeight: '800', color: '#ffffff', margin: '4px 0 0 0' }}>
+                {currentProject.title}
+              </h3>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowMediaLightbox(false)}
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                color: '#ffffff',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          {/* Visual Media Showcase */}
+          <div
+            style={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '2rem',
+              overflow: 'hidden'
+            }}
+          >
+            <img
+              src={getStoragePublicUrl(currentProject.image) || currentProject.image}
+              alt={currentProject.title}
+              style={{
+                maxWidth: '92%',
+                maxHeight: '85vh',
+                objectFit: 'contain',
+                borderRadius: '8px',
+                boxShadow: '0 20px 60px rgba(0, 0, 0, 0.9)'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Global CSS Animasi & Transisi Lembut */}
       <style>{`
-        @keyframes roleModalFadeIn {
+        @keyframes fullRevealFade {
           from {
             opacity: 0;
             transform: scale(0.98);
@@ -1154,6 +1765,36 @@ export function RoleDetailModal({
             opacity: 1;
             transform: scale(1);
           }
+        }
+
+        @keyframes fadeInUpContent {
+          from {
+            opacity: 0;
+            transform: translateY(24px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes fadeInOverlay {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes heroImageZoom {
+          from { transform: scale(1); }
+          to { transform: scale(1.05); }
         }
       `}</style>
     </div>
