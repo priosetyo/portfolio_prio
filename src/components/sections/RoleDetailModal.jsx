@@ -229,6 +229,8 @@ export function RoleDetailModal({
 
   if (!isOpen) return null;
 
+  const isAnyActive = activeProjectIdx !== null;
+
   return (
     <div
       role="dialog"
@@ -256,7 +258,9 @@ export function RoleDetailModal({
           zIndex: 1,
           display: 'flex',
           justifyContent: 'space-between',
-          padding: '0 4vw'
+          padding: '0 4vw',
+          opacity: isAnyActive ? 0.3 : 1,
+          transition: 'opacity 750ms ease'
         }}
       >
         {[...Array(6)].map((_, i) => (
@@ -271,47 +275,56 @@ export function RoleDetailModal({
         ))}
       </div>
 
-      {/* 2. Tombol Tutup Floating Minimalis di Kanan Atas (Tampilan 5 Kartu Awal) */}
-      {activeProjectIdx === null && (
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Tutup Galeri (ESC)"
-          style={{
-            position: 'absolute',
-            top: '24px',
-            right: 'clamp(1.5rem, 3.5vw, 2.5rem)',
-            zIndex: 50,
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '8px 14px',
-            borderRadius: '9999px',
-            backgroundColor: 'rgba(255, 255, 255, 0.08)',
-            color: '#ffffff',
-            border: '1px solid rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            fontSize: '11px',
-            fontWeight: '700',
-            letterSpacing: '0.06em',
-            cursor: 'pointer',
-            transition: 'all 200ms ease'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(237, 28, 36, 0.85)';
-            e.currentTarget.style.borderColor = 'transparent';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
-          }}
-        >
-          <span>ESC</span>
-          <X size={14} />
-        </button>
-      )}
+      {/* 2. Tombol Tutup Floating Minimalis di Kanan Atas */}
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          if (isAnyActive) {
+            setActiveProjectIdx(null);
+          } else if (onClose) {
+            onClose();
+          }
+        }}
+        aria-label={isAnyActive ? 'Tutup Foto (ESC)' : 'Tutup Galeri (ESC)'}
+        style={{
+          position: 'absolute',
+          top: '24px',
+          right: 'clamp(1.5rem, 3.5vw, 2.5rem)',
+          zIndex: 50,
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: '6px',
+          padding: '8px 14px',
+          borderRadius: '9999px',
+          backgroundColor: isAnyActive ? 'rgba(0, 0, 0, 0.65)' : 'rgba(255, 255, 255, 0.08)',
+          color: '#ffffff',
+          border: '1px solid rgba(255, 255, 255, 0.22)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          fontSize: '11px',
+          fontWeight: '700',
+          letterSpacing: '0.06em',
+          cursor: 'pointer',
+          transition: 'all 200ms ease',
+          boxShadow: isAnyActive ? '0 4px 20px rgba(0, 0, 0, 0.6)' : 'none'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = 'rgba(237, 28, 36, 0.85)';
+          e.currentTarget.style.borderColor = 'transparent';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = isAnyActive
+            ? 'rgba(0, 0, 0, 0.65)'
+            : 'rgba(255, 255, 255, 0.08)';
+          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.22)';
+        }}
+      >
+        <span>ESC</span>
+        <X size={14} />
+      </button>
 
-      {/* 3. Badan Konten Utama: 5 Kartu Vertikal Ramping (Vertical Strips Accordion) */}
+      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Efek Unmasking Reveal Halus */}
       <div style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}>
         <main
           style={{
@@ -320,7 +333,8 @@ export function RoleDetailModal({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '2rem clamp(1rem, 3.5vw, 3.5rem)',
+            padding: isAnyActive ? '0px' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
+            transition: 'padding 800ms cubic-bezier(0.16, 1, 0.3, 1)',
             overflow: 'hidden'
           }}
         >
@@ -330,186 +344,165 @@ export function RoleDetailModal({
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: activeProjectIdx !== null ? '0px' : '16px',
+              gap: isAnyActive ? '0px' : '16px',
               width: '100%',
               height: '100%',
-              maxWidth: '1360px',
+              maxWidth: isAnyActive ? '100%' : '1360px',
               position: 'relative',
-              transition: 'gap 500ms ease'
+              transition:
+                'gap 800ms cubic-bezier(0.16, 1, 0.3, 1), max-width 800ms cubic-bezier(0.16, 1, 0.3, 1)'
             }}
           >
             {displayProjects.map((project, idx) => {
-              const isHovered = hoveredStripIdx === idx;
               const isSelected = activeProjectIdx === idx;
-              const isOtherSelected = activeProjectIdx !== null && !isSelected;
+              const isOtherSelected = isAnyActive && !isSelected;
+              const isHovered = hoveredStripIdx === idx && !isAnyActive;
               const stagger = STAGGER_PRESETS[idx % STAGGER_PRESETS.length];
 
-              // State Ketika Diklik: Murni Menampilkan Foto / Video Saja Tanpa Emblem Apapun
+              // Penentuan Flex, Tinggi, dan Transform untuk Transisi Mulus Unmasking
+              let flexValue = '1';
+              let heightValue = stagger.height;
+              let transformValue = `translateY(${stagger.translateY})`;
+              let borderRadiusValue = '16px';
+              let opacityValue = 1;
+              let zIndexValue = 2;
+
               if (isSelected) {
-                return (
-                  <div
-                    key={project.id}
-                    onClick={() => setActiveProjectIdx(null)}
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      width: '100%',
-                      height: '100%',
-                      zIndex: 40,
-                      backgroundColor: '#000000',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      overflow: 'hidden',
-                      cursor: 'zoom-out',
-                      animation: 'pureMediaReveal 380ms cubic-bezier(0.16, 1, 0.3, 1) forwards'
-                    }}
-                  >
-                    {/* Media Murni: Foto atau Video Fullscreen */}
-                    {project.videoUrl ? (
-                      <video
-                        src={project.videoUrl}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        controls
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                          backgroundColor: '#000000'
-                        }}
-                        onClick={(e) => e.stopPropagation()}
-                      />
-                    ) : (
-                      <img
-                        src={getStoragePublicUrl(project.image) || project.image}
-                        alt={project.title}
-                        style={{
-                          width: '100%',
-                          height: '100%',
-                          objectFit: 'contain',
-                          backgroundColor: '#000000'
-                        }}
-                      />
-                    )}
-
-                    {/* Satu-satunya Elemen: Tombol Tutup / ESC */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveProjectIdx(null);
-                      }}
-                      aria-label="Tutup Tampilan (ESC)"
-                      style={{
-                        position: 'absolute',
-                        top: '24px',
-                        right: 'clamp(1.5rem, 3.5vw, 2.5rem)',
-                        zIndex: 50,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        padding: '8px 14px',
-                        borderRadius: '9999px',
-                        backgroundColor: 'rgba(0, 0, 0, 0.65)',
-                        color: '#ffffff',
-                        border: '1px solid rgba(255, 255, 255, 0.25)',
-                        backdropFilter: 'blur(12px)',
-                        fontSize: '11px',
-                        fontWeight: '700',
-                        letterSpacing: '0.06em',
-                        cursor: 'pointer',
-                        transition: 'all 200ms ease'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = 'rgba(237, 28, 36, 0.9)';
-                        e.currentTarget.style.borderColor = 'transparent';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.65)';
-                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-                      }}
-                    >
-                      <span>ESC</span>
-                      <X size={14} />
-                    </button>
-                  </div>
-                );
+                // Saat diklik: melebar 100% penuh, tinggi 100%, tanpa offset vertikal, border radius rata
+                flexValue = '1 1 100%';
+                heightValue = '100%';
+                transformValue = 'translateY(0px)';
+                borderRadiusValue = '0px';
+                zIndexValue = 40;
+              } else if (isOtherSelected) {
+                // Kartu lainnya menyusut halus ke 0
+                flexValue = '0 0 0%';
+                heightValue = stagger.height;
+                transformValue = `translateY(${stagger.translateY}) scale(0.92)`;
+                opacityValue = 0;
+                zIndexValue = 1;
+              } else if (isHovered) {
+                // Hover normal: melebar elastis
+                flexValue = '3.8';
+                zIndexValue = 10;
               }
-
-              // Tampilan Normal: 5 Kartu Vertikal Ramping dengan Posisi Staggered (Zig-zag)
-              const flexValue = isHovered ? 4.2 : isOtherSelected ? 0 : 1;
-              const opacityValue = isOtherSelected ? 0 : 1;
 
               return (
                 <div
                   key={project.id}
-                  onClick={() => setActiveProjectIdx(idx)}
-                  onMouseEnter={() => setHoveredStripIdx(idx)}
-                  onMouseLeave={() => setHoveredStripIdx(null)}
+                  onClick={() => {
+                    if (isSelected) {
+                      setActiveProjectIdx(null);
+                    } else {
+                      setActiveProjectIdx(idx);
+                    }
+                  }}
+                  onMouseEnter={() => !isAnyActive && setHoveredStripIdx(idx)}
+                  onMouseLeave={() => !isAnyActive && setHoveredStripIdx(null)}
                   role="button"
                   tabIndex={0}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter' || e.key === ' ') {
                       e.preventDefault();
-                      setActiveProjectIdx(idx);
+                      setActiveProjectIdx(isSelected ? null : idx);
                     }
                   }}
-                  aria-label={`Buka karya ${project.title}`}
+                  aria-label={isSelected ? 'Klik untuk memperkecil' : `Buka karya ${project.title}`}
                   style={{
                     position: 'relative',
                     flex: flexValue,
-                    height: stagger.height,
-                    transform: `translateY(${stagger.translateY})`,
+                    height: heightValue,
+                    transform: transformValue,
                     opacity: opacityValue,
-                    borderRadius: '16px',
+                    borderRadius: borderRadiusValue,
                     overflow: 'hidden',
-                    cursor: 'pointer',
-                    backgroundColor: '#121212',
-                    border: isHovered
+                    cursor: isSelected ? 'zoom-out' : 'pointer',
+                    backgroundColor: '#070707',
+                    border: isSelected
+                      ? 'none'
+                      : isHovered
                       ? `1px solid ${activeDiscipline.accentColor || '#38bdf8'}`
                       : '1px solid rgba(255, 255, 255, 0.09)',
-                    boxShadow: isHovered
+                    boxShadow: isSelected
+                      ? 'none'
+                      : isHovered
                       ? '0 24px 48px rgba(0, 0, 0, 0.8)'
                       : '0 10px 24px rgba(0, 0, 0, 0.4)',
                     transition:
-                      'flex 650ms cubic-bezier(0.25, 1, 0.5, 1), transform 650ms cubic-bezier(0.25, 1, 0.5, 1), border-color 300ms ease, box-shadow 400ms ease, opacity 400ms ease',
-                    pointerEvents: isOtherSelected ? 'none' : 'auto'
+                      'flex 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'height 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'transform 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'border-radius 850ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), ' +
+                      'border-color 300ms ease, ' +
+                      'box-shadow 400ms ease',
+                    pointerEvents: isOtherSelected ? 'none' : 'auto',
+                    zIndex: zIndexValue
                   }}
                 >
-                  {/* Gambar Preview Project (object-fit: cover) */}
-                  <img
-                    src={getStoragePublicUrl(project.image) || project.image}
-                    alt={project.title}
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'center',
-                      transform: isHovered ? 'scale(1.08)' : 'scale(1)',
-                      filter: isHovered ? 'brightness(0.95) contrast(1.06)' : 'brightness(0.55) contrast(1.02)',
-                      transition:
-                        'transform 750ms cubic-bezier(0.25, 1, 0.5, 1), filter 400ms ease'
-                    }}
-                  />
+                  {/* Gambar Karya: Membuka Sisi yang Belum Terlihat & Memperbesar Skala Secara Halus */}
+                  {project.videoUrl && isSelected ? (
+                    <video
+                      src={project.videoUrl}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      controls
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                        backgroundColor: '#000000'
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    />
+                  ) : (
+                    <img
+                      src={getStoragePublicUrl(project.image) || project.image}
+                      alt={project.title}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'cover',
+                        objectPosition: 'center',
+                        // Skala membesar halus saat diklik (1.05) atau saat di-hover (1.08)
+                        transform: isSelected
+                          ? 'scale(1.05)'
+                          : isHovered
+                          ? 'scale(1.08)'
+                          : 'scale(1)',
+                        filter: isSelected
+                          ? 'brightness(1) contrast(1.04)'
+                          : isHovered
+                          ? 'brightness(0.95) contrast(1.06)'
+                          : 'brightness(0.55) contrast(1.02)',
+                        transition:
+                          'transform 950ms cubic-bezier(0.16, 1, 0.3, 1), filter 600ms ease',
+                        willChange: 'transform'
+                      }}
+                    />
+                  )}
 
-                  {/* Efek Gelap (Overlay Hitam Transparan) */}
+                  {/* Efek Gelap (Overlay Hitam): Menghilang Penuh Saat Kartu Diklik */}
                   <div
                     style={{
                       position: 'absolute',
                       inset: 0,
                       background: isHovered
-                        ? 'linear-gradient(180deg, rgba(11, 11, 11, 0.2) 0%, rgba(11, 11, 11, 0.75) 100%)'
+                        ? 'linear-gradient(180deg, rgba(11, 11, 11, 0.15) 0%, rgba(11, 11, 11, 0.72) 100%)'
                         : 'linear-gradient(180deg, rgba(11, 11, 11, 0.55) 0%, rgba(11, 11, 11, 0.85) 100%)',
-                      transition: 'background 400ms ease'
+                      opacity: isSelected ? 0 : 1,
+                      transition: 'opacity 500ms ease, background 400ms ease',
+                      pointerEvents: 'none'
                     }}
                   />
 
-                  {/* Teks Judul Kategori/Karya Tepat di Tengah Kartu */}
+                  {/* Teks Judul Kategori/Karya di Tengah Kartu: Fade-out Halus Saat Terbuka */}
                   <div
                     style={{
                       position: 'absolute',
@@ -520,7 +513,12 @@ export function RoleDetailModal({
                       justifyContent: 'center',
                       padding: '1.25rem',
                       textAlign: 'center',
-                      zIndex: 3
+                      zIndex: 3,
+                      opacity: isSelected ? 0 : 1,
+                      transform: isSelected ? 'scale(0.92) translateY(16px)' : 'scale(1) translateY(0)',
+                      transition:
+                        'opacity 350ms ease, transform 450ms cubic-bezier(0.16, 1, 0.3, 1)',
+                      pointerEvents: 'none'
                     }}
                   >
                     {!isHovered ? (
@@ -565,8 +563,7 @@ export function RoleDetailModal({
                           display: 'flex',
                           flexDirection: 'column',
                           alignItems: 'center',
-                          maxWidth: '300px',
-                          animation: 'fadeInText 250ms ease forwards'
+                          maxWidth: '300px'
                         }}
                       >
                         <span
@@ -598,7 +595,7 @@ export function RoleDetailModal({
                     )}
                   </div>
 
-                  {/* Indikator Garis Aksen Halus di Dasar Kartu */}
+                  {/* Indikator Garis Aksen Halus di Dasar Kartu (Hilang Saat Terbuka) */}
                   <div
                     style={{
                       position: 'absolute',
@@ -609,7 +606,8 @@ export function RoleDetailModal({
                       backgroundColor: isHovered
                         ? activeDiscipline.accentColor || '#38bdf8'
                         : 'rgba(255, 255, 255, 0.1)',
-                      transition: 'background-color 300ms ease'
+                      opacity: isSelected ? 0 : 1,
+                      transition: 'background-color 300ms ease, opacity 350ms ease'
                     }}
                   />
                 </div>
@@ -618,31 +616,6 @@ export function RoleDetailModal({
           </div>
         </main>
       </div>
-
-      {/* Global CSS Animasi & Transisi Lembut */}
-      <style>{`
-        @keyframes pureMediaReveal {
-          from {
-            opacity: 0;
-            transform: scale(0.96);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-
-        @keyframes fadeInText {
-          from {
-            opacity: 0;
-            transform: translateY(12px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }
