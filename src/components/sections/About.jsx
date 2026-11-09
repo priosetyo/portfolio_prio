@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { getStoragePublicUrl } from '../../lib/queries';
 import { ArrowUpRight } from 'lucide-react';
+import { RoleDetailModal } from './RoleDetailModal';
 
 export const DEFAULT_ABOUT_ROLES = [
   {
@@ -84,6 +85,7 @@ export function isColorLight(hexOrColor) {
 export function About({ settings }) {
   const [hoveredIdx, setHoveredIdx] = useState(null);
   const [touchedIdx, setTouchedIdx] = useState(null);
+  const [selectedRole, setSelectedRole] = useState(null);
 
   const aboutRoles = useMemo(() => {
     let custom = settings?.about_roles;
@@ -117,20 +119,7 @@ export function About({ settings }) {
   }, [settings?.about_roles]);
 
   const handleCardClick = (role, idx) => {
-    if (!role.actionUrl) return;
-
-    if (role.actionUrl.startsWith('http')) {
-      window.open(role.actionUrl, '_blank', 'noopener,noreferrer');
-      return;
-    }
-
-    if (role.actionUrl.startsWith('#')) {
-      const targetId = role.actionUrl.replace('#', '');
-      const elem = document.getElementById(targetId);
-      if (elem) {
-        elem.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    setSelectedRole(role);
   };
 
   return (
@@ -434,6 +423,20 @@ export function About({ settings }) {
           })}
         </div>
       </div>
+
+      {/* Reusable Cinematic Role Detail Modal & Interactive Works Gallery */}
+      <RoleDetailModal
+        isOpen={Boolean(selectedRole)}
+        onClose={() => setSelectedRole(null)}
+        role={selectedRole}
+        allRoles={aboutRoles}
+        onSelectRole={(r) => setSelectedRole(r)}
+        onOpenContact={() => {
+          setSelectedRole(null);
+          const el = document.getElementById('contact');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+      />
 
       <style>{`
         @media (min-width: 1024px) {
