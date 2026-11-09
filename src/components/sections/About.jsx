@@ -47,8 +47,10 @@ export const DEFAULT_ABOUT_ROLES = [
     roleKey: 'social',
     title: 'As a Social Media Specialist',
     badge: 'Social Media Specialist',
-    color: '#0A2540', // Deep Navy / Slate
-    hoverBg: 'linear-gradient(160deg, #0A2540 0%, #00407A 100%)',
+    color: '#ffffff', // Clean White
+    hoverColor: '#ffffff',
+    hoverBg: '#ffffff',
+    isLight: true,
     photo:
       'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/hero-backgrounds/hero-bg-photo-1793368701318-a4eb.jpg',
     desc: 'Memimpin strategi komunikasi digital terintegrasi yang berhasil melipatgandakan audiens Instagram @pertaminaru2 dari 8.000 ke 67.000+ followers—menjadikannya akun kilang refinery #1 di Indonesia.',
@@ -56,6 +58,28 @@ export const DEFAULT_ABOUT_ROLES = [
     actionUrl: 'https://www.instagram.com/pertaminaru2/'
   }
 ];
+
+export function isColorLight(hexOrColor) {
+  if (!hexOrColor) return false;
+  const str = String(hexOrColor).trim().toLowerCase();
+  if (str === '#ffffff' || str === '#fff' || str === 'white' || str.startsWith('rgb(255, 255, 255)')) return true;
+  if (str.startsWith('#')) {
+    const hex = str.replace('#', '');
+    if (hex.length === 3) {
+      const r = parseInt(hex[0] + hex[0], 16);
+      const g = parseInt(hex[1] + hex[1], 16);
+      const b = parseInt(hex[2] + hex[2], 16);
+      return (r * 299 + g * 587 + b * 114) / 1000 > 180;
+    }
+    if (hex.length === 6) {
+      const r = parseInt(hex.substring(0, 2), 16);
+      const g = parseInt(hex.substring(2, 4), 16);
+      const b = parseInt(hex.substring(4, 6), 16);
+      return (r * 299 + g * 587 + b * 114) / 1000 > 180;
+    }
+  }
+  return false;
+}
 
 export function About({ settings }) {
   const [hoveredIdx, setHoveredIdx] = useState(null);
@@ -73,9 +97,18 @@ export function About({ settings }) {
     if (Array.isArray(custom) && custom.length > 0) {
       return DEFAULT_ABOUT_ROLES.map((def, idx) => {
         const item = custom[idx] || {};
+        const rawColor =
+          idx === 3 && (item.color === '#0A2540' || item.hoverColor === '#0A2540')
+            ? '#ffffff'
+            : (item.hoverColor || item.color || def.color);
+        const isLight = isColorLight(rawColor) || Boolean(def.isLight) || Boolean(item.isLight);
         return {
           ...def,
           ...item,
+          color: rawColor,
+          hoverColor: rawColor,
+          hoverBg: rawColor === '#ffffff' ? '#ffffff' : (item.hoverBg || def.hoverBg),
+          isLight,
           photo: getStoragePublicUrl(item.photo) || item.photo || def.photo
         };
       });
@@ -170,6 +203,8 @@ export function About({ settings }) {
           {aboutRoles.map((role, idx) => {
             const isHovered = hoveredIdx === idx || touchedIdx === idx;
             const photoUrl = getStoragePublicUrl(role.photo) || role.photo;
+            const isLight = isColorLight(role.hoverColor || role.color) || Boolean(role.isLight);
+            const activeBg = role.hoverBg || role.hoverColor || role.color || '#00529B';
 
             return (
               <div
@@ -194,12 +229,15 @@ export function About({ settings }) {
                   overflow: 'hidden',
                   cursor: 'pointer',
                   backgroundColor: '#071320',
+                  border: isHovered && isLight ? '1px solid rgba(0, 0, 0, 0.08)' : '1px solid transparent',
                   boxShadow: isHovered
-                    ? '0 20px 38px rgba(10, 37, 64, 0.22)'
+                    ? isLight
+                      ? '0 20px 38px rgba(0, 0, 0, 0.12)'
+                      : '0 20px 38px rgba(10, 37, 64, 0.22)'
                     : '0 4px 16px rgba(10, 37, 64, 0.08)',
                   transform: isHovered ? 'translateY(-6px)' : 'translateY(0)',
                   transition:
-                    'transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1)'
+                    'transform 350ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 350ms cubic-bezier(0.16, 1, 0.3, 1), border 350ms ease'
                 }}
               >
                 {/* Background Photo */}
@@ -214,8 +252,8 @@ export function About({ settings }) {
                     objectFit: 'cover',
                     objectPosition: 'center',
                     transform: isHovered ? 'scale(1.08)' : 'scale(1)',
-                    opacity: isHovered ? 0.18 : 1,
-                    filter: isHovered ? 'grayscale(30%)' : 'none',
+                    opacity: isHovered ? (isLight ? 0.04 : 0.18) : 1,
+                    filter: isHovered ? (isLight ? 'grayscale(100%)' : 'grayscale(30%)') : 'none',
                     transition:
                       'transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 350ms ease, filter 350ms ease'
                   }}
@@ -233,12 +271,12 @@ export function About({ settings }) {
                   }}
                 />
 
-                {/* Vibrant Hover Color Overlay (Pertamina Style) */}
+                {/* Vibrant Hover Color Overlay (Pertamina Style / White for Column 4) */}
                 <div
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    background: role.hoverBg || role.color,
+                    background: activeBg,
                     opacity: isHovered ? 1 : 0,
                     transition: 'opacity 350ms ease'
                   }}
@@ -264,11 +302,12 @@ export function About({ settings }) {
                       style={{
                         fontSize: '21px',
                         fontWeight: '700',
-                        color: '#ffffff',
+                        color: isHovered && isLight ? '#071320' : '#ffffff',
                         letterSpacing: '-0.02em',
                         lineHeight: 1.3,
                         margin: 0,
-                        textShadow: '0 2px 8px rgba(0, 0, 0, 0.45)'
+                        textShadow: isHovered && isLight ? 'none' : '0 2px 8px rgba(0, 0, 0, 0.45)',
+                        transition: 'color 300ms ease, text-shadow 300ms ease'
                       }}
                     >
                       {role.title}
@@ -295,20 +334,21 @@ export function About({ settings }) {
                         marginBottom: isHovered ? '0.5rem' : '0'
                       }}
                     >
-                      {/* Pill Badge (Pertamina Style) */}
+                      {/* Pill Badge (Pertamina Style / Inverted Dark Pill for White Card) */}
                       <span
                         className="font-label-mono-sm"
                         style={{
                           display: 'inline-block',
                           padding: '0.35rem 0.85rem',
                           borderRadius: '9999px',
-                          backgroundColor: '#ffffff',
-                          color: role.color,
+                          backgroundColor: isLight ? '#071320' : '#ffffff',
+                          color: isLight ? '#ffffff' : (role.hoverColor || role.color || '#00529B'),
                           fontSize: '11px',
                           fontWeight: '800',
                           letterSpacing: '0.02em',
                           marginBottom: '0.85rem',
-                          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)'
+                          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.15)',
+                          transition: 'all 300ms ease'
                         }}
                       >
                         {role.badge}
@@ -320,9 +360,10 @@ export function About({ settings }) {
                         style={{
                           fontSize: '13px',
                           lineHeight: 1.62,
-                          color: 'rgba(255, 255, 255, 0.95)',
+                          color: isLight ? '#334155' : 'rgba(255, 255, 255, 0.95)',
                           margin: 0,
-                          fontWeight: '400'
+                          fontWeight: isLight ? '500' : '400',
+                          transition: 'color 300ms ease'
                         }}
                       >
                         {role.desc}
@@ -337,7 +378,9 @@ export function About({ settings }) {
                         justifyContent: isHovered ? 'space-between' : 'flex-end',
                         paddingTop: isHovered ? '0.85rem' : '0',
                         borderTop: isHovered
-                          ? '1px solid rgba(255, 255, 255, 0.22)'
+                          ? isLight
+                            ? '1px solid rgba(0, 0, 0, 0.1)'
+                            : '1px solid rgba(255, 255, 255, 0.22)'
                           : '1px solid transparent',
                         transition: 'all 300ms ease'
                       }}
@@ -348,8 +391,9 @@ export function About({ settings }) {
                           style={{
                             fontSize: '12px',
                             fontWeight: '700',
-                            color: '#ffffff',
-                            letterSpacing: '0.02em'
+                            color: isLight ? '#071320' : '#ffffff',
+                            letterSpacing: '0.02em',
+                            transition: 'color 300ms ease'
                           }}
                         >
                           {role.actionLabel || 'Selengkapnya'}
@@ -361,7 +405,9 @@ export function About({ settings }) {
                           height: '36px',
                           borderRadius: '50%',
                           backgroundColor: isHovered
-                            ? 'rgba(255, 255, 255, 0.2)'
+                            ? isLight
+                              ? '#071320'
+                              : 'rgba(255, 255, 255, 0.2)'
                             : 'rgba(7, 19, 32, 0.5)',
                           backdropFilter: 'blur(8px)',
                           WebkitBackdropFilter: 'blur(8px)',

@@ -461,10 +461,18 @@ export function AdminPage({ onBackToSite }) {
       }
     }
     if (Array.isArray(custom) && custom.length > 0) {
-      return DEFAULT_ABOUT_ROLES.map((def, idx) => ({
-        ...def,
-        ...(custom[idx] || {})
-      }));
+      return DEFAULT_ABOUT_ROLES.map((def, idx) => {
+        const item = custom[idx] || {};
+        const hoverColor =
+          idx === 3 && (item.hoverColor === '#0A2540' || item.color === '#0A2540')
+            ? '#ffffff'
+            : (item.hoverColor || def.hoverColor || def.color);
+        return {
+          ...def,
+          ...item,
+          hoverColor
+        };
+      });
     }
     return DEFAULT_ABOUT_ROLES;
   }, [profile.about_roles]);
