@@ -527,9 +527,9 @@ export function RoleDetailModal({
                         inset: 0,
                         width: '100%',
                         height: '100%',
+                        display: 'block',
                         objectFit: 'contain',
-                        backgroundColor: '#000000',
-                        borderRadius: isSelected ? '14px' : '16px'
+                        backgroundColor: '#000000'
                       }}
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -551,6 +551,7 @@ export function RoleDetailModal({
                         inset: 0,
                         width: '100%',
                         height: '100%',
+                        display: 'block',
                         objectFit: isSelected ? 'contain' : 'cover',
                         objectPosition: 'center',
                         transform: isSelected ? 'scale(1)' : isHovered ? 'scale(1.05)' : 'scale(1)',
@@ -561,9 +562,7 @@ export function RoleDetailModal({
                           : 'brightness(0.55) contrast(1.02)',
                         transition:
                           'transform 800ms cubic-bezier(0.19, 1, 0.22, 1), filter 500ms ease',
-                        willChange: 'transform',
-                        backgroundColor: '#000000',
-                        borderRadius: isSelected ? '14px' : '16px'
+                        willChange: 'transform'
                       }}
                     />
                   )}
@@ -674,22 +673,6 @@ export function RoleDetailModal({
                       </div>
                     )}
                   </div>
-
-                  {/* Indikator Garis Aksen Halus di Dasar Kartu (Hilang Saat Dibuka) */}
-                  <div
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      height: '3px',
-                      backgroundColor: isHovered
-                        ? activeDiscipline.accentColor || '#38bdf8'
-                        : 'rgba(255, 255, 255, 0.1)',
-                      opacity: isSelected ? 0 : 1,
-                      transition: 'background-color 300ms ease, opacity 350ms ease'
-                    }}
-                  />
                 </div>
               );
             })}
