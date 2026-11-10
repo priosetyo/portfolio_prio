@@ -477,13 +477,10 @@ export function RoleDetailModal({
                     overflow: 'hidden',
                     cursor: isSelected ? 'zoom-out' : 'pointer',
                     backgroundColor: '#000000',
-                    border: isSelected
-                      ? '1px solid rgba(255, 255, 255, 0.16)'
-                      : isHovered
-                      ? `1px solid ${activeDiscipline.accentColor || '#38bdf8'}`
-                      : '1px solid rgba(255, 255, 255, 0.09)',
+                    border: 'none',
+                    outline: 'none',
                     boxShadow: isSelected
-                      ? '0 25px 65px rgba(0, 0, 0, 0.88), 0 0 1px rgba(255, 255, 255, 0.25)'
+                      ? '0 25px 65px rgba(0, 0, 0, 0.88)'
                       : isHovered
                       ? '0 24px 48px rgba(0, 0, 0, 0.8)'
                       : '0 10px 24px rgba(0, 0, 0, 0.4)',
@@ -495,7 +492,6 @@ export function RoleDetailModal({
                       'transform 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
                       'border-radius 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
                       'opacity 550ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'border-color 300ms ease, ' +
                       'box-shadow 450ms ease',
                     pointerEvents: isOtherSelected ? 'none' : 'auto',
                     zIndex: zIndexValue,
