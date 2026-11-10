@@ -239,6 +239,25 @@ export function RoleDetailModal({
     return (activeDiscipline.projects || []).slice(0, 5);
   }, [activeDiscipline]);
 
+  // Pre-ukur dimensi asli file gambar secara presisi di background
+  useEffect(() => {
+    displayProjects.forEach((p) => {
+      if (p.image && !mediaRatios[p.id]) {
+        const img = new Image();
+        img.src = getStoragePublicUrl(p.image) || p.image;
+        img.onload = () => {
+          if (img.naturalWidth && img.naturalHeight) {
+            setMediaRatios((prev) => {
+              const r = img.naturalWidth / img.naturalHeight;
+              if (prev[p.id] === r) return prev;
+              return { ...prev, [p.id]: r };
+            });
+          }
+        };
+      }
+    });
+  }, [displayProjects, mediaRatios]);
+
   if (!isOpen) return null;
 
   const isAnyActive = activeProjectIdx !== null;
@@ -272,7 +291,7 @@ export function RoleDetailModal({
           justifyContent: 'space-between',
           padding: '0 4vw',
           opacity: isAnyActive ? 0.15 : 1,
-          transition: 'opacity 850ms cubic-bezier(0.19, 1, 0.22, 1)'
+          transition: 'opacity 800ms cubic-bezier(0.19, 1, 0.22, 1)'
         }}
       >
         {[...Array(6)].map((_, i) => (
@@ -336,7 +355,7 @@ export function RoleDetailModal({
         <X size={14} />
       </button>
 
-      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Rasio Asli Foto / Video Saat Dibuka */}
+      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Rasio Asli Media & Framing yang Pas */}
       <div
         style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}
         onClick={() => {
@@ -350,8 +369,8 @@ export function RoleDetailModal({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: isAnyActive ? '2vh 2.5vw' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
-            transition: 'padding 850ms cubic-bezier(0.19, 1, 0.22, 1)',
+            padding: isAnyActive ? '3.5vh 4vw' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
+            transition: 'padding 800ms cubic-bezier(0.19, 1, 0.22, 1)',
             overflow: 'hidden'
           }}
         >
@@ -364,10 +383,10 @@ export function RoleDetailModal({
               gap: isAnyActive ? '0px' : '16px',
               width: '100%',
               height: '100%',
-              maxWidth: isAnyActive ? '95vw' : '1360px',
+              maxWidth: isAnyActive ? '88vw' : '1360px',
               position: 'relative',
               transition:
-                'gap 850ms cubic-bezier(0.19, 1, 0.22, 1), max-width 850ms cubic-bezier(0.19, 1, 0.22, 1)'
+                'gap 800ms cubic-bezier(0.19, 1, 0.22, 1), max-width 800ms cubic-bezier(0.19, 1, 0.22, 1)'
             }}
           >
             {displayProjects.map((project, idx) => {
@@ -376,7 +395,7 @@ export function RoleDetailModal({
               const isHovered = hoveredStripIdx === idx && !isAnyActive;
               const stagger = STAGGER_PRESETS[idx % STAGGER_PRESETS.length];
 
-              // Deteksi Rasio Asli Media (3:2 untuk foto Sony, 16:9 untuk video, atau natural width/height)
+              // Deteksi Rasio Asli Media dari File (naturalWidth / naturalHeight)
               const intrinsicRatio =
                 mediaRatios[project.id] ||
                 project.aspectRatio ||
@@ -384,7 +403,7 @@ export function RoleDetailModal({
                 DEFAULT_RATIOS[selectedDisciplineKey] ||
                 1.5;
 
-              // Penentuan Dimensi: Menggunakan Rasio Asli Saat Kartu Terbuka
+              // Penentuan Dimensi: Fit Layar Elegan dengan Space Secukupnya (Tidak Full Kali)
               let flexValue = '1';
               let widthValue = 'auto';
               let maxWidthValue = '100%';
@@ -397,15 +416,15 @@ export function RoleDetailModal({
               let zIndexValue = 2;
 
               if (isSelected) {
-                // Saat diklik: Mengadopsi Rasio Asli Foto/Video dengan Batas Layar Maksimal
+                // Saat diklik: Sesuai Rasio Asli File, Fit di Layar dengan Space Estetik
                 flexValue = '0 0 auto';
-                widthValue = '100%';
-                maxWidthValue = '94vw';
-                heightValue = 'clamp(360px, 86vh, 880px)';
-                maxHeightValue = '86vh';
+                widthValue = 'auto';
+                maxWidthValue = '86vw';
+                heightValue = 'clamp(320px, 80vh, 740px)';
+                maxHeightValue = '80vh';
                 aspectRatioValue = `${intrinsicRatio}`;
                 transformValue = 'translate3d(0, 0px, 0)';
-                borderRadiusValue = '16px';
+                borderRadiusValue = '14px';
                 zIndexValue = 40;
               } else if (isOtherSelected) {
                 // Kartu lainnya menyusut secara sangat halus ke 0
@@ -464,20 +483,20 @@ export function RoleDetailModal({
                       ? `1px solid ${activeDiscipline.accentColor || '#38bdf8'}`
                       : '1px solid rgba(255, 255, 255, 0.09)',
                     boxShadow: isSelected
-                      ? '0 30px 80px rgba(0, 0, 0, 0.9), 0 0 1px rgba(255, 255, 255, 0.25)'
+                      ? '0 25px 65px rgba(0, 0, 0, 0.88), 0 0 1px rgba(255, 255, 255, 0.25)'
                       : isHovered
                       ? '0 24px 48px rgba(0, 0, 0, 0.8)'
                       : '0 10px 24px rgba(0, 0, 0, 0.4)',
                     transition:
-                      'flex 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'width 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'max-width 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'height 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'transform 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'border-radius 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'opacity 600ms cubic-bezier(0.19, 1, 0.22, 1), ' +
-                      'border-color 350ms ease, ' +
-                      'box-shadow 500ms ease',
+                      'flex 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'width 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'max-width 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'height 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'transform 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'border-radius 800ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'opacity 550ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'border-color 300ms ease, ' +
+                      'box-shadow 450ms ease',
                     pointerEvents: isOtherSelected ? 'none' : 'auto',
                     zIndex: zIndexValue,
                     willChange: 'flex, width, height, transform',
@@ -485,7 +504,7 @@ export function RoleDetailModal({
                     backfaceVisibility: 'hidden'
                   }}
                 >
-                  {/* Media Karya: Rasio Asli Foto / Video Tanpa Terpotong */}
+                  {/* Media Karya: Menggunakan Rasio Asli File Tanpa Ada Pemotongan */}
                   {project.videoUrl && isSelected ? (
                     <video
                       src={project.videoUrl}
@@ -508,8 +527,9 @@ export function RoleDetailModal({
                         inset: 0,
                         width: '100%',
                         height: '100%',
-                        objectFit: 'cover',
-                        backgroundColor: '#000000'
+                        objectFit: 'contain',
+                        backgroundColor: '#000000',
+                        borderRadius: isSelected ? '14px' : '16px'
                       }}
                       onClick={(e) => e.stopPropagation()}
                     />
@@ -531,8 +551,7 @@ export function RoleDetailModal({
                         inset: 0,
                         width: '100%',
                         height: '100%',
-                        // Karena container berasio sama persis dengan foto asli, object-fit: cover menampilkan 100% foto utuh
-                        objectFit: 'cover',
+                        objectFit: isSelected ? 'contain' : 'cover',
                         objectPosition: 'center',
                         transform: isSelected ? 'scale(1)' : isHovered ? 'scale(1.05)' : 'scale(1)',
                         filter: isSelected
@@ -541,9 +560,10 @@ export function RoleDetailModal({
                           ? 'brightness(0.95) contrast(1.06)'
                           : 'brightness(0.55) contrast(1.02)',
                         transition:
-                          'transform 850ms cubic-bezier(0.19, 1, 0.22, 1), filter 500ms ease',
+                          'transform 800ms cubic-bezier(0.19, 1, 0.22, 1), filter 500ms ease',
                         willChange: 'transform',
-                        backgroundColor: '#000000'
+                        backgroundColor: '#000000',
+                        borderRadius: isSelected ? '14px' : '16px'
                       }}
                     />
                   )}
@@ -557,7 +577,7 @@ export function RoleDetailModal({
                         ? 'linear-gradient(180deg, rgba(11, 11, 11, 0.15) 0%, rgba(11, 11, 11, 0.72) 100%)'
                         : 'linear-gradient(180deg, rgba(11, 11, 11, 0.55) 0%, rgba(11, 11, 11, 0.85) 100%)',
                       opacity: isSelected ? 0 : 1,
-                      transition: 'opacity 500ms ease, background 400ms ease',
+                      transition: 'opacity 450ms ease, background 400ms ease',
                       pointerEvents: 'none'
                     }}
                   />
@@ -577,7 +597,7 @@ export function RoleDetailModal({
                       opacity: isSelected ? 0 : 1,
                       transform: isSelected ? 'scale(0.92) translateY(16px)' : 'scale(1) translateY(0)',
                       transition:
-                        'opacity 350ms ease, transform 450ms cubic-bezier(0.19, 1, 0.22, 1)',
+                        'opacity 300ms ease, transform 400ms cubic-bezier(0.19, 1, 0.22, 1)',
                       pointerEvents: 'none'
                     }}
                   >
