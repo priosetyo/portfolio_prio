@@ -259,8 +259,8 @@ export function RoleDetailModal({
           display: 'flex',
           justifyContent: 'space-between',
           padding: '0 4vw',
-          opacity: isAnyActive ? 0.2 : 1,
-          transition: 'opacity 700ms ease'
+          opacity: isAnyActive ? 0.15 : 1,
+          transition: 'opacity 850ms cubic-bezier(0.19, 1, 0.22, 1)'
         }}
       >
         {[...Array(6)].map((_, i) => (
@@ -324,7 +324,7 @@ export function RoleDetailModal({
         <X size={14} />
       </button>
 
-      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Ukuran Media Player Normal Saat Dibuka */}
+      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Transisi Membuka Hampir Penuh Layar */}
       <div
         style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}
         onClick={() => {
@@ -338,8 +338,8 @@ export function RoleDetailModal({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: isAnyActive ? '2rem clamp(1rem, 3vw, 2.5rem)' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
-            transition: 'padding 750ms cubic-bezier(0.16, 1, 0.3, 1)',
+            padding: isAnyActive ? '1.5vh 2.5vw' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
+            transition: 'padding 850ms cubic-bezier(0.19, 1, 0.22, 1)',
             overflow: 'hidden'
           }}
         >
@@ -352,10 +352,10 @@ export function RoleDetailModal({
               gap: isAnyActive ? '0px' : '16px',
               width: '100%',
               height: '100%',
-              maxWidth: isAnyActive ? '1020px' : '1360px',
+              maxWidth: isAnyActive ? '95vw' : '1360px',
               position: 'relative',
               transition:
-                'gap 750ms cubic-bezier(0.16, 1, 0.3, 1), max-width 750ms cubic-bezier(0.16, 1, 0.3, 1)'
+                'gap 850ms cubic-bezier(0.19, 1, 0.22, 1), max-width 850ms cubic-bezier(0.19, 1, 0.22, 1)'
             }}
           >
             {displayProjects.map((project, idx) => {
@@ -364,26 +364,26 @@ export function RoleDetailModal({
               const isHovered = hoveredStripIdx === idx && !isAnyActive;
               const stagger = STAGGER_PRESETS[idx % STAGGER_PRESETS.length];
 
-              // Penentuan Dimensi Media Player Normal Saat Dibuka
+              // Penentuan Dimensi: Saat Terpilih Dibuat Besar Hampir Penuh Layar
               let flexValue = '1';
               let heightValue = stagger.height;
-              let transformValue = `translateY(${stagger.translateY})`;
+              let transformValue = `translate3d(0, ${stagger.translateY}, 0)`;
               let borderRadiusValue = '16px';
               let opacityValue = 1;
               let zIndexValue = 2;
 
               if (isSelected) {
-                // Saat diklik: membuka ke ukuran normal foto / video player (bukan full-bleed raksasa)
+                // Saat diklik: Melebar besar hampir penuh layar (95vw & 88vh)
                 flexValue = '1 1 100%';
-                heightValue = 'clamp(340px, 74vh, 600px)';
-                transformValue = 'translateY(0px)';
+                heightValue = 'clamp(420px, 88vh, 880px)';
+                transformValue = 'translate3d(0, 0px, 0)';
                 borderRadiusValue = '16px';
                 zIndexValue = 40;
               } else if (isOtherSelected) {
-                // Kartu lainnya menyusut halus ke 0
+                // Kartu lainnya menyusut secara sangat halus ke 0
                 flexValue = '0 0 0%';
                 heightValue = stagger.height;
-                transformValue = `translateY(${stagger.translateY}) scale(0.92)`;
+                transformValue = `translate3d(0, ${stagger.translateY}, 0) scale(0.92)`;
                 opacityValue = 0;
                 zIndexValue = 1;
               } else if (isHovered) {
@@ -423,30 +423,33 @@ export function RoleDetailModal({
                     borderRadius: borderRadiusValue,
                     overflow: 'hidden',
                     cursor: isSelected ? 'zoom-out' : 'pointer',
-                    backgroundColor: '#000000',
+                    backgroundColor: '#050505',
                     border: isSelected
                       ? '1px solid rgba(255, 255, 255, 0.16)'
                       : isHovered
                       ? `1px solid ${activeDiscipline.accentColor || '#38bdf8'}`
                       : '1px solid rgba(255, 255, 255, 0.09)',
                     boxShadow: isSelected
-                      ? '0 24px 60px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.2)'
+                      ? '0 30px 80px rgba(0, 0, 0, 0.9), 0 0 1px rgba(255, 255, 255, 0.25)'
                       : isHovered
                       ? '0 24px 48px rgba(0, 0, 0, 0.8)'
                       : '0 10px 24px rgba(0, 0, 0, 0.4)',
                     transition:
-                      'flex 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'height 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'transform 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'border-radius 750ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'opacity 550ms cubic-bezier(0.16, 1, 0.3, 1), ' +
-                      'border-color 300ms ease, ' +
-                      'box-shadow 400ms ease',
+                      'flex 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'height 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'transform 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'border-radius 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'opacity 600ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'border-color 350ms ease, ' +
+                      'box-shadow 500ms ease',
                     pointerEvents: isOtherSelected ? 'none' : 'auto',
-                    zIndex: zIndexValue
+                    zIndex: zIndexValue,
+                    willChange: 'flex, height, transform',
+                    WebkitBackfaceVisibility: 'hidden',
+                    backfaceVisibility: 'hidden'
                   }}
                 >
-                  {/* Media Karya: Skala Normal Foto / Video Player */}
+                  {/* Media Karya: object-fit: cover Konsisten Tanpa Snap untuk Transisi Paling Halus */}
                   {project.videoUrl && isSelected ? (
                     <video
                       src={project.videoUrl}
@@ -460,7 +463,7 @@ export function RoleDetailModal({
                         inset: 0,
                         width: '100%',
                         height: '100%',
-                        objectFit: 'contain',
+                        objectFit: 'cover',
                         backgroundColor: '#000000'
                       }}
                       onClick={(e) => e.stopPropagation()}
@@ -474,22 +477,22 @@ export function RoleDetailModal({
                         inset: 0,
                         width: '100%',
                         height: '100%',
-                        objectFit: isSelected ? 'contain' : 'cover',
+                        objectFit: 'cover',
                         objectPosition: 'center',
-                        // Skala normal 1 saat dibuka (tidak over-zoomed)
+                        // Transisi skala halus: scale(1) -> scale(1.02) saat dibuka
                         transform: isSelected
-                          ? 'scale(1)'
+                          ? 'scale(1.02)'
                           : isHovered
                           ? 'scale(1.05)'
                           : 'scale(1)',
                         filter: isSelected
-                          ? 'brightness(1) contrast(1.02)'
+                          ? 'brightness(1) contrast(1.03)'
                           : isHovered
                           ? 'brightness(0.95) contrast(1.06)'
                           : 'brightness(0.55) contrast(1.02)',
                         transition:
-                          'transform 750ms cubic-bezier(0.16, 1, 0.3, 1), filter 500ms ease',
-                        backgroundColor: '#000000'
+                          'transform 900ms cubic-bezier(0.19, 1, 0.22, 1), filter 600ms ease',
+                        willChange: 'transform'
                       }}
                     />
                   )}
@@ -503,7 +506,7 @@ export function RoleDetailModal({
                         ? 'linear-gradient(180deg, rgba(11, 11, 11, 0.15) 0%, rgba(11, 11, 11, 0.72) 100%)'
                         : 'linear-gradient(180deg, rgba(11, 11, 11, 0.55) 0%, rgba(11, 11, 11, 0.85) 100%)',
                       opacity: isSelected ? 0 : 1,
-                      transition: 'opacity 450ms ease, background 400ms ease',
+                      transition: 'opacity 500ms ease, background 400ms ease',
                       pointerEvents: 'none'
                     }}
                   />
@@ -523,7 +526,7 @@ export function RoleDetailModal({
                       opacity: isSelected ? 0 : 1,
                       transform: isSelected ? 'scale(0.92) translateY(16px)' : 'scale(1) translateY(0)',
                       transition:
-                        'opacity 300ms ease, transform 400ms cubic-bezier(0.16, 1, 0.3, 1)',
+                        'opacity 350ms ease, transform 450ms cubic-bezier(0.19, 1, 0.22, 1)',
                       pointerEvents: 'none'
                     }}
                   >
