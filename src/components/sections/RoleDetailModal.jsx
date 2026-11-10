@@ -4,6 +4,13 @@ import { getStoragePublicUrl } from '../../lib/queries';
 
 const HELVETICA_STACK = "'Helvetica Neue', Helvetica, Arial, sans-serif";
 
+const DEFAULT_RATIOS = {
+  photo: 3 / 2, // Standard 35mm photography (1.5)
+  video: 16 / 9, // Standard cinema / broadcast video (1.777)
+  design: 3 / 2, // Standard design canvas
+  social: 16 / 9 // Social media landscape / feed
+};
+
 // 5 Proyek Kurasi Sinematik untuk Masing-Masing Disiplin Visual
 export const DISCIPLINE_GALLERY_DATA = {
   photo: {
@@ -11,6 +18,7 @@ export const DISCIPLINE_GALLERY_DATA = {
     name: 'Photography',
     themeColor: '#00529B',
     accentColor: '#38bdf8',
+    defaultRatio: 3 / 2,
     projects: [
       {
         id: 'photo-1',
@@ -49,6 +57,7 @@ export const DISCIPLINE_GALLERY_DATA = {
     name: 'Videography',
     themeColor: '#ED1C24',
     accentColor: '#f87171',
+    defaultRatio: 16 / 9,
     projects: [
       {
         id: 'video-1',
@@ -87,6 +96,7 @@ export const DISCIPLINE_GALLERY_DATA = {
     name: 'Graphic Design',
     themeColor: '#7AC142',
     accentColor: '#86efac',
+    defaultRatio: 3 / 2,
     projects: [
       {
         id: 'design-1',
@@ -125,6 +135,7 @@ export const DISCIPLINE_GALLERY_DATA = {
     name: 'Social Media Strategy',
     themeColor: '#ffffff',
     accentColor: '#ffffff',
+    defaultRatio: 16 / 9,
     projects: [
       {
         id: 'social-1',
@@ -177,6 +188,7 @@ export function RoleDetailModal({
   const [selectedDisciplineKey, setSelectedDisciplineKey] = useState('photo');
   const [hoveredStripIdx, setHoveredStripIdx] = useState(null);
   const [activeProjectIdx, setActiveProjectIdx] = useState(null);
+  const [mediaRatios, setMediaRatios] = useState({});
 
   // Sinkronisasi disiplin awal saat modal dibuka berdasarkan kartu yang diklik di section About
   useEffect(() => {
@@ -324,7 +336,7 @@ export function RoleDetailModal({
         <X size={14} />
       </button>
 
-      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Transisi Membuka Hampir Penuh Layar */}
+      {/* 3. Badan Konten Utama: 5 Kartu Vertikal dengan Rasio Asli Foto / Video Saat Dibuka */}
       <div
         style={{ flex: 1, display: 'flex', position: 'relative', overflow: 'hidden' }}
         onClick={() => {
@@ -338,7 +350,7 @@ export function RoleDetailModal({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: isAnyActive ? '1.5vh 2.5vw' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
+            padding: isAnyActive ? '2vh 2.5vw' : '2rem clamp(1rem, 3.5vw, 3.5rem)',
             transition: 'padding 850ms cubic-bezier(0.19, 1, 0.22, 1)',
             overflow: 'hidden'
           }}
@@ -364,24 +376,42 @@ export function RoleDetailModal({
               const isHovered = hoveredStripIdx === idx && !isAnyActive;
               const stagger = STAGGER_PRESETS[idx % STAGGER_PRESETS.length];
 
-              // Penentuan Dimensi: Saat Terpilih Dibuat Besar Hampir Penuh Layar
+              // Deteksi Rasio Asli Media (3:2 untuk foto Sony, 16:9 untuk video, atau natural width/height)
+              const intrinsicRatio =
+                mediaRatios[project.id] ||
+                project.aspectRatio ||
+                activeDiscipline.defaultRatio ||
+                DEFAULT_RATIOS[selectedDisciplineKey] ||
+                1.5;
+
+              // Penentuan Dimensi: Menggunakan Rasio Asli Saat Kartu Terbuka
               let flexValue = '1';
+              let widthValue = 'auto';
+              let maxWidthValue = '100%';
               let heightValue = stagger.height;
+              let maxHeightValue = 'none';
+              let aspectRatioValue = 'unset';
               let transformValue = `translate3d(0, ${stagger.translateY}, 0)`;
               let borderRadiusValue = '16px';
               let opacityValue = 1;
               let zIndexValue = 2;
 
               if (isSelected) {
-                // Saat diklik: Melebar besar hampir penuh layar (95vw & 88vh)
-                flexValue = '1 1 100%';
-                heightValue = 'clamp(420px, 88vh, 880px)';
+                // Saat diklik: Mengadopsi Rasio Asli Foto/Video dengan Batas Layar Maksimal
+                flexValue = '0 0 auto';
+                widthValue = '100%';
+                maxWidthValue = '94vw';
+                heightValue = 'clamp(360px, 86vh, 880px)';
+                maxHeightValue = '86vh';
+                aspectRatioValue = `${intrinsicRatio}`;
                 transformValue = 'translate3d(0, 0px, 0)';
                 borderRadiusValue = '16px';
                 zIndexValue = 40;
               } else if (isOtherSelected) {
                 // Kartu lainnya menyusut secara sangat halus ke 0
                 flexValue = '0 0 0%';
+                widthValue = '0px';
+                maxWidthValue = '0px';
                 heightValue = stagger.height;
                 transformValue = `translate3d(0, ${stagger.translateY}, 0) scale(0.92)`;
                 opacityValue = 0;
@@ -417,13 +447,17 @@ export function RoleDetailModal({
                   style={{
                     position: 'relative',
                     flex: flexValue,
+                    width: widthValue,
+                    maxWidth: maxWidthValue,
                     height: heightValue,
+                    maxHeight: maxHeightValue,
+                    aspectRatio: aspectRatioValue,
                     transform: transformValue,
                     opacity: opacityValue,
                     borderRadius: borderRadiusValue,
                     overflow: 'hidden',
                     cursor: isSelected ? 'zoom-out' : 'pointer',
-                    backgroundColor: '#050505',
+                    backgroundColor: '#000000',
                     border: isSelected
                       ? '1px solid rgba(255, 255, 255, 0.16)'
                       : isHovered
@@ -436,6 +470,8 @@ export function RoleDetailModal({
                       : '0 10px 24px rgba(0, 0, 0, 0.4)',
                     transition:
                       'flex 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'width 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
+                      'max-width 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
                       'height 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
                       'transform 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
                       'border-radius 850ms cubic-bezier(0.19, 1, 0.22, 1), ' +
@@ -444,12 +480,12 @@ export function RoleDetailModal({
                       'box-shadow 500ms ease',
                     pointerEvents: isOtherSelected ? 'none' : 'auto',
                     zIndex: zIndexValue,
-                    willChange: 'flex, height, transform',
+                    willChange: 'flex, width, height, transform',
                     WebkitBackfaceVisibility: 'hidden',
                     backfaceVisibility: 'hidden'
                   }}
                 >
-                  {/* Media Karya: object-fit: cover Konsisten Tanpa Snap untuk Transisi Paling Halus */}
+                  {/* Media Karya: Rasio Asli Foto / Video Tanpa Terpotong */}
                   {project.videoUrl && isSelected ? (
                     <video
                       src={project.videoUrl}
@@ -458,6 +494,15 @@ export function RoleDetailModal({
                       muted
                       playsInline
                       controls
+                      onLoadedMetadata={(e) => {
+                        const { videoWidth, videoHeight } = e.currentTarget;
+                        if (videoWidth && videoHeight) {
+                          setMediaRatios((prev) => ({
+                            ...prev,
+                            [project.id]: videoWidth / videoHeight
+                          }));
+                        }
+                      }}
                       style={{
                         position: 'absolute',
                         inset: 0,
@@ -472,27 +517,33 @@ export function RoleDetailModal({
                     <img
                       src={getStoragePublicUrl(project.image) || project.image}
                       alt={project.title}
+                      onLoad={(e) => {
+                        const { naturalWidth, naturalHeight } = e.currentTarget;
+                        if (naturalWidth && naturalHeight) {
+                          setMediaRatios((prev) => ({
+                            ...prev,
+                            [project.id]: naturalWidth / naturalHeight
+                          }));
+                        }
+                      }}
                       style={{
                         position: 'absolute',
                         inset: 0,
                         width: '100%',
                         height: '100%',
+                        // Karena container berasio sama persis dengan foto asli, object-fit: cover menampilkan 100% foto utuh
                         objectFit: 'cover',
                         objectPosition: 'center',
-                        // Transisi skala halus: scale(1) -> scale(1.02) saat dibuka
-                        transform: isSelected
-                          ? 'scale(1.02)'
-                          : isHovered
-                          ? 'scale(1.05)'
-                          : 'scale(1)',
+                        transform: isSelected ? 'scale(1)' : isHovered ? 'scale(1.05)' : 'scale(1)',
                         filter: isSelected
-                          ? 'brightness(1) contrast(1.03)'
+                          ? 'brightness(1) contrast(1.02)'
                           : isHovered
                           ? 'brightness(0.95) contrast(1.06)'
                           : 'brightness(0.55) contrast(1.02)',
                         transition:
-                          'transform 900ms cubic-bezier(0.19, 1, 0.22, 1), filter 600ms ease',
-                        willChange: 'transform'
+                          'transform 850ms cubic-bezier(0.19, 1, 0.22, 1), filter 500ms ease',
+                        willChange: 'transform',
+                        backgroundColor: '#000000'
                       }}
                     />
                   )}
