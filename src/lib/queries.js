@@ -163,6 +163,7 @@ export async function getSiteSettings() {
           if (extra.track_record_metrics) merged.track_record_metrics = extra.track_record_metrics;
           if (extra.spotlight_items) merged.spotlight_items = extra.spotlight_items;
           if (extra.about_roles) merged.about_roles = extra.about_roles;
+          if (extra.discipline_galleries) merged.discipline_galleries = extra.discipline_galleries;
         }
       }
     } catch (e) {
@@ -665,7 +666,8 @@ export async function updateSiteSettings(settingsData) {
     track_record_header: settingsData.track_record_header,
     track_record_metrics: settingsData.track_record_metrics,
     spotlight_items: settingsData.spotlight_items,
-    about_roles: settingsData.about_roles
+    about_roles: settingsData.about_roles,
+    discipline_galleries: settingsData.discipline_galleries
   };
 
   // Hanya kirim kolom-kolom yang valid di skema tabel site_settings Supabase

@@ -429,6 +429,7 @@ export function About({ settings }) {
         isOpen={Boolean(selectedRole)}
         onClose={() => setSelectedRole(null)}
         role={selectedRole}
+        disciplineGalleries={settings?.discipline_galleries}
         allRoles={aboutRoles}
         onSelectRole={(r) => setSelectedRole(r)}
         onOpenContact={() => {

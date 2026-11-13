@@ -24,13 +24,14 @@ import {
   getStoragePublicUrl,
   uploadMediaFile
 } from '../../lib/queries';
-import { resizeImageToWebP } from '../../lib/image';
+import { resizeImageToWebP, captureVideoPoster } from '../../lib/image';
 import {
   DEFAULT_TRACK_RECORD_HEADER,
   DEFAULT_TRACK_RECORD_METRICS,
   DEFAULT_SPOTLIGHT_PROJECTS
 } from '../sections/Hero';
 import { DEFAULT_ABOUT_ROLES } from '../sections/About';
+import { DISCIPLINE_GALLERY_DATA } from '../sections/RoleDetailModal';
 import {
   FolderKanban,
   Mail,
@@ -581,17 +582,132 @@ export function AdminPage({ onBackToSite }) {
     }
   };
 
+  const [activeGalleryDiscipline, setActiveGalleryDiscipline] = useState('photo');
+  const [uploadingGallerySlot, setUploadingGallerySlot] = useState(null);
+
+  const currentDisciplineGalleries = React.useMemo(() => {
+    let custom = profile.discipline_galleries;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    const merged = {};
+    Object.keys(DISCIPLINE_GALLERY_DATA).forEach((key) => {
+      const def = DISCIPLINE_GALLERY_DATA[key];
+      const customList = custom?.[key]?.projects || custom?.[key];
+      merged[key] = def.projects.map((defProj, idx) => {
+        const item = Array.isArray(customList) ? customList[idx] || {} : {};
+        return {
+          ...defProj,
+          ...item,
+          id: defProj.id
+        };
+      });
+    });
+    return merged;
+  }, [profile.discipline_galleries]);
+
+  const handleUpdateGallerySlot = (disciplineKey, slotIdx, field, value) => {
+    const nextList = currentDisciplineGalleries[disciplineKey].map((item, idx) =>
+      idx === slotIdx ? { ...item, [field]: value } : item
+    );
+    setProfile((prev) => ({
+      ...prev,
+      discipline_galleries: {
+        ...currentDisciplineGalleries,
+        [disciplineKey]: nextList
+      }
+    }));
+  };
+
+  const handleGalleryMediaUpload = async (disciplineKey, slotIdx, e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const uploadKey = `${disciplineKey}-${slotIdx}`;
+    setUploadingGallerySlot(uploadKey);
+    const isVideo = file.type.startsWith('video/');
+
+    try {
+      const timestamp = Date.now();
+      let nextFields = {};
+
+      if (isVideo) {
+        const ext = file.name.split('.').pop()?.toLowerCase() || 'mp4';
+        const posterResult = await captureVideoPoster(file);
+        const posterPath = `role-galleries/${disciplineKey}/slot-${slotIdx + 1}-${timestamp}-poster.webp`;
+        const videoPath = `role-galleries/${disciplineKey}/slot-${slotIdx + 1}-${timestamp}.${ext}`;
+
+        const [posterRes, videoRes] = await Promise.all([
+          uploadMediaFile(posterPath, posterResult.blob, 'image/webp'),
+          uploadMediaFile(videoPath, file, file.type || 'video/mp4')
+        ]);
+
+        nextFields = {
+          image: posterRes?.publicUrl || posterPath,
+          videoUrl: videoRes?.publicUrl || videoPath
+        };
+      } else {
+        const compressed = await resizeImageToWebP(file, 2400, 0.88);
+        const storagePath = `role-galleries/${disciplineKey}/slot-${slotIdx + 1}-${timestamp}.webp`;
+        const res = await uploadMediaFile(storagePath, compressed.blob, 'image/webp');
+        nextFields = {
+          image: res?.publicUrl || storagePath,
+          videoUrl: ''
+        };
+      }
+
+      const nextList = currentDisciplineGalleries[disciplineKey].map((item, idx) =>
+        idx === slotIdx ? { ...item, ...nextFields } : item
+      );
+      const nextGalleries = {
+        ...currentDisciplineGalleries,
+        [disciplineKey]: nextList
+      };
+      const updatedProfile = { ...profile, discipline_galleries: nextGalleries };
+      setProfile(updatedProfile);
+      await updateSiteSettings(updatedProfile);
+      showToast(
+        `${isVideo ? 'Video' : 'Foto'} ${DISCIPLINE_GALLERY_DATA[disciplineKey].name} Slot 0${slotIdx + 1} berhasil diunggah & disimpan!`
+      );
+    } catch (err) {
+      console.error('Gagal mengunggah media galeri peran:', err);
+      showToast('Gagal mengunggah media galeri. Silakan coba lagi.');
+    } finally {
+      setUploadingGallerySlot(null);
+      e.target.value = '';
+    }
+  };
+
+  const handleClearGalleryVideo = async (disciplineKey, slotIdx) => {
+    const nextList = currentDisciplineGalleries[disciplineKey].map((item, idx) =>
+      idx === slotIdx ? { ...item, videoUrl: '' } : item
+    );
+    const nextGalleries = {
+      ...currentDisciplineGalleries,
+      [disciplineKey]: nextList
+    };
+    const updatedProfile = { ...profile, discipline_galleries: nextGalleries };
+    setProfile(updatedProfile);
+    await updateSiteSettings(updatedProfile);
+    showToast(`Video pada Slot 0${slotIdx + 1} dihapus (kembali ke mode foto).`);
+  };
+
   const handleSaveTrackAndSpotlight = async () => {
     const updatedProfile = {
       ...profile,
       track_record_header: currentTrackHeader,
       track_record_metrics: currentTrackMetrics,
       spotlight_items: currentSpotlightItems,
-      about_roles: currentAboutRoles
+      about_roles: currentAboutRoles,
+      discipline_galleries: currentDisciplineGalleries
     };
     setProfile(updatedProfile);
     await updateSiteSettings(updatedProfile);
-    showToast('Perubahan Track Record & 4 Peran About Me berhasil disimpan ke website!');
+    showToast('Perubahan Track Record, About Me & Galeri Peran berhasil disimpan ke website!');
   };
 
   const handleResetTrackMetrics = async () => {
@@ -3048,6 +3164,252 @@ export function AdminPage({ onBackToSite }) {
                           </div>
                         </div>
                       ))}
+                    </div>
+
+                    {/* 4. Galeri Detail 4 Peran (5 Karya per Disiplin) */}
+                    <div
+                      style={{
+                        marginTop: '2.25rem',
+                        paddingTop: '1.5rem',
+                        borderTop: '1px solid rgba(0, 0, 0, 0.08)'
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          flexWrap: 'wrap',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                          gap: '0.75rem',
+                          marginBottom: '1rem'
+                        }}
+                      >
+                        <div>
+                          <div style={{ fontWeight: '800', fontSize: '13px', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                            4. Galeri Detail per Peran (5 Karya Sinematik)
+                          </div>
+                          <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
+                            Atur 5 foto atau video yang muncul saat kartu peran di section Multi-Disciplinary diklik.
+                          </p>
+                        </div>
+
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                          {Object.values(DISCIPLINE_GALLERY_DATA).map((disc) => {
+                            const isActiveTab = activeGalleryDiscipline === disc.disciplineKey;
+                            return (
+                              <button
+                                key={disc.disciplineKey}
+                                type="button"
+                                onClick={() => setActiveGalleryDiscipline(disc.disciplineKey)}
+                                style={{
+                                  display: 'inline-flex',
+                                  alignItems: 'center',
+                                  gap: '6px',
+                                  padding: '6px 12px',
+                                  borderRadius: '9999px',
+                                  border: isActiveTab
+                                    ? '1px solid #000000'
+                                    : '1px solid rgba(0, 0, 0, 0.12)',
+                                  backgroundColor: isActiveTab ? '#000000' : '#ffffff',
+                                  color: isActiveTab ? '#ffffff' : '#000000',
+                                  fontSize: '11px',
+                                  fontWeight: '700',
+                                  cursor: 'pointer'
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    width: '8px',
+                                    height: '8px',
+                                    borderRadius: '50%',
+                                    backgroundColor:
+                                      disc.themeColor === '#ffffff' ? '#9ca3af' : disc.themeColor
+                                  }}
+                                />
+                                <span>{disc.name}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                          gap: '0.9rem'
+                        }}
+                      >
+                        {(currentDisciplineGalleries[activeGalleryDiscipline] || []).map((slot, slotIdx) => {
+                          const uploadKey = `${activeGalleryDiscipline}-${slotIdx}`;
+                          const isUploadingSlot = uploadingGallerySlot === uploadKey;
+                          const previewUrl = getStoragePublicUrl(slot.image) || slot.image;
+
+                          return (
+                            <div
+                              key={slot.id || slotIdx}
+                              style={{
+                                borderRadius: '0.9rem',
+                                border: '1px solid rgba(0, 0, 0, 0.1)',
+                                backgroundColor: '#ffffff',
+                                overflow: 'hidden',
+                                display: 'flex',
+                                flexDirection: 'column'
+                              }}
+                            >
+                              <div
+                                style={{
+                                  position: 'relative',
+                                  height: '130px',
+                                  backgroundColor: '#111111',
+                                  overflow: 'hidden'
+                                }}
+                              >
+                                {previewUrl && (
+                                  <img
+                                    src={previewUrl}
+                                    alt={slot.title}
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                  />
+                                )}
+                                <div
+                                  style={{
+                                    position: 'absolute',
+                                    inset: 0,
+                                    background: 'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.75) 100%)',
+                                    padding: '0.6rem',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    justifyContent: 'space-between'
+                                  }}
+                                >
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '4px' }}>
+                                    <span
+                                      style={{
+                                        padding: '2px 8px',
+                                        borderRadius: '9999px',
+                                        backgroundColor: 'rgba(255,255,255,0.9)',
+                                        color: '#071320',
+                                        fontSize: '10px',
+                                        fontWeight: '800'
+                                      }}
+                                    >
+                                      SLOT 0{slotIdx + 1}
+                                    </span>
+                                    {slot.videoUrl && (
+                                      <span
+                                        style={{
+                                          padding: '2px 8px',
+                                          borderRadius: '9999px',
+                                          backgroundColor: '#ED1C24',
+                                          color: '#ffffff',
+                                          fontSize: '9px',
+                                          fontWeight: '800',
+                                          letterSpacing: '0.05em'
+                                        }}
+                                      >
+                                        VIDEO
+                                      </span>
+                                    )}
+                                  </div>
+
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
+                                    <label
+                                      style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '4px',
+                                        padding: '4px 9px',
+                                        borderRadius: '6px',
+                                        backgroundColor: 'rgba(255,255,255,0.92)',
+                                        color: '#071320',
+                                        fontSize: '10px',
+                                        fontWeight: '700',
+                                        cursor: isUploadingSlot ? 'wait' : 'pointer'
+                                      }}
+                                    >
+                                      <Upload size={11} />
+                                      <span>{isUploadingSlot ? 'Mengunggah...' : 'Foto / Video'}</span>
+                                      <input
+                                        type="file"
+                                        accept="image/*,video/*"
+                                        style={{ display: 'none' }}
+                                        disabled={isUploadingSlot}
+                                        onChange={(e) => handleGalleryMediaUpload(activeGalleryDiscipline, slotIdx, e)}
+                                      />
+                                    </label>
+
+                                    {slot.videoUrl && (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleClearGalleryVideo(activeGalleryDiscipline, slotIdx)}
+                                        style={{
+                                          padding: '4px 8px',
+                                          borderRadius: '6px',
+                                          backgroundColor: 'rgba(0,0,0,0.7)',
+                                          color: '#ffffff',
+                                          border: '1px solid rgba(255,255,255,0.25)',
+                                          fontSize: '10px',
+                                          fontWeight: '600',
+                                          cursor: 'pointer'
+                                        }}
+                                        title="Hapus video (gunakan foto saja)"
+                                      >
+                                        Hapus Video
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div style={{ padding: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                <div>
+                                  <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                    Kategori
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={slot.category || ''}
+                                    onChange={(e) => handleUpdateGallerySlot(activeGalleryDiscipline, slotIdx, 'category', e.target.value)}
+                                    placeholder="Contoh: Kilang & Industri"
+                                    style={{
+                                      width: '100%',
+                                      padding: '0.4rem 0.55rem',
+                                      borderRadius: '0.45rem',
+                                      border: '1px solid rgba(0,0,0,0.1)',
+                                      backgroundColor: '#f3f3f5',
+                                      fontSize: '11px',
+                                      color: '#000000'
+                                    }}
+                                  />
+                                </div>
+
+                                <div>
+                                  <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', color: 'var(--text-secondary)', marginBottom: '2px', textTransform: 'uppercase' }}>
+                                    Judul Karya
+                                  </label>
+                                  <input
+                                    type="text"
+                                    value={slot.title || ''}
+                                    onChange={(e) => handleUpdateGallerySlot(activeGalleryDiscipline, slotIdx, 'title', e.target.value)}
+                                    placeholder="Judul karya..."
+                                    style={{
+                                      width: '100%',
+                                      padding: '0.4rem 0.55rem',
+                                      borderRadius: '0.45rem',
+                                      border: '1px solid rgba(0,0,0,0.1)',
+                                      backgroundColor: '#f3f3f5',
+                                      fontSize: '12px',
+                                      fontWeight: '700',
+                                      color: '#000000'
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1.25rem' }}>

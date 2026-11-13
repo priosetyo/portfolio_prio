@@ -183,7 +183,8 @@ const STAGGER_PRESETS = [
 export function RoleDetailModal({
   isOpen,
   onClose,
-  role
+  role,
+  disciplineGalleries
 }) {
   const [selectedDisciplineKey, setSelectedDisciplineKey] = useState('photo');
   const [hoveredStripIdx, setHoveredStripIdx] = useState(null);
@@ -231,8 +232,35 @@ export function RoleDetailModal({
   }, [isOpen, activeProjectIdx, onClose]);
 
   const activeDiscipline = useMemo(() => {
-    return DISCIPLINE_GALLERY_DATA[selectedDisciplineKey] || DISCIPLINE_GALLERY_DATA.photo;
-  }, [selectedDisciplineKey]);
+    const def = DISCIPLINE_GALLERY_DATA[selectedDisciplineKey] || DISCIPLINE_GALLERY_DATA.photo;
+    let custom = disciplineGalleries;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    const customList = custom?.[selectedDisciplineKey]?.projects || custom?.[selectedDisciplineKey];
+    if (Array.isArray(customList) && customList.length > 0) {
+      return {
+        ...def,
+        projects: def.projects.map((defProj, idx) => {
+          const item = customList[idx] || {};
+          return {
+            ...defProj,
+            ...item,
+            id: defProj.id,
+            title: item.title?.trim() || defProj.title,
+            category: item.category?.trim() || defProj.category,
+            image: item.image || defProj.image,
+            videoUrl: item.videoUrl || ''
+          };
+        })
+      };
+    }
+    return def;
+  }, [selectedDisciplineKey, disciplineGalleries]);
 
   // 5 Kartu Proyek
   const displayProjects = useMemo(() => {
@@ -242,15 +270,16 @@ export function RoleDetailModal({
   // Pre-ukur dimensi asli file gambar secara presisi di background
   useEffect(() => {
     displayProjects.forEach((p) => {
-      if (p.image && !mediaRatios[p.id]) {
+      const ratioKey = `${p.id}::${p.image || ''}`;
+      if (p.image && !mediaRatios[ratioKey]) {
         const img = new Image();
         img.src = getStoragePublicUrl(p.image) || p.image;
         img.onload = () => {
           if (img.naturalWidth && img.naturalHeight) {
             setMediaRatios((prev) => {
               const r = img.naturalWidth / img.naturalHeight;
-              if (prev[p.id] === r) return prev;
-              return { ...prev, [p.id]: r };
+              if (prev[ratioKey] === r) return prev;
+              return { ...prev, [ratioKey]: r };
             });
           }
         };
@@ -396,8 +425,11 @@ export function RoleDetailModal({
               const stagger = STAGGER_PRESETS[idx % STAGGER_PRESETS.length];
 
               // Deteksi Rasio Asli Media dari File (naturalWidth / naturalHeight)
+              const ratioKey = `${project.id}::${project.image || ''}`;
+              const videoRatioKey = `${project.id}::video::${project.videoUrl || ''}`;
               const intrinsicRatio =
-                mediaRatios[project.id] ||
+                (project.videoUrl && isSelected ? mediaRatios[videoRatioKey] : null) ||
+                mediaRatios[ratioKey] ||
                 project.aspectRatio ||
                 activeDiscipline.defaultRatio ||
                 DEFAULT_RATIOS[selectedDisciplineKey] ||
@@ -503,7 +535,7 @@ export function RoleDetailModal({
                   {/* Media Karya: Menggunakan Rasio Asli File Tanpa Ada Pemotongan */}
                   {project.videoUrl && isSelected ? (
                     <video
-                      src={project.videoUrl}
+                      src={getStoragePublicUrl(project.videoUrl) || project.videoUrl}
                       autoPlay
                       loop
                       muted
@@ -514,7 +546,7 @@ export function RoleDetailModal({
                         if (videoWidth && videoHeight) {
                           setMediaRatios((prev) => ({
                             ...prev,
-                            [project.id]: videoWidth / videoHeight
+                            [videoRatioKey]: videoWidth / videoHeight
                           }));
                         }
                       }}
@@ -538,7 +570,7 @@ export function RoleDetailModal({
                         if (naturalWidth && naturalHeight) {
                           setMediaRatios((prev) => ({
                             ...prev,
-                            [project.id]: naturalWidth / naturalHeight
+                            [ratioKey]: naturalWidth / naturalHeight
                           }));
                         }
                       }}
