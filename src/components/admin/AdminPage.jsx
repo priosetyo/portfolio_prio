@@ -490,21 +490,60 @@ export function AdminPage({ onBackToSite }) {
     if (!file) return;
 
     setUploadingRolePhotoIdx(idx);
+    const isVideo = file.type.startsWith('video/');
+
     try {
-      const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-      const storagePath = `about-roles/role-${idx + 1}-${Date.now()}.${ext}`;
-      const res = await uploadMediaFile(storagePath, file, file.type || 'image/jpeg');
-      const publicUrl = res?.publicUrl || storagePath;
-      if (publicUrl) {
-        handleUpdateAboutRole(idx, 'photo', publicUrl);
-        showToast(`Foto untuk "${currentAboutRoles[idx]?.title}" berhasil diunggah!`);
+      const timestamp = Date.now();
+      let nextFields = {};
+
+      if (isVideo) {
+        const ext = file.name.split('.').pop()?.toLowerCase() || 'mp4';
+        const posterResult = await captureVideoPoster(file);
+        const posterPath = `about-roles/role-${idx + 1}-${timestamp}-poster.webp`;
+        const videoPath = `about-roles/role-${idx + 1}-${timestamp}.${ext}`;
+
+        const [posterRes, videoRes] = await Promise.all([
+          uploadMediaFile(posterPath, posterResult.blob, 'image/webp'),
+          uploadMediaFile(videoPath, file, file.type || 'video/mp4')
+        ]);
+
+        nextFields = {
+          photo: posterRes?.publicUrl || posterPath,
+          videoUrl: videoRes?.publicUrl || videoPath
+        };
+      } else {
+        const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+        const storagePath = `about-roles/role-${idx + 1}-${timestamp}.${ext}`;
+        const res = await uploadMediaFile(storagePath, file, file.type || 'image/jpeg');
+        const publicUrl = res?.publicUrl || storagePath;
+        nextFields = {
+          photo: publicUrl,
+          videoUrl: ''
+        };
       }
+
+      const nextRoles = currentAboutRoles.map((r, i) => (i === idx ? { ...r, ...nextFields } : r));
+      const updatedProfile = { ...profile, about_roles: nextRoles };
+      setProfile(updatedProfile);
+      await updateSiteSettings(updatedProfile);
+      showToast(
+        `${isVideo ? 'Video' : 'Foto'} untuk "${currentAboutRoles[idx]?.title}" berhasil diunggah & disimpan!`
+      );
     } catch (err) {
-      console.error('Gagal upload foto peran:', err);
-      showToast('Gagal mengunggah foto. Silakan coba lagi.');
+      console.error('Gagal upload media peran:', err);
+      showToast('Gagal mengunggah media. Silakan coba lagi.');
     } finally {
       setUploadingRolePhotoIdx(null);
+      e.target.value = '';
     }
+  };
+
+  const handleClearRoleVideo = async (idx) => {
+    const nextRoles = currentAboutRoles.map((r, i) => (i === idx ? { ...r, videoUrl: '' } : r));
+    const updatedProfile = { ...profile, about_roles: nextRoles };
+    setProfile(updatedProfile);
+    await updateSiteSettings(updatedProfile);
+    showToast(`Video pada "${currentAboutRoles[idx]?.title}" dihapus (kembali ke mode foto).`);
   };
 
   const handleUpdateSpotlightItem = (idx, field, value) => {
@@ -2934,12 +2973,24 @@ export function AdminPage({ onBackToSite }) {
                               overflow: 'hidden'
                             }}
                           >
-                            {role.photo && (
-                              <img
-                                src={getStoragePublicUrl(role.photo) || role.photo}
-                                alt={role.title}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            {role.videoUrl ? (
+                              <video
+                                src={getStoragePublicUrl(role.videoUrl) || role.videoUrl}
+                                poster={role.photo ? getStoragePublicUrl(role.photo) || role.photo : undefined}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                               />
+                            ) : (
+                              role.photo && (
+                                <img
+                                  src={getStoragePublicUrl(role.photo) || role.photo}
+                                  alt={role.title}
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              )
                             )}
                             <div
                               style={{
@@ -2953,20 +3004,37 @@ export function AdminPage({ onBackToSite }) {
                               }}
                             >
                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                <span
-                                  style={{
-                                    padding: '3px 10px',
-                                    borderRadius: '9999px',
-                                    backgroundColor: '#ffffff',
-                                    color: '#071320',
-                                    fontSize: '11px',
-                                    fontWeight: '800',
-                                    textTransform: 'uppercase',
-                                    letterSpacing: '0.04em'
-                                  }}
-                                >
-                                  {role.badge || `Role 0${idx + 1}`}
-                                </span>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <span
+                                    style={{
+                                      padding: '3px 10px',
+                                      borderRadius: '9999px',
+                                      backgroundColor: '#ffffff',
+                                      color: '#071320',
+                                      fontSize: '11px',
+                                      fontWeight: '800',
+                                      textTransform: 'uppercase',
+                                      letterSpacing: '0.04em'
+                                    }}
+                                  >
+                                    {role.badge || `Role 0${idx + 1}`}
+                                  </span>
+                                  {role.videoUrl && (
+                                    <span
+                                      style={{
+                                        padding: '2px 7px',
+                                        borderRadius: '9999px',
+                                        backgroundColor: '#ED1C24',
+                                        color: '#ffffff',
+                                        fontSize: '9px',
+                                        fontWeight: '800',
+                                        letterSpacing: '0.05em'
+                                      }}
+                                    >
+                                      VIDEO
+                                    </span>
+                                  )}
+                                </div>
                                 <span
                                   style={{
                                     display: 'inline-block',
@@ -2980,34 +3048,61 @@ export function AdminPage({ onBackToSite }) {
                                 />
                               </div>
 
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
                                 <span style={{ color: '#ffffff', fontSize: '13px', fontWeight: '800' }}>
                                   {role.title}
                                 </span>
-                                <label
-                                  style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '4px',
-                                    padding: '4px 8px',
-                                    borderRadius: '6px',
-                                    backgroundColor: 'rgba(255,255,255,0.9)',
-                                    color: '#071320',
-                                    fontSize: '10px',
-                                    fontWeight: '700',
-                                    cursor: 'pointer'
-                                  }}
-                                >
-                                  <Upload size={11} />
-                                  <span>{uploadingRolePhotoIdx === idx ? 'Mengunggah...' : 'Ganti Foto'}</span>
-                                  <input
-                                    type="file"
-                                    accept="image/*"
-                                    style={{ display: 'none' }}
-                                    disabled={uploadingRolePhotoIdx === idx}
-                                    onChange={(e) => handleRolePhotoFileSelect(idx, e)}
-                                  />
-                                </label>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                  {role.videoUrl && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleClearRoleVideo(idx)}
+                                      style={{
+                                        padding: '4px 7px',
+                                        borderRadius: '6px',
+                                        backgroundColor: 'rgba(0,0,0,0.72)',
+                                        color: '#ffffff',
+                                        border: '1px solid rgba(255,255,255,0.25)',
+                                        fontSize: '10px',
+                                        fontWeight: '600',
+                                        cursor: 'pointer'
+                                      }}
+                                      title="Hapus video (kembali ke foto saja)"
+                                    >
+                                      Hapus Video
+                                    </button>
+                                  )}
+                                  <label
+                                    style={{
+                                      display: 'inline-flex',
+                                      alignItems: 'center',
+                                      gap: '4px',
+                                      padding: '4px 8px',
+                                      borderRadius: '6px',
+                                      backgroundColor: 'rgba(255,255,255,0.9)',
+                                      color: '#071320',
+                                      fontSize: '10px',
+                                      fontWeight: '700',
+                                      cursor: uploadingRolePhotoIdx === idx ? 'wait' : 'pointer'
+                                    }}
+                                  >
+                                    <Upload size={11} />
+                                    <span>
+                                      {uploadingRolePhotoIdx === idx
+                                        ? 'Mengunggah...'
+                                        : role.roleKey === 'video' || idx === 1
+                                        ? 'Foto / Video'
+                                        : 'Ganti Foto'}
+                                    </span>
+                                    <input
+                                      type="file"
+                                      accept={role.roleKey === 'video' || idx === 1 ? 'image/*,video/*' : 'image/*'}
+                                      style={{ display: 'none' }}
+                                      disabled={uploadingRolePhotoIdx === idx}
+                                      onChange={(e) => handleRolePhotoFileSelect(idx, e)}
+                                    />
+                                  </label>
+                                </div>
                               </div>
                             </div>
                           </div>

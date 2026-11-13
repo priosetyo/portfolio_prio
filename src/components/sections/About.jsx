@@ -192,8 +192,26 @@ export function About({ settings }) {
           {aboutRoles.map((role, idx) => {
             const isHovered = hoveredIdx === idx || touchedIdx === idx;
             const photoUrl = getStoragePublicUrl(role.photo) || role.photo;
+            const videoUrl = role.videoUrl
+              ? getStoragePublicUrl(role.videoUrl) || role.videoUrl
+              : /\.(mp4|webm|mov)(\?|$)/i.test(photoUrl || '')
+              ? photoUrl
+              : null;
             const isLight = isColorLight(role.hoverColor || role.color) || Boolean(role.isLight);
             const activeBg = role.hoverBg || role.hoverColor || role.color || '#00529B';
+            const mediaStyle = {
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              transform: isHovered ? 'scale(1.08)' : 'scale(1)',
+              opacity: isHovered ? (isLight ? 0.04 : 0.18) : 1,
+              filter: isHovered ? (isLight ? 'grayscale(100%)' : 'grayscale(30%)') : 'none',
+              transition:
+                'transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 350ms ease, filter 350ms ease'
+            };
 
             return (
               <div
@@ -229,24 +247,24 @@ export function About({ settings }) {
                     'transform 400ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 400ms cubic-bezier(0.16, 1, 0.3, 1)'
                 }}
               >
-                {/* Background Photo */}
-                <img
-                  src={photoUrl}
-                  alt={role.title}
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'center',
-                    transform: isHovered ? 'scale(1.08)' : 'scale(1)',
-                    opacity: isHovered ? (isLight ? 0.04 : 0.18) : 1,
-                    filter: isHovered ? (isLight ? 'grayscale(100%)' : 'grayscale(30%)') : 'none',
-                    transition:
-                      'transform 650ms cubic-bezier(0.16, 1, 0.3, 1), opacity 350ms ease, filter 350ms ease'
-                  }}
-                />
+                {/* Background Photo or Video */}
+                {videoUrl ? (
+                  <video
+                    src={videoUrl}
+                    poster={videoUrl !== photoUrl ? photoUrl : undefined}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={mediaStyle}
+                  />
+                ) : (
+                  <img
+                    src={photoUrl}
+                    alt={role.title}
+                    style={mediaStyle}
+                  />
+                )}
 
                 {/* Base Dark Gradient (Default State) */}
                 <div
