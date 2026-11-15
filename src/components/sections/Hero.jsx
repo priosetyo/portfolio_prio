@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { ArrowUpRight, ArrowRight, Layers, Award, Briefcase } from 'lucide-react';
-import { getStoragePublicUrl } from '../../lib/queries';
+import { getStoragePublicUrl, isVideoMediaUrl } from '../../lib/queries';
 import { useProjects } from '../../hooks/useProjects';
 
 const HERO_PORTRAIT_FALLBACK =
@@ -606,20 +606,40 @@ export function Hero({ settings, onOpenFilosofi, onOpenDetailModal }) {
               }}
             >
               {heroPortraitUrl && (
-                <img
-                  src={getStoragePublicUrl(heroPortraitUrl)}
-                  alt={name}
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'contain',
-                    objectPosition: 'bottom right',
-                    border: 'none',
-                    background: 'transparent',
-                    boxShadow: 'none',
-                    display: 'block'
-                  }}
-                />
+                isVideoMediaUrl(getStoragePublicUrl(heroPortraitUrl) || heroPortraitUrl) ? (
+                  <video
+                    src={getStoragePublicUrl(heroPortraitUrl)}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      objectPosition: 'bottom right',
+                      border: 'none',
+                      background: 'transparent',
+                      boxShadow: 'none',
+                      display: 'block'
+                    }}
+                  />
+                ) : (
+                  <img
+                    src={getStoragePublicUrl(heroPortraitUrl)}
+                    alt={name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                      objectPosition: 'bottom right',
+                      border: 'none',
+                      background: 'transparent',
+                      boxShadow: 'none',
+                      display: 'block'
+                    }}
+                  />
+                )
               )}
             </div>
           </div>

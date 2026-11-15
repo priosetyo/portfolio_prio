@@ -31,6 +31,11 @@ export const DEFAULT_SECTION_HEADERS = {
   }
 };
 
+export function isVideoMediaUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  return /\.(mp4|webm|mov|m4v|ogg)(\?|$)/i.test(url);
+}
+
 /**
  * Local Storage Helpers & Event Dispatcher
  */

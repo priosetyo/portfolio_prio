@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Menu, X, ArrowUpRight, ShieldCheck } from 'lucide-react';
-import { getStoragePublicUrl } from '../../lib/queries';
+import { getStoragePublicUrl, isVideoMediaUrl } from '../../lib/queries';
 
 const SUPABASE_AVATAR_FALLBACK =
   'https://pipymdkphzhkyvutclfn.supabase.co/storage/v1/object/public/portfolio-media/avatars/avatar-1793091534469.webp';
@@ -264,11 +264,22 @@ export function Navbar({
                 e.currentTarget.style.boxShadow = 'none';
               }}
             >
-              <img
-                src={resolvedAvatar}
-                alt={siteName ? `Profile ${siteName}` : 'Profile Prio Setyo'}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
+              {isVideoMediaUrl(resolvedAvatar) ? (
+                <video
+                  src={resolvedAvatar}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              ) : (
+                <img
+                  src={resolvedAvatar}
+                  alt={siteName ? `Profile ${siteName}` : 'Profile Prio Setyo'}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              )}
             </a>
 
             {/* Mobile Menu Button */}

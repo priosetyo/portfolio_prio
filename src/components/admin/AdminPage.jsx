@@ -23,7 +23,8 @@ import {
   saveLocalMessages,
   getStoragePublicUrl,
   uploadMediaFile,
-  DEFAULT_SECTION_HEADERS
+  DEFAULT_SECTION_HEADERS,
+  isVideoMediaUrl
 } from '../../lib/queries';
 import { resizeImageToWebP, captureVideoPoster } from '../../lib/image';
 import {
@@ -191,10 +192,12 @@ export function AdminPage({ onBackToSite }) {
         localStorage.setItem('prio_hero_png_url', portraitUrl);
       } catch (err) {}
       await updateSiteSettings(updatedProfile);
-      showToast('Foto PNG Hero berhasil diunggah dan langsung aktif di halaman depan!');
+      showToast(
+        `${file.type.startsWith('video/') ? 'Video' : 'Foto PNG'} Hero berhasil diunggah dan langsung aktif di halaman depan!`
+      );
     } catch (err) {
       console.error('Error uploading hero portrait:', err);
-      showToast('Gagal mengunggah Foto PNG Hero.');
+      showToast('Gagal mengunggah media Hero.');
     } finally {
       setUploadingHeroPortrait(false);
       e.target.value = '';
@@ -942,17 +945,27 @@ export function AdminPage({ onBackToSite }) {
 
     setUploadingAvatar(true);
     setAvatarError('');
+    const isVideo = file.type.startsWith('video/');
 
     try {
-      const compressed = await resizeImageToWebP(file, 600, 0.9);
       const timestamp = Date.now();
-      const storagePath = `avatars/avatar-${timestamp}.webp`;
+      let res;
+      let storagePath;
 
-      const res = await uploadMediaFile(storagePath, compressed.blob);
+      if (isVideo) {
+        const ext = file.name.split('.').pop()?.toLowerCase() || 'mp4';
+        storagePath = `avatars/avatar-${timestamp}.${ext}`;
+        res = await uploadMediaFile(storagePath, file, file.type || 'video/mp4');
+      } else {
+        const compressed = await resizeImageToWebP(file, 600, 0.9);
+        storagePath = `avatars/avatar-${timestamp}.webp`;
+        res = await uploadMediaFile(storagePath, compressed.blob);
+      }
+
       const avatarUrl = res?.publicUrl || storagePath;
 
       setProfile((prev) => ({ ...prev, avatar_url: avatarUrl }));
-      showToast('Foto profil berhasil diunggah! Klik "Simpan Perubahan Profil" untuk menerapkan.');
+      showToast(`${isVideo ? 'Video' : 'Foto'} profil berhasil diunggah! Klik "Simpan Perubahan Profil" untuk menerapkan.`);
     } catch (err) {
       console.error('Error uploading avatar:', err);
       let msg = err.message || 'Gagal mengunggah foto profil.';
@@ -2614,11 +2627,22 @@ export function AdminPage({ onBackToSite }) {
                         }}
                       >
                         {profile.hero_png_url ? (
-                          <img
-                            src={getStoragePublicUrl(profile.hero_png_url)}
-                            alt="Foto PNG Hero"
-                            style={{ width: '100%', height: '100%', objectFit: 'contain', border: 'none' }}
-                          />
+                          isVideoMediaUrl(getStoragePublicUrl(profile.hero_png_url) || profile.hero_png_url) ? (
+                            <video
+                              src={getStoragePublicUrl(profile.hero_png_url)}
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', border: 'none', display: 'block' }}
+                            />
+                          ) : (
+                            <img
+                              src={getStoragePublicUrl(profile.hero_png_url)}
+                              alt="Foto PNG Hero"
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', border: 'none' }}
+                            />
+                          )
                         ) : (
                           <span
                             className="font-label-mono-sm"
@@ -2665,10 +2689,10 @@ export function AdminPage({ onBackToSite }) {
                         }}
                       >
                         <Camera size={14} />
-                        <span>{uploadingHeroPortrait ? 'Mengunggah...' : 'Upload Foto PNG Hero'}</span>
+                        <span>{uploadingHeroPortrait ? 'Mengunggah...' : 'Upload Foto / Video Hero'}</span>
                         <input
                           type="file"
-                          accept="image/png,image/webp"
+                          accept="image/*,video/*"
                           disabled={uploadingHeroPortrait}
                           onChange={handleHeroPortraitFileSelect}
                           style={{ display: 'none' }}
@@ -3283,13 +3307,11 @@ export function AdminPage({ onBackToSite }) {
                                     <span>
                                       {uploadingRolePhotoIdx === idx
                                         ? 'Mengunggah...'
-                                        : role.roleKey === 'video' || idx === 1
-                                        ? 'Foto / Video'
-                                        : 'Ganti Foto'}
+                                        : 'Foto / Video'}
                                     </span>
                                     <input
                                       type="file"
-                                      accept={role.roleKey === 'video' || idx === 1 ? 'image/*,video/*' : 'image/*'}
+                                      accept="image/*,video/*"
                                       style={{ display: 'none' }}
                                       disabled={uploadingRolePhotoIdx === idx}
                                       onChange={(e) => handleRolePhotoFileSelect(idx, e)}
@@ -3914,11 +3936,22 @@ export function AdminPage({ onBackToSite }) {
                           }}
                         >
                           {profile.avatar_url ? (
-                            <img
-                              src={getStoragePublicUrl(profile.avatar_url)}
-                              alt="Foto Profil"
-                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                            />
+                            isVideoMediaUrl(getStoragePublicUrl(profile.avatar_url) || profile.avatar_url) ? (
+                              <video
+                                src={getStoragePublicUrl(profile.avatar_url)}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                              />
+                            ) : (
+                              <img
+                                src={getStoragePublicUrl(profile.avatar_url)}
+                                alt="Foto Profil"
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                              />
+                            )
                           ) : (
                             <div
                               style={{
@@ -3987,10 +4020,10 @@ export function AdminPage({ onBackToSite }) {
                           }}
                         >
                           <Camera size={14} />
-                          <span>{uploadingAvatar ? 'Mengunggah...' : 'Ganti Foto Profil'}</span>
+                          <span>{uploadingAvatar ? 'Mengunggah...' : 'Foto / Video Profil'}</span>
                           <input
                             type="file"
-                            accept="image/*"
+                            accept="image/*,video/*"
                             disabled={uploadingAvatar}
                             onChange={handleAvatarFileSelect}
                             style={{ display: 'none' }}
