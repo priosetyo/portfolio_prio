@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { DEFAULT_SECTION_HEADERS } from '../../lib/queries';
 
-export function WorkGrid({ onOpenDetailModal }) {
+export function WorkGrid({ settings, onOpenDetailModal }) {
+  const sectionHeader = {
+    ...DEFAULT_SECTION_HEADERS.works,
+    ...(settings?.section_headers?.works || {})
+  };
   const [macroFilter, setMacroFilter] = useState('all'); // 'all' or 'studio'
   const [disciplineFilter, setDisciplineFilter] = useState('all'); // 'all', 'fotografi', 'videografi', 'desain', 'copywriting'
 
@@ -127,7 +132,7 @@ export function WorkGrid({ onOpenDetailModal }) {
                   marginBottom: '0.5rem'
                 }}
               >
-                CURATED PORTFOLIO
+                {sectionHeader.eyebrow}
               </span>
               <h2
                 className="font-headline-lg"
@@ -137,7 +142,7 @@ export function WorkGrid({ onOpenDetailModal }) {
                   letterSpacing: '-0.025em'
                 }}
               >
-                Selected Works Gallery
+                {sectionHeader.title}
               </h2>
             </div>
 

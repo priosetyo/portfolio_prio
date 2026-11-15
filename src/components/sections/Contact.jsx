@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import { DEFAULT_SECTION_HEADERS } from '../../lib/queries';
 
 export function Contact({ settings }) {
+  const sectionHeader = {
+    ...DEFAULT_SECTION_HEADERS.contact,
+    ...(settings?.section_headers?.contact || {})
+  };
   const [copiedType, setCopiedType] = useState(null);
 
   const email = settings?.email || 'contact@prioworks.my.id';
@@ -85,7 +90,7 @@ export function Contact({ settings }) {
             className="font-label-mono-sm"
           >
             <span className="material-symbols-outlined" style={{ fontSize: '14px' }}>bolt</span>
-            <span>STRATEGIC PROJECT COLLABORATION</span>
+            <span>{sectionHeader.eyebrow}</span>
           </div>
 
           <h2
@@ -97,7 +102,7 @@ export function Contact({ settings }) {
               marginBottom: '1rem'
             }}
           >
-            Initiate Collaboration
+            {sectionHeader.title}
           </h2>
 
           <p
@@ -108,7 +113,7 @@ export function Contact({ settings }) {
               marginBottom: '2rem'
             }}
           >
-            Ready to elevate your visual standards and strategic brand impact to the next frontier? Let's discuss creative briefs, commercial direction, or long-term team advisory.
+            {sectionHeader.subtitle}
           </p>
 
           <a

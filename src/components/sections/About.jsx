@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { getStoragePublicUrl } from '../../lib/queries';
+import { getStoragePublicUrl, DEFAULT_SECTION_HEADERS } from '../../lib/queries';
 import { ArrowUpRight } from 'lucide-react';
 import { RoleDetailModal } from './RoleDetailModal';
 
@@ -122,6 +122,11 @@ export function About({ settings }) {
     setSelectedRole(role);
   };
 
+  const sectionHeader = {
+    ...DEFAULT_SECTION_HEADERS.about,
+    ...(settings?.section_headers?.about || {})
+  };
+
   return (
     <section
       id="about"
@@ -152,7 +157,7 @@ export function About({ settings }) {
               marginBottom: '0.5rem'
             }}
           >
-            ABOUT PRIO SETYO
+            {sectionHeader.eyebrow}
           </span>
           <h2
             className="font-headline-lg"
@@ -163,7 +168,7 @@ export function About({ settings }) {
               marginBottom: '0.65rem'
             }}
           >
-            Multi-Disciplinary Visual Practitioner
+            {sectionHeader.title}
           </h2>
           <p
             className="font-body-md"
@@ -175,7 +180,7 @@ export function About({ settings }) {
               margin: 0
             }}
           >
-            Menjembatani kedisiplinan dan presisi komunikasi industri energi dengan estetika visual modern, desain fungsional, dan strategi narasi digital berdaya pikat.
+            {sectionHeader.subtitle}
           </p>
         </div>
 

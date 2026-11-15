@@ -1,6 +1,11 @@
 import React from 'react';
+import { DEFAULT_SECTION_HEADERS } from '../../lib/queries';
 
-export function Experience({ experiences = [], onOpenDetailModal }) {
+export function Experience({ settings, experiences = [], onOpenDetailModal }) {
+  const sectionHeader = {
+    ...DEFAULT_SECTION_HEADERS.experience,
+    ...(settings?.section_headers?.experience || {})
+  };
   const defaultTimeline = [
     {
       company: 'Studio Artefak',
@@ -93,7 +98,7 @@ export function Experience({ experiences = [], onOpenDetailModal }) {
                 marginBottom: '0.5rem'
               }}
             >
-              CAREER JOURNEY
+              {sectionHeader.eyebrow}
             </span>
             <h2
               className="font-headline-lg"
@@ -103,7 +108,7 @@ export function Experience({ experiences = [], onOpenDetailModal }) {
                 letterSpacing: '-0.025em'
               }}
             >
-              Creative Leadership Timeline
+              {sectionHeader.title}
             </h2>
           </div>
           <p
@@ -114,7 +119,7 @@ export function Experience({ experiences = [], onOpenDetailModal }) {
               lineHeight: 1.6
             }}
           >
-            A consistent record of steering multidisciplinary teams across commercial advertising and independent studio production.
+            {sectionHeader.subtitle}
           </p>
         </div>
 

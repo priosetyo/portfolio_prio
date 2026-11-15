@@ -1,6 +1,11 @@
 import React from 'react';
+import { DEFAULT_SECTION_HEADERS } from '../../lib/queries';
 
-export function Skills({ onOpenDetailModal }) {
+export function Skills({ settings, onOpenDetailModal }) {
+  const sectionHeader = {
+    ...DEFAULT_SECTION_HEADERS.skills,
+    ...(settings?.section_headers?.skills || {})
+  };
   const tools = [
     {
       icon: 'layers',
@@ -120,7 +125,7 @@ export function Skills({ onOpenDetailModal }) {
               }}
               className="font-label-mono-sm"
             >
-              <span>CREATIVE PIPELINE</span>
+              <span>{sectionHeader.eyebrow}</span>
             </div>
             <h2
               className="font-headline-lg"
@@ -130,7 +135,7 @@ export function Skills({ onOpenDetailModal }) {
                 letterSpacing: '-0.025em'
               }}
             >
-              Toolkit & Experiments
+              {sectionHeader.title}
             </h2>
             <p
               className="font-body-md"
@@ -140,7 +145,7 @@ export function Skills({ onOpenDetailModal }) {
                 marginTop: '0.5rem'
               }}
             >
-              Industry-standard suites and real-time simulation platforms orchestrated with precision to power enterprise-grade creative delivery.
+              {sectionHeader.subtitle}
             </p>
           </div>
 

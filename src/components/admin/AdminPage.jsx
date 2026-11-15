@@ -22,7 +22,8 @@ import {
   getLocalMessages,
   saveLocalMessages,
   getStoragePublicUrl,
-  uploadMediaFile
+  uploadMediaFile,
+  DEFAULT_SECTION_HEADERS
 } from '../../lib/queries';
 import { resizeImageToWebP, captureVideoPoster } from '../../lib/image';
 import {
@@ -128,8 +129,8 @@ export function AdminPage({ onBackToSite }) {
   const { session, user, loading: authLoading, signIn, signOut } = useAuth();
   const isAuthenticated = Boolean(session);
 
-  // Tab State: 'projects' | 'messages' | 'profile' | 'skills' | 'experience' | 'social'
-  const [activeTab, setActiveTab] = useState('projects');
+  // Tab State: 'section1' | 'section2' | 'section3' | 'section4' | 'section5' | 'section6' | 'section7'
+  const [activeTab, setActiveTab] = useState('section1');
 
   // Data states
   const [projects, setProjects] = useState([]);
@@ -735,6 +736,170 @@ export function AdminPage({ onBackToSite }) {
     showToast(`Video pada Slot 0${slotIdx + 1} dihapus (kembali ke mode foto).`);
   };
 
+  const currentSectionHeaders = React.useMemo(() => {
+    let custom = profile.section_headers;
+    if (typeof custom === 'string') {
+      try {
+        custom = JSON.parse(custom);
+      } catch (e) {
+        custom = null;
+      }
+    }
+    const merged = {};
+    Object.keys(DEFAULT_SECTION_HEADERS).forEach((key) => {
+      merged[key] = {
+        ...DEFAULT_SECTION_HEADERS[key],
+        ...(custom?.[key] || {})
+      };
+    });
+    return merged;
+  }, [profile.section_headers]);
+
+  const handleUpdateSectionHeader = (sectionKey, field, value) => {
+    setProfile((prev) => ({
+      ...prev,
+      section_headers: {
+        ...currentSectionHeaders,
+        [sectionKey]: {
+          ...currentSectionHeaders[sectionKey],
+          [field]: value
+        }
+      }
+    }));
+  };
+
+  const handleSaveSectionHeaders = async (sectionLabel = 'Section') => {
+    const updatedProfile = {
+      ...profile,
+      section_headers: currentSectionHeaders
+    };
+    setProfile(updatedProfile);
+    await updateSiteSettings(updatedProfile);
+    showToast(`Header ${sectionLabel} berhasil disimpan ke website!`);
+  };
+
+  const renderSectionHeaderEditor = (sectionKey, titleLabel, { showSubtitle = true } = {}) => {
+    const hdr = currentSectionHeaders[sectionKey] || {};
+    return (
+      <div
+        style={{
+          padding: '1.25rem',
+          borderRadius: '1rem',
+          backgroundColor: '#ffffff',
+          border: '1px solid rgba(0, 0, 0, 0.08)',
+          marginBottom: '1.25rem',
+          boxShadow: '0 1px 4px rgba(0, 0, 0, 0.02)'
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '0.75rem',
+            marginBottom: '0.85rem'
+          }}
+        >
+          <div>
+            <div style={{ fontWeight: '800', fontSize: '13px', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              Header {titleLabel}
+            </div>
+            <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '2px 0 0 0' }}>
+              Ubah label badge, judul utama, {showSubtitle ? 'dan deskripsi pengantar ' : ''}pada bagian ini.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => handleSaveSectionHeaders(titleLabel)}
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '0.5rem 1rem',
+              borderRadius: '9999px',
+              backgroundColor: '#000000',
+              color: '#ffffff',
+              fontSize: '11px',
+              fontWeight: '700',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+          >
+            <Save size={12} />
+            <span>Simpan Header</span>
+          </button>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.75rem' }}>
+          <div>
+            <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '3px' }}>
+              Eyebrow / Badge
+            </label>
+            <input
+              type="text"
+              value={hdr.eyebrow || ''}
+              onChange={(e) => handleUpdateSectionHeader(sectionKey, 'eyebrow', e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.55rem 0.75rem',
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                backgroundColor: '#f3f3f5',
+                fontSize: '12px',
+                fontWeight: '600',
+                color: '#000000'
+              }}
+            />
+          </div>
+          <div>
+            <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '3px' }}>
+              Judul Utama Section
+            </label>
+            <input
+              type="text"
+              value={hdr.title || ''}
+              onChange={(e) => handleUpdateSectionHeader(sectionKey, 'title', e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.55rem 0.75rem',
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                backgroundColor: '#f3f3f5',
+                fontSize: '12px',
+                fontWeight: '700',
+                color: '#000000'
+              }}
+            />
+          </div>
+        </div>
+
+        {showSubtitle && (
+          <div style={{ marginTop: '0.75rem' }}>
+            <label style={{ display: 'block', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', color: 'var(--text-secondary)', marginBottom: '3px' }}>
+              Subjudul / Deskripsi Section
+            </label>
+            <textarea
+              rows={2}
+              value={hdr.subtitle || ''}
+              onChange={(e) => handleUpdateSectionHeader(sectionKey, 'subtitle', e.target.value)}
+              style={{
+                width: '100%',
+                padding: '0.55rem 0.75rem',
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(0, 0, 0, 0.1)',
+                backgroundColor: '#f3f3f5',
+                fontSize: '12px',
+                color: '#000000',
+                resize: 'vertical'
+              }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const handleSaveTrackAndSpotlight = async () => {
     const updatedProfile = {
       ...profile,
@@ -742,11 +907,12 @@ export function AdminPage({ onBackToSite }) {
       track_record_metrics: currentTrackMetrics,
       spotlight_items: currentSpotlightItems,
       about_roles: currentAboutRoles,
-      discipline_galleries: currentDisciplineGalleries
+      discipline_galleries: currentDisciplineGalleries,
+      section_headers: currentSectionHeaders
     };
     setProfile(updatedProfile);
     await updateSiteSettings(updatedProfile);
-    showToast('Perubahan Track Record, About Me & Galeri Peran berhasil disimpan ke website!');
+    showToast('Perubahan berhasil disimpan ke website!');
   };
 
   const handleResetTrackMetrics = async () => {
@@ -1281,14 +1447,13 @@ export function AdminPage({ onBackToSite }) {
               }}
             >
               {[
-                { id: 'projects', label: 'Proyek & Karya', icon: FolderKanban, count: projects.length },
-                { id: 'hero_media', label: 'Media Background Hero', icon: Film, count: currentHeroBgSlides.length },
-                { id: 'track_spotlight', label: 'Track Record & About Me', icon: Sparkles },
-                { id: 'messages', label: 'Pesan Masuk', icon: Mail, badge: unreadMessagesCount },
-                { id: 'profile', label: 'Profil & Bio', icon: User },
-                { id: 'skills', label: 'Keahlian / Tools', icon: Wrench, count: skills.length },
-                { id: 'experience', label: 'Riwayat & Karier', icon: Clock, count: experiences.length },
-                { id: 'social', label: 'Link Sosial', icon: Share2 }
+                { id: 'section1', label: 'Section 1 • Hero & Spotlight', icon: Film, count: currentHeroBgSlides.length },
+                { id: 'section2', label: 'Section 2 • Track Record', icon: Sparkles },
+                { id: 'section3', label: 'Section 3 • About & Galeri', icon: User },
+                { id: 'section4', label: 'Section 4 • Keahlian & Tools', icon: Wrench, count: skills.length },
+                { id: 'section5', label: 'Section 5 • Karya Portfolio', icon: FolderKanban, count: projects.length },
+                { id: 'section6', label: 'Section 6 • Pengalaman', icon: Clock, count: experiences.length },
+                { id: 'section7', label: 'Section 7 • Kontak & Pesan', icon: Mail, badge: unreadMessagesCount }
               ].map((tab) => {
                 const Icon = tab.icon;
                 const isSelected = activeTab === tab.id;
@@ -1367,9 +1532,10 @@ export function AdminPage({ onBackToSite }) {
                 gap: '1.5rem'
               }}
             >
-              {/* TAB 1: PROYEK & KARYA */}
-              {activeTab === 'projects' && (
+              {/* SECTION 5: GALERI KARYA (PORTFOLIO) */}
+              {activeTab === 'section5' && (
                 <div>
+                  {renderSectionHeaderEditor('works', 'Section 5 — Galeri Karya', { showSubtitle: false })}
                   {/* Pembeda Upload Karya vs Media Background Hero */}
                   <div
                     style={{
@@ -1413,7 +1579,7 @@ export function AdminPage({ onBackToSite }) {
 
                     <button
                       type="button"
-                      onClick={() => setActiveTab('hero_media')}
+                      onClick={() => setActiveTab('section1')}
                       className="font-label-mono-sm"
                       style={{
                         display: 'inline-flex',
@@ -1751,7 +1917,8 @@ export function AdminPage({ onBackToSite }) {
               )}
 
               {/* TAB 2: MEDIA BACKGROUND HERO (FOTO ATAU VIDEO) */}
-              {activeTab === 'hero_media' && (
+              {/* SECTION 1: MEDIA BACKGROUND HERO & PORTRAIT PNG */}
+              {activeTab === 'section1' && (
                 <div>
                   {/* Card Header inside container */}
                   <div
@@ -1871,7 +2038,7 @@ export function AdminPage({ onBackToSite }) {
                       </div>
                       <button
                         type="button"
-                        onClick={() => setActiveTab('projects')}
+                        onClick={() => setActiveTab('section5')}
                         style={{
                           marginTop: '6px',
                           alignSelf: 'flex-start',
@@ -2547,7 +2714,8 @@ export function AdminPage({ onBackToSite }) {
               )}
 
               {/* TAB BARU: TRACK RECORD SUMMARY & 5 SPOTLIGHT (SECTION 2) */}
-              {activeTab === 'track_spotlight' && (
+              {/* SECTION 2: TRACK RECORD SUMMARY & 3 KARTU METRIK */}
+              {activeTab === 'section2' && (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
                   {/* Header Section */}
                   <div
@@ -2571,10 +2739,10 @@ export function AdminPage({ onBackToSite }) {
                           margin: 0
                         }}
                       >
-                        Pengaturan Section 2: Track Record Summary & 5 Spotlight
+                        Section 2 — Track Record Summary & Metrik Kunci
                       </h2>
                       <p style={{ fontSize: '12px', color: 'var(--text-secondary)', margin: '4px 0 0 0' }}>
-                        Sesuaikan angka metrik utama (10+, 42, 180+), teks deskripsi, serta 5 kartu Spotlight unggulan di bawahnya.
+                        Sesuaikan angka metrik utama (10+, 42, 180+), badge, judul, dan deskripsi Track Record.
                       </p>
                     </div>
 
@@ -2918,13 +3086,38 @@ export function AdminPage({ onBackToSite }) {
                     </div>
                   </div>
 
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <button
+                      type="button"
+                      onClick={handleSaveTrackAndSpotlight}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '0.7rem 1.5rem',
+                        borderRadius: '9999px',
+                        backgroundColor: '#000000',
+                        color: '#ffffff',
+                        fontSize: '12px',
+                        fontWeight: '700',
+                        border: 'none',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+                      }}
+                    >
+                      <Save size={14} />
+                      <span>Simpan Perubahan Section 2</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* SECTION 3: ABOUT ME, 4 KARTU PERAN & GALERI DETAIL */}
+              {activeTab === 'section3' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  {renderSectionHeaderEditor('about', 'Section 3 — About Me & 4 Peran')}
                   {/* BAGIAN 3: 4 KARTU EKSPLORASI PERAN & ABOUT ME (GAYA PERTAMINA PATRA NIAGA) */}
-                  <div
-                    style={{
-                      paddingTop: '1.25rem',
-                      borderTop: '1px solid rgba(0, 0, 0, 0.08)'
-                    }}
-                  >
+                  <div>
                     <div
                       style={{
                         display: 'flex',
@@ -3534,8 +3727,8 @@ export function AdminPage({ onBackToSite }) {
                 </div>
               )}
 
-              {/* TAB 3: PESAN MASUK */}
-              {activeTab === 'messages' && (
+              {/* SECTION 7: KOTAK MASUK PESAN */}
+              {activeTab === 'section7' && (
                 <div>
                   <div
                     style={{
@@ -3671,7 +3864,8 @@ export function AdminPage({ onBackToSite }) {
               )}
 
               {/* TAB 3: PROFIL & BIO */}
-              {activeTab === 'profile' && (
+              {/* SECTION 1: PROFIL, AVATAR & TEKS HERO */}
+              {activeTab === 'section1' && (
                 <div>
                   <div
                     style={{
@@ -4006,9 +4200,10 @@ export function AdminPage({ onBackToSite }) {
                 </div>
               )}
 
-              {/* TAB 4: KEAHLIAN / TOOLS */}
-              {activeTab === 'skills' && (
+              {/* SECTION 4: KEAHLIAN & TOOLS */}
+              {activeTab === 'section4' && (
                 <div>
+                  {renderSectionHeaderEditor('skills', 'Section 4 — Keahlian & Tools')}
                   <div
                     style={{
                       display: 'flex',
@@ -4111,9 +4306,10 @@ export function AdminPage({ onBackToSite }) {
                 </div>
               )}
 
-              {/* TAB 5: RIWAYAT & KARIER */}
-              {activeTab === 'experience' && (
+              {/* SECTION 6: PENGALAMAN & KARIER */}
+              {activeTab === 'section6' && (
                 <div>
+                  {renderSectionHeaderEditor('experience', 'Section 6 — Pengalaman & Karier')}
                   <div
                     style={{
                       display: 'flex',
@@ -4229,9 +4425,10 @@ export function AdminPage({ onBackToSite }) {
                 </div>
               )}
 
-              {/* TAB 6: LINK SOSIAL */}
-              {activeTab === 'social' && (
+              {/* SECTION 7: HEADER KONTAK & LINK SOSIAL */}
+              {activeTab === 'section7' && (
                 <div>
+                  {renderSectionHeaderEditor('contact', 'Section 7 — Kontak & Kolaborasi')}
                   <div
                     style={{
                       marginBottom: '1.5rem',

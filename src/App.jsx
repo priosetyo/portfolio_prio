@@ -191,6 +191,7 @@ export default function App() {
 
         {/* Section 4: Creative Toolkit & Eksperimen Visual */}
         <Skills
+          settings={settings}
           groupedSkills={groupedSkills}
           loading={loading}
           onOpenDetailModal={handleOpenDetailModal}
@@ -198,11 +199,13 @@ export default function App() {
 
         {/* Section 5: Galeri Karya Terkurasi (Bento Grid) */}
         <WorkGrid
+          settings={settings}
           onOpenDetailModal={handleOpenDetailModal}
         />
 
         {/* Section 6: Linimasa Pengalaman Profesional */}
         <Experience
+          settings={settings}
           experiences={experiences}
           loading={loading}
           onOpenDetailModal={handleOpenDetailModal}

@@ -1,5 +1,36 @@
 import { supabase } from './supabaseClient';
 
+export const DEFAULT_SECTION_HEADERS = {
+  about: {
+    eyebrow: 'ABOUT PRIO SETYO',
+    title: 'Multi-Disciplinary Visual Practitioner',
+    subtitle:
+      'Menjembatani kedisiplinan dan presisi komunikasi industri energi dengan estetika visual modern, desain fungsional, dan strategi narasi digital berdaya pikat.'
+  },
+  skills: {
+    eyebrow: 'CREATIVE PIPELINE',
+    title: 'Toolkit & Experiments',
+    subtitle:
+      'Industry-standard suites and real-time simulation platforms orchestrated with precision to power enterprise-grade creative delivery.'
+  },
+  works: {
+    eyebrow: 'CURATED PORTFOLIO',
+    title: 'Selected Works Gallery'
+  },
+  experience: {
+    eyebrow: 'CAREER JOURNEY',
+    title: 'Creative Leadership Timeline',
+    subtitle:
+      'A consistent record of steering multidisciplinary teams across commercial advertising and independent studio production.'
+  },
+  contact: {
+    eyebrow: 'STRATEGIC PROJECT COLLABORATION',
+    title: 'Initiate Collaboration',
+    subtitle:
+      "Ready to elevate your visual standards and strategic brand impact to the next frontier? Let's discuss creative briefs, commercial direction, or long-term team advisory."
+  }
+};
+
 /**
  * Local Storage Helpers & Event Dispatcher
  */
@@ -164,6 +195,7 @@ export async function getSiteSettings() {
           if (extra.spotlight_items) merged.spotlight_items = extra.spotlight_items;
           if (extra.about_roles) merged.about_roles = extra.about_roles;
           if (extra.discipline_galleries) merged.discipline_galleries = extra.discipline_galleries;
+          if (extra.section_headers) merged.section_headers = extra.section_headers;
         }
       }
     } catch (e) {
@@ -667,7 +699,8 @@ export async function updateSiteSettings(settingsData) {
     track_record_metrics: settingsData.track_record_metrics,
     spotlight_items: settingsData.spotlight_items,
     about_roles: settingsData.about_roles,
-    discipline_galleries: settingsData.discipline_galleries
+    discipline_galleries: settingsData.discipline_galleries,
+    section_headers: settingsData.section_headers
   };
 
   // Hanya kirim kolom-kolom yang valid di skema tabel site_settings Supabase
